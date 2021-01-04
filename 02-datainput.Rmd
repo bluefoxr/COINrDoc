@@ -1,0 +1,7 @@
+# Data Input
+
+The main starting point in COINr is to read in your data. To assemble a composite indicator, COINr needs three different inputs (data frames):
+
+1. Raw indicator data (containing values of indicators for each unit)
+2. Indicator metadata
+3. Aggregation metadata
