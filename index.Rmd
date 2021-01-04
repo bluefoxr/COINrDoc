@@ -12,4 +12,8 @@ github-repo: rstudio/bookdown-demo
 description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
 ---
 
+# Background
+
 This documentation describes in detail the COINr package, which is an R package for developing and analysing composite indicators.
+
+At the moment, the documentation is very incomplete, and this is mostly here as a placeholder. However, this will be updated over time.

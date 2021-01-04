@@ -1,3 +1,4 @@
+background
 introduction
 how-to-use-coinr
 terminology
