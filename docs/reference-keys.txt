@@ -1,0 +1,10 @@
+introduction
+how-to-use-coinr
+terminology
+data-input
+imputation
+denomination
+example-one
+example-two
+normalisation
+aggregation
