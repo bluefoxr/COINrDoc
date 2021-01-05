@@ -12,8 +12,18 @@ github-repo: rstudio/bookdown-demo
 description: "COINr Documentation"
 ---
 
-# Background
+# Overview
 
 This documentation describes in detail the COINr package, which is an R package for developing and analysing composite indicators.
 
 At the moment, the documentation is very incomplete, and this is mostly here as a placeholder. However, this will be updated over time.
+
+## Installation
+
+COINr is currently under development, but a very limited very beta version can be installed via Github. First, install the devtools package if you don't already have it, then run:
+
+```{r eval=FALSE}
+devtools::install_github("bluefoxr/COINr")
+```
+
+This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also try to skip this step.

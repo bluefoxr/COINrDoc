@@ -1,4 +1,5 @@
-background
+overview
+installation
 introduction
 how-to-use-coinr
 terminology
@@ -9,3 +10,8 @@ example-one
 example-two
 normalisation
 aggregation
+weighting
+approaches-to-weighting
+interactive-re-weighting-with-rew8r
+automatic-re-weighting
+manual-re-weighting

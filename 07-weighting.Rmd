@@ -1,0 +1,21 @@
+# Weighting
+
+Strictly speaking, weighting comes before aggregation. However, in order to understand the *effects* of weights, we need to aggregate the index first.
+
+Weighting in composite indicators is a thorny issue, which attracts considerable attention and is often one of the main focuses of critics.
+
+## Approaches to weighting
+
+Outline of some key approaches
+
+## Interactive re-weighting with ReW8R
+
+A description
+
+## Automatic re-weighting
+
+The weight optimisation algorithm
+
+## Manual re-weighting
+
+Further options for weighting.
