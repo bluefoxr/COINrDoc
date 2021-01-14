@@ -1,5 +1,7 @@
 overview
 installation
+whats-it-for
+quick-start-guide
 introduction
 how-to-use-coinr
 terminology

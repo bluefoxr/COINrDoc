@@ -20,10 +20,57 @@ At the moment, the documentation is very incomplete, and this is mostly here as 
 
 ## Installation
 
-COINr is currently under development, but a very limited very beta version can be installed via Github. First, install the devtools package if you don't already have it, then run:
+COINr is currently under development, but a very limited very beta version can be installed via Github. First, install the `devtools` package if you don't already have it, then run:
 
 ```{r eval=FALSE}
 devtools::install_github("bluefoxr/COINr")
 ```
 
 This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also try to skip this step.
+
+## What's it for?
+
+COINr is the first fully-flexible development and analysis environment for composite indicators and scoreboards. It allows:
+
+* Flexible and fast development of composite indicators with no limits on aggregation levels, numbers of indicators, highly flexible set of methodological choices.
+
+* In-depth statistical analysis of indicators and results, including multivariate analysis, statistical reweighting, uncertainty and sensitivity analysis, etc.
+
+* Interactive data exploration and visualisation via Shiny apps which can be hosted online. HTML widgets for incorporation in interactive markdown documents.
+
+## Quick-start guide
+
+COINr is highly customisable, but equally allows composite indicator construction in a few commands. Taking the built-in ASEM dataset, we can assemble a composite indicator in a few steps.
+
+```{r, collapse=T}
+library(COINr)
+
+# assemble basic composite indicator object from input data
+ASEM <- coin_assemble(data_raw = ASEMIndData,
+                      metad = ASEMIndMeta,
+                      framewk = ASEMAggMeta)
+# denominate data using specifications in ASEMIndMeta
+ASEM <- coin_denominate(ASEM)
+# normalise data
+ASEM <- coin_normalise(ASEM, dset = "Denominated")
+# Aggregate normalised data
+ASEM <- coin_aggregate(ASEM, dset = "Normalised")
+
+```
+
+At this point, the dashboard for viewing the results interactively is still under development. Still, we can view a number of things. First, we may want to see the index structure:
+
+```{r, warning=F, message=F}
+coin_plotframework(ASEM)
+```
+
+This is an interactive "HTML widget" which can be embedded into HTML documents (such as this page). We can also analyse indicator statistics:
+
+```{r, warning=F, message=F}
+library(reactable)
+library(magrittr)
+ASEM <- coin_preanalyse(ASEM, dset = "Raw")
+ASEM$Analysis$Raw$StatTable %>%
+  reactable::reactable(defaultPageSize = 5, highlight = TRUE, wrap = F)
+```
+
