@@ -17,3 +17,9 @@ approaches-to-weighting
 interactive-re-weighting-with-rew8r
 automatic-re-weighting
 manual-re-weighting
+helper-functions
+getting-a-whole-data-set
+getting-specific-indicators
+getting-indicators-belonging-to-an-aggregation-group
+getting-aggregate-group-data-at-targeted-level
+use-with-data-frames

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Weighting | COINr: An R Package for Composite Indicator Development and Analysis</title>
+  <title>Chapter 10 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis</title>
   <meta name="description" content="COINr Documentation" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Weighting | COINr: An R Package for Composite Indicator Development and Analysis" />
+  <meta property="og:title" content="Chapter 10 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Weighting | COINr: An R Package for Composite Indicator Development and Analysis" />
+  <meta name="twitter:title" content="Chapter 10 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis" />
   
   <meta name="twitter:description" content="COINr Documentation" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="aggregation.html"/>
-<link rel="next" href="helper-functions.html"/>
+<link rel="prev" href="weighting.html"/>
+
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -196,25 +196,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="weighting" class="section level1">
-<h1><span class="header-section-number">Chapter 9</span> Weighting</h1>
-<p>Strictly speaking, weighting comes before aggregation. However, in order to understand the <em>effects</em> of weights, we need to aggregate the index first.</p>
-<p>Weighting in composite indicators is a thorny issue, which attracts considerable attention and is often one of the main focuses of critics.</p>
-<div id="approaches-to-weighting" class="section level2">
-<h2><span class="header-section-number">9.1</span> Approaches to weighting</h2>
-<p>Outline of some key approaches</p>
+<div id="helper-functions" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Helper functions</h1>
+<p>The <code>getIn()</code> function is widely used by many <code>COINr</code> functions. It is used for selecting specific data sets, and returning subsets of indicators. While some of this can be achieved fairly easily with base R, or <code>dplyr::select()</code>, subsetting in a heirarchical context can be more awkward. That’s where <code>getIn()</code> steps in to help.</p>
+<p>Let’s take some examples:</p>
+<div id="getting-a-whole-data-set" class="section level2">
+<h2><span class="header-section-number">10.1</span> Getting a whole data set</h2>
+<p>Explanation using ASEM data</p>
 </div>
-<div id="interactive-re-weighting-with-rew8r" class="section level2">
-<h2><span class="header-section-number">9.2</span> Interactive re-weighting with ReW8R</h2>
-<p>A description</p>
+<div id="getting-specific-indicators" class="section level2">
+<h2><span class="header-section-number">10.2</span> Getting specific indicators</h2>
+<p>Explanation using ASEM data, also of getting aggregate group data</p>
 </div>
-<div id="automatic-re-weighting" class="section level2">
-<h2><span class="header-section-number">9.3</span> Automatic re-weighting</h2>
-<p>The weight optimisation algorithm</p>
+<div id="getting-indicators-belonging-to-an-aggregation-group" class="section level2">
+<h2><span class="header-section-number">10.3</span> Getting indicators belonging to an aggregation group</h2>
+<p>Explanation using ASEM data, also multiple groups</p>
 </div>
-<div id="manual-re-weighting" class="section level2">
-<h2><span class="header-section-number">9.4</span> Manual re-weighting</h2>
-<p>Further options for weighting.</p>
+<div id="getting-aggregate-group-data-at-targeted-level" class="section level2">
+<h2><span class="header-section-number">10.4</span> Getting aggregate group data at targeted level</h2>
+<p>Explanation using ASEM data</p>
+</div>
+<div id="use-with-data-frames" class="section level2">
+<h2><span class="header-section-number">10.5</span> Use with data frames</h2>
+<p>Examples with just data frames</p>
 
 </div>
 </div>
@@ -223,8 +227,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="aggregation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="helper-functions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="weighting.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -255,7 +259,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/07-weighting.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/10-helperfunctions.Rmd",
 "text": "Edit"
 },
 "history": {

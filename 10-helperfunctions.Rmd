@@ -1,0 +1,25 @@
+# Helper functions
+
+The `getIn()` function is widely used by many `COINr` functions. It is used for selecting specific data sets, and returning subsets of indicators. While some of this can be achieved fairly easily with base R, or `dplyr::select()`, subsetting in a heirarchical context can be more awkward. That's where `getIn()` steps in to help.
+
+Let's take some examples:
+
+## Getting a whole data set
+
+Explanation using ASEM data
+
+## Getting specific indicators
+
+Explanation using ASEM data, also of getting aggregate group data
+
+## Getting indicators belonging to an aggregation group
+
+Explanation using ASEM data, also multiple groups
+
+## Getting aggregate group data at targeted level
+
+Explanation using ASEM data
+
+## Use with data frames
+
+Examples with just data frames
