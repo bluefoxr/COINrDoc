@@ -1,6 +1,6 @@
 # Helper functions
 
-The `getIn()` function is widely used by many `COINr` functions. It is used for selecting specific data sets, and returning subsets of indicators. While some of this can be achieved fairly easily with base R, or `dplyr::select()`, subsetting in a heirarchical context can be more awkward. That's where `getIn()` steps in to help.
+The `getIn()` function is widely used by many `COINr` functions. It is used for selecting specific data sets, and returning subsets of indicators. While some of this can be achieved fairly easily with base R, or `dplyr::select()`, subsetting in a hierarchical context can be more awkward. That's where `getIn()` steps in to help.
 
 Let's take some examples:
 

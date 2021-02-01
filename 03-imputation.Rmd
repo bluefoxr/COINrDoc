@@ -1,3 +1,24 @@
 # Imputation
 
-Stuff.
+Imputation is the process of estimating missing data points. This can be done in any number of ways, and as usual, the "best" way depends on the problem.
+
+## By indicators
+
+Column-wise imputation means 
+
+## By units
+
+A similar but alternative approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here's some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let's view the last few rows:
+
+```{r}
+library(COINr)
+Ind1 <- data.frame(Country = ASEMIndData$UnitName, ConSpeed = ASEMIndData$ConSpeed)
+Ind1[40:nrow(Ind1),]
+```
+
+Using our simple imputation method, we just replace the `NA` values with the sample mean.
+
+```{r}
+Ind1$ConSpeed <- replace(Ind1$ConSpeed, is.na(Ind1$ConSpeed), mean(Ind1$ConSpeed, na.rm = T))
+Ind1[40:nrow(Ind1),]
+```

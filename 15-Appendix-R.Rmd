@@ -1,0 +1,55 @@
+# Appendix: R Resources
+
+One of the great things about R is the sheer number of freely-available resources that are out there. Not just the software and packages, but also online books and materials to learn everything you need to know about pretty much anything.
+
+Here are a list of resources for users who (a) are interested in R and want to get started, and (b) are proficient R users but want to learn more. I am focusing here on resources that have really helped me in the work that I have done. Of course there is far more out there and you only have to look.
+
+## Introduction to R
+
+If you're just starting out, these are good places to start.
+
+**R for Data Science** is a modern classic that starts from the beginning and leads you into the world of R, from a data science perspective. It uses the "tidyverse" approach which is developed by R Guru Hadley Wickham. Even advanced users can probably learn something here.
+
+https://r4ds.had.co.nz/index.html
+
+**Swirl** is an R package which lets you learn R at the command line. Also very good for beginners.
+
+https://swirlstats.com/
+
+## Advanced resources
+
+### Programming
+
+If you really want to sharpen your programming skills in R, Hadley Wickham has another book: this one digs around in the roots of R and teaches you all kinds of tricks and quirks.
+
+https://adv-r.hadley.nz/
+
+Want to build your own R package? Hadley come to the rescue, again.
+
+https://r-pkgs.org/
+
+### Visualisation
+
+Plotly is a big R package which generates interactive graphics using Javascript (there are many others, by the way). This book tells you all you need to know about that.
+
+https://plotly-r.com/
+
+Shiny is another R package which lets you build interactive web apps based on R code. It's tricky to get your head around at first, but this book really helps.
+
+https://mastering-shiny.org/index.html
+
+### Other
+
+If you're not using GitHub, ask yourself, why not? GitHub is the best way to collaborate and share code, and you can also host documentation and websites. This book is hosted on GitHub, to take a random example. The Happy Git with R Book gives an easy introduction to hooking up R Studio to work seamlessly with Git and Github.
+
+https://happygitwithr.com/
+
+You wouldn't think that R would be a good tool for writing books, but actually it turns out that... it's a pretty good tool for writing books. The Bookdown package lets you build nifty online books with a simple and neat layout. You can include equations and importantly, R code, outputs and HTML widgets, etc.
+
+https://bookdown.org/yihui/bookdown/
+
+Finally, you wouldn't think that R would be a good tool for building website, but actually it turns out... it's a pretty good tool for building websites. OK, yes, if you want to build something really complicated and/or highly customised, then it's not the way forward. But for building fairly simple sites and blogs, personal pages etc (especially if you want to stick in some R code), then the *Blogdown* package gives a great way to do this. And guess what, you can link it to Github and it automatically updates your website when you push any changes from R Studio. And it's all free. An example of this is my very humble website which you can find at http://www.bluefoxdata.eu. 
+
+What's that you say, if only there were a book to teach me how to do all this? Well you're in luck - here it is.
+
+https://bookdown.org/yihui/blogdown/

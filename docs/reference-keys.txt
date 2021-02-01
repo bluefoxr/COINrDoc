@@ -7,6 +7,8 @@ how-to-use-coinr
 terminology
 data-input
 imputation
+by-indicators
+by-units
 denomination
 example-one
 example-two
@@ -23,3 +25,9 @@ getting-specific-indicators
 getting-indicators-belonging-to-an-aggregation-group
 getting-aggregate-group-data-at-targeted-level
 use-with-data-frames
+appendix-r-resources
+introduction-to-r
+advanced-resources
+programming
+visualisation
+other

@@ -46,9 +46,9 @@ COINr is highly customisable, but equally allows composite indicator constructio
 library(COINr)
 
 # assemble basic composite indicator object from input data
-ASEM <- coin_assemble(data_raw = ASEMIndData,
-                      metad = ASEMIndMeta,
-                      framewk = ASEMAggMeta)
+ASEM <- coin_assemble(IndData = ASEMIndData,
+                      IndMeta = ASEMIndMeta,
+                      AggMeta = ASEMAggMeta)
 # denominate data using specifications in ASEMIndMeta
 ASEM <- coin_denominate(ASEM)
 # normalise data

@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-01-26" />
+<meta name="date" content="2021-02-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -156,7 +156,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="terminology.html"><a href="terminology.html"><i class="fa fa-check"></i><b>3</b> Terminology</a></li>
 <li class="chapter" data-level="4" data-path="data-input.html"><a href="data-input.html"><i class="fa fa-check"></i><b>4</b> Data Input</a></li>
-<li class="chapter" data-level="5" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>5</b> Imputation</a></li>
+<li class="chapter" data-level="5" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>5</b> Imputation</a><ul>
+<li class="chapter" data-level="5.1" data-path="imputation.html"><a href="imputation.html#by-indicators"><i class="fa fa-check"></i><b>5.1</b> By indicators</a></li>
+<li class="chapter" data-level="5.2" data-path="imputation.html"><a href="imputation.html#by-units"><i class="fa fa-check"></i><b>5.2</b> By units</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>6</b> Denomination</a><ul>
 <li class="chapter" data-level="6.1" data-path="denomination.html"><a href="denomination.html#example-one"><i class="fa fa-check"></i><b>6.1</b> Example one</a></li>
 <li class="chapter" data-level="6.2" data-path="denomination.html"><a href="denomination.html#example-two"><i class="fa fa-check"></i><b>6.2</b> Example two</a></li>
@@ -175,6 +178,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>10.3</b> Getting indicators belonging to an aggregation group</a></li>
 <li class="chapter" data-level="10.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>10.4</b> Getting aggregate group data at targeted level</a></li>
 <li class="chapter" data-level="10.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>10.5</b> Use with data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>11</b> Appendix: R Resources</a><ul>
+<li class="chapter" data-level="11.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>11.1</b> Introduction to R</a></li>
+<li class="chapter" data-level="11.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>11.2</b> Advanced resources</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>11.2.1</b> Programming</a></li>
+<li class="chapter" data-level="11.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>11.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="11.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>11.2.3</b> Other</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -198,8 +209,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="imputation" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Imputation</h1>
-<p>Stuff.</p>
+<p>Imputation is the process of estimating missing data points. This can be done in any number of ways, and as usual, the “best” way depends on the problem.</p>
+<div id="by-indicators" class="section level2">
+<h2><span class="header-section-number">5.1</span> By indicators</h2>
+<p>Column-wise imputation means</p>
+</div>
+<div id="by-units" class="section level2">
+<h2><span class="header-section-number">5.2</span> By units</h2>
+<p>A similar but alternative approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here’s some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let’s view the last few rows:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="imputation.html#cb5-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb5-2"><a href="imputation.html#cb5-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
+<span id="cb5-3"><a href="imputation.html#cb5-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<pre><code>##               Country ConSpeed
+## 40              Korea     28.6
+## 41            Lao PDR       NA
+## 42           Malaysia      8.9
+## 43           Mongolia       NA
+## 44            Myanmar       NA
+## 45        New Zealand     14.7
+## 46           Pakistan       NA
+## 47        Philippines      5.5
+## 48 Russian Federation     11.8
+## 49          Singapore     20.3
+## 50           Thailand     16.0
+## 51            Vietnam      9.5</code></pre>
+<p>Using our simple imputation method, we just replace the <code>NA</code> values with the sample mean.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="imputation.html#cb7-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
+<span id="cb7-2"><a href="imputation.html#cb7-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<pre><code>##               Country ConSpeed
+## 40              Korea 28.60000
+## 41            Lao PDR 14.28605
+## 42           Malaysia  8.90000
+## 43           Mongolia 14.28605
+## 44            Myanmar 14.28605
+## 45        New Zealand 14.70000
+## 46           Pakistan 14.28605
+## 47        Philippines  5.50000
+## 48 Russian Federation 11.80000
+## 49          Singapore 20.30000
+## 50           Thailand 16.00000
+## 51            Vietnam  9.50000</code></pre>
 
+</div>
 </div>
             </section>
 
