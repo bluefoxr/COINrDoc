@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-01" />
+<meta name="date" content="2021-02-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -155,7 +155,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#how-to-use-coinr"><i class="fa fa-check"></i><b>2.1</b> How to use COINr</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="terminology.html"><a href="terminology.html"><i class="fa fa-check"></i><b>3</b> Terminology</a></li>
-<li class="chapter" data-level="4" data-path="data-input.html"><a href="data-input.html"><i class="fa fa-check"></i><b>4</b> Data Input</a></li>
+<li class="chapter" data-level="4" data-path="data-input.html"><a href="data-input.html"><i class="fa fa-check"></i><b>4</b> Data Input</a><ul>
+<li class="chapter" data-level="4.1" data-path="data-input.html"><a href="data-input.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="data-input.html"><a href="data-input.html#the-three-inputs"><i class="fa fa-check"></i><b>4.2</b> The three inputs</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="data-input.html"><a href="data-input.html#indicator-data"><i class="fa fa-check"></i><b>4.2.1</b> Indicator data</a></li>
+<li class="chapter" data-level="4.2.2" data-path="data-input.html"><a href="data-input.html#indicator-metadata"><i class="fa fa-check"></i><b>4.2.2</b> Indicator metadata</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>5</b> Imputation</a><ul>
 <li class="chapter" data-level="5.1" data-path="imputation.html"><a href="imputation.html#by-indicators"><i class="fa fa-check"></i><b>5.1</b> By indicators</a></li>
 <li class="chapter" data-level="5.2" data-path="imputation.html"><a href="imputation.html#by-units"><i class="fa fa-check"></i><b>5.2</b> By units</a></li>
@@ -217,9 +223,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="by-units" class="section level2">
 <h2><span class="header-section-number">5.2</span> By units</h2>
 <p>A similar but alternative approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here’s some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let’s view the last few rows:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="imputation.html#cb5-1"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb5-2"><a href="imputation.html#cb5-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
-<span id="cb5-3"><a href="imputation.html#cb5-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="imputation.html#cb7-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb7-2"><a href="imputation.html#cb7-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
+<span id="cb7-3"><a href="imputation.html#cb7-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
 <pre><code>##               Country ConSpeed
 ## 40              Korea     28.6
 ## 41            Lao PDR       NA
@@ -234,8 +240,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 50           Thailand     16.0
 ## 51            Vietnam      9.5</code></pre>
 <p>Using our simple imputation method, we just replace the <code>NA</code> values with the sample mean.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="imputation.html#cb7-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
-<span id="cb7-2"><a href="imputation.html#cb7-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="imputation.html#cb9-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
+<span id="cb9-2"><a href="imputation.html#cb9-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
 <pre><code>##               Country ConSpeed
 ## 40              Korea 28.60000
 ## 41            Lao PDR 14.28605

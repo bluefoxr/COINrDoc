@@ -6,6 +6,10 @@ introduction
 how-to-use-coinr
 terminology
 data-input
+introduction-1
+the-three-inputs
+indicator-data
+indicator-metadata
 imputation
 by-indicators
 by-units
