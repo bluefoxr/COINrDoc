@@ -29,11 +29,11 @@ COINr comes prepackaged with some example data - here we are looking at indicato
 
 The first thing to notice is that each row is an observation (here, a country), and each column is a variable (mostly indicators, but also other things). Look at the structure of the data frame, working from left to right:
 
-* `UnitName` [REQUIRED] gives the name of each unit. Here, units are countries, so these are the names of each country.
-* `UnitCode` [REQUIRED] is a unique code assigned to each unit (country). This is very important, and is the main "reference" inside COINr for units. If your units are countries, I recommend using [ISO Alpha-3 codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3), because these are recognised by COINr for generating maps. It also makes data processing generally easier.
-* `Group_*` [OPTIONAL] Any column name that starts with `Group_` is recognised as a group column rather than an indicator. You don't have to have any groups, but some COINr functions support specific operations on groups (e.g. imputation within group, and future updates plan to expand this capacity). You can have as many group columns as you want.
-* `Year` [OPTIONAL] gives the reference year of the data. This allows you to have multiple years of data, for example, you can have a value for a given country for 2018, and another value for the same country for 2019, and so on. Like groups, this feature is not yet fully developed in COINr.
-* `Den_*`[OPTIONAL] Any column names that begin with `Den_*` are recognised as *denominators*, i.e. indicators that are used to scale other indicators.
+* `UnitName` [**required**] gives the name of each unit. Here, units are countries, so these are the names of each country.
+* `UnitCode` [**required**] is a unique code assigned to each unit (country). This is very important, and is the main "reference" inside COINr for units. If your units are countries, I recommend using [ISO Alpha-3 codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3), because these are recognised by COINr for generating maps. It also makes data processing generally easier.
+* `Group_*` [optional] Any column name that starts with `Group_` is recognised as a group column rather than an indicator. You don't have to have any groups, but some COINr functions support specific operations on groups (e.g. imputation within group, and future updates plan to expand this capacity). You can have as many group columns as you want.
+* `Year` [optional] gives the reference year of the data. This allows you to have multiple years of data, for example, you can have a value for a given country for 2018, and another value for the same country for 2019, and so on. Like groups, this feature is not yet fully developed in COINr.
+* `Den_*`[optional] Any column names that begin with `Den_*` are recognised as *denominators*, i.e. indicators that are used to scale other indicators.
 * Any remaining columns that do not use the names in this list are recognised as indicators.
 
 You will notice that all column (variable/indicator) names use short codes. This is to keep things concise in tables, rough plots etc. The full names of indicators, and other details, are also specified in the indicator metadata table - see the next section.
@@ -48,6 +48,7 @@ Some important rules and tips to keep in mind are:
 * You can have as many indicators and units as you like.
 * Indicator codes and unit codes must have unique names. You can't use the same code twice otherwise bad things will happen.
 * Avoid any accented characters or basically any characters outside of English - this can sometimes cause trouble with encoding.
+* Column names are case-sensitive. Most things in COINr are built to have a degree of flexibility where possible, but *column names need to be written exactly as they appear here for COINr to recognise them*.,
 
 ### Indicator metadata
 
@@ -57,19 +58,38 @@ The second data frame you need to input specifies the *metadata* of each indicat
 head(ASEMIndMeta)
 ```
 
-Notice that now, the table is flipped on its side (transposed), and each row is an indicator, and the columns specify other things. Let's go through them one by one.
+Notice that now, the table is flipped on its side (transposed), and each row is an indicator, and the columns specify other things. This is to keep the data in a "tidy" format. Let's go through the columns one by one.
 
-* `IndName` [REQUIRED]
-* `IndCode`[REQUIRED]
-* `Direction` [REQUIRED]
-* `IndWeight` [REQUIRED??]
-* `Denominator` [REQUIRED??]
-* `IndUnit` [OPTIONAL - TO ADD]
-* `Agg*`
+* `IndName` [**required**] This is the full name of the indicator, which will be used in display plots.
+* `IndCode`[**required**] A reference code for each indicator. These *must be the same codes as specified in the indicator metadata*. The codes must also be unique.
+* `Direction` [**required**] The "direction" of each indicator - this takes values of either 1 or -1 for each indicator. A value of 1 means that higher values of the indicator correspond to higher values of the index, whereas -1 means the opposite.
+* `IndWeight` [**required**] The initial weights assigned to each indicator. Weights are relative and do not need to sum to one, so you can simply put all 1s here if you don't know what else to put (the values can be adjusted later).
+* `Denominator` [**required**??] These should be the indicator codes of one of the denominator variables for each indicator to be denominated. E.g. here "Den_Pop" specifies that the indicator should be denominated by the "Den_Pop" indicators (population, in this case). For any indicators that do not need denominating, just set `NA`. Denominators can also be specified later, so if you want you can leave this column out.
+* `IndUnit` [**optional**] The units of the indicator. This helps for keeping track of what the numbers actually mean, and can be used in plots.
+* `Agg*` [**required**] Any column name that begins with `Agg` is recognised as a column specifying the aggregation group, and therefore the structure of the index. Aggregation columns should be in the order of the aggregation, but otherwise can have arbitrary names.
 
+Let's look at the aggregation columns in a bit more detail. Each column represents a separate aggregation level, so in the ASEM example here we have three aggregation levels - the pillars, the two sub-indexes, and the overall index. The entry of each column specifies which group each indicator falls in. So, the first column `Agg1` specifies the pillar of each indicator. Again, each aggregation group (pillar, sub-index or index) is referenced by a unique code.
 
-The main starting point in COINr is to read in your data. To assemble a composite indicator, COINr needs three different inputs (data frames):
+The next column `Agg2`, gives the sub-index that the indicator belongs to. There is a bit of redundancy here, because obviously indicators in the same pillar must also belong to the same sub-index. Finally, `Agg3` specifies that all indicators belong to the index.
 
-1. Raw indicator data (containing values of indicators for each unit)
-2. Indicator metadata
-3. Aggregation metadata
+You can have as many `Agg` columns as you like, and the names don't have to be `Agg1` etc, but could be e.g. `Agg_Pillar`, `Agg_SubIndex`, etc. However, they *must* begin with `Agg`, otherwise COINr will not recognise them. And they *must* appear in the order of the aggregation, i.e. lowest level of aggregation first, then working upwards.
+
+### Aggregation metadata
+
+The final data input is the aggregation metadata, which is also the simplest. Here's our example for the ASEM data set:
+
+```{r, eval=F}
+head(ASEMAggMeta)
+```
+
+This data frame simply consists of three columns for each aggregation level:
+
+* `*Code` [**required**] The aggregation group codes. This column must end with "Code", and the codes must match the codes in the corresponding column in the indicator metadata aggregation columns.
+* `*Name` [**required**] The aggregation group names. This column must end with "Name".
+* `*Weight` [**required**] The aggregation group weights. This column must end with "Weight". Again, these weights can be changed later on.
+
+Columns must appear in the order of the aggregation groups.
+
+## Putting everything together
+
+Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called `coin_assemble()`.
