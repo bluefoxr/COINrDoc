@@ -92,4 +92,43 @@ Columns must appear in the order of the aggregation groups.
 
 ## Putting everything together
 
-Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called `coin_assemble()`.
+Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called `coin_assemble()`. This function takes the three data frames mentioned and converts them into a so-called *COIN Object*, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let's run `coin_assemble()` using the built-in data sets to show how it works.
+
+```{r, eval=F}
+ASEM <- coin_assemble(IndData = ASEMIndData, IndMeta = ASEMIndMeta, AggMeta = ASEMAggMeta)
+```
+
+The three inputs here are as follows:
+
+* `IndData` which is the indicator data
+* `IndMeta` which is the indicator metadata
+* `AggMeta` which is the aggregation metadata
+
+And this outputs a "COIN Object" which you can name as you want (here we have called it "ASEM"). There are two further arguments to `coin_assemble()` which are not used here, and they are:
+
+* `include` - this is a character vector of indicator codes (i.e. codes that are found in `IndData$IndCode`) which specifies which indicators to include out of the `IndData` and `IndMeta` inputs. By default, all indicators are included, but this gives the option to only include certain indicators, if for example, you have several alternative data sources.
+* `exclude`- this an analogous character vector of indicator codes, but specifying which indicators to *exclude*, if any. Again, by default, nothing is excluded. This may be easier to specify when creating a subset of indicators.
+
+The structure of the list is as follows. First, it is divided into five main sub-lists, which I am going to call "folders":
+
+1. `Input` is the input data, and has the following entries:
+    (a) `IndData` The indicator data, *after* any exclusion of indicators
+    (b) `IndMeta` The indicator metadata, *after* any exclusion of indicators
+    (c) `AggMeta` The aggregation metadata, *after* any exclusion of indicators
+    (d) `Original` A list containing the original, unaltered inputs to `coin_assemble()`
+2. `Data` is where the indicator data sets are stored. As you go through the construction, this will populated with more data sets, e.g. imputed data, treated data, aggregated data, and so on. On first assembly you will only see `Raw` present here.
+3. `Parameters` stores some useful parameters that are used by COINr functions, and may be of general interest, such as the indicator codes, unit codes, weights, and so on.
+4. `Analysis` is where analysis of the indicator data will be stored, including missing data analysis, indicator summary statistics, principal component analysis and so on.
+5. `Method` keeps a record of the methodological decisions made when constructing the composite indicator, for example the normalisation method and parameters, data treatment specifications, and so on. Apart from keeping a record of the construction, this also allows the entire results to be regenerated using the information stored in the COIN Object, this will be explained better in Chapter XXX.
+
+The logic of the COIN object is that COINr functions can take all the data and parameters that they need from it, and you only have to specify some particular parameters of the function. Then, outputs, such as new data sets, are returned back to the COIN object, which is added to and expanded as the analysis progresses.
+
+Apart from building the COIN Object, `coin_assemble()` does a few other things:
+
+* It checks that indicator codes are consistent between indicator data and indicator metadata
+* It checks that required columns, such as indicator codes, are presenr
+* It returns some basic information about the data that was input, such as the number of indicators, the number of units, the number of aggregation levels and the groups in each level. This is done so you can check what you have entered, and that it agrees with your expectations.
+
+## Moving on
+
+Now that you have a COIN Object, you can start using all the other functions in COINr to their full potential. Most functions will still work on standalone data frames, so you don't *need* to work with COIN objects if you prefer not to.

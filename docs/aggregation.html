@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Aggregation | COINr: An R Package for Composite Indicator Development and Analysis</title>
+  <title>Chapter 9 Aggregation | COINr: An R Package for Composite Indicator Development and Analysis</title>
   <meta name="description" content="COINr Documentation" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Aggregation | COINr: An R Package for Composite Indicator Development and Analysis" />
+  <meta property="og:title" content="Chapter 9 Aggregation | COINr: An R Package for Composite Indicator Development and Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Aggregation | COINr: An R Package for Composite Indicator Development and Analysis" />
+  <meta name="twitter:title" content="Chapter 9 Aggregation | COINr: An R Package for Composite Indicator Development and Analysis" />
   
   <meta name="twitter:description" content="COINr Documentation" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-08" />
+<meta name="date" content="2021-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -163,36 +163,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.3" data-path="data-input.html"><a href="data-input.html#aggregation-metadata"><i class="fa fa-check"></i><b>4.2.3</b> Aggregation metadata</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="data-input.html"><a href="data-input.html#putting-everything-together"><i class="fa fa-check"></i><b>4.3</b> Putting everything together</a></li>
+<li class="chapter" data-level="4.4" data-path="data-input.html"><a href="data-input.html#moving-on"><i class="fa fa-check"></i><b>4.4</b> Moving on</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>5</b> Imputation</a><ul>
-<li class="chapter" data-level="5.1" data-path="imputation.html"><a href="imputation.html#by-indicators"><i class="fa fa-check"></i><b>5.1</b> By indicators</a></li>
-<li class="chapter" data-level="5.2" data-path="imputation.html"><a href="imputation.html#by-units"><i class="fa fa-check"></i><b>5.2</b> By units</a></li>
+<li class="chapter" data-level="5" data-path="initial-visualisation.html"><a href="initial-visualisation.html"><i class="fa fa-check"></i><b>5</b> Initial visualisation</a><ul>
+<li class="chapter" data-level="5.1" data-path="initial-visualisation.html"><a href="initial-visualisation.html#structure"><i class="fa fa-check"></i><b>5.1</b> Structure</a></li>
+<li class="chapter" data-level="5.2" data-path="initial-visualisation.html"><a href="initial-visualisation.html#distribution-plotting"><i class="fa fa-check"></i><b>5.2</b> Distribution plotting</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>6</b> Denomination</a><ul>
-<li class="chapter" data-level="6.1" data-path="denomination.html"><a href="denomination.html#example-one"><i class="fa fa-check"></i><b>6.1</b> Example one</a></li>
-<li class="chapter" data-level="6.2" data-path="denomination.html"><a href="denomination.html#example-two"><i class="fa fa-check"></i><b>6.2</b> Example two</a></li>
+<li class="chapter" data-level="6" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>6</b> Imputation</a><ul>
+<li class="chapter" data-level="6.1" data-path="imputation.html"><a href="imputation.html#by-indicators"><i class="fa fa-check"></i><b>6.1</b> By indicators</a></li>
+<li class="chapter" data-level="6.2" data-path="imputation.html"><a href="imputation.html#by-units"><i class="fa fa-check"></i><b>6.2</b> By units</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>7</b> Normalisation</a></li>
-<li class="chapter" data-level="8" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>8</b> Aggregation</a></li>
-<li class="chapter" data-level="9" data-path="weighting.html"><a href="weighting.html"><i class="fa fa-check"></i><b>9</b> Weighting</a><ul>
-<li class="chapter" data-level="9.1" data-path="weighting.html"><a href="weighting.html#approaches-to-weighting"><i class="fa fa-check"></i><b>9.1</b> Approaches to weighting</a></li>
-<li class="chapter" data-level="9.2" data-path="weighting.html"><a href="weighting.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>9.2</b> Interactive re-weighting with ReW8R</a></li>
-<li class="chapter" data-level="9.3" data-path="weighting.html"><a href="weighting.html#automatic-re-weighting"><i class="fa fa-check"></i><b>9.3</b> Automatic re-weighting</a></li>
-<li class="chapter" data-level="9.4" data-path="weighting.html"><a href="weighting.html#manual-re-weighting"><i class="fa fa-check"></i><b>9.4</b> Manual re-weighting</a></li>
+<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a><ul>
+<li class="chapter" data-level="7.1" data-path="denomination.html"><a href="denomination.html#example-one"><i class="fa fa-check"></i><b>7.1</b> Example one</a></li>
+<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#example-two"><i class="fa fa-check"></i><b>7.2</b> Example two</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>10</b> Helper functions</a><ul>
-<li class="chapter" data-level="10.1" data-path="helper-functions.html"><a href="helper-functions.html#getting-a-whole-data-set"><i class="fa fa-check"></i><b>10.1</b> Getting a whole data set</a></li>
-<li class="chapter" data-level="10.2" data-path="helper-functions.html"><a href="helper-functions.html#getting-specific-indicators"><i class="fa fa-check"></i><b>10.2</b> Getting specific indicators</a></li>
-<li class="chapter" data-level="10.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>10.3</b> Getting indicators belonging to an aggregation group</a></li>
-<li class="chapter" data-level="10.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>10.4</b> Getting aggregate group data at targeted level</a></li>
-<li class="chapter" data-level="10.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>10.5</b> Use with data frames</a></li>
+<li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a></li>
+<li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a></li>
+<li class="chapter" data-level="10" data-path="weighting.html"><a href="weighting.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
+<li class="chapter" data-level="10.1" data-path="weighting.html"><a href="weighting.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a></li>
+<li class="chapter" data-level="10.2" data-path="weighting.html"><a href="weighting.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>10.2</b> Interactive re-weighting with ReW8R</a></li>
+<li class="chapter" data-level="10.3" data-path="weighting.html"><a href="weighting.html#automatic-re-weighting"><i class="fa fa-check"></i><b>10.3</b> Automatic re-weighting</a></li>
+<li class="chapter" data-level="10.4" data-path="weighting.html"><a href="weighting.html#manual-re-weighting"><i class="fa fa-check"></i><b>10.4</b> Manual re-weighting</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>11</b> Appendix: R Resources</a><ul>
-<li class="chapter" data-level="11.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>11.1</b> Introduction to R</a></li>
-<li class="chapter" data-level="11.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>11.2</b> Advanced resources</a><ul>
-<li class="chapter" data-level="11.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>11.2.1</b> Programming</a></li>
-<li class="chapter" data-level="11.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>11.2.2</b> Visualisation</a></li>
-<li class="chapter" data-level="11.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>11.2.3</b> Other</a></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a><ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#getting-a-whole-data-set"><i class="fa fa-check"></i><b>11.1</b> Getting a whole data set</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#getting-specific-indicators"><i class="fa fa-check"></i><b>11.2</b> Getting specific indicators</a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>11.3</b> Getting indicators belonging to an aggregation group</a></li>
+<li class="chapter" data-level="11.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>11.4</b> Getting aggregate group data at targeted level</a></li>
+<li class="chapter" data-level="11.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>11.5</b> Use with data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>12</b> Appendix: R Resources</a><ul>
+<li class="chapter" data-level="12.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>12.1</b> Introduction to R</a></li>
+<li class="chapter" data-level="12.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>12.2</b> Advanced resources</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>12.2.1</b> Programming</a></li>
+<li class="chapter" data-level="12.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="12.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>12.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -216,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="aggregation" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Aggregation</h1>
+<h1><span class="header-section-number">Chapter 9</span> Aggregation</h1>
 <p>Stuff.</p>
 
 </div>

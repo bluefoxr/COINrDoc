@@ -12,6 +12,10 @@ indicator-data
 indicator-metadata
 aggregation-metadata
 putting-everything-together
+moving-on
+initial-visualisation
+structure
+distribution-plotting
 imputation
 by-indicators
 by-units
