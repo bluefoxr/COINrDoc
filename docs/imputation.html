@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="initial-visualisation.html"/>
+<link rel="prev" href="initial-visualisation-and-analysis.html"/>
 <link rel="next" href="denomination.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -165,9 +165,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="data-input.html"><a href="data-input.html#putting-everything-together"><i class="fa fa-check"></i><b>4.3</b> Putting everything together</a></li>
 <li class="chapter" data-level="4.4" data-path="data-input.html"><a href="data-input.html#moving-on"><i class="fa fa-check"></i><b>4.4</b> Moving on</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="initial-visualisation.html"><a href="initial-visualisation.html"><i class="fa fa-check"></i><b>5</b> Initial visualisation</a><ul>
-<li class="chapter" data-level="5.1" data-path="initial-visualisation.html"><a href="initial-visualisation.html#structure"><i class="fa fa-check"></i><b>5.1</b> Structure</a></li>
-<li class="chapter" data-level="5.2" data-path="initial-visualisation.html"><a href="initial-visualisation.html#distribution-plotting"><i class="fa fa-check"></i><b>5.2</b> Distribution plotting</a></li>
+<li class="chapter" data-level="5" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>5</b> Initial visualisation and analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#structure"><i class="fa fa-check"></i><b>5.1</b> Structure</a></li>
+<li class="chapter" data-level="5.2" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#indicator-distributions"><i class="fa fa-check"></i><b>5.2</b> Indicator distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#distribution-plotting"><i class="fa fa-check"></i><b>5.3</b> Distribution plotting</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>6</b> Imputation</a><ul>
 <li class="chapter" data-level="6.1" data-path="imputation.html"><a href="imputation.html#by-indicators"><i class="fa fa-check"></i><b>6.1</b> By indicators</a></li>
@@ -200,6 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>12.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>13</b> Acknowledgements</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -230,9 +232,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="by-units" class="section level2">
 <h2><span class="header-section-number">6.2</span> By units</h2>
 <p>A similar but alternative approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here’s some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let’s view the last few rows:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="imputation.html#cb12-1"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb12-2"><a href="imputation.html#cb12-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
-<span id="cb12-3"><a href="imputation.html#cb12-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="imputation.html#cb17-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb17-2"><a href="imputation.html#cb17-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
+<span id="cb17-3"><a href="imputation.html#cb17-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
 <pre><code>##               Country ConSpeed
 ## 40              Korea     28.6
 ## 41            Lao PDR       NA
@@ -247,8 +249,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 50           Thailand     16.0
 ## 51            Vietnam      9.5</code></pre>
 <p>Using our simple imputation method, we just replace the <code>NA</code> values with the sample mean.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="imputation.html#cb14-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
-<span id="cb14-2"><a href="imputation.html#cb14-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="imputation.html#cb19-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
+<span id="cb19-2"><a href="imputation.html#cb19-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
 <pre><code>##               Country ConSpeed
 ## 40              Korea 28.60000
 ## 41            Lao PDR 14.28605
@@ -270,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="initial-visualisation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="initial-visualisation-and-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="denomination.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

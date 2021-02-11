@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="terminology.html"/>
-<link rel="next" href="initial-visualisation.html"/>
+<link rel="next" href="initial-visualisation-and-analysis.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -165,9 +165,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="data-input.html"><a href="data-input.html#putting-everything-together"><i class="fa fa-check"></i><b>4.3</b> Putting everything together</a></li>
 <li class="chapter" data-level="4.4" data-path="data-input.html"><a href="data-input.html#moving-on"><i class="fa fa-check"></i><b>4.4</b> Moving on</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="initial-visualisation.html"><a href="initial-visualisation.html"><i class="fa fa-check"></i><b>5</b> Initial visualisation</a><ul>
-<li class="chapter" data-level="5.1" data-path="initial-visualisation.html"><a href="initial-visualisation.html#structure"><i class="fa fa-check"></i><b>5.1</b> Structure</a></li>
-<li class="chapter" data-level="5.2" data-path="initial-visualisation.html"><a href="initial-visualisation.html#distribution-plotting"><i class="fa fa-check"></i><b>5.2</b> Distribution plotting</a></li>
+<li class="chapter" data-level="5" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>5</b> Initial visualisation and analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#structure"><i class="fa fa-check"></i><b>5.1</b> Structure</a></li>
+<li class="chapter" data-level="5.2" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#indicator-distributions"><i class="fa fa-check"></i><b>5.2</b> Indicator distributions</a></li>
+<li class="chapter" data-level="5.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#distribution-plotting"><i class="fa fa-check"></i><b>5.3</b> Distribution plotting</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>6</b> Imputation</a><ul>
 <li class="chapter" data-level="6.1" data-path="imputation.html"><a href="imputation.html#by-indicators"><i class="fa fa-check"></i><b>6.1</b> By indicators</a></li>
@@ -200,6 +201,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>12.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="13" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>13</b> Acknowledgements</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -271,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>Den_*</code>[optional] Any column names that begin with <code>Den_*</code> are recognised as <em>denominators</em>, i.e. indicators that are used to scale other indicators.</li>
 <li>Any remaining columns that do not use the names in this list are recognised as indicators.</li>
 </ul>
-<p>You will notice that all column (variable/indicator) names use short codes. This is to keep things concise in tables, rough plots etc. The full names of indicators, and other details, are also specified in the indicator metadata table - see the next section.</p>
+<p>You will notice that all column (variable/indicator) names use short codes. This is to keep things concise in tables, rough plots etc. Indicator codes should be short, but informative enough that you know which indicator it refers to (e.g. “Ind1” is not so helpful). In some COINr plots, codes are displayed, so you might want to take that into account. In any case, the full names of indicators, and other details, are also specified in the indicator metadata table - see the next section.</p>
 <p>Some important rules and tips to keep in mind are:</p>
 <ul>
 <li>The following columns are <em>required</em>. All other columns are optional:
@@ -339,8 +341,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="putting-everything-together" class="section level2">
 <h2><span class="header-section-number">4.3</span> Putting everything together</h2>
-<p>Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called <code>coin_assemble()</code>. This function takes the three data frames mentioned and converts them into a so-called <em>COIN Object</em>, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let’s run <code>coin_assemble()</code> using the built-in data sets to show how it works.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-input.html#cb11-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">coin_assemble</span>(<span class="dt">IndData =</span> ASEMIndData, <span class="dt">IndMeta =</span> ASEMIndMeta, <span class="dt">AggMeta =</span> ASEMAggMeta)</span>
+<p>Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called <code>assemble()</code>. This function takes the three data frames mentioned and converts them into a so-called <em>COIN Object</em>, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let’s run <code>assemble()</code> using the built-in data sets to show how it works.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-input.html#cb11-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> ASEMIndData, <span class="dt">IndMeta =</span> ASEMIndMeta, <span class="dt">AggMeta =</span> ASEMAggMeta)</span>
 <span id="cb11-2"><a href="data-input.html#cb11-2"></a><span class="co">## -----------------</span></span>
 <span id="cb11-3"><a href="data-input.html#cb11-3"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
 <span id="cb11-4"><a href="data-input.html#cb11-4"></a><span class="co">## -----------------</span></span>
@@ -363,7 +365,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>IndMeta</code> which is the indicator metadata</li>
 <li><code>AggMeta</code> which is the aggregation metadata</li>
 </ul>
-<p>And this outputs a “COIN Object” which you can name as you want (here we have called it “ASEM”). There are two further arguments to <code>coin_assemble()</code> which are not used here, and they are:</p>
+<p>And this outputs a “COIN Object” which you can name as you want (here we have called it “ASEM”). There are two further arguments to <code>assemble()</code> which are not used here, and they are:</p>
 <ul>
 <li><code>include</code> - this is a character vector of indicator codes (i.e. codes that are found in <code>IndData$IndCode</code>) which specifies which indicators to include out of the <code>IndData</code> and <code>IndMeta</code> inputs. By default, all indicators are included, but this gives the option to only include certain indicators, if for example, you have several alternative data sources.</li>
 <li><code>exclude</code>- this an analogous character vector of indicator codes, but specifying which indicators to <em>exclude</em>, if any. Again, by default, nothing is excluded. This may be easier to specify when creating a subset of indicators.</li>
@@ -375,7 +377,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>IndData</code> The indicator data, <em>after</em> any exclusion of indicators</li>
 <li><code>IndMeta</code> The indicator metadata, <em>after</em> any exclusion of indicators</li>
 <li><code>AggMeta</code> The aggregation metadata, <em>after</em> any exclusion of indicators</li>
-<li><code>Original</code> A list containing the original, unaltered inputs to <code>coin_assemble()</code></li>
+<li><code>Original</code> A list containing the original, unaltered inputs to <code>assemble()</code></li>
 </ol></li>
 <li><code>Data</code> is where the indicator data sets are stored. As you go through the construction, this will populated with more data sets, e.g. imputed data, treated data, aggregated data, and so on. On first assembly you will only see <code>Raw</code> present here.</li>
 <li><code>Parameters</code> stores some useful parameters that are used by COINr functions, and may be of general interest, such as the indicator codes, unit codes, weights, and so on.</li>
@@ -383,7 +385,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>Method</code> keeps a record of the methodological decisions made when constructing the composite indicator, for example the normalisation method and parameters, data treatment specifications, and so on. Apart from keeping a record of the construction, this also allows the entire results to be regenerated using the information stored in the COIN Object, this will be explained better in Chapter XXX.</li>
 </ol>
 <p>The logic of the COIN object is that COINr functions can take all the data and parameters that they need from it, and you only have to specify some particular parameters of the function. Then, outputs, such as new data sets, are returned back to the COIN object, which is added to and expanded as the analysis progresses.</p>
-<p>Apart from building the COIN Object, <code>coin_assemble()</code> does a few other things:</p>
+<p>Apart from building the COIN Object, <code>assemble()</code> does a few other things:</p>
 <ul>
 <li>It checks that indicator codes are consistent between indicator data and indicator metadata</li>
 <li>It checks that required columns, such as indicator codes, are presenr</li>
@@ -402,7 +404,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="terminology.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="initial-visualisation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="initial-visualisation-and-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

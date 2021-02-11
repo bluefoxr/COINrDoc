@@ -46,9 +46,9 @@ COINr is highly customisable, but equally allows composite indicator constructio
 library(COINr)
 
 # assemble basic composite indicator object from input data
-ASEM <- coin_assemble(IndData = ASEMIndData,
-                      IndMeta = ASEMIndMeta,
-                      AggMeta = ASEMAggMeta)
+ASEM <- assemble(IndData = ASEMIndData,
+                 IndMeta = ASEMIndMeta,
+                 AggMeta = ASEMAggMeta)
 # denominate data using specifications in ASEMIndMeta
 ASEM <- coin_denominate(ASEM)
 # normalise data
@@ -61,7 +61,7 @@ ASEM <- coin_aggregate(ASEM, dset = "Normalised")
 At this point, the dashboard for viewing the results interactively is still under development. Still, we can view a number of things. First, we may want to see the index structure:
 
 ```{r, warning=F, message=F}
-coin_plotframework(ASEM)
+plotframework(ASEM)
 ```
 
 This is an interactive "HTML widget" which can be embedded into HTML documents (such as this page). We can also analyse indicator statistics:
@@ -69,7 +69,7 @@ This is an interactive "HTML widget" which can be embedded into HTML documents (
 ```{r, warning=F, message=F}
 library(reactable)
 library(magrittr)
-ASEM <- coin_preanalyse(ASEM, dset = "Raw")
+ASEM <- getStats(ASEM, dset = "Raw")
 ASEM$Analysis$Raw$StatTable %>%
   reactable::reactable(defaultPageSize = 5, highlight = TRUE, wrap = F)
 ```

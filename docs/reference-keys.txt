@@ -13,8 +13,9 @@ indicator-metadata
 aggregation-metadata
 putting-everything-together
 moving-on
-initial-visualisation
+initial-visualisation-and-analysis
 structure
+indicator-distributions
 distribution-plotting
 imputation
 by-indicators
@@ -41,3 +42,4 @@ advanced-resources
 programming
 visualisation
 other
+acknowledgements

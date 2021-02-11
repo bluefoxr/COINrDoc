@@ -36,7 +36,7 @@ The first thing to notice is that each row is an observation (here, a country), 
 * `Den_*`[optional] Any column names that begin with `Den_*` are recognised as *denominators*, i.e. indicators that are used to scale other indicators.
 * Any remaining columns that do not use the names in this list are recognised as indicators.
 
-You will notice that all column (variable/indicator) names use short codes. This is to keep things concise in tables, rough plots etc. The full names of indicators, and other details, are also specified in the indicator metadata table - see the next section.
+You will notice that all column (variable/indicator) names use short codes. This is to keep things concise in tables, rough plots etc. Indicator codes should be short, but informative enough that you know which indicator it refers to (e.g. "Ind1" is not so helpful). In some COINr plots, codes are displayed, so you might want to take that into account. In any case, the full names of indicators, and other details, are also specified in the indicator metadata table - see the next section.
 
 Some important rules and tips to keep in mind are:
 
@@ -92,10 +92,10 @@ Columns must appear in the order of the aggregation groups.
 
 ## Putting everything together
 
-Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called `coin_assemble()`. This function takes the three data frames mentioned and converts them into a so-called *COIN Object*, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let's run `coin_assemble()` using the built-in data sets to show how it works.
+Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called `assemble()`. This function takes the three data frames mentioned and converts them into a so-called *COIN Object*, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let's run `assemble()` using the built-in data sets to show how it works.
 
 ```{r,collapse=T}
-ASEM <- coin_assemble(IndData = ASEMIndData, IndMeta = ASEMIndMeta, AggMeta = ASEMAggMeta)
+ASEM <- assemble(IndData = ASEMIndData, IndMeta = ASEMIndMeta, AggMeta = ASEMAggMeta)
 ```
 
 The three inputs here are as follows:
@@ -104,7 +104,7 @@ The three inputs here are as follows:
 * `IndMeta` which is the indicator metadata
 * `AggMeta` which is the aggregation metadata
 
-And this outputs a "COIN Object" which you can name as you want (here we have called it "ASEM"). There are two further arguments to `coin_assemble()` which are not used here, and they are:
+And this outputs a "COIN Object" which you can name as you want (here we have called it "ASEM"). There are two further arguments to `assemble()` which are not used here, and they are:
 
 * `include` - this is a character vector of indicator codes (i.e. codes that are found in `IndData$IndCode`) which specifies which indicators to include out of the `IndData` and `IndMeta` inputs. By default, all indicators are included, but this gives the option to only include certain indicators, if for example, you have several alternative data sources.
 * `exclude`- this an analogous character vector of indicator codes, but specifying which indicators to *exclude*, if any. Again, by default, nothing is excluded. This may be easier to specify when creating a subset of indicators.
@@ -115,7 +115,7 @@ The structure of the list is as follows. First, it is divided into five main sub
     (a) `IndData` The indicator data, *after* any exclusion of indicators
     (b) `IndMeta` The indicator metadata, *after* any exclusion of indicators
     (c) `AggMeta` The aggregation metadata, *after* any exclusion of indicators
-    (d) `Original` A list containing the original, unaltered inputs to `coin_assemble()`
+    (d) `Original` A list containing the original, unaltered inputs to `assemble()`
 2. `Data` is where the indicator data sets are stored. As you go through the construction, this will populated with more data sets, e.g. imputed data, treated data, aggregated data, and so on. On first assembly you will only see `Raw` present here.
 3. `Parameters` stores some useful parameters that are used by COINr functions, and may be of general interest, such as the indicator codes, unit codes, weights, and so on.
 4. `Analysis` is where analysis of the indicator data will be stored, including missing data analysis, indicator summary statistics, principal component analysis and so on.
@@ -123,7 +123,7 @@ The structure of the list is as follows. First, it is divided into five main sub
 
 The logic of the COIN object is that COINr functions can take all the data and parameters that they need from it, and you only have to specify some particular parameters of the function. Then, outputs, such as new data sets, are returned back to the COIN object, which is added to and expanded as the analysis progresses.
 
-Apart from building the COIN Object, `coin_assemble()` does a few other things:
+Apart from building the COIN Object, `assemble()` does a few other things:
 
 * It checks that indicator codes are consistent between indicator data and indicator metadata
 * It checks that required columns, such as indicator codes, are presenr

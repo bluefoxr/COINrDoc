@@ -1,0 +1,9 @@
+# Acknowledgements
+
+COINr, like all R packages, has been built off of the back of many other packages. Some that COINr uses in particular are:
+
+* Plotly, for beautiful javascript plots
+* ggplot2, for beautiful static plots
+* reactable, for nice interactive tables
+* shiny, for apps
+* Various elements of the tidyverse, particularly dplyr
