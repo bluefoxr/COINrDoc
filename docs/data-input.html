@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-10" />
+<meta name="date" content="2021-02-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -241,6 +241,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The indicator data is a data frame which, shockingly, specifies the data for the indicators. However, it can do more than that, and also some rules have to be followed. The easiest way to explain is to start with an example.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="data-input.html#cb5-1"></a><span class="kw">library</span>(COINr)</span>
 <span id="cb5-2"><a href="data-input.html#cb5-2"></a><span class="kw">head</span>(ASEMIndData)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 60
+##   UnitName UnitCode Group_GDP Group_GDPpc Group_Pop Group_EurAsia  Year Den_Area
+##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Austria  AUT      L         XL          M         Europe         2018    83871
+## 2 Belgium  BEL      L         L           L         Europe         2018    30528
+## 3 Bulgaria BGR      S         S           M         Europe         2018   110879
+## 4 Croatia  HRV      S         M           S         Europe         2018    56594
+## 5 Cyprus   CYP      S         L           S         Europe         2018     9251
+## 6 Czech R~ CZE      M         L           M         Europe         2018    78867
+## # ... with 52 more variables: Den_Energy &lt;dbl&gt;, Den_GDP &lt;dbl&gt;, Den_Pop &lt;dbl&gt;,
+## #   LPI &lt;dbl&gt;, Flights &lt;dbl&gt;, Ship &lt;dbl&gt;, Bord &lt;dbl&gt;, Elec &lt;dbl&gt;, Gas &lt;dbl&gt;,
+## #   ConSpeed &lt;dbl&gt;, Cov4G &lt;dbl&gt;, Goods &lt;dbl&gt;, Services &lt;dbl&gt;, FDI &lt;dbl&gt;,
+## #   PRemit &lt;dbl&gt;, ForPort &lt;dbl&gt;, Embs &lt;dbl&gt;, IGOs &lt;dbl&gt;, UNVote &lt;dbl&gt;,
+## #   CostImpEx &lt;dbl&gt;, Tariff &lt;dbl&gt;, TBTs &lt;dbl&gt;, TIRcon &lt;dbl&gt;, RTAs &lt;dbl&gt;,
+## #   Visa &lt;dbl&gt;, StMob &lt;dbl&gt;, Research &lt;dbl&gt;, Pat &lt;dbl&gt;, CultServ &lt;dbl&gt;,
+## #   CultGood &lt;dbl&gt;, Tourist &lt;dbl&gt;, MigStock &lt;dbl&gt;, Lang &lt;dbl&gt;, Renew &lt;dbl&gt;,
+## #   PrimEner &lt;dbl&gt;, CO2 &lt;dbl&gt;, MatCon &lt;dbl&gt;, Forest &lt;dbl&gt;, Poverty &lt;dbl&gt;,
+## #   Palma &lt;dbl&gt;, TertGrad &lt;dbl&gt;, FreePress &lt;dbl&gt;, TolMin &lt;dbl&gt;, NGOs &lt;dbl&gt;,
+## #   CPI &lt;dbl&gt;, FemLab &lt;dbl&gt;, WomParl &lt;dbl&gt;, PubDebt &lt;dbl&gt;, PrivDebt &lt;dbl&gt;,
+## #   GDPGrow &lt;dbl&gt;, RDExp &lt;dbl&gt;, NEET &lt;dbl&gt;</code></pre>
 <p>COINr comes prepackaged with some example data - here we are looking at indicator data from the <a href="https://composite-indicators.jrc.ec.europa.eu/asem-sustainable-connectivity/">ASEM Sustainable Connectivity Portal</a>, which has an indicator data set covering 51 Asian and European countries.</p>
 <p>The first thing to notice is that each row is an observation (here, a country), and each column is a variable (mostly indicators, but also other things). Look at the structure of the data frame, working from left to right:</p>
 <ul>
@@ -270,7 +290,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="indicator-metadata" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Indicator metadata</h3>
 <p>The second data frame you need to input specifies the <em>metadata</em> of each indicator. This serves two purposes: first, to give details about each indicator, such as its name, its units and so on; and second, to specify the structure of the index. Here’s what this looks like, for our example ASEM data set:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-input.html#cb6-1"></a><span class="kw">head</span>(ASEMIndMeta)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data-input.html#cb7-1"></a><span class="kw">head</span>(ASEMIndMeta)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 8
+##   IndName             IndCode Direction IndWeight Denominator Agg1   Agg2  Agg3 
+##   &lt;chr&gt;               &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;
+## 1 Logistics Performa~ LPI             1         1 &lt;NA&gt;        Physi~ Conn  Index
+## 2 International flig~ Flights         1         1 Den_Pop     Physi~ Conn  Index
+## 3 Liner Shipping Con~ Ship            1         1 &lt;NA&gt;        Physi~ Conn  Index
+## 4 Border crossings    Bord            1         1 Den_Area    Physi~ Conn  Index
+## 5 Trade in electrici~ Elec            1         1 Den_Energy  Physi~ Conn  Index
+## 6 Trade in gas        Gas             1         1 Den_Energy  Physi~ Conn  Index</code></pre>
 <p>Notice that now, the table is flipped on its side (transposed), and each row is an indicator, and the columns specify other things. This is to keep the data in a “tidy” format. Let’s go through the columns one by one.</p>
 <ul>
 <li><code>IndName</code> [<strong>required</strong>] This is the full name of the indicator, which will be used in display plots.</li>
@@ -288,7 +317,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="aggregation-metadata" class="section level3">
 <h3><span class="header-section-number">4.2.3</span> Aggregation metadata</h3>
 <p>The final data input is the aggregation metadata, which is also the simplest. Here’s our example for the ASEM data set:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="data-input.html#cb7-1"></a><span class="kw">head</span>(ASEMAggMeta)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="data-input.html#cb9-1"></a><span class="kw">head</span>(ASEMAggMeta)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 9
+##   Agg1Code Agg1Name Agg1Weight Agg2Code Agg2Name Agg2Weight Agg3Code Agg3Name
+##   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+## 1 Physical Physical          1 Conn     Connect~          1 Index    Sustain~
+## 2 ConEcFin Economi~          1 Sust     Sustain~          1 &lt;NA&gt;     &lt;NA&gt;    
+## 3 Politic~ Politic~          1 &lt;NA&gt;     &lt;NA&gt;             NA &lt;NA&gt;     &lt;NA&gt;    
+## 4 Instit   Institu~          1 &lt;NA&gt;     &lt;NA&gt;             NA &lt;NA&gt;     &lt;NA&gt;    
+## 5 P2P      People ~          1 &lt;NA&gt;     &lt;NA&gt;             NA &lt;NA&gt;     &lt;NA&gt;    
+## 6 Environ  Environ~          1 &lt;NA&gt;     &lt;NA&gt;             NA &lt;NA&gt;     &lt;NA&gt;    
+## # ... with 1 more variable: Agg3Weight &lt;dbl&gt;</code></pre>
 <p>This data frame simply consists of three columns for each aggregation level:</p>
 <ul>
 <li><code>*Code</code> [<strong>required</strong>] The aggregation group codes. This column must end with “Code”, and the codes must match the codes in the corresponding column in the indicator metadata aggregation columns.</li>
@@ -301,7 +340,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="putting-everything-together" class="section level2">
 <h2><span class="header-section-number">4.3</span> Putting everything together</h2>
 <p>Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called <code>coin_assemble()</code>. This function takes the three data frames mentioned and converts them into a so-called <em>COIN Object</em>, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let’s run <code>coin_assemble()</code> using the built-in data sets to show how it works.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-input.html#cb8-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">coin_assemble</span>(<span class="dt">IndData =</span> ASEMIndData, <span class="dt">IndMeta =</span> ASEMIndMeta, <span class="dt">AggMeta =</span> ASEMAggMeta)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="data-input.html#cb11-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">coin_assemble</span>(<span class="dt">IndData =</span> ASEMIndData, <span class="dt">IndMeta =</span> ASEMIndMeta, <span class="dt">AggMeta =</span> ASEMAggMeta)</span>
+<span id="cb11-2"><a href="data-input.html#cb11-2"></a><span class="co">## -----------------</span></span>
+<span id="cb11-3"><a href="data-input.html#cb11-3"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb11-4"><a href="data-input.html#cb11-4"></a><span class="co">## -----------------</span></span>
+<span id="cb11-5"><a href="data-input.html#cb11-5"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb11-6"><a href="data-input.html#cb11-6"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb11-7"><a href="data-input.html#cb11-7"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb11-8"><a href="data-input.html#cb11-8"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb11-9"><a href="data-input.html#cb11-9"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb11-10"><a href="data-input.html#cb11-10"></a><span class="co">## -----------------</span></span>
+<span id="cb11-11"><a href="data-input.html#cb11-11"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb11-12"><a href="data-input.html#cb11-12"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb11-13"><a href="data-input.html#cb11-13"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb11-14"><a href="data-input.html#cb11-14"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb11-15"><a href="data-input.html#cb11-15"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb11-16"><a href="data-input.html#cb11-16"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb11-17"><a href="data-input.html#cb11-17"></a><span class="co">## -----------------</span></span></code></pre></div>
 <p>The three inputs here are as follows:</p>
 <ul>
 <li><code>IndData</code> which is the indicator data</li>

@@ -20,7 +20,7 @@ To build a COIN object, three ingredients (data frames) are needed to begin with
 
 The indicator data is a data frame which, shockingly, specifies the data for the indicators. However, it can do more than that, and also some rules have to be followed. The easiest way to explain is to start with an example.
 
-```{r, eval=F}
+```{r}
 library(COINr)
 head(ASEMIndData)
 ```
@@ -54,7 +54,7 @@ Some important rules and tips to keep in mind are:
 
 The second data frame you need to input specifies the *metadata* of each indicator. This serves two purposes: first, to give details about each indicator, such as its name, its units and so on; and second, to specify the structure of the index. Here's what this looks like, for our example ASEM data set:
 
-```{r, eval=F}
+```{r}
 head(ASEMIndMeta)
 ```
 
@@ -78,7 +78,7 @@ You can have as many `Agg` columns as you like, and the names don't have to be `
 
 The final data input is the aggregation metadata, which is also the simplest. Here's our example for the ASEM data set:
 
-```{r, eval=F}
+```{r}
 head(ASEMAggMeta)
 ```
 
@@ -94,7 +94,7 @@ Columns must appear in the order of the aggregation groups.
 
 Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called `coin_assemble()`. This function takes the three data frames mentioned and converts them into a so-called *COIN Object*, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let's run `coin_assemble()` using the built-in data sets to show how it works.
 
-```{r, eval=F}
+```{r,collapse=T}
 ASEM <- coin_assemble(IndData = ASEMIndData, IndMeta = ASEMIndMeta, AggMeta = ASEMAggMeta)
 ```
 

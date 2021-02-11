@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-10" />
+<meta name="date" content="2021-02-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -230,9 +230,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="by-units" class="section level2">
 <h2><span class="header-section-number">6.2</span> By units</h2>
 <p>A similar but alternative approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here’s some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let’s view the last few rows:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="imputation.html#cb9-1"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb9-2"><a href="imputation.html#cb9-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
-<span id="cb9-3"><a href="imputation.html#cb9-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="imputation.html#cb12-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb12-2"><a href="imputation.html#cb12-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
+<span id="cb12-3"><a href="imputation.html#cb12-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
 <pre><code>##               Country ConSpeed
 ## 40              Korea     28.6
 ## 41            Lao PDR       NA
@@ -247,8 +247,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 50           Thailand     16.0
 ## 51            Vietnam      9.5</code></pre>
 <p>Using our simple imputation method, we just replace the <code>NA</code> values with the sample mean.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="imputation.html#cb11-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
-<span id="cb11-2"><a href="imputation.html#cb11-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="imputation.html#cb14-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
+<span id="cb14-2"><a href="imputation.html#cb14-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
 <pre><code>##               Country ConSpeed
 ## 40              Korea 28.60000
 ## 41            Lao PDR 14.28605
