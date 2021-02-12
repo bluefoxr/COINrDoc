@@ -17,6 +17,7 @@ initial-visualisation-and-analysis
 structure
 distributions
 ranks-and-maps
+statistics-and-analysis
 imputation
 by-indicators
 by-units
@@ -34,11 +35,13 @@ interactive-re-weighting-with-rew8r
 automatic-re-weighting
 manual-re-weighting
 helper-functions
+selecting-data-sets-and-indicators
 getting-a-whole-data-set
 getting-specific-indicators
 getting-indicators-belonging-to-an-aggregation-group
 getting-aggregate-group-data-at-targeted-level
 use-with-data-frames
+rounding-data-frames
 appendix-r-resources
 introduction-to-r
 advanced-resources

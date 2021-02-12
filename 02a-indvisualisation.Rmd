@@ -78,3 +78,19 @@ iplotMap(ASEM, dset = "Raw", isel = "Embs")
 Note that this only works if `IndData$UnitCode` correspond to ISO alpha-3 country codes. If you want to do some more sophisticated mapping R, Plotly has [many mapping options](https://plotly.com/r/maps/), but R in general has all kinds of mapping packages, you just have to search for them. COINr uses Plotly maps to keep things simple and to not depend on too many packages.
 
 COINr has yet more tools to plot data, but let's leave it at that for the moment. Other tools will be introduced in other chapters.
+
+## Statistics and analysis
+
+Aside from plots, COINr gives a fairly detailed statistical analysis of initial indicator data. The function `getStats()` returns a series of statistics which can be aimed at any of the data sets in the `.$Data` folder. You can also specify if you want the output to be returned back to the COIN, or to a separate list.
+
+```{r, collapse=T}
+# get stats
+ASEM <- getStats(ASEM, dset = "Raw", out2 = "COIN")
+
+# display in table using Reactable
+# (note the use of helper function roundDF() to round the values to a sensible number of decimals)
+ASEM$Analysis$Raw$StatTable %>% roundDF() %>%
+reactable::reactable(resizable = TRUE, bordered = TRUE, highlight = TRUE, defaultPageSize = 10)
+```
+
+The columns of this table give all kind of information from max, min, standard deviation, etc, to the presence of outliers and amount of missing data.
