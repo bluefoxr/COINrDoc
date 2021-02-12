@@ -26,7 +26,7 @@ COINr is currently under development, but a very limited very beta version can b
 devtools::install_github("bluefoxr/COINr")
 ```
 
-This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also try to skip this step.
+This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also skip this step.
 
 ## What's it for?
 
