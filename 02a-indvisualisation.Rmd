@@ -94,3 +94,11 @@ reactable::reactable(resizable = TRUE, bordered = TRUE, highlight = TRUE, defaul
 ```
 
 The columns of this table give all kind of information from max, min, standard deviation, etc, to the presence of outliers and amount of missing data.
+
+Apart from the overall statistics for each indicator, `getStats` also returns a few other things:
+
+* `.$Outliers`, which flags individual outlying points using the relation to the interquartile range
+* `.$Correlations`, which gives a correlation matrix between all indicators in the data set
+* `.$DenomCorrelations`, which gives the correlations between indicators and any denominators
+
+Each of these aspects will be explained in more detail in later chapters (**to add which**), so for the moment it is enough to mention that they exist.
