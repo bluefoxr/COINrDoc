@@ -14,7 +14,7 @@ The COINrverse approach enables the full feature set of COINr, because some func
 
 More details on how the COINrverse works can be found in XXX.
 
-# Terminology
+## Terminology
 
 Let's clearly define a few terms first to avoid confusion later on.
 

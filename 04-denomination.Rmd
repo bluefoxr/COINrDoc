@@ -1,7 +1,64 @@
 # Denomination
 
-Some _significant_ applications are demonstrated in this chapter.
+The first section here gives a bit of introduction to the concept of denomination. If you just want to know how to denominate in COINr, skip to the section on [Denominating in COINr].
 
-## Example one
+## Concept
+
+*Denomination* refers to the operation of dividing one indicator by another. But why should we do that?
+
+As anyone who has ever looked at a map will know, countries come in all different sizes. The problem is that many indicators, on their own, are strongly linked to the size of the country. That means that if we compare countries using these indicators directly, we will often get a ranking that has roughly the biggest countries at the top, and the smallest countries at the bottom.
+
+To take an example, let's examine some indicators in the ASEM data set, and introduce another plotting function in the process.
+
+```{r, warning=F, message=F}
+# load COINr package
+library(COINr)
+library(magrittr) # for pipe operations
+# build ASEM index
+ASEM <- build_ASEM()
+# plot international trade in goods against GDP
+iplotIndDist2(ASEM, dsets = c("Denominators", "Raw"), inames = c("Den_GDP", "Goods"))
+# (note: need to fix labelling and units of denominators)
+```
+
+The function `iplotIndDist2()` is similar to `iplotIndDist()` but allows plotting two indicators against each other. You can pick any indicator from any data set for each, including denominators.
+
+What are these "denominators" anyway? Denominators are indicators that are used to scale other indicators, in order to remove the "size effect". Typically, they are those related to physical or economic size, including GDP, population, land area and so on.
+
+Anyway, looking at the plot above, it is clear that that countries with a higher GDP have a higher international trade in international goods (e.g. Germany, China, UK, Japan, France), which is not very surprising. The problem comes when we want to include this indicator as a measure of connectivity: on its own, trade in goods simply summarises having a large economy. What is more interesting, is to measure international trade *per unit GDP*, and this is done by dividing (i.e. **denominating**) the international trade of each country by its GDP. Let's do that manually here and see what we get.
+
+```{r}
+# divide trade by GDP
+tradeperGDP <- ASEM$Data$Raw$Goods/ASEM$Input$Denominators$Den_GDP
+# bar chart: add unit names first
+iplotBar(data.frame(UnitCode=ASEM$Parameters$UnitCodes, TradePerGDP = tradeperGDP))
+```
+
+Now the picture is completely different - small countries like Slovakia, Czech Republic and Singapore have the highest values.
+
+The rankings here are completely different because the meanings of these two measures are completely different. Denomination is in fact a nonlinear transformation, because every value is divided by a different value (each country is divided by its own unique GDP, in this case). That doesn't mean that denominated indicators are suddenly more "right" than the before their denomination, however. Trade per GDP is a useful measure of how much a country's economy is dependent on international trade, but in terms of economic power, it might not be meaningful to scale by GDP. In summary, it is important to consider the meaning of the indicator compared to what you want to actually measure.
+
+More precisely, indicators can be thought of as either *intensive* or *extensive* variables. Intensive variables are not (or only weakly) related to the size of the country, and allow "fair" comparisons between countries of different sizes. Extensive variables, on the contrary, are strongly related to the size of the country.
+
+This distinction is well known in physics, for example. Mass is related to the size of the object and is an extensive variable. If we take a block of steel, and double its size (volume), we also double its mass. Density, which is mass per unit volume, is an intensive quantity: if we double the size of the block, the density remains the same.
+
+* An example of an extensive variable is population. Bigger countries tend to have bigger populations.
+* An example of an intensive variable is population density. This is no longer dependent on the physical size of the country.
+
+The summary here is that an **extensive** variable becomes an **intensive** variable when we divide it by a **denominator**.
+
+## Denominating in COINr
+
+Denomination is fairly simple to do in R, it's just dividing one vector by another. Nevertheless, COINr has a dedicated function for denominating which makes life easier and helps you to track what you have done.
+
+Before we get to that, it's worth mentioning that COINr has a few built-in denominators sourced from the World Bank. They can be called as follows:
+
+```{r}
+head(WorldDenoms)
+```
+
+and the metadata can be found by calling `?WorldDenoms`. Data here is the latest available as of February 2021 and I would recommend using these only for exploration, then updating your data yourself.
+
+To denominate your indicators in COINr, the function to call is `denominate()`
 
 ## Example two

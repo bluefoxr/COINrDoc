@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 12 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis</title>
+  <title>Chapter 11 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis</title>
   <meta name="description" content="COINr Documentation" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 12 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis" />
+  <meta property="og:title" content="Chapter 11 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 12 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis" />
+  <meta name="twitter:title" content="Chapter 11 Helper functions | COINr: An R Package for Composite Indicator Development and Analysis" />
   
   <meta name="twitter:description" content="COINr Documentation" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-12" />
+<meta name="date" content="2021-02-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -153,63 +153,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#how-to-use-coinr"><i class="fa fa-check"></i><b>2.1</b> How to use COINr</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.2</b> Terminology</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="terminology.html"><a href="terminology.html"><i class="fa fa-check"></i><b>3</b> Terminology</a></li>
-<li class="chapter" data-level="4" data-path="data-input.html"><a href="data-input.html"><i class="fa fa-check"></i><b>4</b> Data Input</a><ul>
-<li class="chapter" data-level="4.1" data-path="data-input.html"><a href="data-input.html#introduction-1"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
-<li class="chapter" data-level="4.2" data-path="data-input.html"><a href="data-input.html#the-three-inputs"><i class="fa fa-check"></i><b>4.2</b> The three inputs</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="data-input.html"><a href="data-input.html#indicator-data"><i class="fa fa-check"></i><b>4.2.1</b> Indicator data</a></li>
-<li class="chapter" data-level="4.2.2" data-path="data-input.html"><a href="data-input.html#indicator-metadata"><i class="fa fa-check"></i><b>4.2.2</b> Indicator metadata</a></li>
-<li class="chapter" data-level="4.2.3" data-path="data-input.html"><a href="data-input.html#aggregation-metadata"><i class="fa fa-check"></i><b>4.2.3</b> Aggregation metadata</a></li>
+<li class="chapter" data-level="3" data-path="data-input.html"><a href="data-input.html"><i class="fa fa-check"></i><b>3</b> Data Input</a><ul>
+<li class="chapter" data-level="3.1" data-path="data-input.html"><a href="data-input.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="data-input.html"><a href="data-input.html#the-three-inputs"><i class="fa fa-check"></i><b>3.2</b> The three inputs</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="data-input.html"><a href="data-input.html#indicator-data"><i class="fa fa-check"></i><b>3.2.1</b> Indicator data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data-input.html"><a href="data-input.html#indicator-metadata"><i class="fa fa-check"></i><b>3.2.2</b> Indicator metadata</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data-input.html"><a href="data-input.html#aggregation-metadata"><i class="fa fa-check"></i><b>3.2.3</b> Aggregation metadata</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="data-input.html"><a href="data-input.html#putting-everything-together"><i class="fa fa-check"></i><b>4.3</b> Putting everything together</a></li>
-<li class="chapter" data-level="4.4" data-path="data-input.html"><a href="data-input.html#moving-on"><i class="fa fa-check"></i><b>4.4</b> Moving on</a></li>
+<li class="chapter" data-level="3.3" data-path="data-input.html"><a href="data-input.html#putting-everything-together"><i class="fa fa-check"></i><b>3.3</b> Putting everything together</a></li>
+<li class="chapter" data-level="3.4" data-path="data-input.html"><a href="data-input.html#moving-on"><i class="fa fa-check"></i><b>3.4</b> Moving on</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>5</b> Initial visualisation and analysis</a><ul>
-<li class="chapter" data-level="5.1" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#structure"><i class="fa fa-check"></i><b>5.1</b> Structure</a></li>
-<li class="chapter" data-level="5.2" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#distributions"><i class="fa fa-check"></i><b>5.2</b> Distributions</a></li>
-<li class="chapter" data-level="5.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>5.3</b> Ranks and Maps</a></li>
-<li class="chapter" data-level="5.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>5.4</b> Statistics and analysis</a></li>
+<li class="chapter" data-level="4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>4</b> Initial visualisation and analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#structure"><i class="fa fa-check"></i><b>4.1</b> Structure</a></li>
+<li class="chapter" data-level="4.2" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#distributions"><i class="fa fa-check"></i><b>4.2</b> Distributions</a></li>
+<li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
+<li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>6</b> Imputation</a><ul>
-<li class="chapter" data-level="6.1" data-path="imputation.html"><a href="imputation.html#by-indicators"><i class="fa fa-check"></i><b>6.1</b> By indicators</a></li>
-<li class="chapter" data-level="6.2" data-path="imputation.html"><a href="imputation.html#by-units"><i class="fa fa-check"></i><b>6.2</b> By units</a></li>
+<li class="chapter" data-level="5" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>5</b> Imputation</a><ul>
+<li class="chapter" data-level="5.1" data-path="imputation.html"><a href="imputation.html#by-indicators"><i class="fa fa-check"></i><b>5.1</b> By indicators</a></li>
+<li class="chapter" data-level="5.2" data-path="imputation.html"><a href="imputation.html#by-units"><i class="fa fa-check"></i><b>5.2</b> By units</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a><ul>
-<li class="chapter" data-level="7.1" data-path="denomination.html"><a href="denomination.html#example-one"><i class="fa fa-check"></i><b>7.1</b> Example one</a></li>
-<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#example-two"><i class="fa fa-check"></i><b>7.2</b> Example two</a></li>
+<li class="chapter" data-level="6" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>6</b> Denomination</a><ul>
+<li class="chapter" data-level="6.1" data-path="denomination.html"><a href="denomination.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
+<li class="chapter" data-level="6.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>6.2</b> Denominating in COINr</a></li>
+<li class="chapter" data-level="6.3" data-path="denomination.html"><a href="denomination.html#example-two"><i class="fa fa-check"></i><b>6.3</b> Example two</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>8</b> Data Treatment</a><ul>
-<li class="chapter" data-level="8.1" data-path="data-treatment.html"><a href="data-treatment.html#example-one-1"><i class="fa fa-check"></i><b>8.1</b> Example one</a></li>
-<li class="chapter" data-level="8.2" data-path="data-treatment.html"><a href="data-treatment.html#example-two-1"><i class="fa fa-check"></i><b>8.2</b> Example two</a></li>
+<li class="chapter" data-level="7" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>7</b> Data Treatment</a><ul>
+<li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#example-one"><i class="fa fa-check"></i><b>7.1</b> Example one</a></li>
+<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#example-two-1"><i class="fa fa-check"></i><b>7.2</b> Example two</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>9</b> Normalisation</a></li>
-<li class="chapter" data-level="10" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>10</b> Aggregation</a></li>
-<li class="chapter" data-level="11" data-path="weighting.html"><a href="weighting.html"><i class="fa fa-check"></i><b>11</b> Weighting</a><ul>
-<li class="chapter" data-level="11.1" data-path="weighting.html"><a href="weighting.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a></li>
-<li class="chapter" data-level="11.2" data-path="weighting.html"><a href="weighting.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2</b> Interactive re-weighting with ReW8R</a></li>
-<li class="chapter" data-level="11.3" data-path="weighting.html"><a href="weighting.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.3</b> Automatic re-weighting</a></li>
-<li class="chapter" data-level="11.4" data-path="weighting.html"><a href="weighting.html#manual-re-weighting"><i class="fa fa-check"></i><b>11.4</b> Manual re-weighting</a></li>
+<li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a></li>
+<li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a></li>
+<li class="chapter" data-level="10" data-path="weighting.html"><a href="weighting.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
+<li class="chapter" data-level="10.1" data-path="weighting.html"><a href="weighting.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a></li>
+<li class="chapter" data-level="10.2" data-path="weighting.html"><a href="weighting.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>10.2</b> Interactive re-weighting with ReW8R</a></li>
+<li class="chapter" data-level="10.3" data-path="weighting.html"><a href="weighting.html#automatic-re-weighting"><i class="fa fa-check"></i><b>10.3</b> Automatic re-weighting</a></li>
+<li class="chapter" data-level="10.4" data-path="weighting.html"><a href="weighting.html#manual-re-weighting"><i class="fa fa-check"></i><b>10.4</b> Manual re-weighting</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>12</b> Helper functions</a><ul>
-<li class="chapter" data-level="12.1" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>12.1</b> Selecting data sets and indicators</a><ul>
-<li class="chapter" data-level="12.1.1" data-path="helper-functions.html"><a href="helper-functions.html#getting-a-whole-data-set"><i class="fa fa-check"></i><b>12.1.1</b> Getting a whole data set</a></li>
-<li class="chapter" data-level="12.1.2" data-path="helper-functions.html"><a href="helper-functions.html#getting-specific-indicators"><i class="fa fa-check"></i><b>12.1.2</b> Getting specific indicators</a></li>
-<li class="chapter" data-level="12.1.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>12.1.3</b> Getting indicators belonging to an aggregation group</a></li>
-<li class="chapter" data-level="12.1.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>12.1.4</b> Getting aggregate group data at targeted level</a></li>
-<li class="chapter" data-level="12.1.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>12.1.5</b> Use with data frames</a></li>
+<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a><ul>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>11.1</b> Selecting data sets and indicators</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="helper-functions.html"><a href="helper-functions.html#getting-a-whole-data-set"><i class="fa fa-check"></i><b>11.1.1</b> Getting a whole data set</a></li>
+<li class="chapter" data-level="11.1.2" data-path="helper-functions.html"><a href="helper-functions.html#getting-specific-indicators"><i class="fa fa-check"></i><b>11.1.2</b> Getting specific indicators</a></li>
+<li class="chapter" data-level="11.1.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>11.1.3</b> Getting indicators belonging to an aggregation group</a></li>
+<li class="chapter" data-level="11.1.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>11.1.4</b> Getting aggregate group data at targeted level</a></li>
+<li class="chapter" data-level="11.1.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>11.1.5</b> Use with data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="12.2" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>12.2</b> Rounding data frames</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>11.2</b> Rounding data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>13</b> Appendix: R Resources</a><ul>
-<li class="chapter" data-level="13.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>13.1</b> Introduction to R</a></li>
-<li class="chapter" data-level="13.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>13.2</b> Advanced resources</a><ul>
-<li class="chapter" data-level="13.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>13.2.1</b> Programming</a></li>
-<li class="chapter" data-level="13.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>13.2.2</b> Visualisation</a></li>
-<li class="chapter" data-level="13.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>13.2.3</b> Other</a></li>
+<li class="chapter" data-level="12" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>12</b> Appendix: R Resources</a><ul>
+<li class="chapter" data-level="12.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>12.1</b> Introduction to R</a></li>
+<li class="chapter" data-level="12.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>12.2</b> Advanced resources</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>12.2.1</b> Programming</a></li>
+<li class="chapter" data-level="12.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="12.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>12.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>14</b> Acknowledgements</a></li>
+<li class="chapter" data-level="13" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>13</b> Acknowledgements</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -231,34 +232,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="helper-functions" class="section level1">
-<h1><span class="header-section-number">Chapter 12</span> Helper functions</h1>
+<h1><span class="header-section-number">Chapter 11</span> Helper functions</h1>
 <div id="selecting-data-sets-and-indicators" class="section level2">
-<h2><span class="header-section-number">12.1</span> Selecting data sets and indicators</h2>
+<h2><span class="header-section-number">11.1</span> Selecting data sets and indicators</h2>
 <p>The <code>getIn()</code> function is widely used by many <code>COINr</code> functions. It is used for selecting specific data sets, and returning subsets of indicators. While some of this can be achieved fairly easily with base R, or <code>dplyr::select()</code>, subsetting in a hierarchical context can be more awkward. That’s where <code>getIn()</code> steps in to help.</p>
 <p>Let’s take some examples:</p>
 <div id="getting-a-whole-data-set" class="section level3">
-<h3><span class="header-section-number">12.1.1</span> Getting a whole data set</h3>
+<h3><span class="header-section-number">11.1.1</span> Getting a whole data set</h3>
 <p>Explanation using ASEM data</p>
 </div>
 <div id="getting-specific-indicators" class="section level3">
-<h3><span class="header-section-number">12.1.2</span> Getting specific indicators</h3>
+<h3><span class="header-section-number">11.1.2</span> Getting specific indicators</h3>
 <p>Explanation using ASEM data, also of getting aggregate group data</p>
 </div>
 <div id="getting-indicators-belonging-to-an-aggregation-group" class="section level3">
-<h3><span class="header-section-number">12.1.3</span> Getting indicators belonging to an aggregation group</h3>
+<h3><span class="header-section-number">11.1.3</span> Getting indicators belonging to an aggregation group</h3>
 <p>Explanation using ASEM data, also multiple groups</p>
 </div>
 <div id="getting-aggregate-group-data-at-targeted-level" class="section level3">
-<h3><span class="header-section-number">12.1.4</span> Getting aggregate group data at targeted level</h3>
+<h3><span class="header-section-number">11.1.4</span> Getting aggregate group data at targeted level</h3>
 <p>Explanation using ASEM data</p>
 </div>
 <div id="use-with-data-frames" class="section level3">
-<h3><span class="header-section-number">12.1.5</span> Use with data frames</h3>
+<h3><span class="header-section-number">11.1.5</span> Use with data frames</h3>
 <p>Examples with just data frames</p>
 </div>
 </div>
 <div id="rounding-data-frames" class="section level2">
-<h2><span class="header-section-number">12.2</span> Rounding data frames</h2>
+<h2><span class="header-section-number">11.2</span> Rounding data frames</h2>
 <p>The <code>roundDF</code> function is a small helper function for rounding data frames that contain a mix of numeric and non-numeric columns. This is very handy for presenting tables generated by COINr in documents.</p>
 
 </div>

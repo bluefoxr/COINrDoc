@@ -14,19 +14,21 @@ description: "COINr Documentation"
 
 # Overview
 
-This documentation describes in detail the COINr package, which is an R package for developing and analysing composite indicators.
+This documentation describes in detail the COINr package, which is an open source R package for developing and analysing composite indicators. In fact, this is slightly more than technical documentation, and also gives some tips on composite indicator development along the way.
 
-At the moment, the documentation is very incomplete, and this is mostly here as a placeholder. However, this will be updated over time.
+COINr is currently still under development, therefore the package itself, and this documentation, are a work in progress but are being continually updated. You can find the latest version of COINr at its [GitHub repo](https://github.com/bluefoxr/COINr), and also the source code for this documentation [here](https://github.com/bluefoxr/COINrDoc).
 
 ## Installation
 
-COINr is currently under development, but a very limited very beta version can be installed via Github. First, install the `devtools` package if you don't already have it, then run:
+Although COINr is under development, but a limited pre-beta version can be installed via Github. First, install the `devtools` package if you don't already have it, then run:
 
 ```{r eval=FALSE}
 devtools::install_github("bluefoxr/COINr")
 ```
 
 This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also skip this step.
+
+It should go without saying that as a non-even-beta version of the package, this is made available more as a preview than anything else. Many functions will work, but bugs are likely in many places. In case you do spot a bug, or have a suggestion, the best way is to [open an issue](https://github.com/bluefoxr/COINr/issues) on the repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).
 
 ## What's it for?
 
@@ -50,7 +52,7 @@ ASEM <- assemble(IndData = ASEMIndData,
                  IndMeta = ASEMIndMeta,
                  AggMeta = ASEMAggMeta)
 # denominate data using specifications in ASEMIndMeta
-ASEM <- coin_denominate(ASEM)
+ASEM <- denominate(ASEM)
 # normalise data
 ASEM <- coin_normalise(ASEM, dset = "Denominated")
 # Aggregate normalised data
@@ -74,3 +76,37 @@ ASEM$Analysis$Raw$StatTable %>%
   reactable::reactable(defaultPageSize = 5, highlight = TRUE, wrap = F)
 ```
 
+plot indicator distributions,
+
+```{r, warning=F, message=F}
+plotIndDist(ASEM, type = "Violindot", inames = "Political")
+```
+
+and visualise and explore overall results in an interactive dashboard
+
+```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Results dashboard screenshot"}
+knitr::include_graphics("images/demo_resultsdash.png")
+```
+
+COINr has, or will have, many more features. Among those that are already implemented and in various stages of testing:
+
+* Unlimited indicators, units, aggregation levels
+* Denomination of indicators
+* Indicator visualisation via static plots and dashboards
+* Indicator statistics and missing data analysis
+* Imputation of missing data via various methods
+* Outlier analysis and treatment
+* Normalisation via various methods
+* Aggregation of indicators via various methods
+* Multivariate analysis (PCA) and correlation analysis
+* Interactive re-weighting
+* Export to Excel
+
+And those that will be included soon, among others:
+
+* Automatic re-weighting
+* Grouping units by e.g. income groups, size groups
+* Support for panel data, i.e. indexes for multiple years
+* What-if experiments, comparing alternative versions of the index
+* Sensitivity analysis, robustness to methodological assumptions, weights, etc.
+* Import/export to the [COIN Tool](https://composite-indicators.jrc.ec.europa.eu/?q=coin-tool)
