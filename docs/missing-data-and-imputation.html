@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 13 Acknowledgements | COINr: An R Package for Composite Indicator Development and Analysis</title>
+  <title>Chapter 5 Missing data and Imputation | COINr: An R Package for Composite Indicator Development and Analysis</title>
   <meta name="description" content="COINr Documentation" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 13 Acknowledgements | COINr: An R Package for Composite Indicator Development and Analysis" />
+  <meta property="og:title" content="Chapter 5 Missing data and Imputation | COINr: An R Package for Composite Indicator Development and Analysis" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 13 Acknowledgements | COINr: An R Package for Composite Indicator Development and Analysis" />
+  <meta name="twitter:title" content="Chapter 5 Missing data and Imputation | COINr: An R Package for Composite Indicator Development and Analysis" />
   
   <meta name="twitter:description" content="COINr Documentation" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="appendix-r-resources.html"/>
-
+<link rel="prev" href="initial-visualisation-and-analysis.html"/>
+<link rel="next" href="denomination.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -237,25 +237,67 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="acknowledgements" class="section level1">
-<h1><span class="header-section-number">Chapter 13</span> Acknowledgements</h1>
-<p>COINr, like all R packages, has been built off of the back of many other packages. Some that COINr uses in particular are:</p>
+<div id="missing-data-and-imputation" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Missing data and Imputation</h1>
+<p>Imputation is the process of estimating missing data points. This can be done in any number of ways, and as usual, the “best” way depends on the problem.</p>
+<p>Of course, you don’t <em>have</em> to impute data. You can also simply delete any indicator or unit that has missing values, although in many cases this can be too restrictive. Reasonable results can still be obtained despite small amounts of missing data, although if too much data is missing, the uncertainty can be too high to give a meaningful analysis. As usual, it is a balance.</p>
+<p>A good first step is to check how much data is missing, and where (see below). Units with very high amounts of missing data can be screened out. Small amounts of missing data can then be imputed.</p>
+<div id="concept" class="section level2">
+<h2><span class="header-section-number">5.1</span> Concept</h2>
+<p>The simplest imputation approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here’s some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let’s view the last few rows:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="missing-data-and-imputation.html#cb22-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb22-2"><a href="missing-data-and-imputation.html#cb22-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
+<span id="cb22-3"><a href="missing-data-and-imputation.html#cb22-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<pre><code>##               Country ConSpeed
+## 40              Korea     28.6
+## 41            Lao PDR       NA
+## 42           Malaysia      8.9
+## 43           Mongolia       NA
+## 44            Myanmar       NA
+## 45        New Zealand     14.7
+## 46           Pakistan       NA
+## 47        Philippines      5.5
+## 48 Russian Federation     11.8
+## 49          Singapore     20.3
+## 50           Thailand     16.0
+## 51            Vietnam      9.5</code></pre>
+<p>Using our simple imputation method, we just replace the <code>NA</code> values with the sample mean.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="missing-data-and-imputation.html#cb24-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
+<span id="cb24-2"><a href="missing-data-and-imputation.html#cb24-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span></code></pre></div>
+<pre><code>##               Country ConSpeed
+## 40              Korea 28.60000
+## 41            Lao PDR 14.28605
+## 42           Malaysia  8.90000
+## 43           Mongolia 14.28605
+## 44            Myanmar 14.28605
+## 45        New Zealand 14.70000
+## 46           Pakistan 14.28605
+## 47        Philippines  5.50000
+## 48 Russian Federation 11.80000
+## 49          Singapore 20.30000
+## 50           Thailand 16.00000
+## 51            Vietnam  9.50000</code></pre>
+<p>This approach can be reasonable if countries are somehow similar in that indicator. However, other perhaps more informative ways are available:</p>
 <ul>
-<li>Plotly, for beautiful javascript plots</li>
-<li>ggplot2, for beautiful static plots</li>
-<li>reactable, for nice interactive tables</li>
-<li>shiny, for apps</li>
-<li>Various elements of the tidyverse, particularly dplyr</li>
+<li>Substituting by the mean or median of the country group (e.g. income group or continent)</li>
+<li>If time series data is available, use the latest known data point</li>
+</ul>
+<p>Then there is another class of methods which use data from other indicators to estimate the missing point. The core idea here is that if the indicators are related to one another, it is possible to guess the missing point by using known values of other indicators. This can take the form of:</p>
+<ul>
+<li>Simply substituting the mean or median of the <em>normalised</em> values of the other indicators</li>
+<li>Subsituting the mean or median of <em>normalised</em> values of the other indicators <em>within the aggregation group</em></li>
+<li>Using a more formal approach, based on regression</li>
 </ul>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="appendix-r-resources.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="initial-visualisation-and-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="denomination.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -286,7 +328,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/16-Acknowledgements.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/03-imputation.Rmd",
 "text": "Edit"
 },
 "history": {

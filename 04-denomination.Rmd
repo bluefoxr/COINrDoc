@@ -51,14 +51,104 @@ The summary here is that an **extensive** variable becomes an **intensive** vari
 
 Denomination is fairly simple to do in R, it's just dividing one vector by another. Nevertheless, COINr has a dedicated function for denominating which makes life easier and helps you to track what you have done.
 
-Before we get to that, it's worth mentioning that COINr has a few built-in denominators sourced from the World Bank. They can be called as follows:
+Before we get to that, it's worth mentioning that COINr has a few built-in denominators sourced from the World Bank. It looks like this:
 
 ```{r}
-head(WorldDenoms)
+WorldDenoms
 ```
 
 and the metadata can be found by calling `?WorldDenoms`. Data here is the latest available as of February 2021 and I would recommend using these only for exploration, then updating your data yourself.
 
-To denominate your indicators in COINr, the function to call is `denominate()`
+To denominate your indicators in COINr, the function to call is `denominate()`. Like other COINr functions, this can be used either independently on a data frame of indicators, or on COINs. Consider that in all cases you need three main ingredients:
 
-## Example two
+1. Some indicator data that should be denominated
+2. Some other indicators to use as denominators
+3. A mapping to say which denominators (if any) to use for each indicator.
+
+### On COINs
+
+If you are working with a COIN, the indicator data will be present in the `.$Data` folder. If you specified any denominators in `IndData` (i.e. columns beginning with "Den_") when calling `assemble()` you will also find them in `.$Input$Denominators`. Finally, if you specified a `Denominator` column in `IndMeta` when calling `assemble()` then the mapping of denominators to indicators will also be present.
+
+```{r}
+# The raw indicator data which will be denominated
+ASEM$Data$Raw
+# The denominators
+ASEM$Input$Denominators
+# The mapping of denominators to indicators (see Denominator column)
+ASEM$Input$IndMeta
+```
+
+COINr's `denominate()` function knows where to look for each of these ingredients, so we can simply call:
+
+```{r}
+ASEM <- denominate(ASEM)
+```
+
+which will return a new data set `.Data$Denominated`. To return the dataset directly, rather than outputting an updated COIN, you can also set `out2 = "df"` (this is a common argument to many functions which can be useful if you want to examine the result directly).
+
+You can also change which indicators are denominated, and by what.
+
+```{r}
+# Get denominator specification from metadata
+denomby_meta <- ASEM$Input$IndMeta$Denominator
+# Example: we want to change the denominator of flights from population to GDP
+denomby_meta[ASEM$Input$IndMeta$IndCode == "Flights"] <- "Den_GDP"
+# Now re-denominate. Return data frame for inspection
+ASEM <- denominate(ASEM, dset = "Raw", specby = "user", denomby = denomby_meta)
+```
+
+Here we have changed the denominator of one of the indicators, "Flights", to GDP. This is done by creating a character vector `denomby_meta` (copied from the original denominator specification) which has an entry for each indicator, specifying which denominator to use, if any. We then changed the entry corresponding to "Flights". This overwrites any previous denomination. If you want to keep and compare alternative specifications, see the chapter on (*chap to add*).
+
+Let's compare the raw Flights data with the Flights per GDP data:
+
+```{r}
+# plot raw flights against denominated
+iplotIndDist2(ASEM, dsets = c("Raw", "Denominated"), inames = "Flights")
+```
+
+Clearly, the denominated and raw indicators are very different from one another, reflecting the completely different meaning.
+
+### On data frames
+
+If you are just working with data frames, you need to supply the three ingredients directly to the function. Here we will take some of the ASEM data for illustration (recalling that both indicator and denominator data is specified in `ASEMIndMeta`).
+
+```{r}
+# a small data frame of indicator data
+IndData <- ASEMIndData[c("Goods", "Services", "FDI")]
+IndData
+# two selected denominators
+Denoms <- ASEMIndData[c("Den_Pop", "Den_GDP")]
+
+# denominate the data
+IndDataDenom <- denominate(IndData, denomby = c("Den_GDP", NA, "Den_Pop"), denominators = Denoms)
+IndDataDenom
+```
+
+Since the input is recognised as a data frame, you don't need to specify any other arguments, and the output is automatically a data frame. Note how `denomby` works: here it specifies that that "Goods" should be denominated by "Den_GDP", that "Services" should not be denominated, and that "FDI" should be denominated by "Den_Pop".
+
+## When to denominate, and by what?
+
+Denomination is mathematically very simple, but from a conceptual point of view it needs to be handled with care. As we have shown, denominating an indicator will usually completely change it, and will have a corresponding impact on the results.
+
+Two ways of looking at the problem are first, from the conceptual point of view. Consider each indicator and whether it fits with the aim of your index. Some indicators are anyway intensive, such as the percentage of tertiary graduates. Others, such as trade, will be strongly linked to the size of the country. In those cases, consider whether countries with high trade values should have higher scores in your index or not? Or should it be trade as a percentage of GDP? Or trade per capita? Each of these will have different meanings.
+
+Sometimes extensive variables will anyway be the right choice. The [Lowy Asia Power Index](https://power.lowyinstitute.org/) measures the power of each country in an absolute sense: in this case, the size of the country is all-important and e.g. trade or military capabilities per capita would not make much sense.
+
+The second (complimentary) way to approach denomination is from a statistical point of view. We can check which indicators are strongly related to the size of a country by correlating them with some typical denominators, such as the ones used here. The `getStats()` function does just this, checking the correlations between each indicator and each denominator, and flagging any possible high correlations.
+
+```{r, collapse=T}
+# get statistics on raw data set
+ASEM <- getStats(ASEM, dset = "Raw", out2 = "COIN", t_denom = 0.8)
+# get the result
+ctable <- ASEM$Analysis$Raw$DenomCorrelations
+# return only columns that have entries with correlation above 0.8
+ctable[,colSums((abs(ctable) > 0.8))>0]
+```
+
+The matrix that is displayed above only includes columns where there is a correlation value (between an indicator and any denominator) of greater than 0.8. The results show some interesting patterns:
+
+* Many indicators have a high positive correlation with GDP, including flights, trade, foreign direct investment (very high), personal remittances, research, stock of migrants, and so on.
+* Bigger countries, in terms of land area, tend to have *less* trade agreements (RTAs) and a more restrictive visa policy
+* Larger populations are associated with higher levels of poverty
+
+The purpose here is not to draw causal links between these quantities, although they might reveal interesting patterns. Rather, these might suggest which quantities to denominate by, if the choices also work on a conceptual level.

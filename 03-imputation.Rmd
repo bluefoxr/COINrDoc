@@ -1,14 +1,14 @@
-# Imputation
+# Missing data and Imputation
 
 Imputation is the process of estimating missing data points. This can be done in any number of ways, and as usual, the "best" way depends on the problem.
 
-## By indicators
+Of course, you don't *have* to impute data. You can also simply delete any indicator or unit that has missing values, although in many cases this can be too restrictive. Reasonable results can still be obtained despite small amounts of missing data, although if too much data is missing, the uncertainty can be too high to give a meaningful analysis. As usual, it is a balance.
 
-Column-wise imputation means 
+A good first step is to check how much data is missing, and where (see below). Units with very high amounts of missing data can be screened out. Small amounts of missing data can then be imputed.
 
-## By units
+## Concept
 
-A similar but alternative approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here's some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let's view the last few rows:
+The simplest imputation approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here's some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let's view the last few rows:
 
 ```{r}
 library(COINr)
@@ -22,3 +22,14 @@ Using our simple imputation method, we just replace the `NA` values with the sam
 Ind1$ConSpeed <- replace(Ind1$ConSpeed, is.na(Ind1$ConSpeed), mean(Ind1$ConSpeed, na.rm = T))
 Ind1[40:nrow(Ind1),]
 ```
+
+This approach can be reasonable if countries are somehow similar in that indicator. However, other perhaps more informative ways are available:
+
+* Substituting by the mean or median of the country group (e.g. income group or continent)
+* If time series data is available, use the latest known data point
+
+Then there is another class of methods which use data from other indicators to estimate the missing point. The core idea here is that if the indicators are related to one another, it is possible to guess the missing point by using known values of other indicators. This can take the form of:
+
+* Simply substituting the mean or median of the *normalised* values of the other indicators
+* Subsituting the mean or median of *normalised* values of the other indicators *within the aggregation group*
+* Using a more formal approach, based on regression
