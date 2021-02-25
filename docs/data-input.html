@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-18" />
+<meta name="date" content="2021-02-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -199,14 +199,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="weighting.html"><a href="weighting.html#manual-re-weighting"><i class="fa fa-check"></i><b>10.4</b> Manual re-weighting</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a><ul>
-<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>11.1</b> Selecting data sets and indicators</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="helper-functions.html"><a href="helper-functions.html#getting-a-whole-data-set"><i class="fa fa-check"></i><b>11.1.1</b> Getting a whole data set</a></li>
-<li class="chapter" data-level="11.1.2" data-path="helper-functions.html"><a href="helper-functions.html#getting-specific-indicators"><i class="fa fa-check"></i><b>11.1.2</b> Getting specific indicators</a></li>
-<li class="chapter" data-level="11.1.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>11.1.3</b> Getting indicators belonging to an aggregation group</a></li>
-<li class="chapter" data-level="11.1.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>11.1.4</b> Getting aggregate group data at targeted level</a></li>
-<li class="chapter" data-level="11.1.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>11.1.5</b> Use with data frames</a></li>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#importing-and-exporting"><i class="fa fa-check"></i><b>11.1</b> Importing and exporting</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>11.2</b> Selecting data sets and indicators</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="helper-functions.html"><a href="helper-functions.html#getting-a-whole-data-set"><i class="fa fa-check"></i><b>11.2.1</b> Getting a whole data set</a></li>
+<li class="chapter" data-level="11.2.2" data-path="helper-functions.html"><a href="helper-functions.html#getting-specific-indicators"><i class="fa fa-check"></i><b>11.2.2</b> Getting specific indicators</a></li>
+<li class="chapter" data-level="11.2.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>11.2.3</b> Getting indicators belonging to an aggregation group</a></li>
+<li class="chapter" data-level="11.2.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>11.2.4</b> Getting aggregate group data at targeted level</a></li>
+<li class="chapter" data-level="11.2.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>11.2.5</b> Use with data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>11.2</b> Rounding data frames</a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>11.3</b> Rounding data frames</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>12</b> Appendix: R Resources</a><ul>
 <li class="chapter" data-level="12.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>12.1</b> Introduction to R</a></li>
@@ -335,16 +336,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.2.3</span> Aggregation metadata</h3>
 <p>The final data input is the aggregation metadata, which is also the simplest. Here’s our example for the ASEM data set:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-input.html#cb10-1"></a><span class="kw">head</span>(ASEMAggMeta)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 9
-##   Agg1Code Agg1Name Agg1Weight Agg2Code Agg2Name Agg2Weight Agg3Code Agg3Name
-##   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-## 1 Physical Physical          1 Conn     Connect~          1 Index    Sustain~
-## 2 ConEcFin Economi~          1 Sust     Sustain~          1 &lt;NA&gt;     &lt;NA&gt;    
-## 3 Politic~ Politic~          1 &lt;NA&gt;     &lt;NA&gt;             NA &lt;NA&gt;     &lt;NA&gt;    
-## 4 Instit   Institu~          1 &lt;NA&gt;     &lt;NA&gt;             NA &lt;NA&gt;     &lt;NA&gt;    
-## 5 P2P      People ~          1 &lt;NA&gt;     &lt;NA&gt;             NA &lt;NA&gt;     &lt;NA&gt;    
-## 6 Environ  Environ~          1 &lt;NA&gt;     &lt;NA&gt;             NA &lt;NA&gt;     &lt;NA&gt;    
-## # ... with 1 more variable: Agg3Weight &lt;dbl&gt;</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   AgLevel Code      Name                         Weight
+##     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                         &lt;dbl&gt;
+## 1       2 Physical  Physical                          1
+## 2       2 ConEcFin  Economic and Financial (Con)      1
+## 3       2 Political Political                         1
+## 4       2 Instit    Institutional                     1
+## 5       2 P2P       People to People                  1
+## 6       2 Environ   Environmental                     1</code></pre>
 <p>This data frame simply consists of three columns for each aggregation level:</p>
 <ul>
 <li><code>*Code</code> [<strong>required</strong>] The aggregation group codes. This column must end with “Code”, and the codes must match the codes in the corresponding column in the indicator metadata aggregation columns.</li>
@@ -359,21 +359,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called <code>assemble()</code>. This function takes the three data frames mentioned and converts them into a so-called <em>COIN Object</em>, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let’s run <code>assemble()</code> using the built-in data sets to show how it works.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="data-input.html#cb12-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> ASEMIndData, <span class="dt">IndMeta =</span> ASEMIndMeta, <span class="dt">AggMeta =</span> ASEMAggMeta)</span>
 <span id="cb12-2"><a href="data-input.html#cb12-2"></a><span class="co">## -----------------</span></span>
-<span id="cb12-3"><a href="data-input.html#cb12-3"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb12-3"><a href="data-input.html#cb12-3"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
 <span id="cb12-4"><a href="data-input.html#cb12-4"></a><span class="co">## -----------------</span></span>
-<span id="cb12-5"><a href="data-input.html#cb12-5"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb12-6"><a href="data-input.html#cb12-6"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb12-7"><a href="data-input.html#cb12-7"></a><span class="co">## Number of reference years of data = 1</span></span>
-<span id="cb12-8"><a href="data-input.html#cb12-8"></a><span class="co">## Years from 2018 to 2018</span></span>
-<span id="cb12-9"><a href="data-input.html#cb12-9"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb12-10"><a href="data-input.html#cb12-10"></a><span class="co">## -----------------</span></span>
-<span id="cb12-11"><a href="data-input.html#cb12-11"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb12-12"><a href="data-input.html#cb12-12"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb12-13"><a href="data-input.html#cb12-13"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb12-14"><a href="data-input.html#cb12-14"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb12-15"><a href="data-input.html#cb12-15"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb12-16"><a href="data-input.html#cb12-16"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb12-17"><a href="data-input.html#cb12-17"></a><span class="co">## -----------------</span></span></code></pre></div>
+<span id="cb12-5"><a href="data-input.html#cb12-5"></a><span class="co">## -----------------</span></span>
+<span id="cb12-6"><a href="data-input.html#cb12-6"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb12-7"><a href="data-input.html#cb12-7"></a><span class="co">## -----------------</span></span>
+<span id="cb12-8"><a href="data-input.html#cb12-8"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb12-9"><a href="data-input.html#cb12-9"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb12-10"><a href="data-input.html#cb12-10"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb12-11"><a href="data-input.html#cb12-11"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb12-12"><a href="data-input.html#cb12-12"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb12-13"><a href="data-input.html#cb12-13"></a><span class="co">## -----------------</span></span>
+<span id="cb12-14"><a href="data-input.html#cb12-14"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb12-15"><a href="data-input.html#cb12-15"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb12-16"><a href="data-input.html#cb12-16"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb12-17"><a href="data-input.html#cb12-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb12-18"><a href="data-input.html#cb12-18"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb12-19"><a href="data-input.html#cb12-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb12-20"><a href="data-input.html#cb12-20"></a><span class="co">## -----------------</span></span></code></pre></div>
 <p>The three inputs here are as follows:</p>
 <ul>
 <li><code>IndData</code> which is the indicator data</li>

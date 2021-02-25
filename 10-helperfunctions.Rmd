@@ -1,5 +1,41 @@
 # Helper functions
 
+## Importing and exporting
+
+COINr has a couple of useful functions to help import and export data and metadata. You might have heard of the [COIN Tool](https://composite-indicators.jrc.ec.europa.eu/?q=coin-tool) which is an Excel-based tool for building and analysing composite indicators, similar in fact to COINr^[Full disclosure, I was also involved in the development of the COIN Tool]. With the `coinToolIn()` function you can import data directly from the COIN Tool to cross check or extend your analysis in COINr.
+
+To demonstrate, we can take the example version of the COIN Tool, which you can download [here](https://composite-indicators.jrc.ec.europa.eu/sites/default/files/COIN_Tool_v1_LITE_exampledata.xlsm). Then it's as simple as running:
+
+```{r}
+library(COINr)
+
+# This is the file path and name where the COIN Tool is downloaded to
+# You could also just put it in your project directory.
+fname <- "C:/Users/becke/Downloads/COIN_Tool_v1_LITE_exampledata.xlsm"
+
+dflist <- COINToolIn(fname)
+```
+
+The output of this function is a list with the three data frame inputs to `assemble()`.
+
+```{r}
+dflist
+```
+
+Because the COIN Tool uses numeric codes for indicators such as `ind.01`, you might want slightly more informative codes. The best way to do this is to name the codes yourself, but a quick solution is to set `makecodes = TRUE` in `COINToolIn()`. This generates short codes based on the indicator names. It will not yield perfect results, but for a quick analysis it might be sufficient. At least, you could use this and then modify the results by hand.
+
+```{r}
+dflist <- COINToolIn(fname, makecodes = TRUE)
+dflist$IndMeta$IndCode
+```
+
+While the codes could certainly be improved, it's certainly better than uninformative numbers. Finally, we can assemble the output into a COIN and begin the construction.
+
+```{r, collapse=T}
+ESI <- assemble(dflist[[1]],dflist[[2]],dflist[[3]],)
+```
+
+
 ## Selecting data sets and indicators
 
 The `getIn()` function is widely used by many `COINr` functions. It is used for selecting specific data sets, and returning subsets of indicators. While some of this can be achieved fairly easily with base R, or `dplyr::select()`, subsetting in a hierarchical context can be more awkward. That's where `getIn()` steps in to help.

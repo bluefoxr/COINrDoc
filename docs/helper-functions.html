@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-18" />
+<meta name="date" content="2021-02-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -199,14 +199,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4" data-path="weighting.html"><a href="weighting.html#manual-re-weighting"><i class="fa fa-check"></i><b>10.4</b> Manual re-weighting</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a><ul>
-<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>11.1</b> Selecting data sets and indicators</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="helper-functions.html"><a href="helper-functions.html#getting-a-whole-data-set"><i class="fa fa-check"></i><b>11.1.1</b> Getting a whole data set</a></li>
-<li class="chapter" data-level="11.1.2" data-path="helper-functions.html"><a href="helper-functions.html#getting-specific-indicators"><i class="fa fa-check"></i><b>11.1.2</b> Getting specific indicators</a></li>
-<li class="chapter" data-level="11.1.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>11.1.3</b> Getting indicators belonging to an aggregation group</a></li>
-<li class="chapter" data-level="11.1.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>11.1.4</b> Getting aggregate group data at targeted level</a></li>
-<li class="chapter" data-level="11.1.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>11.1.5</b> Use with data frames</a></li>
+<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#importing-and-exporting"><i class="fa fa-check"></i><b>11.1</b> Importing and exporting</a></li>
+<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>11.2</b> Selecting data sets and indicators</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="helper-functions.html"><a href="helper-functions.html#getting-a-whole-data-set"><i class="fa fa-check"></i><b>11.2.1</b> Getting a whole data set</a></li>
+<li class="chapter" data-level="11.2.2" data-path="helper-functions.html"><a href="helper-functions.html#getting-specific-indicators"><i class="fa fa-check"></i><b>11.2.2</b> Getting specific indicators</a></li>
+<li class="chapter" data-level="11.2.3" data-path="helper-functions.html"><a href="helper-functions.html#getting-indicators-belonging-to-an-aggregation-group"><i class="fa fa-check"></i><b>11.2.3</b> Getting indicators belonging to an aggregation group</a></li>
+<li class="chapter" data-level="11.2.4" data-path="helper-functions.html"><a href="helper-functions.html#getting-aggregate-group-data-at-targeted-level"><i class="fa fa-check"></i><b>11.2.4</b> Getting aggregate group data at targeted level</a></li>
+<li class="chapter" data-level="11.2.5" data-path="helper-functions.html"><a href="helper-functions.html#use-with-data-frames"><i class="fa fa-check"></i><b>11.2.5</b> Use with data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>11.2</b> Rounding data frames</a></li>
+<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>11.3</b> Rounding data frames</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>12</b> Appendix: R Resources</a><ul>
 <li class="chapter" data-level="12.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>12.1</b> Introduction to R</a></li>
@@ -239,36 +240,135 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="helper-functions" class="section level1">
 <h1><span class="header-section-number">Chapter 11</span> Helper functions</h1>
+<div id="importing-and-exporting" class="section level2">
+<h2><span class="header-section-number">11.1</span> Importing and exporting</h2>
+<p>COINr has a couple of useful functions to help import and export data and metadata. You might have heard of the <a href="https://composite-indicators.jrc.ec.europa.eu/?q=coin-tool">COIN Tool</a> which is an Excel-based tool for building and analysing composite indicators, similar in fact to COINr<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. With the <code>coinToolIn()</code> function you can import data directly from the COIN Tool to cross check or extend your analysis in COINr.</p>
+<p>To demonstrate, we can take the example version of the COIN Tool, which you can download <a href="https://composite-indicators.jrc.ec.europa.eu/sites/default/files/COIN_Tool_v1_LITE_exampledata.xlsm">here</a>. Then it’s as simple as running:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="helper-functions.html#cb45-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb45-2"><a href="helper-functions.html#cb45-2"></a></span>
+<span id="cb45-3"><a href="helper-functions.html#cb45-3"></a><span class="co"># This is the file path and name where the COIN Tool is downloaded to</span></span>
+<span id="cb45-4"><a href="helper-functions.html#cb45-4"></a><span class="co"># You could also just put it in your project directory.</span></span>
+<span id="cb45-5"><a href="helper-functions.html#cb45-5"></a>fname &lt;-<span class="st"> &quot;C:/Users/becke/Downloads/COIN_Tool_v1_LITE_exampledata.xlsm&quot;</span></span>
+<span id="cb45-6"><a href="helper-functions.html#cb45-6"></a></span>
+<span id="cb45-7"><a href="helper-functions.html#cb45-7"></a>dflist &lt;-<span class="st"> </span><span class="kw">COINToolIn</span>(fname)</span></code></pre></div>
+<pre><code>## Imported 15 indicators and 28 units.</code></pre>
+<p>The output of this function is a list with the three data frame inputs to <code>assemble()</code>.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="helper-functions.html#cb47-1"></a>dflist</span></code></pre></div>
+<pre><code>## $IndData
+## # A tibble: 28 x 17
+##    UnitName UnitCode ind.01 ind.02 ind.03 ind.04 ind.05 ind.06 ind.07 ind.08
+##    &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1 Austria  AT         13.3   80.4   492.   14.9   68.8     34    3.7   87.6
+##  2 Belgium  BE         15.1   71.8   503.    7     59.6     24    5.2   81.2
+##  3 Bulgaria BG         12.3   78.1   440.    2.2   51.3     15   10.6   72  
+##  4 Cyprus   CY         14     76     438.    6.9   16.7     23    3.6   73.4
+##  5 Czech R~ CZ         13.5   87.6   491.    8.8   73.2     27    3.9   86.7
+##  6 Germany  DE          9.7   80.2   508.    8.5   46.3     30    5.6   90.1
+##  7 Denmark  DK          9.7   73     504.   27.7   40.6     39    3.8   83.9
+##  8 Estonia  EE          8.6   83.3   524.   15.7   35.7     37    4.1   77.1
+##  9 Greece   EL         11.8   70     458.    4     31.5     30    3.9   49.2
+## 10 Spain    ES         14.9   57.4   491.    9.4   34.8     33   11.4   68  
+## # ... with 18 more rows, and 7 more variables: ind.09 &lt;dbl&gt;, ind.10 &lt;dbl&gt;,
+## #   ind.11 &lt;dbl&gt;, ind.12 &lt;dbl&gt;, ind.13 &lt;dbl&gt;, ind.14 &lt;dbl&gt;, ind.15 &lt;dbl&gt;
+## 
+## $IndMeta
+## # A tibble: 15 x 9
+##    IndCode IndName         GPupper GPlower Direction IndWeight Agg1  Agg2  Agg3 
+##    &lt;chr&gt;   &lt;chr&gt;             &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;
+##  1 ind.01  Pre-primary pu~      NA      NA        -1      0.4  sp.01 p.01  Index
+##  2 ind.02  Share of popul~      NA      NA         1      0.3  sp.01 p.01  Index
+##  3 ind.03  Reading, maths~      NA      NA         1      0.3  sp.01 p.01  Index
+##  4 ind.04  Recent training      NA      NA         1      0.3  sp.02 p.01  Index
+##  5 ind.05  VET students         NA      NA         1      0.35 sp.02 p.01  Index
+##  6 ind.06  High computer ~      NA      NA         1      0.35 sp.02 p.01  Index
+##  7 ind.07  Early leavers ~      NA      NA        -1      0.7  sp.03 p.02  Index
+##  8 ind.08  Recent graduat~      NA      NA         1      0.3  sp.03 p.02  Index
+##  9 ind.09  Activity rate ~      NA      NA         1      0.5  sp.04 p.02  Index
+## 10 ind.10  Activity rate ~      NA      NA         1      0.5  sp.04 p.02  Index
+## 11 ind.11  Long-term unem~      NA      NA        -1      0.4  sp.05 p.03  Index
+## 12 ind.12  Underemployed ~      NA      NA        -1      0.6  sp.05 p.03  Index
+## 13 ind.13  Higher educati~      NA      NA        -1      0.4  sp.06 p.03  Index
+## 14 ind.14  ISCED 5-8 prop~      NA      NA        -1      0.1  sp.06 p.03  Index
+## 15 ind.15  Qualification ~      NA      NA        -1      0.5  sp.06 p.03  Index
+## 
+## $AggMeta
+## # A tibble: 10 x 4
+##    AgLevel Code  Name                            Weight
+##      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;                            &lt;dbl&gt;
+##  1       4 Index European Skills Index              1  
+##  2       3 p.01  Skills Development                 0.3
+##  3       3 p.02  Skills Activation                  0.3
+##  4       3 p.03  Skills Matching                    0.4
+##  5       2 sp.01 Compulsory education               0.5
+##  6       2 sp.02 Training and tertiary education    0.5
+##  7       2 sp.03 Transition to work                 0.5
+##  8       2 sp.04 Activity rates                     0.5
+##  9       2 sp.05 Unemployment                       0.4
+## 10       2 sp.06 Skills mismatch                    0.6</code></pre>
+<p>Because the COIN Tool uses numeric codes for indicators such as <code>ind.01</code>, you might want slightly more informative codes. The best way to do this is to name the codes yourself, but a quick solution is to set <code>makecodes = TRUE</code> in <code>COINToolIn()</code>. This generates short codes based on the indicator names. It will not yield perfect results, but for a quick analysis it might be sufficient. At least, you could use this and then modify the results by hand.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="helper-functions.html#cb49-1"></a>dflist &lt;-<span class="st"> </span><span class="kw">COINToolIn</span>(fname, <span class="dt">makecodes =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## Imported 15 indicators and 28 units.</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="helper-functions.html#cb51-1"></a>dflist<span class="op">$</span>IndMeta<span class="op">$</span>IndCode</span></code></pre></div>
+<pre><code>##  [1] &quot;Pre-Pupi&quot;   &quot;SharPopu&quot;   &quot;ReadMath&quot;   &quot;ReceTrai&quot;   &quot;Stud&quot;      
+##  [6] &quot;HighComp&quot;   &quot;EarlLeav&quot;   &quot;ReceGrad&quot;   &quot;ActiRate&quot;   &quot;ActiRate_1&quot;
+## [11] &quot;LongUnem&quot;   &quot;UndePart&quot;   &quot;HighEduc&quot;   &quot;Isce5-Pr&quot;   &quot;QualMism&quot;</code></pre>
+<p>While the codes could certainly be improved, it’s certainly better than uninformative numbers. Finally, we can assemble the output into a COIN and begin the construction.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="helper-functions.html#cb53-1"></a>ESI &lt;-<span class="st"> </span><span class="kw">assemble</span>(dflist[[<span class="dv">1</span>]],dflist[[<span class="dv">2</span>]],dflist[[<span class="dv">3</span>]],)</span>
+<span id="cb53-2"><a href="helper-functions.html#cb53-2"></a><span class="co">## -----------------</span></span>
+<span id="cb53-3"><a href="helper-functions.html#cb53-3"></a><span class="co">## No denominators detected.</span></span>
+<span id="cb53-4"><a href="helper-functions.html#cb53-4"></a><span class="co">## -----------------</span></span>
+<span id="cb53-5"><a href="helper-functions.html#cb53-5"></a><span class="co">## -----------------</span></span>
+<span id="cb53-6"><a href="helper-functions.html#cb53-6"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb53-7"><a href="helper-functions.html#cb53-7"></a><span class="co">## -----------------</span></span>
+<span id="cb53-8"><a href="helper-functions.html#cb53-8"></a><span class="co">## Number of indicators = 15</span></span>
+<span id="cb53-9"><a href="helper-functions.html#cb53-9"></a><span class="co">## Number of units = 28</span></span>
+<span id="cb53-10"><a href="helper-functions.html#cb53-10"></a><span class="co">## No Year column detected in input data. Assuming you only have one year of data.</span></span>
+<span id="cb53-11"><a href="helper-functions.html#cb53-11"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb53-12"><a href="helper-functions.html#cb53-12"></a><span class="co">## -----------------</span></span>
+<span id="cb53-13"><a href="helper-functions.html#cb53-13"></a><span class="co">## Aggregation level 1 with 6 aggregate groups: sp.01, sp.02, sp.03, sp.04, sp.05, sp.06</span></span>
+<span id="cb53-14"><a href="helper-functions.html#cb53-14"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb53-15"><a href="helper-functions.html#cb53-15"></a><span class="co">## Aggregation level 2 with 3 aggregate groups: p.01, p.02, p.03</span></span>
+<span id="cb53-16"><a href="helper-functions.html#cb53-16"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb53-17"><a href="helper-functions.html#cb53-17"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb53-18"><a href="helper-functions.html#cb53-18"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb53-19"><a href="helper-functions.html#cb53-19"></a><span class="co">## -----------------</span></span></code></pre></div>
+</div>
 <div id="selecting-data-sets-and-indicators" class="section level2">
-<h2><span class="header-section-number">11.1</span> Selecting data sets and indicators</h2>
+<h2><span class="header-section-number">11.2</span> Selecting data sets and indicators</h2>
 <p>The <code>getIn()</code> function is widely used by many <code>COINr</code> functions. It is used for selecting specific data sets, and returning subsets of indicators. While some of this can be achieved fairly easily with base R, or <code>dplyr::select()</code>, subsetting in a hierarchical context can be more awkward. That’s where <code>getIn()</code> steps in to help.</p>
 <p>Let’s take some examples:</p>
 <div id="getting-a-whole-data-set" class="section level3">
-<h3><span class="header-section-number">11.1.1</span> Getting a whole data set</h3>
+<h3><span class="header-section-number">11.2.1</span> Getting a whole data set</h3>
 <p>Explanation using ASEM data</p>
 </div>
 <div id="getting-specific-indicators" class="section level3">
-<h3><span class="header-section-number">11.1.2</span> Getting specific indicators</h3>
+<h3><span class="header-section-number">11.2.2</span> Getting specific indicators</h3>
 <p>Explanation using ASEM data, also of getting aggregate group data</p>
 </div>
 <div id="getting-indicators-belonging-to-an-aggregation-group" class="section level3">
-<h3><span class="header-section-number">11.1.3</span> Getting indicators belonging to an aggregation group</h3>
+<h3><span class="header-section-number">11.2.3</span> Getting indicators belonging to an aggregation group</h3>
 <p>Explanation using ASEM data, also multiple groups</p>
 </div>
 <div id="getting-aggregate-group-data-at-targeted-level" class="section level3">
-<h3><span class="header-section-number">11.1.4</span> Getting aggregate group data at targeted level</h3>
+<h3><span class="header-section-number">11.2.4</span> Getting aggregate group data at targeted level</h3>
 <p>Explanation using ASEM data</p>
 </div>
 <div id="use-with-data-frames" class="section level3">
-<h3><span class="header-section-number">11.1.5</span> Use with data frames</h3>
+<h3><span class="header-section-number">11.2.5</span> Use with data frames</h3>
 <p>Examples with just data frames</p>
 </div>
 </div>
 <div id="rounding-data-frames" class="section level2">
-<h2><span class="header-section-number">11.2</span> Rounding data frames</h2>
+<h2><span class="header-section-number">11.3</span> Rounding data frames</h2>
 <p>The <code>roundDF</code> function is a small helper function for rounding data frames that contain a mix of numeric and non-numeric columns. This is very handy for presenting tables generated by COINr in documents.</p>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Full disclosure, I was also involved in the development of the COIN Tool<a href="helper-functions.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
             </section>
 

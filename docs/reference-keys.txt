@@ -41,6 +41,7 @@ interactive-re-weighting-with-rew8r
 automatic-re-weighting
 manual-re-weighting
 helper-functions
+importing-and-exporting
 selecting-data-sets-and-indicators
 getting-a-whole-data-set
 getting-specific-indicators
