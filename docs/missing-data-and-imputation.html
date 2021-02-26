@@ -177,6 +177,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>5</b> Missing data and Imputation</a><ul>
 <li class="chapter" data-level="5.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>5.1</b> Concept</a></li>
+<li class="chapter" data-level="5.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>5.2</b> Data checks and screening</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>6</b> Denomination</a><ul>
 <li class="chapter" data-level="6.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
@@ -284,8 +285,77 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>Simply substituting the mean or median of the <em>normalised</em> values of the other indicators</li>
 <li>Subsituting the mean or median of <em>normalised</em> values of the other indicators <em>within the aggregation group</em></li>
-<li>Using a more formal approach, based on regression</li>
+<li>Using a more formal approach, based on regression or more generally on statistical modelling</li>
 </ul>
+<p>Let’s explore the options available in COINr</p>
+</div>
+<div id="data-checks-and-screening" class="section level2">
+<h2><span class="header-section-number">5.2</span> Data checks and screening</h2>
+<p>A first step is to check in detail how much data missing. The function <code>checkData()</code> does this, and also has the option to screen units based on data availability.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="missing-data-and-imputation.html#cb26-1"></a><span class="co"># Assemble ASEM data first</span></span>
+<span id="cb26-2"><a href="missing-data-and-imputation.html#cb26-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> COINr<span class="op">::</span>ASEMIndData, <span class="dt">IndMeta =</span> COINr<span class="op">::</span>ASEMIndMeta,</span>
+<span id="cb26-3"><a href="missing-data-and-imputation.html#cb26-3"></a>                 <span class="dt">AggMeta =</span> COINr<span class="op">::</span>ASEMAggMeta)</span>
+<span id="cb26-4"><a href="missing-data-and-imputation.html#cb26-4"></a><span class="co">## -----------------</span></span>
+<span id="cb26-5"><a href="missing-data-and-imputation.html#cb26-5"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb26-6"><a href="missing-data-and-imputation.html#cb26-6"></a><span class="co">## -----------------</span></span>
+<span id="cb26-7"><a href="missing-data-and-imputation.html#cb26-7"></a><span class="co">## -----------------</span></span>
+<span id="cb26-8"><a href="missing-data-and-imputation.html#cb26-8"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb26-9"><a href="missing-data-and-imputation.html#cb26-9"></a><span class="co">## -----------------</span></span>
+<span id="cb26-10"><a href="missing-data-and-imputation.html#cb26-10"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb26-11"><a href="missing-data-and-imputation.html#cb26-11"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb26-12"><a href="missing-data-and-imputation.html#cb26-12"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb26-13"><a href="missing-data-and-imputation.html#cb26-13"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb26-14"><a href="missing-data-and-imputation.html#cb26-14"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb26-15"><a href="missing-data-and-imputation.html#cb26-15"></a><span class="co">## -----------------</span></span>
+<span id="cb26-16"><a href="missing-data-and-imputation.html#cb26-16"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb26-17"><a href="missing-data-and-imputation.html#cb26-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb26-18"><a href="missing-data-and-imputation.html#cb26-18"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb26-19"><a href="missing-data-and-imputation.html#cb26-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb26-20"><a href="missing-data-and-imputation.html#cb26-20"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb26-21"><a href="missing-data-and-imputation.html#cb26-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb26-22"><a href="missing-data-and-imputation.html#cb26-22"></a><span class="co">## -----------------</span></span>
+<span id="cb26-23"><a href="missing-data-and-imputation.html#cb26-23"></a><span class="co"># Missing data check on the raw data set</span></span>
+<span id="cb26-24"><a href="missing-data-and-imputation.html#cb26-24"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb26-25"><a href="missing-data-and-imputation.html#cb26-25"></a><span class="kw">head</span>(ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>MissDatSummary)</span>
+<span id="cb26-26"><a href="missing-data-and-imputation.html#cb26-26"></a><span class="co">##   UnitCode N_missing PrcDataAll LowDataAll</span></span>
+<span id="cb26-27"><a href="missing-data-and-imputation.html#cb26-27"></a><span class="co">## 1      AUT         0        100      FALSE</span></span>
+<span id="cb26-28"><a href="missing-data-and-imputation.html#cb26-28"></a><span class="co">## 2      BEL         0        100      FALSE</span></span>
+<span id="cb26-29"><a href="missing-data-and-imputation.html#cb26-29"></a><span class="co">## 3      BGR         0        100      FALSE</span></span>
+<span id="cb26-30"><a href="missing-data-and-imputation.html#cb26-30"></a><span class="co">## 4      HRV         0        100      FALSE</span></span>
+<span id="cb26-31"><a href="missing-data-and-imputation.html#cb26-31"></a><span class="co">## 5      CYP         0        100      FALSE</span></span>
+<span id="cb26-32"><a href="missing-data-and-imputation.html#cb26-32"></a><span class="co">## 6      CZE         0        100      FALSE</span></span></code></pre></div>
+<p>The <code>MissDataSummary</code> table shows the unit code, number of missing observations, and overall percentage data availability. Finally, the <code>LowDataAll</code> column can be used as a flag for units with data availability lower than a set amount <code>ind_thresh</code> which is one of the input arguments to <code>checkData()</code>. ASEM indicators were already chosen to fulfill minimum data requirements, for which reason the data availability is all above the default of 2/3.</p>
+<p>We will set the minimum data threshold a bit higher, and in doing so also demonstrate another feature of <code>checkData()</code>, which is to automatically screen units based on data availability. Setting <code>unit_screen = TRUE</code> will generate a new data set <code>.$Data$Screened</code> which only includes units with data availability above the set threshold. This data set can then be passed on to subsequent operations.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="missing-data-and-imputation.html#cb27-1"></a><span class="co"># Missing data check on the raw data set</span></span>
+<span id="cb27-2"><a href="missing-data-and-imputation.html#cb27-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">ind_thresh =</span> <span class="fl">0.85</span>, <span class="dt">unit_screen =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb27-3"><a href="missing-data-and-imputation.html#cb27-3"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>RemovedUnits</span></code></pre></div>
+<pre><code>## [1] &quot;BRN&quot; &quot;LAO&quot; &quot;MMR&quot;</code></pre>
+<p>This generates a new data set <code>.$Data$Screened</code> with the removed units recorded in <code>.$Analysis$Raw$RemovedUnits</code>, which in this case are Brunei, Laos and Myanmar. As a final option to mention, you can manually include or exclude units. So for example, a unit that doesn’t have sufficient data coverage could be manually included anyway, and another unit could be excluded.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="missing-data-and-imputation.html#cb29-1"></a><span class="co"># Countries to include and exclude</span></span>
+<span id="cb29-2"><a href="missing-data-and-imputation.html#cb29-2"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">UnitCode =</span> <span class="kw">c</span>(<span class="st">&quot;AUT&quot;</span>,<span class="st">&quot;BRN&quot;</span>), <span class="dt">Status =</span> <span class="kw">c</span>(<span class="st">&quot;Exclude&quot;</span>, <span class="st">&quot;Include&quot;</span>))</span>
+<span id="cb29-3"><a href="missing-data-and-imputation.html#cb29-3"></a></span>
+<span id="cb29-4"><a href="missing-data-and-imputation.html#cb29-4"></a><span class="co"># Missing data check on the raw data set</span></span>
+<span id="cb29-5"><a href="missing-data-and-imputation.html#cb29-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">ind_thresh =</span> <span class="fl">0.85</span>, <span class="dt">unit_screen =</span> <span class="ot">TRUE</span>, <span class="dt">Force =</span> df)</span>
+<span id="cb29-6"><a href="missing-data-and-imputation.html#cb29-6"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>RemovedUnits</span></code></pre></div>
+<pre><code>## [1] &quot;AUT&quot; &quot;LAO&quot; &quot;MMR&quot;</code></pre>
+<p>Now AUT has been excluded, even though it had sufficient data coverage, and BRN has been manually included, even though it didn’t. The intention is to give some flexibility to make exceptions for hard rules.</p>
+<p>The other output of interest from <code>checkData()</code> is missing data by group:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="missing-data-and-imputation.html#cb31-1"></a><span class="kw">head</span>(ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>MissDatByGroup[<span class="dv">30</span><span class="op">:</span><span class="dv">40</span>,])</span></code></pre></div>
+<pre><code>##    UnitCode Physical ConEcFin Political    Instit P2P Environ    Social
+## 30      GBR    100.0      100       100 100.00000 100     100 100.00000
+## 31      AUS    100.0      100       100 100.00000 100     100 100.00000
+## 32      BGD     87.5      100       100  83.33333  75     100  88.88889
+## 33      BRN     87.5       80       100 100.00000  75     100  55.55556
+## 34      KHM     87.5       80       100 100.00000  75     100  77.77778
+## 35      CHN    100.0      100       100 100.00000 100     100 100.00000
+##    SusEcFin      Conn      Sust     Index
+## 30      100 100.00000 100.00000 100.00000
+## 31      100 100.00000 100.00000 100.00000
+## 32       80  86.66667  89.47368  87.75510
+## 33       60  86.66667  68.42105  79.59184
+## 34      100  86.66667  89.47368  87.75510
+## 35       80 100.00000  94.73684  97.95918</code></pre>
+<p>This gives the percentage indicator data availability inside each aggregation group.</p>
 
 </div>
 </div>

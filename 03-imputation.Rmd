@@ -32,4 +32,50 @@ Then there is another class of methods which use data from other indicators to e
 
 * Simply substituting the mean or median of the *normalised* values of the other indicators
 * Subsituting the mean or median of *normalised* values of the other indicators *within the aggregation group*
-* Using a more formal approach, based on regression
+* Using a more formal approach, based on regression or more generally on statistical modelling
+
+Let's explore the options available in COINr
+
+## Data checks and screening
+
+A first step is to check in detail how much data missing. The function `checkData()` does this, and also has the option to screen units based on data availability.
+
+```{r, collapse=T}
+# Assemble ASEM data first
+ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta,
+                 AggMeta = COINr::ASEMAggMeta)
+# Missing data check on the raw data set
+ASEM <- checkData(ASEM, dset = "Raw")
+head(ASEM$Analysis$Raw$MissDatSummary)
+```
+
+The `MissDataSummary` table shows the unit code, number of missing observations, and overall percentage data availability. Finally, the `LowDataAll` column can be used as a flag for units with data availability lower than a set amount `ind_thresh` which is one of the input arguments to `checkData()`. ASEM indicators were already chosen to fulfill minimum data requirements, for which reason the data availability is all above the default of 2/3.
+
+We will set the minimum data threshold a bit higher, and in doing so also demonstrate another feature of `checkData()`, which is to automatically screen units based on data availability. Setting `unit_screen = TRUE` will generate a new data set `.$Data$Screened` which only includes units with data availability above the set threshold. This data set can then be passed on to subsequent operations.
+
+```{r}
+# Missing data check on the raw data set
+ASEM <- checkData(ASEM, dset = "Raw", ind_thresh = 0.85, unit_screen = TRUE)
+ASEM$Analysis$Raw$RemovedUnits
+```
+
+This generates a new data set `.$Data$Screened` with the removed units recorded in `.$Analysis$Raw$RemovedUnits`, which in this case are Brunei, Laos and Myanmar. As a final option to mention, you can manually include or exclude units. So for example, a unit that doesn't have sufficient data coverage could be manually included anyway, and another unit could be excluded.
+
+```{r}
+# Countries to include and exclude
+df <- data.frame(UnitCode = c("AUT","BRN"), Status = c("Exclude", "Include"))
+
+# Missing data check on the raw data set
+ASEM <- checkData(ASEM, dset = "Raw", ind_thresh = 0.85, unit_screen = TRUE, Force = df)
+ASEM$Analysis$Raw$RemovedUnits
+```
+
+Now AUT has been excluded, even though it had sufficient data coverage, and BRN has been manually included, even though it didn't. The intention is to give some flexibility to make exceptions for hard rules.
+
+The other output of interest from `checkData()` is missing data by group:
+
+```{r}
+head(ASEM$Analysis$Raw$MissDatByGroup[30:40,])
+```
+
+This gives the percentage indicator data availability inside each aggregation group.
