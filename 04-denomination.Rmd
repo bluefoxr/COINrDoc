@@ -141,6 +141,8 @@ The second (complimentary) way to approach denomination is from a statistical po
 ASEM <- getStats(ASEM, dset = "Raw", out2 = "COIN", t_denom = 0.8)
 # get the result
 ctable <- ASEM$Analysis$Raw$DenomCorrelations
+# remove first column
+ctable <- ctable[-1]
 # return only columns that have entries with correlation above 0.8
 ctable[,colSums((abs(ctable) > 0.8))>0]
 ```

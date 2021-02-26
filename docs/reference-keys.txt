@@ -9,7 +9,7 @@ terminology
 tips-for-using-coinr
 ordering
 syntax
-data-input
+coins-the-currency-of-coinr
 introduction-1
 the-three-inputs
 indicator-data
@@ -41,13 +41,10 @@ interactive-re-weighting-with-rew8r
 automatic-re-weighting
 manual-re-weighting
 helper-functions
-importing-and-exporting
+r-interfaces
+data-import
+export-to-excel
 selecting-data-sets-and-indicators
-getting-a-whole-data-set
-getting-specific-indicators
-getting-indicators-belonging-to-an-aggregation-group
-getting-aggregate-group-data-at-targeted-level
-use-with-data-frames
 rounding-data-frames
 appendix-r-resources
 introduction-to-r
