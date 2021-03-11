@@ -25,6 +25,10 @@ statistics-and-analysis
 missing-data-and-imputation
 concept
 data-checks-and-screening
+imputation-in-coinr
+by-column
+by-row
+by-column-and-row
 denomination
 concept-1
 denominating-in-coinr
@@ -32,8 +36,10 @@ on-coins
 on-data-frames
 when-to-denominate-and-by-what
 data-treatment
-example-one
-example-two
+why-treat-data
+winsorisation
+visualising-data-treatment
+further-examples-in-coinr
 normalisation
 aggregation
 weighting

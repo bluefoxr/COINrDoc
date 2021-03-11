@@ -79,7 +79,7 @@ ASEM$Analysis$Raw$StatTable %>%
 plot indicator distributions,
 
 ```{r, warning=F, message=F}
-plotIndDist(ASEM, type = "Violindot", inames = "Political")
+plotIndDist(ASEM, type = "Violindot", icodes = "Political")
 ```
 
 and visualise and explore overall results in an interactive dashboard

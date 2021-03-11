@@ -25,13 +25,13 @@ Finally, it can be a good way to communicate your index structure to other peopl
 Individual indicator distributions can be visualised in several different ways. For static plots, the main tool is `plotIndDist()` which generates histograms, boxplots, violin plots, dot plots and violin-dot plots. This is powered by `ggplot2`, and if you want to customise plots, you should use that directly. However, COINr plotting functions are intended as quick tools to visualise data, with easy access to the hierarchical data set. You can plot individual indicators:
 
 ```{r}
-plotIndDist(ASEM, type = "Histogram", inames = "LPI")
+plotIndDist(ASEM, type = "Histogram", icodes = "LPI")
 ```
 
 And you can also plot groups of indicators by calling aggregate names (notice that when multiple indicators are plotted, the indicator codes are used to label each plot, rather than indicator names, to save space):
 
 ```{r, warning=F, message=F}
-plotIndDist(ASEM, type = "Violindot", inames = "Physical")
+plotIndDist(ASEM, type = "Violindot", icodes = "Physical")
 ```
 
 The `plotIndDist()` function has several arguments. In the first place, any indicator or aggregation (pillar, dimension, index etc) can be plotted by using the `dset` argument. If you have only just assembled the COIN Object, you will only have the "Raw" dataset, but any other dataset can be accessed, e.g. treated data set, aggregated data set, and so on. You can also target different levels using the `aglev` argument - for more details see the chapter on [Helper functions].

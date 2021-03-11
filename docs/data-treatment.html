@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-26" />
+<meta name="date" content="2021-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -178,6 +178,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>5</b> Missing data and Imputation</a><ul>
 <li class="chapter" data-level="5.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>5.1</b> Concept</a></li>
 <li class="chapter" data-level="5.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>5.2</b> Data checks and screening</a></li>
+<li class="chapter" data-level="5.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>5.3</b> Imputation in COINr</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>5.3.1</b> By column</a></li>
+<li class="chapter" data-level="5.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>5.3.2</b> By row</a></li>
+<li class="chapter" data-level="5.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>5.3.3</b> By column and row</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>6</b> Denomination</a><ul>
 <li class="chapter" data-level="6.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
@@ -188,8 +193,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>6.3</b> When to denominate, and by what?</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>7</b> Data Treatment</a><ul>
-<li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#example-one"><i class="fa fa-check"></i><b>7.1</b> Example one</a></li>
-<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#example-two"><i class="fa fa-check"></i><b>7.2</b> Example two</a></li>
+<li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>7.1</b> Why treat data?</a></li>
+<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>7.2</b> Winsorisation</a></li>
+<li class="chapter" data-level="7.3" data-path="data-treatment.html"><a href="data-treatment.html#visualising-data-treatment"><i class="fa fa-check"></i><b>7.3</b> Visualising data treatment</a></li>
+<li class="chapter" data-level="7.4" data-path="data-treatment.html"><a href="data-treatment.html#further-examples-in-coinr"><i class="fa fa-check"></i><b>7.4</b> Further examples in COINr</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a></li>
 <li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a></li>
@@ -238,12 +245,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="data-treatment" class="section level1">
 <h1><span class="header-section-number">Chapter 7</span> Data Treatment</h1>
-<p>Some <em>significant</em> applications are demonstrated in this chapter.</p>
-<div id="example-one" class="section level2">
-<h2><span class="header-section-number">7.1</span> Example one</h2>
+<p>Data treatment is the process of altering indicators to improve their statistical properties, mainly for the purposes of aggregation.</p>
+<p>Data treatment is a delicate subject, because it essentially involves changing the values of certain observations, or transforming an entire distribution. This entails balancing two opposing considerations:</p>
+<ul>
+<li>On the one hand, treatment should be used as sparingly as possible, because you are altering one or more known data points.</li>
+<li>On the other hand, <em>this is only done for the purposes of aggregation,</em> (i.e. creating a composite score), and since composite indicators are normally presented with the index scores and original data accessible underneath, the underlying data would normally be presented in its original form.</li>
+</ul>
+<p>Therefore, be careful, but also realise that data treatment is not unethical, it’s simply an assumption in a statistical process. Like any other step or assumption though, any data treatment should be carefully recorded.</p>
+<div id="why-treat-data" class="section level2">
+<h2><span class="header-section-number">7.1</span> Why treat data?</h2>
+<p>Outliers and strange distributions.</p>
 </div>
-<div id="example-two" class="section level2">
-<h2><span class="header-section-number">7.2</span> Example two</h2>
+<div id="winsorisation" class="section level2">
+<h2><span class="header-section-number">7.2</span> Winsorisation</h2>
+<p>Examples from COINr</p>
+</div>
+<div id="visualising-data-treatment" class="section level2">
+<h2><span class="header-section-number">7.3</span> Visualising data treatment</h2>
+<p>Using Shiny.</p>
+</div>
+<div id="further-examples-in-coinr" class="section level2">
+<h2><span class="header-section-number">7.4</span> Further examples in COINr</h2>
+<p>Other features of <code>treat()</code>.</p>
 
 </div>
 </div>

@@ -17,7 +17,7 @@ library(magrittr) # for pipe operations
 # build ASEM index
 ASEM <- build_ASEM()
 # plot international trade in goods against GDP
-iplotIndDist2(ASEM, dsets = c("Denominators", "Raw"), inames = c("Den_GDP", "Goods"))
+iplotIndDist2(ASEM, dsets = c("Denominators", "Raw"), icodes = c("Den_GDP", "Goods"))
 # (note: need to fix labelling and units of denominators)
 ```
 
@@ -103,7 +103,7 @@ Let's compare the raw Flights data with the Flights per GDP data:
 
 ```{r}
 # plot raw flights against denominated
-iplotIndDist2(ASEM, dsets = c("Raw", "Denominated"), inames = "Flights")
+iplotIndDist2(ASEM, dsets = c("Raw", "Denominated"), icodes = "Flights")
 ```
 
 Clearly, the denominated and raw indicators are very different from one another, reflecting the completely different meaning.

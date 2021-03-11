@@ -1,7 +1,26 @@
 # Data Treatment
 
-Some _significant_ applications are demonstrated in this chapter.
+Data treatment is the process of altering indicators to improve their statistical properties, mainly for the purposes of aggregation.
 
-## Example one
+Data treatment is a delicate subject, because it essentially involves changing the values of certain observations, or transforming an entire distribution. This entails balancing two opposing considerations:
 
-## Example two
+* On the one hand, treatment should be used as sparingly as possible, because you are altering one or more known data points.
+* On the other hand, *this is only done for the purposes of aggregation,* (i.e. creating a composite score), and since composite indicators are normally presented with the index scores and original data accessible underneath, the underlying data would normally be presented in its original form.
+
+Therefore, be careful, but also realise that data treatment is not unethical, it's simply an assumption in a statistical process. Like any other step or assumption though, any data treatment should be carefully recorded.
+
+## Why treat data?
+
+Outliers and strange distributions.
+
+## Winsorisation
+
+Examples from COINr
+
+## Visualising data treatment
+
+Using Shiny.
+
+## Further examples in COINr
+
+Other features of `treat()`.

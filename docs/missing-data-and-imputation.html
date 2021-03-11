@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-02-26" />
+<meta name="date" content="2021-03-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -178,6 +178,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>5</b> Missing data and Imputation</a><ul>
 <li class="chapter" data-level="5.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>5.1</b> Concept</a></li>
 <li class="chapter" data-level="5.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>5.2</b> Data checks and screening</a></li>
+<li class="chapter" data-level="5.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>5.3</b> Imputation in COINr</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>5.3.1</b> By column</a></li>
+<li class="chapter" data-level="5.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>5.3.2</b> By row</a></li>
+<li class="chapter" data-level="5.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>5.3.3</b> By column and row</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>6</b> Denomination</a><ul>
 <li class="chapter" data-level="6.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
@@ -188,8 +193,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>6.3</b> When to denominate, and by what?</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>7</b> Data Treatment</a><ul>
-<li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#example-one"><i class="fa fa-check"></i><b>7.1</b> Example one</a></li>
-<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#example-two"><i class="fa fa-check"></i><b>7.2</b> Example two</a></li>
+<li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>7.1</b> Why treat data?</a></li>
+<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>7.2</b> Winsorisation</a></li>
+<li class="chapter" data-level="7.3" data-path="data-treatment.html"><a href="data-treatment.html#visualising-data-treatment"><i class="fa fa-check"></i><b>7.3</b> Visualising data treatment</a></li>
+<li class="chapter" data-level="7.4" data-path="data-treatment.html"><a href="data-treatment.html#further-examples-in-coinr"><i class="fa fa-check"></i><b>7.4</b> Further examples in COINr</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a></li>
 <li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a></li>
@@ -356,7 +363,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 34      100  86.66667  89.47368  87.75510
 ## 35       80 100.00000  94.73684  97.95918</code></pre>
 <p>This gives the percentage indicator data availability inside each aggregation group.</p>
+</div>
+<div id="imputation-in-coinr" class="section level2">
+<h2><span class="header-section-number">5.3</span> Imputation in COINr</h2>
+<p>Now we turn to estimating missing data points in COINr. The function of interest is <code>impute()</code>, which gives a number of options, corresponding to the types of imputation discussed above. Briefly, COINr can impute using:</p>
+<ul>
+<li>The indicator mean, either across all countries or within a specified group</li>
+<li>The indicator median, either across all countries or within a specified group</li>
+<li>The mean or median, within the aggregation group</li>
+<li>The expectation maximisation algorithm, via the <a href="https://cran.r-project.org/web/packages/Amelia/index.html">AMELIA</a> package</li>
+</ul>
+<div id="by-column" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> By column</h3>
+<p>The <code>impute()</code> function follows a similar logic to other COINr functions. We can enter a COIN or a data frame, and get a COIN or a data frame back. Let’s impute on a COIN first, using the raw ASEM data.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="missing-data-and-imputation.html#cb33-1"></a><span class="co"># Assemble ASEM data if not done already (uncomment the following)</span></span>
+<span id="cb33-2"><a href="missing-data-and-imputation.html#cb33-2"></a><span class="co"># ASEM &lt;- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta,</span></span>
+<span id="cb33-3"><a href="missing-data-and-imputation.html#cb33-3"></a><span class="co">#                 AggMeta = COINr::ASEMAggMeta)</span></span>
+<span id="cb33-4"><a href="missing-data-and-imputation.html#cb33-4"></a></span>
+<span id="cb33-5"><a href="missing-data-and-imputation.html#cb33-5"></a><span class="co"># check how many NAs we have</span></span>
+<span id="cb33-6"><a href="missing-data-and-imputation.html#cb33-6"></a><span class="kw">sum</span>(<span class="kw">is.na</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Raw))</span>
+<span id="cb33-7"><a href="missing-data-and-imputation.html#cb33-7"></a><span class="co">## [1] 63</span></span>
+<span id="cb33-8"><a href="missing-data-and-imputation.html#cb33-8"></a></span>
+<span id="cb33-9"><a href="missing-data-and-imputation.html#cb33-9"></a><span class="co"># impute using indicator mean</span></span>
+<span id="cb33-10"><a href="missing-data-and-imputation.html#cb33-10"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">imtype =</span> <span class="st">&quot;ind_mean&quot;</span>)</span>
+<span id="cb33-11"><a href="missing-data-and-imputation.html#cb33-11"></a><span class="co">## Missing data points detected = 63</span></span>
+<span id="cb33-12"><a href="missing-data-and-imputation.html#cb33-12"></a><span class="co">## Missing data points imputed = 63, using method = ind_mean</span></span>
+<span id="cb33-13"><a href="missing-data-and-imputation.html#cb33-13"></a></span>
+<span id="cb33-14"><a href="missing-data-and-imputation.html#cb33-14"></a><span class="co"># check how many NAs after imputation</span></span>
+<span id="cb33-15"><a href="missing-data-and-imputation.html#cb33-15"></a><span class="kw">sum</span>(<span class="kw">is.na</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed))</span>
+<span id="cb33-16"><a href="missing-data-and-imputation.html#cb33-16"></a><span class="co">## [1] 0</span></span></code></pre></div>
+<p>If the input is a COIN, by default the output is an updated COIN, with a new data set <code>.$Data$Imputed</code>. We can also set <code>out2 = "df"</code> to output the imputed data frame on its own.</p>
+<p>The above example replaces <code>NA</code> values with the mean of the indicator, and setting <code>imtype = ind_median</code> will instead use the indicator median. In this respect, we are using information from other units, inside the same indicator, to estimate the missing values.</p>
+<p>Imputing by group may be more informative if you have meaningful grouping variables. For example, the ASEM data set has groupings by GDP, population, GDP per capita and whether the country is European or Asian. We might hypothesise that it is better to replace <code>NA</code> values with the median inside a group, say by GDP group. This would imply that countries with a similar GDP are likely to have similar indicator values.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="missing-data-and-imputation.html#cb34-1"></a><span class="co"># impute using GDP group median</span></span>
+<span id="cb34-2"><a href="missing-data-and-imputation.html#cb34-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">imtype =</span> <span class="st">&quot;indgroup_median&quot;</span>, <span class="dt">groupvar =</span> <span class="st">&quot;Group_GDP&quot;</span>)</span>
+<span id="cb34-3"><a href="missing-data-and-imputation.html#cb34-3"></a><span class="co">## Missing data points detected = 63</span></span>
+<span id="cb34-4"><a href="missing-data-and-imputation.html#cb34-4"></a><span class="co">## Missing data points imputed = 63, using method = indgroup_median</span></span></code></pre></div>
+</div>
+<div id="by-row" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> By row</h3>
+<p>So far, the imputation has been using values from the same column (indicator). Another possibility is to use values from other indicators, i.e operate row-wise. COINr offers two basic options in this respect: either to take the mean or median of the other indicators inside the aggregation group, and this can be done by setting <code>imtype = "agg_mean"</code> or <code>imtype = "agg_median"</code> respectively.</p>
+<p>Both of these imputation methods will, for a given unit, take the mean or median of the <em>normalised</em> values of the other indicators in the aggregation group in the level above indicator level. The process is as follows, for each <code>NA</code> value:</p>
+<ol style="list-style-type: decimal">
+<li>Find indicators in the same aggregation group</li>
+<li>Normalise these indicators using the min-max method, so they each have a minimum of zero and a maximum of one.</li>
+<li>Replace the <code>NA</code> with the mean or median of the normalised values, for the unit in question.</li>
+<li>Reverse the min-max transformation so that the indicators are returned to their original scale.</li>
+</ol>
+<p>It’s important to realise that this is equivalent to aggregating with the mean or median without imputing first. This is because in the aggregation step, if we take the mean of a group of indicators, and there is a <code>NA</code> present, this value is excluded from the mean calculation. Doing this is mathematically equivalent to assigning the mean to that missing value. Therefore, one reason to use this imputation method is to see which values are being implicitly assigned as a result of excluding missing values from the aggregation step. This is sometimes known as “shadow imputation”.</p>
+</div>
+<div id="by-column-and-row" class="section level3">
+<h3><span class="header-section-number">5.3.3</span> By column and row</h3>
+<p>Finally, we can use a regression-based <em>expectation maximisation</em> algorithm, imported via the <code>AMELIA</code> package. This estimates missing values using the values of the other indicators <em>and</em> the other units. This effectively involves regressing each indicator on other indicators, and predicting missing values.</p>
+<p>A catch of this approach is that if the number of units is small compared to the number of indicators, there will not be enough observations to estimate the parameters of the model. This is definitely the case if you have more indicators than observations. To use the EM algorithm in this case, imputation is performed on aggregation groups. So, to use the EM approach in <code>COINr</code>, you have to specify the aggregation level to group indicators by.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="missing-data-and-imputation.html#cb35-1"></a><span class="co"># impute using EM, grouping indicators inside their pillars (level 2)</span></span>
+<span id="cb35-2"><a href="missing-data-and-imputation.html#cb35-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">imtype =</span> <span class="st">&quot;EM&quot;</span>, <span class="dt">EMaglev =</span> <span class="dv">2</span>)</span>
+<span id="cb35-3"><a href="missing-data-and-imputation.html#cb35-3"></a><span class="co">## Missing data points detected = 63</span></span>
+<span id="cb35-4"><a href="missing-data-and-imputation.html#cb35-4"></a><span class="co">## Missing data points imputed = 63, using method = EM</span></span></code></pre></div>
+<p>This works, because the ASEM data set has 51 units and no more thann eight indicators per pillar. However, if we were to use <code>EMaglev = 3</code>, i.e. try imputing indicators grouped into the two sub-indexes, it does not work.</p>
+<p>Finding the right aggregation level to impute at might involve a bit of trial and error, but the advantage of imputing by groups of indicators is that aggregation groups are usually composed of indicators that are similar in some respect. This makes it more likely that they are good predictors of the other indicators in their group.</p>
+<p>The <code>AMELIA</code> package offers many more options for imputation that are not available through the <code>impute()</code> function, such as bootstrapping, time-series imputation and more. As with plotting packages <code>COINr</code> aims to provide an easy and quick interface to standard imputation in <code>AMELIA</code>, but if you want to have full control you should use the <code>AMELIA</code> package directly. Other good imputation options are the <a href="https://cran.r-project.org/web/packages/mice/index.html"><code>MICE</code></a> package (Multivariate Imputation via Chained Equations) and the <a href="https://cran.rstudio.com/web/packages/missForest/index.html"><code>missForest</code></a> package (using random forests).</p>
 
+</div>
 </div>
 </div>
             </section>

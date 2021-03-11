@@ -83,14 +83,14 @@ More usefully, we can get specific indicators:
 
 ```{r}
 # Get raw data set
-datalist <- getIn(ASEM, dset = "Raw", inames = c("Flights", "LPI"))
+datalist <- getIn(ASEM, dset = "Raw", icodes = c("Flights", "LPI"))
 datalist$ind_data_only
 ```
 More usefully still, we can get groups of indicators based on their groupings. For example, we can ask for indicators that belong to the "Political" group:
 
 ```{r}
 # Get raw data set
-datalist <- getIn(ASEM, dset = "Raw", inames = "Political", aglev = 1)
+datalist <- getIn(ASEM, dset = "Raw", icodes = "Political", aglev = 1)
 datalist$ind_data_only
 ```
 
@@ -98,14 +98,14 @@ To do this, you have to specify the `aglev` argument, which specifies which leve
 
 ```{r}
 # Get raw data set
-datalist <- getIn(ASEM, dset = "Aggregated", inames = "Conn", aglev = 1)
+datalist <- getIn(ASEM, dset = "Aggregated", icodes = "Conn", aglev = 1)
 datalist$ind_data_only
 ```
 Or we can call all the pillars belonging to "Connectivity", i.e. the level below:
 
 ```{r}
 # Get raw data set
-datalist <- getIn(ASEM, dset = "Aggregated", inames = "Conn", aglev = 2)
+datalist <- getIn(ASEM, dset = "Aggregated", icodes = "Conn", aglev = 2)
 datalist$ind_data_only
 ```
 
@@ -113,7 +113,7 @@ Finally, if we want "Conn" itself, we can just call it directly with no `aglev` 
 
 ```{r}
 # Get raw data set
-datalist <- getIn(ASEM, dset = "Aggregated", inames = "Conn")
+datalist <- getIn(ASEM, dset = "Aggregated", icodes = "Conn")
 datalist$ind_data_only
 ```
 
@@ -121,7 +121,7 @@ We can also use `getIn()` with data frames, and it will behave in more or less t
 
 ```{r}
 # use the ASEM indicator data frame directly
-datalist <- getIn(ASEMIndData, inames = c("LPI", "Goods"))
+datalist <- getIn(ASEMIndData, icodes = c("LPI", "Goods"))
 datalist$ind_data_only
 ```
 

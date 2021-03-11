@@ -79,3 +79,72 @@ head(ASEM$Analysis$Raw$MissDatByGroup[30:40,])
 ```
 
 This gives the percentage indicator data availability inside each aggregation group.
+
+## Imputation in COINr
+
+Now we turn to estimating missing data points in COINr. The function of interest is `impute()`, which gives a number of options, corresponding to the types of imputation discussed above. Briefly, COINr can impute using:
+
+* The indicator mean, either across all countries or within a specified group
+* The indicator median, either across all countries or within a specified group
+* The mean or median, within the aggregation group
+* The expectation maximisation algorithm, via the [AMELIA](https://cran.r-project.org/web/packages/Amelia/index.html) package
+
+### By column
+
+The `impute()` function follows a similar logic to other COINr functions. We can enter a COIN or a data frame, and get a COIN or a data frame back. Let's impute on a COIN first, using the raw ASEM data.
+
+```{r, collapse=T}
+# Assemble ASEM data if not done already (uncomment the following)
+# ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta,
+#                 AggMeta = COINr::ASEMAggMeta)
+
+# check how many NAs we have
+sum(is.na(ASEM$Data$Raw))
+
+# impute using indicator mean
+ASEM <- impute(ASEM, dset = "Raw", imtype = "ind_mean")
+
+# check how many NAs after imputation
+sum(is.na(ASEM$Data$Imputed))
+```
+
+If the input is a COIN, by default the output is an updated COIN, with a new data set `.$Data$Imputed`. We can also set `out2 = "df"` to output the imputed data frame on its own.
+
+The above example replaces `NA` values with the mean of the indicator, and setting `imtype = ind_median` will instead use the indicator median. In this respect, we are using information from other units, inside the same indicator, to estimate the missing values.
+
+Imputing by group may be more informative if you have meaningful grouping variables. For example, the ASEM data set has groupings by GDP, population, GDP per capita and whether the country is European or Asian. We might hypothesise that it is better to replace `NA` values with the median inside a group, say by GDP group. This would imply that countries with a similar GDP are likely to have similar indicator values.
+
+```{r, collapse=T}
+# impute using GDP group median
+ASEM <- impute(ASEM, dset = "Raw", imtype = "indgroup_median", groupvar = "Group_GDP")
+```
+
+### By row
+
+So far, the imputation has been using values from the same column (indicator). Another possibility is to use values from other indicators, i.e operate row-wise. COINr offers two basic options in this respect: either to take the mean or median of the other indicators inside the aggregation group, and this can be done by setting `imtype = "agg_mean"` or `imtype = "agg_median"` respectively.
+
+Both of these imputation methods will, for a given unit, take the mean or median of the *normalised* values of the other indicators in the aggregation group in the level above indicator level. The process is as follows, for each `NA` value:
+
+1. Find indicators in the same aggregation group
+2. Normalise these indicators using the min-max method, so they each have a minimum of zero and a maximum of one.
+3. Replace the `NA` with the mean or median of the normalised values, for the unit in question.
+4. Reverse the min-max transformation so that the indicators are returned to their original scale.
+
+It's important to realise that this is equivalent to aggregating with the mean or median without imputing first. This is because in the aggregation step, if we take the mean of a group of indicators, and there is a `NA` present, this value is excluded from the mean calculation. Doing this is mathematically equivalent to assigning the mean to that missing value. Therefore, one reason to use this imputation method is to see which values are being implicitly assigned as a result of excluding missing values from the aggregation step. This is sometimes known as "shadow imputation".
+
+### By column and row
+
+Finally, we can use a regression-based *expectation maximisation* algorithm, imported via the `AMELIA` package. This estimates missing values using the values of the other indicators *and* the other units. This effectively involves regressing each indicator on other indicators, and predicting missing values.
+
+A catch of this approach is that if the number of units is small compared to the number of indicators, there will not be enough observations to estimate the parameters of the model. This is definitely the case if you have more indicators than observations. To use the EM algorithm in this case, imputation is performed on aggregation groups. So, to use the EM approach in `COINr`, you have to specify the aggregation level to group indicators by.
+
+```{r, collapse=T}
+# impute using EM, grouping indicators inside their pillars (level 2)
+ASEM <- impute(ASEM, imtype = "EM", EMaglev = 2)
+```
+
+This works, because the ASEM data set has 51 units and no more thann eight indicators per pillar. However, if we were to use `EMaglev = 3`, i.e. try imputing indicators grouped into the two sub-indexes, it does not work.
+
+Finding the right aggregation level to impute at might involve a bit of trial and error, but the advantage of imputing by groups of indicators is that aggregation groups are usually composed of indicators that are similar in some respect. This makes it more likely that they are good predictors of the other indicators in their group.
+
+The `AMELIA` package offers many more options for imputation that are not available through the `impute()` function, such as bootstrapping, time-series imputation and more. As with plotting packages `COINr` aims to provide an easy and quick interface to standard imputation in `AMELIA`, but if you want to have full control you should use the `AMELIA` package directly. Other good imputation options are the [`MICE`](https://cran.r-project.org/web/packages/mice/index.html) package (Multivariate Imputation via Chained Equations) and the [`missForest` ](https://cran.rstudio.com/web/packages/missForest/index.html) package (using random forests).
