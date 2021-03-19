@@ -1,3 +1,90 @@
 # Normalisation
 
-Some stuff.
+Normalisation is the operation of bringing indicators onto comparable scales so that they can be aggregated more fairly. To see why this is necessary, consider aggregating GDP values (billions or trillions of dollars) with percentage tertiary graduates (tens of percent). Average values here would make no sense because one is on a completely different scale to the other.
+
+## Approaches
+
+### First: adjust direction
+
+Indicators can either be positively or negatively related to the concept that you are trying to measure. For example, in an index of quality of life, median income would probably be a positive indicator. Prevalance of malnourishment would be a negative indicator (higher values should give lower scores in quality of life).
+
+Accounting for these differences is considered part of the normalisation step. Indicators loaded into COINr should usually have a "Direction" column in the `IndMeta` input to `assemble()`, which is 1 for positive indicators, and -1 for negative indicators. With this information, normalisation is a two step procedure:
+
+1. Multiply the values of each indicator by their corresponding direction value (either 1 or -1).
+2. Apply one of the normalisation methods described below.
+
+It's that simple. COINr has this built in, so you don't need to do anything other than specify the directions.
+
+### Linear transformations
+
+Normalisation is relatively simple but there are still a number of different approaches which have different properties.
+
+Perhaps the most straightforward and intuitive option (and therefore probably the most widely used) is called the *min-max* transformation. This is a simple linear function which rescales the indicator to have a minimum value $l$, a maximum value $u$, and consequently a range $u-l$, and is as follows:
+
+$$ \tilde{x}_{\text{min}} = \frac{ x - x_{\text{min}} }{ x_{\text{max}} - x_{\text{min}} } \times (u-l) + l$$
+where $\tilde{x}$ is the normalised indicator value. For example, if $l=0$ and $u=100$ this will rescale the indicator to lie exactly onto the interval $[0, 100]$. The transformation is linear because it does not change the *shape* of the distribution, it simply shrinks or expands it, and moves it.
+
+A similar transformation is to take *z-scores*, which instead use the mean and standard deviation as reference points:
+
+$$ \tilde{x}_{\text{min}} = \frac{ x - \mu_x }{ \sigma_x } \times a + b$$
+where $\mu_x$ and $\sigma_x$ are the mean and standard deviation of $x$. The indicator is first re-scaled to have mean zero and standard deviation of one. Then it is scaled by a factor $a$ and moved by a distance $b$. This is very similar to the min-max transformation in that it can be reduced to multiplying by a factor and adding a constant, which is the definition of a linear transformation. However, the two approaches have different implications. One is that Z scores will generally be less sensitive to outliers, because the standard deviation is less dependent on an outlying value than the minimum or maximum.
+
+Following the min-max and z-score, the general linear transformation is defined as:
+
+$$ \tilde{x} = \frac{ x - p }{ q } \times a + b$$
+
+and it is fairly straightforward to see how z-scores and the min-max transformations are special cases of this.
+
+### Nonlinear transformations
+
+A simple nonlinear transformation is the rank transformation.
+
+$$ \tilde{x} = \text{rank}(x)$$
+where the ranks should be defined so that the lowest indicator value has a rank of 1, the second lowest a rank of 2, and so on. The rank transformation is attractive because it automatically eliminates any outliers. Therefore there would not usually be any need to treat the data previously. However, it converts detailed indicator scores to simple ranks, which might be too reductionist for some.
+
+It's worth pointing out that there are different ways to rank values, because of how ties (units with the same score) are handled. To read about this, just call `?rank` in R.
+
+Similar approaches to simple ranks include Borda scores, which are simply the ranks described above but minus 1 (so the lowest score is 0 instead of 1), and percentile ranks.
+
+## Normalisation in COINr
+
+The normalisation function in COINr is imaginatively named `normalise()`. It has the following main features:
+
+* A wide range of normalisation methods, including custom func
+* Customisable parameters for normalisation
+* Possibility to specify detailed individual treatment for each indicator
+
+The function looks like this:
+
+```{r, eval=FALSE}
+# don't run this chunk, just for illustration (will throw error if run)
+normalise <- function(COIN, ntype="minmax", npara = NULL, icodes = NULL,
+                      dset = "Raw", directions = NULL, individual = NULL,
+                      indiv_only = FALSE, out2 = NULL){
+```
+
+As an input, it takes a COIN or data frame, as usual. Default normalisation can be achieved by simply calling:
+
+```{r Default normalise, collapse=T, message=F, warning=F}
+library(COINr)
+# Build ASEM index up to denomination
+ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta, AggMeta = COINr::ASEMAggMeta)
+ASEM <- denominate(ASEM)
+
+# Default normalisation (min max scaled between 0 and 100)
+ASEM <- normalise(ASEM, dset = "Denominated")
+
+# compare one of the indicators
+iplotIndDist2(ASEM, dsets = c("Denominated", "Normalised"),
+              icodes = "TertGrad", ptype = "Histogram")
+```
+
+
+* `ntype` is the type of normalisation to apply to all indicators. These will be described below.
+* `npara` is an object which supports `ntype`. Details are also given below.
+* `directions` is an optional vector of indicator directions: each element of the vector corresponds to an indicator, such that if it is -1, the direction of the indicator is reversed. Otherwise if it is 1 it is kept as it is. If this is not specified, the function will look in the COIN object for the direction data (it should have been specified in `.$Input$IndMeta`), and if it is not there it will assign all indicators a positive direction.
+* `individual` An optional argument (a named list) if you want to subject some indicators to individual normalisation that is different from the others. This works by specifying a list with specifications of `ntype` and `npara` for specific indicators. It is a list because depending on `ntype`, elements can take different formats. This is explained below.
+* `indiv_only` Logical. As with `treat()`, if this is set to `FALSE` (default), then the indicators that are *not* specified in `individual` will be normalised according to the `ntype` and `npara` arguments specified in the function argument. Otherwise if `TRUE`, only the indicators in `individual` will be normalised, and the others will be unaffected.
+
+
+If `ntype` is minmax, then `npara` should be a vector with two elements, the minimum and maximum of the normalised indicators (e.g. if `npara = c(0,100)`, indicators will all be scaled to have min 0 and max 100). For zscores, `npara` is a vector containing the mean and standard deviation of the normalised indicators. For scaled normalisation, `npara` is a vector with the $a$ and $b$ coefficients mentioned above. For custom normalisation, `npara` is a function to apply to each indicator (e.g. could be `function(x) (x-min(x))/(max(x)-min(x))`, which would result in minmax (careful with `na.rm` though, which I didn't include here)). Note that `npara` has default values for each `ntype` (excect custom), e.g. minmax defaults to a range of [0, 100].

@@ -54,9 +54,9 @@ ASEM <- assemble(IndData = ASEMIndData,
 # denominate data using specifications in ASEMIndMeta
 ASEM <- denominate(ASEM)
 # normalise data
-ASEM <- coin_normalise(ASEM, dset = "Denominated")
+ASEM <- normalise(ASEM, dset = "Denominated")
 # Aggregate normalised data
-ASEM <- coin_aggregate(ASEM, dset = "Normalised")
+ASEM <- aggregate(ASEM, dset = "Normalised")
 
 ```
 

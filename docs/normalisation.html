@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-03-11" />
+<meta name="date" content="2021-03-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -194,11 +194,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>7</b> Data Treatment</a><ul>
 <li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>7.1</b> Why treat data?</a></li>
-<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>7.2</b> Winsorisation</a></li>
-<li class="chapter" data-level="7.3" data-path="data-treatment.html"><a href="data-treatment.html#visualising-data-treatment"><i class="fa fa-check"></i><b>7.3</b> Visualising data treatment</a></li>
-<li class="chapter" data-level="7.4" data-path="data-treatment.html"><a href="data-treatment.html#further-examples-in-coinr"><i class="fa fa-check"></i><b>7.4</b> Further examples in COINr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>7.2</b> How to treat data</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>7.2.1</b> Winsorisation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>7.2.2</b> Transformation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a></li>
+<li class="chapter" data-level="7.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>7.3</b> Data treatment in COINr</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>7.3.1</b> Global treatment</a></li>
+<li class="chapter" data-level="7.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>7.3.2</b> Individual treatment</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>7.4</b> Interactive visualisation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a><ul>
+<li class="chapter" data-level="8.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>8.1</b> Approaches</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>8.1.1</b> First: adjust direction</a></li>
+<li class="chapter" data-level="8.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>8.1.2</b> Linear transformations</a></li>
+<li class="chapter" data-level="8.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>8.1.3</b> Nonlinear transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>8.2</b> Normalisation in COINr</a></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a></li>
 <li class="chapter" data-level="10" data-path="weighting.html"><a href="weighting.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
 <li class="chapter" data-level="10.1" data-path="weighting.html"><a href="weighting.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a></li>
@@ -245,8 +258,78 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="normalisation" class="section level1">
 <h1><span class="header-section-number">Chapter 8</span> Normalisation</h1>
-<p>Some stuff.</p>
+<p>Normalisation is the operation of bringing indicators onto comparable scales so that they can be aggregated more fairly. To see why this is necessary, consider aggregating GDP values (billions or trillions of dollars) with percentage tertiary graduates (tens of percent). Average values here would make no sense because one is on a completely different scale to the other.</p>
+<div id="approaches" class="section level2">
+<h2><span class="header-section-number">8.1</span> Approaches</h2>
+<div id="first-adjust-direction" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> First: adjust direction</h3>
+<p>Indicators can either be positively or negatively related to the concept that you are trying to measure. For example, in an index of quality of life, median income would probably be a positive indicator. Prevalance of malnourishment would be a negative indicator (higher values should give lower scores in quality of life).</p>
+<p>Accounting for these differences is considered part of the normalisation step. Indicators loaded into COINr should usually have a “Direction” column in the <code>IndMeta</code> input to <code>assemble()</code>, which is 1 for positive indicators, and -1 for negative indicators. With this information, normalisation is a two step procedure:</p>
+<ol style="list-style-type: decimal">
+<li>Multiply the values of each indicator by their corresponding direction value (either 1 or -1).</li>
+<li>Apply one of the normalisation methods described below.</li>
+</ol>
+<p>It’s that simple. COINr has this built in, so you don’t need to do anything other than specify the directions.</p>
+</div>
+<div id="linear-transformations" class="section level3">
+<h3><span class="header-section-number">8.1.2</span> Linear transformations</h3>
+<p>Normalisation is relatively simple but there are still a number of different approaches which have different properties.</p>
+<p>Perhaps the most straightforward and intuitive option (and therefore probably the most widely used) is called the <em>min-max</em> transformation. This is a simple linear function which rescales the indicator to have a minimum value <span class="math inline">\(l\)</span>, a maximum value <span class="math inline">\(u\)</span>, and consequently a range <span class="math inline">\(u-l\)</span>, and is as follows:</p>
+<p><span class="math display">\[ \tilde{x}_{\text{min}} = \frac{ x - x_{\text{min}} }{ x_{\text{max}} - x_{\text{min}} } \times (u-l) + l\]</span>
+where <span class="math inline">\(\tilde{x}\)</span> is the normalised indicator value. For example, if <span class="math inline">\(l=0\)</span> and <span class="math inline">\(u=100\)</span> this will rescale the indicator to lie exactly onto the interval <span class="math inline">\([0, 100]\)</span>. The transformation is linear because it does not change the <em>shape</em> of the distribution, it simply shrinks or expands it, and moves it.</p>
+<p>A similar transformation is to take <em>z-scores</em>, which instead use the mean and standard deviation as reference points:</p>
+<p><span class="math display">\[ \tilde{x}_{\text{min}} = \frac{ x - \mu_x }{ \sigma_x } \times a + b\]</span>
+where <span class="math inline">\(\mu_x\)</span> and <span class="math inline">\(\sigma_x\)</span> are the mean and standard deviation of <span class="math inline">\(x\)</span>. The indicator is first re-scaled to have mean zero and standard deviation of one. Then it is scaled by a factor <span class="math inline">\(a\)</span> and moved by a distance <span class="math inline">\(b\)</span>. This is very similar to the min-max transformation in that it can be reduced to multiplying by a factor and adding a constant, which is the definition of a linear transformation. However, the two approaches have different implications. One is that Z scores will generally be less sensitive to outliers, because the standard deviation is less dependent on an outlying value than the minimum or maximum.</p>
+<p>Following the min-max and z-score, the general linear transformation is defined as:</p>
+<p><span class="math display">\[ \tilde{x} = \frac{ x - p }{ q } \times a + b\]</span></p>
+<p>and it is fairly straightforward to see how z-scores and the min-max transformations are special cases of this.</p>
+</div>
+<div id="nonlinear-transformations" class="section level3">
+<h3><span class="header-section-number">8.1.3</span> Nonlinear transformations</h3>
+<p>A simple nonlinear transformation is the rank transformation.</p>
+<p><span class="math display">\[ \tilde{x} = \text{rank}(x)\]</span>
+where the ranks should be defined so that the lowest indicator value has a rank of 1, the second lowest a rank of 2, and so on. The rank transformation is attractive because it automatically eliminates any outliers. Therefore there would not usually be any need to treat the data previously. However, it converts detailed indicator scores to simple ranks, which might be too reductionist for some.</p>
+<p>It’s worth pointing out that there are different ways to rank values, because of how ties (units with the same score) are handled. To read about this, just call <code>?rank</code> in R.</p>
+<p>Similar approaches to simple ranks include Borda scores, which are simply the ranks described above but minus 1 (so the lowest score is 0 instead of 1), and percentile ranks.</p>
+</div>
+</div>
+<div id="normalisation-in-coinr" class="section level2">
+<h2><span class="header-section-number">8.2</span> Normalisation in COINr</h2>
+<p>The normalisation function in COINr is imaginatively named <code>normalise()</code>. It has the following main features:</p>
+<ul>
+<li>A wide range of normalisation methods, including custom func</li>
+<li>Customisable parameters for normalisation</li>
+<li>Possibility to specify detailed individual treatment for each indicator</li>
+</ul>
+<p>The function looks like this:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="normalisation.html#cb69-1"></a><span class="co"># don&#39;t run this chunk, just for illustration (will throw error if run)</span></span>
+<span id="cb69-2"><a href="normalisation.html#cb69-2"></a>normalise &lt;-<span class="st"> </span><span class="cf">function</span>(COIN, <span class="dt">ntype=</span><span class="st">&quot;minmax&quot;</span>, <span class="dt">npara =</span> <span class="ot">NULL</span>, <span class="dt">icodes =</span> <span class="ot">NULL</span>,</span>
+<span id="cb69-3"><a href="normalisation.html#cb69-3"></a>                      <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">directions =</span> <span class="ot">NULL</span>, <span class="dt">individual =</span> <span class="ot">NULL</span>,</span>
+<span id="cb69-4"><a href="normalisation.html#cb69-4"></a>                      <span class="dt">indiv_only =</span> <span class="ot">FALSE</span>, <span class="dt">out2 =</span> <span class="ot">NULL</span>){</span></code></pre></div>
+<p>As an input, it takes a COIN or data frame, as usual. Default normalisation can be achieved by simply calling:</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="normalisation.html#cb70-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb70-2"><a href="normalisation.html#cb70-2"></a><span class="co"># Build ASEM index up to denomination</span></span>
+<span id="cb70-3"><a href="normalisation.html#cb70-3"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> COINr<span class="op">::</span>ASEMIndData, <span class="dt">IndMeta =</span> COINr<span class="op">::</span>ASEMIndMeta, <span class="dt">AggMeta =</span> COINr<span class="op">::</span>ASEMAggMeta)</span>
+<span id="cb70-4"><a href="normalisation.html#cb70-4"></a>ASEM &lt;-<span class="st"> </span><span class="kw">denominate</span>(ASEM)</span>
+<span id="cb70-5"><a href="normalisation.html#cb70-5"></a></span>
+<span id="cb70-6"><a href="normalisation.html#cb70-6"></a><span class="co"># Default normalisation (min max scaled between 0 and 100)</span></span>
+<span id="cb70-7"><a href="normalisation.html#cb70-7"></a>ASEM &lt;-<span class="st"> </span><span class="kw">normalise</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Denominated&quot;</span>)</span>
+<span id="cb70-8"><a href="normalisation.html#cb70-8"></a></span>
+<span id="cb70-9"><a href="normalisation.html#cb70-9"></a><span class="co"># compare one of the indicators</span></span>
+<span id="cb70-10"><a href="normalisation.html#cb70-10"></a><span class="kw">iplotIndDist2</span>(ASEM, <span class="dt">dsets =</span> <span class="kw">c</span>(<span class="st">&quot;Denominated&quot;</span>, <span class="st">&quot;Normalised&quot;</span>),</span>
+<span id="cb70-11"><a href="normalisation.html#cb70-11"></a>              <span class="dt">icodes =</span> <span class="st">&quot;TertGrad&quot;</span>, <span class="dt">ptype =</span> <span class="st">&quot;Histogram&quot;</span>)</span></code></pre></div>
+<div id="htmlwidget-83f1446f37c5e94c11d8" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-83f1446f37c5e94c11d8">{"x":{"visdat":{"3b8020cf67":["function () ","plotlyVisDat"]},"cur_data":"3b8020cf67","attrs":{"3b8020cf67":{"alpha":0.6,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"type":"histogram","name":"Tertiary graduates","inherit":true},"3b8020cf67.1":{"alpha":0.6,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"type":"histogram","name":"Tertiary graduates","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"barmode":"overlay","xaxis":{"domain":[0,1],"automargin":true,"title":""},"yaxis":{"domain":[0,1],"automargin":true},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[13.08167,31.70948,24.47098,18.25773,25.54672,19.3418,30.38373,37.60498,22.50554,17.66307,24.74205,22.92907,20.67309,26.8378,14.35266,27.79356,33.09735,34.27727,13.28486,28.86907,26.65009,23.7002,18.18253,13.01408,18.92215,18.82353,29.29108,22.99885,36.94929,29.33262,29.78425,3.57765,9.13629,8.48301,29.87681,24.35774,16.36954,23.71332,26.00903,8.75331,16.99506,2.00915,28.21053,13.12545],"type":"histogram","name":"Tertiary graduates","marker":{"color":"rgba(31,119,180,0.6)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,0.6)"},"error_x":{"color":"rgba(31,119,180,0.6)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[31.1062278924245,83.4376667154552,63.10241958117,45.6474255551844,66.1245151468585,48.6929227384219,79.7132135983344,100,57.5808739394474,43.9768366126032,63.8639413661656,58.7707043212646,52.4329394763375,69.7515692147086,34.6768427650093,72.4366028267918,87.3366346563628,90.6514049538949,31.677053182915,75.4580522493787,69.2242321642732,60.9370535818381,45.4361648541416,30.9163461000909,47.5139925097968,47.2369375851048,76.6436124680897,58.9667385196524,98.1579583900698,76.7603115308731,78.0290837437981,4.40641502108534,20.0224015004005,18.1871303464479,78.289114202422,62.7842924297593,40.3428997160622,60.9739118318073,67.42329087424,18.9464889567121,42.1001842069703,0,73.6080040836244,31.2292198271539],"type":"histogram","name":"Tertiary graduates","marker":{"color":"rgba(255,127,14,0.6)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,0.6)"},"error_x":{"color":"rgba(255,127,14,0.6)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<ul>
+<li><code>ntype</code> is the type of normalisation to apply to all indicators. These will be described below.</li>
+<li><code>npara</code> is an object which supports <code>ntype</code>. Details are also given below.</li>
+<li><code>directions</code> is an optional vector of indicator directions: each element of the vector corresponds to an indicator, such that if it is -1, the direction of the indicator is reversed. Otherwise if it is 1 it is kept as it is. If this is not specified, the function will look in the COIN object for the direction data (it should have been specified in <code>.$Input$IndMeta</code>), and if it is not there it will assign all indicators a positive direction.</li>
+<li><code>individual</code> An optional argument (a named list) if you want to subject some indicators to individual normalisation that is different from the others. This works by specifying a list with specifications of <code>ntype</code> and <code>npara</code> for specific indicators. It is a list because depending on <code>ntype</code>, elements can take different formats. This is explained below.</li>
+<li><code>indiv_only</code> Logical. As with <code>treat()</code>, if this is set to <code>FALSE</code> (default), then the indicators that are <em>not</em> specified in <code>individual</code> will be normalised according to the <code>ntype</code> and <code>npara</code> arguments specified in the function argument. Otherwise if <code>TRUE</code>, only the indicators in <code>individual</code> will be normalised, and the others will be unaffected.</li>
+</ul>
+<p>If <code>ntype</code> is minmax, then <code>npara</code> should be a vector with two elements, the minimum and maximum of the normalised indicators (e.g. if <code>npara = c(0,100)</code>, indicators will all be scaled to have min 0 and max 100). For zscores, <code>npara</code> is a vector containing the mean and standard deviation of the normalised indicators. For scaled normalisation, <code>npara</code> is a vector with the <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> coefficients mentioned above. For custom normalisation, <code>npara</code> is a function to apply to each indicator (e.g. could be <code>function(x) (x-min(x))/(max(x)-min(x))</code>, which would result in minmax (careful with <code>na.rm</code> though, which I didn’t include here)). Note that <code>npara</code> has default values for each <code>ntype</code> (excect custom), e.g. minmax defaults to a range of [0, 100].</p>
 
+</div>
 </div>
             </section>
 
@@ -304,6 +387,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

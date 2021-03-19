@@ -1,4 +1,5 @@
 fig:unnamed-chunk-6
+fig:unnamed-chunk-39
 overview
 installation
 whats-it-for
@@ -37,10 +38,19 @@ on-data-frames
 when-to-denominate-and-by-what
 data-treatment
 why-treat-data
+how-to-treat-data
 winsorisation
-visualising-data-treatment
-further-examples-in-coinr
+transformation
+data-treatment-in-coinr
+global-treatment
+individual-treatment
+interactive-visualisation
 normalisation
+approaches
+first-adjust-direction
+linear-transformations
+nonlinear-transformations
+normalisation-in-coinr
 aggregation
 weighting
 approaches-to-weighting

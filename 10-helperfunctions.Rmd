@@ -8,7 +8,7 @@ COINr has a couple of useful functions to help import and export data and metada
 
 To demonstrate, we can take the example version of the COIN Tool, which you can download [here](https://composite-indicators.jrc.ec.europa.eu/sites/default/files/COIN_Tool_v1_LITE_exampledata.xlsm). Then it's as simple as running:
 
-```{r}
+```{r Import CT}
 library(COINr)
 
 # This is the file path and name where the COIN Tool is downloaded to
@@ -31,7 +31,7 @@ dflist <- COINToolIn(fname, makecodes = TRUE)
 dflist$IndMeta$IndCode
 ```
 
-While the codes could certainly be improved, it's certainly better than uninformative numbers. Finally, we can assemble the output into a COIN and begin the construction.
+While the codes could certainly be improved, it's a lot better than uninformative numbers. Finally, we can assemble the output into a COIN and begin the construction.
 
 ```{r, collapse=T}
 ESI <- assemble(dflist[[1]],dflist[[2]],dflist[[3]],)
@@ -70,7 +70,7 @@ Let's take some examples. First, we can get a whole data set. `getIn()` will ret
 
 ```{r}
 # Build data set first, if not already done
-# ASEM <- build_ASEM()
+ASEM <- build_ASEM()
 
 # Get raw data set
 datalist <- getIn(ASEM, dset = "Raw")

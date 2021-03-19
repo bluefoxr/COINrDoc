@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-03-11" />
+<meta name="date" content="2021-03-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -194,11 +194,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>7</b> Data Treatment</a><ul>
 <li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>7.1</b> Why treat data?</a></li>
-<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>7.2</b> Winsorisation</a></li>
-<li class="chapter" data-level="7.3" data-path="data-treatment.html"><a href="data-treatment.html#visualising-data-treatment"><i class="fa fa-check"></i><b>7.3</b> Visualising data treatment</a></li>
-<li class="chapter" data-level="7.4" data-path="data-treatment.html"><a href="data-treatment.html#further-examples-in-coinr"><i class="fa fa-check"></i><b>7.4</b> Further examples in COINr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>7.2</b> How to treat data</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>7.2.1</b> Winsorisation</a></li>
+<li class="chapter" data-level="7.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>7.2.2</b> Transformation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a></li>
+<li class="chapter" data-level="7.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>7.3</b> Data treatment in COINr</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>7.3.1</b> Global treatment</a></li>
+<li class="chapter" data-level="7.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>7.3.2</b> Individual treatment</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>7.4</b> Interactive visualisation</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a><ul>
+<li class="chapter" data-level="8.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>8.1</b> Approaches</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>8.1.1</b> First: adjust direction</a></li>
+<li class="chapter" data-level="8.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>8.1.2</b> Linear transformations</a></li>
+<li class="chapter" data-level="8.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>8.1.3</b> Nonlinear transformations</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>8.2</b> Normalisation in COINr</a></li>
+</ul></li>
 <li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a></li>
 <li class="chapter" data-level="10" data-path="weighting.html"><a href="weighting.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
 <li class="chapter" data-level="10.1" data-path="weighting.html"><a href="weighting.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a></li>
@@ -340,6 +353,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
