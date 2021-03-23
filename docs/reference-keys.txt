@@ -50,7 +50,9 @@ approaches
 first-adjust-direction
 linear-transformations
 nonlinear-transformations
+distances
 normalisation-in-coinr
+individual-normalisation
 aggregation
 weighting
 approaches-to-weighting

@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-03-19" />
+<meta name="date" content="2021-03-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -209,8 +209,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>8.1.1</b> First: adjust direction</a></li>
 <li class="chapter" data-level="8.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>8.1.2</b> Linear transformations</a></li>
 <li class="chapter" data-level="8.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>8.1.3</b> Nonlinear transformations</a></li>
+<li class="chapter" data-level="8.1.4" data-path="normalisation.html"><a href="normalisation.html#distances"><i class="fa fa-check"></i><b>8.1.4</b> Distances</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>8.2</b> Normalisation in COINr</a></li>
+<li class="chapter" data-level="8.3" data-path="normalisation.html"><a href="normalisation.html#individual-normalisation"><i class="fa fa-check"></i><b>8.3</b> Individual normalisation</a></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a></li>
 <li class="chapter" data-level="10" data-path="weighting.html"><a href="weighting.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
@@ -276,27 +278,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">3.2.1</span> Indicator data</h3>
 <p>The indicator data is a data frame which, shockingly, specifies the data for the indicators. However, it can do more than that, and also some rules have to be followed. The easiest way to explain is to start with an example.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="coins-the-currency-of-coinr.html#cb6-1"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb6-2"><a href="coins-the-currency-of-coinr.html#cb6-2"></a><span class="kw">head</span>(ASEMIndData)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 60
-##   UnitName UnitCode Group_GDP Group_GDPpc Group_Pop Group_EurAsia  Year Den_Area
-##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Austria  AUT      L         XL          M         Europe         2018    83871
-## 2 Belgium  BEL      L         L           L         Europe         2018    30528
-## 3 Bulgaria BGR      S         S           M         Europe         2018   110879
-## 4 Croatia  HRV      S         M           S         Europe         2018    56594
-## 5 Cyprus   CYP      S         L           S         Europe         2018     9251
-## 6 Czech R~ CZE      M         L           M         Europe         2018    78867
-## # ... with 52 more variables: Den_Energy &lt;dbl&gt;, Den_GDP &lt;dbl&gt;, Den_Pop &lt;dbl&gt;,
-## #   LPI &lt;dbl&gt;, Flights &lt;dbl&gt;, Ship &lt;dbl&gt;, Bord &lt;dbl&gt;, Elec &lt;dbl&gt;, Gas &lt;dbl&gt;,
-## #   ConSpeed &lt;dbl&gt;, Cov4G &lt;dbl&gt;, Goods &lt;dbl&gt;, Services &lt;dbl&gt;, FDI &lt;dbl&gt;,
-## #   PRemit &lt;dbl&gt;, ForPort &lt;dbl&gt;, Embs &lt;dbl&gt;, IGOs &lt;dbl&gt;, UNVote &lt;dbl&gt;,
-## #   CostImpEx &lt;dbl&gt;, Tariff &lt;dbl&gt;, TBTs &lt;dbl&gt;, TIRcon &lt;dbl&gt;, RTAs &lt;dbl&gt;,
-## #   Visa &lt;dbl&gt;, StMob &lt;dbl&gt;, Research &lt;dbl&gt;, Pat &lt;dbl&gt;, CultServ &lt;dbl&gt;,
-## #   CultGood &lt;dbl&gt;, Tourist &lt;dbl&gt;, MigStock &lt;dbl&gt;, Lang &lt;dbl&gt;, Renew &lt;dbl&gt;,
-## #   PrimEner &lt;dbl&gt;, CO2 &lt;dbl&gt;, MatCon &lt;dbl&gt;, Forest &lt;dbl&gt;, Poverty &lt;dbl&gt;,
-## #   Palma &lt;dbl&gt;, TertGrad &lt;dbl&gt;, FreePress &lt;dbl&gt;, TolMin &lt;dbl&gt;, NGOs &lt;dbl&gt;,
-## #   CPI &lt;dbl&gt;, FemLab &lt;dbl&gt;, WomParl &lt;dbl&gt;, PubDebt &lt;dbl&gt;, PrivDebt &lt;dbl&gt;,
-## #   GDPGrow &lt;dbl&gt;, RDExp &lt;dbl&gt;, NEET &lt;dbl&gt;</code></pre>
+<span id="cb6-2"><a href="coins-the-currency-of-coinr.html#cb6-2"></a><span class="kw">head</span>(ASEMIndData)</span>
+<span id="cb6-3"><a href="coins-the-currency-of-coinr.html#cb6-3"></a><span class="co">## # A tibble: 6 x 60</span></span>
+<span id="cb6-4"><a href="coins-the-currency-of-coinr.html#cb6-4"></a><span class="co">##   UnitName UnitCode Group_GDP Group_GDPpc Group_Pop Group_EurAsia  Year Den_Area</span></span>
+<span id="cb6-5"><a href="coins-the-currency-of-coinr.html#cb6-5"></a><span class="co">##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb6-6"><a href="coins-the-currency-of-coinr.html#cb6-6"></a><span class="co">## 1 Austria  AUT      L         XL          M         Europe         2018    83871</span></span>
+<span id="cb6-7"><a href="coins-the-currency-of-coinr.html#cb6-7"></a><span class="co">## 2 Belgium  BEL      L         L           L         Europe         2018    30528</span></span>
+<span id="cb6-8"><a href="coins-the-currency-of-coinr.html#cb6-8"></a><span class="co">## 3 Bulgaria BGR      S         S           M         Europe         2018   110879</span></span>
+<span id="cb6-9"><a href="coins-the-currency-of-coinr.html#cb6-9"></a><span class="co">## 4 Croatia  HRV      S         M           S         Europe         2018    56594</span></span>
+<span id="cb6-10"><a href="coins-the-currency-of-coinr.html#cb6-10"></a><span class="co">## 5 Cyprus   CYP      S         L           S         Europe         2018     9251</span></span>
+<span id="cb6-11"><a href="coins-the-currency-of-coinr.html#cb6-11"></a><span class="co">## 6 Czech R~ CZE      M         L           M         Europe         2018    78867</span></span>
+<span id="cb6-12"><a href="coins-the-currency-of-coinr.html#cb6-12"></a><span class="co">## # ... with 52 more variables: Den_Energy &lt;dbl&gt;, Den_GDP &lt;dbl&gt;, Den_Pop &lt;dbl&gt;,</span></span>
+<span id="cb6-13"><a href="coins-the-currency-of-coinr.html#cb6-13"></a><span class="co">## #   LPI &lt;dbl&gt;, Flights &lt;dbl&gt;, Ship &lt;dbl&gt;, Bord &lt;dbl&gt;, Elec &lt;dbl&gt;, Gas &lt;dbl&gt;,</span></span>
+<span id="cb6-14"><a href="coins-the-currency-of-coinr.html#cb6-14"></a><span class="co">## #   ConSpeed &lt;dbl&gt;, Cov4G &lt;dbl&gt;, Goods &lt;dbl&gt;, Services &lt;dbl&gt;, FDI &lt;dbl&gt;,</span></span>
+<span id="cb6-15"><a href="coins-the-currency-of-coinr.html#cb6-15"></a><span class="co">## #   PRemit &lt;dbl&gt;, ForPort &lt;dbl&gt;, Embs &lt;dbl&gt;, IGOs &lt;dbl&gt;, UNVote &lt;dbl&gt;,</span></span>
+<span id="cb6-16"><a href="coins-the-currency-of-coinr.html#cb6-16"></a><span class="co">## #   CostImpEx &lt;dbl&gt;, Tariff &lt;dbl&gt;, TBTs &lt;dbl&gt;, TIRcon &lt;dbl&gt;, RTAs &lt;dbl&gt;,</span></span>
+<span id="cb6-17"><a href="coins-the-currency-of-coinr.html#cb6-17"></a><span class="co">## #   Visa &lt;dbl&gt;, StMob &lt;dbl&gt;, Research &lt;dbl&gt;, Pat &lt;dbl&gt;, CultServ &lt;dbl&gt;,</span></span>
+<span id="cb6-18"><a href="coins-the-currency-of-coinr.html#cb6-18"></a><span class="co">## #   CultGood &lt;dbl&gt;, Tourist &lt;dbl&gt;, MigStock &lt;dbl&gt;, Lang &lt;dbl&gt;, Renew &lt;dbl&gt;,</span></span>
+<span id="cb6-19"><a href="coins-the-currency-of-coinr.html#cb6-19"></a><span class="co">## #   PrimEner &lt;dbl&gt;, CO2 &lt;dbl&gt;, MatCon &lt;dbl&gt;, Forest &lt;dbl&gt;, Poverty &lt;dbl&gt;,</span></span>
+<span id="cb6-20"><a href="coins-the-currency-of-coinr.html#cb6-20"></a><span class="co">## #   Palma &lt;dbl&gt;, TertGrad &lt;dbl&gt;, FreePress &lt;dbl&gt;, TolMin &lt;dbl&gt;, NGOs &lt;dbl&gt;,</span></span>
+<span id="cb6-21"><a href="coins-the-currency-of-coinr.html#cb6-21"></a><span class="co">## #   CPI &lt;dbl&gt;, FemLab &lt;dbl&gt;, WomParl &lt;dbl&gt;, PubDebt &lt;dbl&gt;, PrivDebt &lt;dbl&gt;,</span></span>
+<span id="cb6-22"><a href="coins-the-currency-of-coinr.html#cb6-22"></a><span class="co">## #   GDPGrow &lt;dbl&gt;, RDExp &lt;dbl&gt;, NEET &lt;dbl&gt;</span></span></code></pre></div>
 <p>COINr comes prepackaged with some example data - here we are looking at indicator data from the <a href="https://composite-indicators.jrc.ec.europa.eu/asem-sustainable-connectivity/">ASEM Sustainable Connectivity Portal</a>, which has an indicator data set covering 51 Asian and European countries.</p>
 <p>The first thing to notice is that each row is an observation (here, a country), and each column is a variable (mostly indicators, but also other things). Look at the structure of the data frame, working from left to right:</p>
 <ul>
@@ -326,17 +328,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="indicator-metadata" class="section level3">
 <h3><span class="header-section-number">3.2.2</span> Indicator metadata</h3>
 <p>The second data frame you need to input specifies the <em>metadata</em> of each indicator. This serves two purposes: first, to give details about each indicator, such as its name, its units and so on; and second, to specify the structure of the index. Here’s what this looks like, for our example ASEM data set:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="coins-the-currency-of-coinr.html#cb8-1"></a><span class="kw">head</span>(ASEMIndMeta)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 10
-##   IndName IndCode Direction IndWeight Denominator IndUnit Target Agg1  Agg2 
-##   &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
-## 1 Logist~ LPI             1         1 &lt;NA&gt;        Score ~   4.12 Phys~ Conn 
-## 2 Intern~ Flights         1         1 Den_Pop     Thousa~ 200.   Phys~ Conn 
-## 3 Liner ~ Ship            1         1 &lt;NA&gt;        Score    20.1  Phys~ Conn 
-## 4 Border~ Bord            1         1 Den_Area    Number~ 116.   Phys~ Conn 
-## 5 Trade ~ Elec            1         1 Den_Energy  TWh     105.   Phys~ Conn 
-## 6 Trade ~ Gas             1         1 Den_Energy  Billio~  90.1  Phys~ Conn 
-## # ... with 1 more variable: Agg3 &lt;chr&gt;</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="coins-the-currency-of-coinr.html#cb7-1"></a><span class="kw">head</span>(ASEMIndMeta)</span>
+<span id="cb7-2"><a href="coins-the-currency-of-coinr.html#cb7-2"></a><span class="co">## # A tibble: 6 x 10</span></span>
+<span id="cb7-3"><a href="coins-the-currency-of-coinr.html#cb7-3"></a><span class="co">##   IndName IndCode Direction IndWeight Denominator IndUnit Target Agg1  Agg2 </span></span>
+<span id="cb7-4"><a href="coins-the-currency-of-coinr.html#cb7-4"></a><span class="co">##   &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
+<span id="cb7-5"><a href="coins-the-currency-of-coinr.html#cb7-5"></a><span class="co">## 1 Logist~ LPI             1         1 &lt;NA&gt;        Score ~   4.12 Phys~ Conn </span></span>
+<span id="cb7-6"><a href="coins-the-currency-of-coinr.html#cb7-6"></a><span class="co">## 2 Intern~ Flights         1         1 Den_Pop     Thousa~ 200.   Phys~ Conn </span></span>
+<span id="cb7-7"><a href="coins-the-currency-of-coinr.html#cb7-7"></a><span class="co">## 3 Liner ~ Ship            1         1 &lt;NA&gt;        Score    20.1  Phys~ Conn </span></span>
+<span id="cb7-8"><a href="coins-the-currency-of-coinr.html#cb7-8"></a><span class="co">## 4 Border~ Bord            1         1 Den_Area    Number~ 116.   Phys~ Conn </span></span>
+<span id="cb7-9"><a href="coins-the-currency-of-coinr.html#cb7-9"></a><span class="co">## 5 Trade ~ Elec            1         1 Den_Energy  TWh     105.   Phys~ Conn </span></span>
+<span id="cb7-10"><a href="coins-the-currency-of-coinr.html#cb7-10"></a><span class="co">## 6 Trade ~ Gas             1         1 Den_Energy  Billio~  90.1  Phys~ Conn </span></span>
+<span id="cb7-11"><a href="coins-the-currency-of-coinr.html#cb7-11"></a><span class="co">## # ... with 1 more variable: Agg3 &lt;chr&gt;</span></span></code></pre></div>
 <p>Notice that now, the table is flipped on its side (transposed), and each row is an indicator, and the columns specify other things. This is to keep the data in a “tidy” format. Let’s go through the columns one by one.</p>
 <ul>
 <li><code>IndName</code> [<strong>required</strong>] This is the full name of the indicator, which will be used in display plots.</li>
@@ -355,16 +357,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="aggregation-metadata" class="section level3">
 <h3><span class="header-section-number">3.2.3</span> Aggregation metadata</h3>
 <p>The final data input is the aggregation metadata, which is also the simplest. Here’s our example for the ASEM data set:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="coins-the-currency-of-coinr.html#cb10-1"></a><span class="kw">head</span>(ASEMAggMeta)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 4
-##   AgLevel Code      Name                         Weight
-##     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                         &lt;dbl&gt;
-## 1       2 Physical  Physical                          1
-## 2       2 ConEcFin  Economic and Financial (Con)      1
-## 3       2 Political Political                         1
-## 4       2 Instit    Institutional                     1
-## 5       2 P2P       People to People                  1
-## 6       2 Environ   Environmental                     1</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="coins-the-currency-of-coinr.html#cb8-1"></a><span class="kw">head</span>(ASEMAggMeta)</span>
+<span id="cb8-2"><a href="coins-the-currency-of-coinr.html#cb8-2"></a><span class="co">## # A tibble: 6 x 4</span></span>
+<span id="cb8-3"><a href="coins-the-currency-of-coinr.html#cb8-3"></a><span class="co">##   AgLevel Code      Name                         Weight</span></span>
+<span id="cb8-4"><a href="coins-the-currency-of-coinr.html#cb8-4"></a><span class="co">##     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                         &lt;dbl&gt;</span></span>
+<span id="cb8-5"><a href="coins-the-currency-of-coinr.html#cb8-5"></a><span class="co">## 1       2 Physical  Physical                          1</span></span>
+<span id="cb8-6"><a href="coins-the-currency-of-coinr.html#cb8-6"></a><span class="co">## 2       2 ConEcFin  Economic and Financial (Con)      1</span></span>
+<span id="cb8-7"><a href="coins-the-currency-of-coinr.html#cb8-7"></a><span class="co">## 3       2 Political Political                         1</span></span>
+<span id="cb8-8"><a href="coins-the-currency-of-coinr.html#cb8-8"></a><span class="co">## 4       2 Instit    Institutional                     1</span></span>
+<span id="cb8-9"><a href="coins-the-currency-of-coinr.html#cb8-9"></a><span class="co">## 5       2 P2P       People to People                  1</span></span>
+<span id="cb8-10"><a href="coins-the-currency-of-coinr.html#cb8-10"></a><span class="co">## 6       2 Environ   Environmental                     1</span></span></code></pre></div>
 <p>This data frame simply consists of three columns for each aggregation level:</p>
 <ul>
 <li><code>*Code</code> [<strong>required</strong>] The aggregation group codes. This column must end with “Code”, and the codes must match the codes in the corresponding column in the indicator metadata aggregation columns.</li>
@@ -377,26 +379,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="putting-everything-together" class="section level2">
 <h2><span class="header-section-number">3.3</span> Putting everything together</h2>
 <p>Having got all your data in the correct format, you can finally build it into a COIN object. From here, things start to get a bit easier. The function to build the COIN object is called <code>assemble()</code>. This function takes the three data frames mentioned and converts them into a so-called <em>COIN Object</em>, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let’s run <code>assemble()</code> using the built-in data sets to show how it works.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="coins-the-currency-of-coinr.html#cb12-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> ASEMIndData, <span class="dt">IndMeta =</span> ASEMIndMeta, <span class="dt">AggMeta =</span> ASEMAggMeta)</span>
-<span id="cb12-2"><a href="coins-the-currency-of-coinr.html#cb12-2"></a><span class="co">## -----------------</span></span>
-<span id="cb12-3"><a href="coins-the-currency-of-coinr.html#cb12-3"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb12-4"><a href="coins-the-currency-of-coinr.html#cb12-4"></a><span class="co">## -----------------</span></span>
-<span id="cb12-5"><a href="coins-the-currency-of-coinr.html#cb12-5"></a><span class="co">## -----------------</span></span>
-<span id="cb12-6"><a href="coins-the-currency-of-coinr.html#cb12-6"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb12-7"><a href="coins-the-currency-of-coinr.html#cb12-7"></a><span class="co">## -----------------</span></span>
-<span id="cb12-8"><a href="coins-the-currency-of-coinr.html#cb12-8"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb12-9"><a href="coins-the-currency-of-coinr.html#cb12-9"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb12-10"><a href="coins-the-currency-of-coinr.html#cb12-10"></a><span class="co">## Number of reference years of data = 1</span></span>
-<span id="cb12-11"><a href="coins-the-currency-of-coinr.html#cb12-11"></a><span class="co">## Years from 2018 to 2018</span></span>
-<span id="cb12-12"><a href="coins-the-currency-of-coinr.html#cb12-12"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb12-13"><a href="coins-the-currency-of-coinr.html#cb12-13"></a><span class="co">## -----------------</span></span>
-<span id="cb12-14"><a href="coins-the-currency-of-coinr.html#cb12-14"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb12-15"><a href="coins-the-currency-of-coinr.html#cb12-15"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb12-16"><a href="coins-the-currency-of-coinr.html#cb12-16"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb12-17"><a href="coins-the-currency-of-coinr.html#cb12-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb12-18"><a href="coins-the-currency-of-coinr.html#cb12-18"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb12-19"><a href="coins-the-currency-of-coinr.html#cb12-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb12-20"><a href="coins-the-currency-of-coinr.html#cb12-20"></a><span class="co">## -----------------</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="coins-the-currency-of-coinr.html#cb9-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> ASEMIndData, <span class="dt">IndMeta =</span> ASEMIndMeta, <span class="dt">AggMeta =</span> ASEMAggMeta)</span>
+<span id="cb9-2"><a href="coins-the-currency-of-coinr.html#cb9-2"></a><span class="co">## -----------------</span></span>
+<span id="cb9-3"><a href="coins-the-currency-of-coinr.html#cb9-3"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb9-4"><a href="coins-the-currency-of-coinr.html#cb9-4"></a><span class="co">## -----------------</span></span>
+<span id="cb9-5"><a href="coins-the-currency-of-coinr.html#cb9-5"></a><span class="co">## -----------------</span></span>
+<span id="cb9-6"><a href="coins-the-currency-of-coinr.html#cb9-6"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb9-7"><a href="coins-the-currency-of-coinr.html#cb9-7"></a><span class="co">## -----------------</span></span>
+<span id="cb9-8"><a href="coins-the-currency-of-coinr.html#cb9-8"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb9-9"><a href="coins-the-currency-of-coinr.html#cb9-9"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb9-10"><a href="coins-the-currency-of-coinr.html#cb9-10"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb9-11"><a href="coins-the-currency-of-coinr.html#cb9-11"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb9-12"><a href="coins-the-currency-of-coinr.html#cb9-12"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb9-13"><a href="coins-the-currency-of-coinr.html#cb9-13"></a><span class="co">## -----------------</span></span>
+<span id="cb9-14"><a href="coins-the-currency-of-coinr.html#cb9-14"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb9-15"><a href="coins-the-currency-of-coinr.html#cb9-15"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb9-16"><a href="coins-the-currency-of-coinr.html#cb9-16"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb9-17"><a href="coins-the-currency-of-coinr.html#cb9-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb9-18"><a href="coins-the-currency-of-coinr.html#cb9-18"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb9-19"><a href="coins-the-currency-of-coinr.html#cb9-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb9-20"><a href="coins-the-currency-of-coinr.html#cb9-20"></a><span class="co">## -----------------</span></span></code></pre></div>
 <p>The three inputs here are as follows:</p>
 <ul>
 <li><code>IndData</code> which is the indicator data</li>
