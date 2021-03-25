@@ -55,6 +55,11 @@ normalisation-in-coinr
 individual-normalisation
 aggregation
 weighting
+approaches-1
+means
+other-methods
+aggregation-in-coinr
+weighting-1
 approaches-to-weighting
 interactive-re-weighting-with-rew8r
 automatic-re-weighting
