@@ -14,6 +14,18 @@ The COINrverse approach enables the full feature set of COINr, because some func
 
 More details on how the COINrverse works can be found in XXX.
 
+## Suggested workflows
+
+E.g. quick construction
+
+Analysis, audit
+
+Comparisons
+
+## A map of COINr
+
+Showing all the functions and the types (e.g. construction, visualisation, analysis, import/export)
+
 ## Terminology
 
 Let's clearly define a few terms first to avoid confusion later on.

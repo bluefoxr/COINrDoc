@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-03-25" />
+<meta name="date" content="2021-03-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -153,10 +153,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#how-to-use-coinr"><i class="fa fa-check"></i><b>2.1</b> How to use COINr</a></li>
-<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.2</b> Terminology</a></li>
-<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.3</b> Tips for using COINr</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="introduction.html"><a href="introduction.html#ordering"><i class="fa fa-check"></i><b>2.3.1</b> Ordering</a></li>
-<li class="chapter" data-level="2.3.2" data-path="introduction.html"><a href="introduction.html#syntax"><i class="fa fa-check"></i><b>2.3.2</b> Syntax</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#suggested-workflows"><i class="fa fa-check"></i><b>2.2</b> Suggested workflows</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.4</b> Terminology</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.5</b> Tips for using COINr</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#ordering"><i class="fa fa-check"></i><b>2.5.1</b> Ordering</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction.html"><a href="introduction.html#syntax"><i class="fa fa-check"></i><b>2.5.2</b> Syntax</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a><ul>
@@ -223,7 +225,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>9.3</b> Aggregation in COINr</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
-<li class="chapter" data-level="10.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a></li>
+<li class="chapter" data-level="10.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>10.1.1</b> Budget allocation</a></li>
+<li class="chapter" data-level="10.1.2" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>10.1.2</b> Principle component analysis</a></li>
+<li class="chapter" data-level="10.1.3" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>10.1.3</b> Weight optimisation</a></li>
+</ul></li>
 <li class="chapter" data-level="10.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>10.2</b> Interactive re-weighting with ReW8R</a></li>
 <li class="chapter" data-level="10.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>10.3</b> Automatic re-weighting</a></li>
 <li class="chapter" data-level="10.4" data-path="weighting-1.html"><a href="weighting-1.html#manual-re-weighting"><i class="fa fa-check"></i><b>10.4</b> Manual re-weighting</a></li>
@@ -300,6 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The median is known to be robust to outliers, and this may be of interest if the distribution of scores across indicators is skewed.</p>
 <p>Another somewhat different approach to aggregation is to use the <a href="https://en.wikipedia.org/wiki/Copeland%27s_method">Copeland method</a>. This approach is based pairwise comparisons between units and proceeds as follows. First, an <em>outranking matrix</em> is constructed, which is a square matrix with <span class="math inline">\(N\)</span> columns and <span class="math inline">\(N\)</span> rows, where <span class="math inline">\(N\)</span> is the number of units.</p>
 <p>The element in the <span class="math inline">\(p\)</span>th row and <span class="math inline">\(q\)</span>th column of the matrix is calculated by summing all the indicator weights where unit <span class="math inline">\(p\)</span> has a higher value in those indicators than unit <span class="math inline">\(q\)</span>. Similarly, the cell in the <span class="math inline">\(q\)</span>th row and <span class="math inline">\(p\)</span>th column (which is the cell opposite on the other side of the diagonal), is calculated as the sum of the weights unit where <span class="math inline">\(q\)</span> has a higher value than unit <span class="math inline">\(p\)</span>. If the indicator weights sum to one over all indicators, then these two scores will also sum to 1 by definition. The outranking matrix effectively summarises to what extent each unit scores better or worse than all other units, for all unit pairs.</p>
+<p>The Copeland score for each unit is calculated by taking the sum of the row values in the outranking matrix. This can be seen as an average measure of to what extent that unit performs above other units.</p>
 <p>Clearly, this can be applied at any level of aggregation and used hierarchically like the other aggregation methods presented here.</p>
 <p>In some cases, one unit may score higher than the other in all indicators. This is called a <em>dominance pair</em>, and corresponds to any pair scores equal to one (equivalent to any pair scores equal to zero).</p>
 <p>The percentage of dominance pairs is an indication of robustness. Under dominance, there is no way methodological choices (weighting, normalisation, etc.) can affect the relative standing of the pair in the ranking. One will always be ranked higher than the other. The greater the number of dominance (or robust) pairs in a classification, the less sensitive country ranks will be to methodological assumptions.</p>
@@ -370,14 +377,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>agtype = harm_mean</code> uses the harmonic mean. This only works if all data values are non-zero, otherwise it will throw an error.</li>
 <li><code>agtype = median</code> uses the weighted median</li>
 <li><code>agtype = copeland</code> uses the Copeland method. This may take a few seconds to process depending on the number of units, because it involves pairwise comparisons across units.</li>
+<li><code>agtype = custom</code> allows you to pass a custom aggregation function.</li>
 </ul>
-<p>A further argument, <code>agtype_bylevel</code>, allows specification of different normalisation types at different aggregation levels. For example, <code>agtype_bylevel = c("arith_mean", "geom_mean", "median")</code> would use the arithmetic mean at the indicator level, the geometric mean at the pillar level, and the median at the sub-index level (for the ASEM data structure).</p>
-<p>Finally, alternative weights can be used for aggregation by specifying the <code>agweights</code> argument. This can either be:
-* <code>NULL</code>, in which case it will use the weights that were attached to IndMeta and AggMeta in GII_assemble (if they exist), or
-* A character string which corresponds to a named list of weights stored in <code>.$Parameters$Weights</code>. You can either add these manually or through <code>rew8r</code> (see chapter on <a href="weighting-1.html#weighting-1">Weighting</a>). E.g. entering <code>agweights = "Original"</code> will use the original weights read in on assembly. This is equivalent to <code>agweights = NULL</code>.
-* A list of weights to use in the aggregation, where each element of the list is a numeric vector of weights for a given level.</p>
-<p>Visualising results.</p>
+<p>For the last option here, if <code>agtype = custom</code> then you need to also specify the custom function via the <code>agfunc</code> argument. As an example:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="aggregation.html#cb50-1"></a><span class="co"># define an aggregation function which is the weighted minimum</span></span>
+<span id="cb50-2"><a href="aggregation.html#cb50-2"></a>weightedMin &lt;-<span class="st"> </span><span class="cf">function</span>(x,w) <span class="kw">min</span>(x<span class="op">*</span>w, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb50-3"><a href="aggregation.html#cb50-3"></a></span>
+<span id="cb50-4"><a href="aggregation.html#cb50-4"></a><span class="co"># pass to aggregate() and aggregate</span></span>
+<span id="cb50-5"><a href="aggregation.html#cb50-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">aggregate</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="dt">agtype =</span> <span class="st">&quot;custom&quot;</span>,</span>
+<span id="cb50-6"><a href="aggregation.html#cb50-6"></a>                  <span class="dt">agfunc =</span> weightedMin, <span class="dt">out2 =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
+<p>Any custom function should have the form <code>functionName &lt;- function(x,w)</code>, i.e. it accepts x and w as vectors of indicator values and weights respectively, and returns a scalar aggregated value. Ensure that NAs are handled (e.g. set na.rm = T) if your data has missing values, otherwise NAs will be passed through to higher levels.</p>
 <p>A number of sophisticated aggregation approaches and linked weighting methods are available in the <a href="https://cran.r-project.org/web/packages/Compind/index.html">compind package</a>. These can nicely complement the features in COINr and may be of interest to those looking for more technical approaches to aggregation, such as those based on benefit of the doubt methods.</p>
+<p>A further argument, <code>agtype_bylevel</code>, allows specification of different normalisation types at different aggregation levels. For example, <code>agtype_bylevel = c("arith_mean", "geom_mean", "median")</code> would use the arithmetic mean at the indicator level, the geometric mean at the pillar level, and the median at the sub-index level (for the ASEM data structure).</p>
+<p>Finally, alternative weights can be used for aggregation by specifying the <code>agweights</code> argument. This can either be:</p>
+<ul>
+<li><code>NULL</code>, in which case it will use the weights that were attached to IndMeta and AggMeta in GII_assemble (if they exist), or</li>
+<li>A character string which corresponds to a named list of weights stored in <code>.$Parameters$Weights</code>. You can either add these manually or through <code>rew8r</code> (see chapter on <a href="weighting-1.html#weighting-1">Weighting</a>). E.g. entering <code>agweights = "Original"</code> will use the original weights read in on assembly. This is equivalent to <code>agweights = NULL</code>.</li>
+<li>A list of weights to use in the aggregation, where each element of the list is a numeric vector of weights for a given level.</li>
+</ul>
+<p>Now that the data has been aggregated, a natural next step is to explore the results. This is dealt with in the chapter on [Results visualisation].</p>
 
 </div>
 </div>

@@ -2,9 +2,90 @@
 
 Strictly speaking, weighting comes before aggregation. However, in order to understand the *effects* of weights, we need to aggregate the index first.
 
-Weighting in composite indicators is a thorny issue, which attracts considerable attention and is often one of the main focuses of critics.
+Weighting in composite indicators is a thorny issue, which attracts considerable attention and is often one of the main focuses of critics. Weighting openly expresses a subjective opinion on the relative importance of each indicator relative to the others, and this opinion can easily be contested.
+
+While this criticism definitely has some basis, weights can be viewed as a type of model parameter, and any model (e.g. engineering models, climate models, economic models) is full of uncertain parameters. In large models, these parameters are less evident since they are inside rather complex model code. Weights in composite indicators are easy to criticise since the model of a composite indicator is quite simple, usually using simple averages of indicator values.
+
+That said, weights do need to be carefully considered, taking into account at least:
+
+* The relative conceptual importance of indicators: is indicator A more, less, or equally important to indicator B?
+* The statistical implications of the weights
+* How to communicate the weights to end users
+
+The last point is important if the index is for advocacy/awareness. Weights may be fine tuned to account for statistical considerations, but the result may make little sense to the public or the media.
+
+Overall, weighting is a large topic which cannot be covered in detail here. Nevertheless, this chapter gives some introduction and points to further references.
 
 ## Approaches to weighting
+
+Broadly, weighting approaches can be divided into those that are based on expert judgment, and those that are based on statistical considerations. Then there are approaches that combine the two.
+
+### Budget allocation
+
+Fundamentally, composite indicators involve breaking down a complex multidimensional concept into sub-concepts, and possibly breaking those sub-concepts down into sub-sub-concepts, and so on. Generally, you keep doing this until you arrive at the point where the (sub-)^n-concepts are sufficiently specific that they can be directly measured with a small group of indicators.
+
+Regardless of the aggregation level that you are at, however, some of the indicators (or aggregates) in the group are likely to be more or less important to the concept you are trying to measure than others. 
+
+Take the example of university rankings. One might consider the following indicators to be relevant to the notion of "excellence" for a university:
+
+* Number of publications in top-tier journals (research output)
+* Teaching reputation, e.g. through a survey (teaching quality)
+* Research funding from private companies (industry links)
+* Percentage of international students (global renown)
+* Mean earning of graduates (future prospects of students)
+
+These may all be relevant for the concept, but the relative importance is definitely debatable. For example, if you are a prospective student, you might prioritise the teaching quality and graduate earnings. If you are researcher, you might priorities publications and research funding. And so on. The two points to make here are:
+
+1. Indicators are often not equally important to the concept, and
+2. Different people have different opinions on what should be more or less important.
+
+Bringing this back to the issue of weights, it is important to make sure that the relative contributions of the indicators to the index scorers reflect the intended importance. This can be achieved by changing the weights attached to each indicator, and the weights of higher aggregation levels.
+
+How then do we understand which indicators should be the most important to the concept? One way is to simply use our own opinion. But this does not reflect a diversity of viewpoints.
+
+The *budget allocation method* is a simple way of eliciting weights from a group of experts. The idea is to get a group of experts on the concept, stakeholders and end-users, ideally from different backgrounds. Then each member of the group is given 100 "coins" which they can "spend" on the indicators. Members allocate their budget to each indicator, so that they give more of the budget to important indicators, and less to less important ones.
+
+This is a simple way of distributing weight to indicators, in a way that is easy for people to understand and to give their opinions. You can take the results, and take the average weight for each indicator. You can even infer a weight-distribution over each indicator which could feed into an uncertainty analysis.
+
+### Principle component analysis
+
+A very different approach is to use principle component analysis (PCA). PCA is a statistical approach, which rotates your indicator data into a new set of coordinates with special properties.
+
+One way of looking at indicator data is as data points in a multidimensional space. If we only have two indicators, then any unit can be plotted as a point on a two-dimensional plot, where the x-axis is the first indicator, and the y-axis is the second.
+
+```{r}
+Ind1 <- 35
+Ind2 <- 60
+
+plot(Ind1, Ind2, main = "World's most boring plot")
+```
+
+Each point on this beautiful base-R plot represents a unit (here we only have one).
+
+If we have three indicators, then we will have three axes (i.e. a 3D plot). If we have more than three, then the point lives in a *hyperspace* which we can't really visualise.
+
+Anyway, the main point here is that indicator data can be plotted as points in a space, where each axis (dimension) is an indicator.
+
+What PCA does, is that it rotates the data so that the axes are no longer indicators, but instead are *linear combinations of indicators*. And this is done so that the first axis is the linear combination of indicators that explains the most variance. If this is not making much sense (and if this is the first time you have encountered PCA then it probably won't), I would recommend to look at one of the many visualisations of PCA on the internet, e.g. [this one](https://setosa.io/ev/principal-component-analysis/).
+
+PCA is useful for composite indicators, because if you use an arithmetic mean, then you are using a linear combination of indicators. And the first principle component gives the weights that maximise the variance of the units. In other words, if you use PCA weights, you will have the best weights for discriminating between units, and for capturing as much information from the underlying indicators.
+
+This sounds perfect, but the downside is that PCA weights do not care about the relative importance of indicators. Typically, PCA assigns the highest weights to indicators with the highest correlations with other indicators, and this can result in a very unbalanced combination of indicators. Still, PCA has a number of nice properties, and has the advantage of being a purely statistical approach.
+
+### Weight optimisation
+
+If you choose to go for the budget allocation approach, to match weights to the opinions of experts, or indeed your own opinion, there is a catch that is not very obvious. Put simply, weights do not directly translate into importance.
+
+To understand why, we must first define what "importance" means. Actually there is more than one way to look at this, but one possible measure is to use the correlation between each indicator and the overall index. If the correlation is high, the indicator is well-reflected in the index scores, and vice versa.
+
+If we accept this definition of importance, then it's important to realise that this correlation is affected not only by the weights attached to each indicator, but also by the correlations *between indicators*. This means that these correlations must be accounted for in choosing weights that agree with the budgets assigned by the group of experts.
+
+
+* First, eliciting weights from experts
+* Equal weighting
+* Statistical weighting
+  + Using PCA
+  + Using weight-optimisation
 
 Outline of some key approaches
 

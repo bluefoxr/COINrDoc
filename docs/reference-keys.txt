@@ -6,6 +6,8 @@ whats-it-for
 quick-start-guide
 introduction
 how-to-use-coinr
+suggested-workflows
+a-map-of-coinr
 terminology
 tips-for-using-coinr
 ordering
@@ -61,6 +63,9 @@ other-methods
 aggregation-in-coinr
 weighting-1
 approaches-to-weighting
+budget-allocation
+principle-component-analysis
+weight-optimisation
 interactive-re-weighting-with-rew8r
 automatic-re-weighting
 manual-re-weighting

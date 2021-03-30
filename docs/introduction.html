@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-03-25" />
+<meta name="date" content="2021-03-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -153,10 +153,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#how-to-use-coinr"><i class="fa fa-check"></i><b>2.1</b> How to use COINr</a></li>
-<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.2</b> Terminology</a></li>
-<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.3</b> Tips for using COINr</a><ul>
-<li class="chapter" data-level="2.3.1" data-path="introduction.html"><a href="introduction.html#ordering"><i class="fa fa-check"></i><b>2.3.1</b> Ordering</a></li>
-<li class="chapter" data-level="2.3.2" data-path="introduction.html"><a href="introduction.html#syntax"><i class="fa fa-check"></i><b>2.3.2</b> Syntax</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction.html"><a href="introduction.html#suggested-workflows"><i class="fa fa-check"></i><b>2.2</b> Suggested workflows</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.4</b> Terminology</a></li>
+<li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.5</b> Tips for using COINr</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#ordering"><i class="fa fa-check"></i><b>2.5.1</b> Ordering</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction.html"><a href="introduction.html#syntax"><i class="fa fa-check"></i><b>2.5.2</b> Syntax</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a><ul>
@@ -223,7 +225,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>9.3</b> Aggregation in COINr</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
-<li class="chapter" data-level="10.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a></li>
+<li class="chapter" data-level="10.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>10.1.1</b> Budget allocation</a></li>
+<li class="chapter" data-level="10.1.2" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>10.1.2</b> Principle component analysis</a></li>
+<li class="chapter" data-level="10.1.3" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>10.1.3</b> Weight optimisation</a></li>
+</ul></li>
 <li class="chapter" data-level="10.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>10.2</b> Interactive re-weighting with ReW8R</a></li>
 <li class="chapter" data-level="10.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>10.3</b> Automatic re-weighting</a></li>
 <li class="chapter" data-level="10.4" data-path="weighting-1.html"><a href="weighting-1.html#manual-re-weighting"><i class="fa fa-check"></i><b>10.4</b> Manual re-weighting</a></li>
@@ -276,8 +282,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The COINrverse approach enables the full feature set of COINr, because some functions only work on COIN objects - for example, exporting all results to Excel in one command, or running an uncertainty/sensitivity analysis. Indeed, COINr is built mainly for COINrverse use, but functions have been written with the flexibility to also accommodate independent use where possible.</p>
 <p>More details on how the COINrverse works can be found in XXX.</p>
 </div>
+<div id="suggested-workflows" class="section level2">
+<h2><span class="header-section-number">2.2</span> Suggested workflows</h2>
+<p>E.g. quick construction</p>
+<p>Analysis, audit</p>
+<p>Comparisons</p>
+</div>
+<div id="a-map-of-coinr" class="section level2">
+<h2><span class="header-section-number">2.3</span> A map of COINr</h2>
+<p>Showing all the functions and the types (e.g. construction, visualisation, analysis, import/export)</p>
+</div>
 <div id="terminology" class="section level2">
-<h2><span class="header-section-number">2.2</span> Terminology</h2>
+<h2><span class="header-section-number">2.4</span> Terminology</h2>
 <p>Let’s clearly define a few terms first to avoid confusion later on.</p>
 <ul>
 <li><p>An <em>indicator</em> is a variable which has an observed value for each unit. Indicators might be things like life expectancy, CO2 emissions, number of tertiary graduates, and so on.</p></li>
@@ -286,15 +302,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Together, indicators and units form the main input data frame for COINr (units as rows, and indicators as columns).</p>
 </div>
 <div id="tips-for-using-coinr" class="section level2">
-<h2><span class="header-section-number">2.3</span> Tips for using COINr</h2>
+<h2><span class="header-section-number">2.5</span> Tips for using COINr</h2>
 <div id="ordering" class="section level3">
-<h3><span class="header-section-number">2.3.1</span> Ordering</h3>
+<h3><span class="header-section-number">2.5.1</span> Ordering</h3>
 <p>Currently, COINr is somewhat dependent on the order of the units. Although you can input your data in any order you like (as long as you follow the rules in [Data Input]), in some cases the order does matter. For example, if you want to denominate your data by a separate data frame of indicators (not in the COIN), you will have to make sure that the units (rows) correspond to the same order of rows as your indicator data.</p>
 <p>In future updates this dependence on order should be removed, because it is a possible source of errors. For now though, just keep ordering in mind.</p>
 <p>It’s worth mentioning that the row order never changes in the <code>.$Data</code> folder. However, if you screen units using a minimum data requirement (e.g. using <code>datacheck()</code>), then the number of units can change. This should also be kept in mind.</p>
 </div>
 <div id="syntax" class="section level3">
-<h3><span class="header-section-number">2.3.2</span> Syntax</h3>
+<h3><span class="header-section-number">2.5.2</span> Syntax</h3>
 <p>Where possible, COINr functions use a common syntax to keep things simple. For example:</p>
 <ul>
 <li><code>dset</code> always refers to the name of the data set that is found in <code>.$Data</code>. For example, <code>dset = "Normalised"</code> will return <code>.$Data$Normalised</code>. The only exception is <code>dset = "Denominators"</code>, which returns <code>.$Input$Denominators</code>. The argument <code>dset</code> is used in many COINr functions because they have to know which data set to operate on.</li>
