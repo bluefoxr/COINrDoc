@@ -1,5 +1,5 @@
 --- 
-title: "COINr: An R Package for Composite Indicator Development and Analysis"
+title: "Composite Indicator Development and Analysis in R with COINr"
 author: "William Becker"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -8,8 +8,8 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
-description: "COINr Documentation"
+github-repo: bluefoxr/COINrDoc
+description: "Composite indicators with COINr"
 ---
 
 ```{r, setup, include=FALSE}
