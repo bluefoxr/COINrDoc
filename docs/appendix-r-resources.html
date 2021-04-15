@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 12 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr</title>
+  <title>Chapter 13 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr</title>
   <meta name="description" content="Composite indicators with COINr" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 12 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr" />
+  <meta property="og:title" content="Chapter 13 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 12 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr" />
+  <meta name="twitter:title" content="Chapter 13 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr" />
   
   <meta name="twitter:description" content="Composite indicators with COINr" />
   
@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-04-06" />
+<meta name="date" content="2021-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -147,9 +147,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#whats-it-for"><i class="fa fa-check"></i><b>1.2</b> What’s it for?</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#quick-start-guide"><i class="fa fa-check"></i><b>1.3</b> Quick-start guide</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#background"><i class="fa fa-check"></i><b>1.1</b> Background</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#whats-it-for"><i class="fa fa-check"></i><b>1.3</b> What’s it for?</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#demo"><i class="fa fa-check"></i><b>1.4</b> Demo</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#features-and-status"><i class="fa fa-check"></i><b>1.5</b> Features and status</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#how-to-use-coinr"><i class="fa fa-check"></i><b>2.1</b> How to use COINr</a></li>
@@ -157,8 +159,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a></li>
 <li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.4</b> Terminology</a></li>
 <li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.5</b> Tips for using COINr</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#ordering"><i class="fa fa-check"></i><b>2.5.1</b> Ordering</a></li>
-<li class="chapter" data-level="2.5.2" data-path="introduction.html"><a href="introduction.html#syntax"><i class="fa fa-check"></i><b>2.5.2</b> Syntax</a></li>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#missing-data"><i class="fa fa-check"></i><b>2.5.1</b> Missing data</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction.html"><a href="introduction.html#ordering"><i class="fa fa-check"></i><b>2.5.2</b> Ordering</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction.html"><a href="introduction.html#syntax"><i class="fa fa-check"></i><b>2.5.3</b> Syntax</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a><ul>
@@ -177,80 +180,81 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
 <li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>5</b> Missing data and Imputation</a><ul>
-<li class="chapter" data-level="5.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>5.1</b> Concept</a></li>
-<li class="chapter" data-level="5.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>5.2</b> Data checks and screening</a></li>
-<li class="chapter" data-level="5.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>5.3</b> Imputation in COINr</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>5.3.1</b> By column</a></li>
-<li class="chapter" data-level="5.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>5.3.2</b> By row</a></li>
-<li class="chapter" data-level="5.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>5.3.3</b> By column and row</a></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a></li>
+<li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a><ul>
+<li class="chapter" data-level="6.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
+<li class="chapter" data-level="6.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>6.2</b> Data checks and screening</a></li>
+<li class="chapter" data-level="6.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>6.3</b> Imputation in COINr</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>6.3.1</b> By column</a></li>
+<li class="chapter" data-level="6.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>6.3.2</b> By row</a></li>
+<li class="chapter" data-level="6.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>6.3.3</b> By column and row</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>6</b> Denomination</a><ul>
-<li class="chapter" data-level="6.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
-<li class="chapter" data-level="6.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>6.2</b> Denominating in COINr</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="denomination.html"><a href="denomination.html#on-coins"><i class="fa fa-check"></i><b>6.2.1</b> On COINs</a></li>
-<li class="chapter" data-level="6.2.2" data-path="denomination.html"><a href="denomination.html#on-data-frames"><i class="fa fa-check"></i><b>6.2.2</b> On data frames</a></li>
+<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a><ul>
+<li class="chapter" data-level="7.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>7.1</b> Concept</a></li>
+<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>7.2</b> Denominating in COINr</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="denomination.html"><a href="denomination.html#on-coins"><i class="fa fa-check"></i><b>7.2.1</b> On COINs</a></li>
+<li class="chapter" data-level="7.2.2" data-path="denomination.html"><a href="denomination.html#on-data-frames"><i class="fa fa-check"></i><b>7.2.2</b> On data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>6.3</b> When to denominate, and by what?</a></li>
+<li class="chapter" data-level="7.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>7.3</b> When to denominate, and by what?</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>7</b> Data Treatment</a><ul>
-<li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>7.1</b> Why treat data?</a></li>
-<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>7.2</b> How to treat data</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>7.2.1</b> Winsorisation</a></li>
-<li class="chapter" data-level="7.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>7.2.2</b> Transformation</a></li>
+<li class="chapter" data-level="8" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>8</b> Data Treatment</a><ul>
+<li class="chapter" data-level="8.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>8.1</b> Why treat data?</a></li>
+<li class="chapter" data-level="8.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>8.2</b> How to treat data</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>8.2.1</b> Winsorisation</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>8.2.2</b> Transformation</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>7.3</b> Data treatment in COINr</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>7.3.1</b> Global treatment</a></li>
-<li class="chapter" data-level="7.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>7.3.2</b> Individual treatment</a></li>
+<li class="chapter" data-level="8.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>8.3</b> Data treatment in COINr</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>8.3.1</b> Global treatment</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>8.3.2</b> Individual treatment</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>7.4</b> Interactive visualisation</a></li>
+<li class="chapter" data-level="8.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>8.4</b> Interactive visualisation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a><ul>
-<li class="chapter" data-level="8.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>8.1</b> Approaches</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>8.1.1</b> First: adjust direction</a></li>
-<li class="chapter" data-level="8.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>8.1.2</b> Linear transformations</a></li>
-<li class="chapter" data-level="8.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>8.1.3</b> Nonlinear transformations</a></li>
-<li class="chapter" data-level="8.1.4" data-path="normalisation.html"><a href="normalisation.html#distances"><i class="fa fa-check"></i><b>8.1.4</b> Distances</a></li>
+<li class="chapter" data-level="9" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>9</b> Normalisation</a><ul>
+<li class="chapter" data-level="9.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>9.1</b> Approaches</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>9.1.1</b> First: adjust direction</a></li>
+<li class="chapter" data-level="9.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>9.1.2</b> Linear transformations</a></li>
+<li class="chapter" data-level="9.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>9.1.3</b> Nonlinear transformations</a></li>
+<li class="chapter" data-level="9.1.4" data-path="normalisation.html"><a href="normalisation.html#distances"><i class="fa fa-check"></i><b>9.1.4</b> Distances</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>8.2</b> Normalisation in COINr</a></li>
-<li class="chapter" data-level="8.3" data-path="normalisation.html"><a href="normalisation.html#individual-normalisation"><i class="fa fa-check"></i><b>8.3</b> Individual normalisation</a></li>
+<li class="chapter" data-level="9.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>9.2</b> Normalisation in COINr</a></li>
+<li class="chapter" data-level="9.3" data-path="normalisation.html"><a href="normalisation.html#individual-normalisation"><i class="fa fa-check"></i><b>9.3</b> Individual normalisation</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a><ul>
-<li class="chapter" data-level="9.1" data-path="aggregation.html"><a href="aggregation.html#weighting"><i class="fa fa-check"></i><b>9.1</b> Weighting</a></li>
-<li class="chapter" data-level="9.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>9.2</b> Approaches</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="aggregation.html"><a href="aggregation.html#means"><i class="fa fa-check"></i><b>9.2.1</b> Means</a></li>
-<li class="chapter" data-level="9.2.2" data-path="aggregation.html"><a href="aggregation.html#other-methods"><i class="fa fa-check"></i><b>9.2.2</b> Other methods</a></li>
+<li class="chapter" data-level="10" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>10</b> Aggregation</a><ul>
+<li class="chapter" data-level="10.1" data-path="aggregation.html"><a href="aggregation.html#weighting"><i class="fa fa-check"></i><b>10.1</b> Weighting</a></li>
+<li class="chapter" data-level="10.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>10.2</b> Approaches</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="aggregation.html"><a href="aggregation.html#means"><i class="fa fa-check"></i><b>10.2.1</b> Means</a></li>
+<li class="chapter" data-level="10.2.2" data-path="aggregation.html"><a href="aggregation.html#other-methods"><i class="fa fa-check"></i><b>10.2.2</b> Other methods</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>9.3</b> Aggregation in COINr</a></li>
+<li class="chapter" data-level="10.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>10.3</b> Aggregation in COINr</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
-<li class="chapter" data-level="10.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>10.1.1</b> Budget allocation</a></li>
-<li class="chapter" data-level="10.1.2" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>10.1.2</b> Principle component analysis</a></li>
-<li class="chapter" data-level="10.1.3" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>10.1.3</b> Weight optimisation</a></li>
+<li class="chapter" data-level="11" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>11</b> Weighting</a><ul>
+<li class="chapter" data-level="11.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>11.1.1</b> Budget allocation</a></li>
+<li class="chapter" data-level="11.1.2" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>11.1.2</b> Principle component analysis</a></li>
+<li class="chapter" data-level="11.1.3" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>11.1.3</b> Weight optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>10.2</b> Interactive re-weighting with ReW8R</a></li>
-<li class="chapter" data-level="10.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>10.3</b> Automatic re-weighting</a></li>
-<li class="chapter" data-level="10.4" data-path="weighting-1.html"><a href="weighting-1.html#manual-re-weighting"><i class="fa fa-check"></i><b>10.4</b> Manual re-weighting</a></li>
+<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2</b> Interactive re-weighting with ReW8R</a></li>
+<li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.3</b> Automatic re-weighting</a></li>
+<li class="chapter" data-level="11.4" data-path="weighting-1.html"><a href="weighting-1.html#manual-re-weighting"><i class="fa fa-check"></i><b>11.4</b> Manual re-weighting</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a><ul>
-<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>11.1</b> R Interfaces</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="helper-functions.html"><a href="helper-functions.html#data-import"><i class="fa fa-check"></i><b>11.1.1</b> Data import</a></li>
-<li class="chapter" data-level="11.1.2" data-path="helper-functions.html"><a href="helper-functions.html#export-to-excel"><i class="fa fa-check"></i><b>11.1.2</b> Export to Excel</a></li>
+<li class="chapter" data-level="12" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>12</b> Helper functions</a><ul>
+<li class="chapter" data-level="12.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>12.1</b> R Interfaces</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="helper-functions.html"><a href="helper-functions.html#data-import"><i class="fa fa-check"></i><b>12.1.1</b> Data import</a></li>
+<li class="chapter" data-level="12.1.2" data-path="helper-functions.html"><a href="helper-functions.html#export-to-excel"><i class="fa fa-check"></i><b>12.1.2</b> Export to Excel</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>11.2</b> Selecting data sets and indicators</a></li>
-<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>11.3</b> Rounding data frames</a></li>
+<li class="chapter" data-level="12.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>12.2</b> Selecting data sets and indicators</a></li>
+<li class="chapter" data-level="12.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>12.3</b> Rounding data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>12</b> Appendix: R Resources</a><ul>
-<li class="chapter" data-level="12.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>12.1</b> Introduction to R</a></li>
-<li class="chapter" data-level="12.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>12.2</b> Advanced resources</a><ul>
-<li class="chapter" data-level="12.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>12.2.1</b> Programming</a></li>
-<li class="chapter" data-level="12.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
-<li class="chapter" data-level="12.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>12.2.3</b> Other</a></li>
+<li class="chapter" data-level="13" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>13</b> Appendix: R Resources</a><ul>
+<li class="chapter" data-level="13.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>13.1</b> Introduction to R</a></li>
+<li class="chapter" data-level="13.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>13.2</b> Advanced resources</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>13.2.1</b> Programming</a></li>
+<li class="chapter" data-level="13.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>13.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="13.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>13.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>13</b> Acknowledgements</a></li>
+<li class="chapter" data-level="14" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>14</b> Acknowledgements</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -272,11 +276,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="appendix-r-resources" class="section level1">
-<h1><span class="header-section-number">Chapter 12</span> Appendix: R Resources</h1>
+<h1><span class="header-section-number">Chapter 13</span> Appendix: R Resources</h1>
 <p>One of the great things about R is the sheer number of freely-available resources that are out there. Not just the software and packages, but also online books and materials to learn everything you need to know about pretty much anything.</p>
 <p>Here are a list of resources for users who (a) are interested in R and want to get started, and (b) are proficient R users but want to learn more. I am focusing here on resources that have really helped me in the work that I have done. Of course there is far more out there and you only have to look.</p>
 <div id="introduction-to-r" class="section level2">
-<h2><span class="header-section-number">12.1</span> Introduction to R</h2>
+<h2><span class="header-section-number">13.1</span> Introduction to R</h2>
 <p>If you’re just starting out, these are good places to start.</p>
 <p><strong>R for Data Science</strong> is a modern classic that starts from the beginning and leads you into the world of R, from a data science perspective. It uses the “tidyverse” approach which is developed by R Guru Hadley Wickham. Even advanced users can probably learn something here.</p>
 <p><a href="https://r4ds.had.co.nz/index.html" class="uri">https://r4ds.had.co.nz/index.html</a></p>
@@ -284,23 +288,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><a href="https://swirlstats.com/" class="uri">https://swirlstats.com/</a></p>
 </div>
 <div id="advanced-resources" class="section level2">
-<h2><span class="header-section-number">12.2</span> Advanced resources</h2>
+<h2><span class="header-section-number">13.2</span> Advanced resources</h2>
 <div id="programming" class="section level3">
-<h3><span class="header-section-number">12.2.1</span> Programming</h3>
+<h3><span class="header-section-number">13.2.1</span> Programming</h3>
 <p>If you really want to sharpen your programming skills in R, Hadley Wickham has another book: this one digs around in the roots of R and teaches you all kinds of tricks and quirks.</p>
 <p><a href="https://adv-r.hadley.nz/" class="uri">https://adv-r.hadley.nz/</a></p>
 <p>Want to build your own R package? Hadley come to the rescue, again.</p>
 <p><a href="https://r-pkgs.org/" class="uri">https://r-pkgs.org/</a></p>
 </div>
 <div id="visualisation" class="section level3">
-<h3><span class="header-section-number">12.2.2</span> Visualisation</h3>
+<h3><span class="header-section-number">13.2.2</span> Visualisation</h3>
 <p>Plotly is a big R package which generates interactive graphics using Javascript (there are many others, by the way). This book tells you all you need to know about that.</p>
 <p><a href="https://plotly-r.com/" class="uri">https://plotly-r.com/</a></p>
 <p>Shiny is another R package which lets you build interactive web apps based on R code. It’s tricky to get your head around at first, but this book really helps.</p>
 <p><a href="https://mastering-shiny.org/index.html" class="uri">https://mastering-shiny.org/index.html</a></p>
 </div>
 <div id="other" class="section level3">
-<h3><span class="header-section-number">12.2.3</span> Other</h3>
+<h3><span class="header-section-number">13.2.3</span> Other</h3>
 <p>If you’re not using GitHub, ask yourself, why not? GitHub is the best way to collaborate and share code, and you can also host documentation and websites. This book is hosted on GitHub, to take a random example. The Happy Git with R Book gives an easy introduction to hooking up R Studio to work seamlessly with Git and Github.</p>
 <p><a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a></p>
 <p>You wouldn’t think that R would be a good tool for writing books, but actually it turns out that… it’s a pretty good tool for writing books. The Bookdown package lets you build nifty online books with a simple and neat layout. You can include equations and importantly, R code, outputs and HTML widgets, etc.</p>

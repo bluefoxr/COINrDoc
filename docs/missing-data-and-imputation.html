@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Missing data and Imputation | Composite Indicator Development and Analysis in R with COINr</title>
+  <title>Chapter 6 Missing data and Imputation | Composite Indicator Development and Analysis in R with COINr</title>
   <meta name="description" content="Composite indicators with COINr" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Missing data and Imputation | Composite Indicator Development and Analysis in R with COINr" />
+  <meta property="og:title" content="Chapter 6 Missing data and Imputation | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Missing data and Imputation | Composite Indicator Development and Analysis in R with COINr" />
+  <meta name="twitter:title" content="Chapter 6 Missing data and Imputation | Composite Indicator Development and Analysis in R with COINr" />
   
   <meta name="twitter:description" content="Composite indicators with COINr" />
   
@@ -24,14 +24,14 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-04-06" />
+<meta name="date" content="2021-04-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="initial-visualisation-and-analysis.html"/>
+<link rel="prev" href="multivariate-analysis.html"/>
 <link rel="next" href="denomination.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -147,9 +147,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#whats-it-for"><i class="fa fa-check"></i><b>1.2</b> What’s it for?</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#quick-start-guide"><i class="fa fa-check"></i><b>1.3</b> Quick-start guide</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#background"><i class="fa fa-check"></i><b>1.1</b> Background</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#whats-it-for"><i class="fa fa-check"></i><b>1.3</b> What’s it for?</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#demo"><i class="fa fa-check"></i><b>1.4</b> Demo</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#features-and-status"><i class="fa fa-check"></i><b>1.5</b> Features and status</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a><ul>
 <li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#how-to-use-coinr"><i class="fa fa-check"></i><b>2.1</b> How to use COINr</a></li>
@@ -157,8 +159,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="introduction.html"><a href="introduction.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a></li>
 <li class="chapter" data-level="2.4" data-path="introduction.html"><a href="introduction.html#terminology"><i class="fa fa-check"></i><b>2.4</b> Terminology</a></li>
 <li class="chapter" data-level="2.5" data-path="introduction.html"><a href="introduction.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.5</b> Tips for using COINr</a><ul>
-<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#ordering"><i class="fa fa-check"></i><b>2.5.1</b> Ordering</a></li>
-<li class="chapter" data-level="2.5.2" data-path="introduction.html"><a href="introduction.html#syntax"><i class="fa fa-check"></i><b>2.5.2</b> Syntax</a></li>
+<li class="chapter" data-level="2.5.1" data-path="introduction.html"><a href="introduction.html#missing-data"><i class="fa fa-check"></i><b>2.5.1</b> Missing data</a></li>
+<li class="chapter" data-level="2.5.2" data-path="introduction.html"><a href="introduction.html#ordering"><i class="fa fa-check"></i><b>2.5.2</b> Ordering</a></li>
+<li class="chapter" data-level="2.5.3" data-path="introduction.html"><a href="introduction.html#syntax"><i class="fa fa-check"></i><b>2.5.3</b> Syntax</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a><ul>
@@ -177,80 +180,81 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
 <li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>5</b> Missing data and Imputation</a><ul>
-<li class="chapter" data-level="5.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>5.1</b> Concept</a></li>
-<li class="chapter" data-level="5.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>5.2</b> Data checks and screening</a></li>
-<li class="chapter" data-level="5.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>5.3</b> Imputation in COINr</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>5.3.1</b> By column</a></li>
-<li class="chapter" data-level="5.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>5.3.2</b> By row</a></li>
-<li class="chapter" data-level="5.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>5.3.3</b> By column and row</a></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a></li>
+<li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a><ul>
+<li class="chapter" data-level="6.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
+<li class="chapter" data-level="6.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>6.2</b> Data checks and screening</a></li>
+<li class="chapter" data-level="6.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>6.3</b> Imputation in COINr</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>6.3.1</b> By column</a></li>
+<li class="chapter" data-level="6.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>6.3.2</b> By row</a></li>
+<li class="chapter" data-level="6.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>6.3.3</b> By column and row</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>6</b> Denomination</a><ul>
-<li class="chapter" data-level="6.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
-<li class="chapter" data-level="6.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>6.2</b> Denominating in COINr</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="denomination.html"><a href="denomination.html#on-coins"><i class="fa fa-check"></i><b>6.2.1</b> On COINs</a></li>
-<li class="chapter" data-level="6.2.2" data-path="denomination.html"><a href="denomination.html#on-data-frames"><i class="fa fa-check"></i><b>6.2.2</b> On data frames</a></li>
+<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a><ul>
+<li class="chapter" data-level="7.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>7.1</b> Concept</a></li>
+<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>7.2</b> Denominating in COINr</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="denomination.html"><a href="denomination.html#on-coins"><i class="fa fa-check"></i><b>7.2.1</b> On COINs</a></li>
+<li class="chapter" data-level="7.2.2" data-path="denomination.html"><a href="denomination.html#on-data-frames"><i class="fa fa-check"></i><b>7.2.2</b> On data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>6.3</b> When to denominate, and by what?</a></li>
+<li class="chapter" data-level="7.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>7.3</b> When to denominate, and by what?</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>7</b> Data Treatment</a><ul>
-<li class="chapter" data-level="7.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>7.1</b> Why treat data?</a></li>
-<li class="chapter" data-level="7.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>7.2</b> How to treat data</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>7.2.1</b> Winsorisation</a></li>
-<li class="chapter" data-level="7.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>7.2.2</b> Transformation</a></li>
+<li class="chapter" data-level="8" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>8</b> Data Treatment</a><ul>
+<li class="chapter" data-level="8.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>8.1</b> Why treat data?</a></li>
+<li class="chapter" data-level="8.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>8.2</b> How to treat data</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>8.2.1</b> Winsorisation</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>8.2.2</b> Transformation</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>7.3</b> Data treatment in COINr</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>7.3.1</b> Global treatment</a></li>
-<li class="chapter" data-level="7.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>7.3.2</b> Individual treatment</a></li>
+<li class="chapter" data-level="8.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>8.3</b> Data treatment in COINr</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>8.3.1</b> Global treatment</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>8.3.2</b> Individual treatment</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>7.4</b> Interactive visualisation</a></li>
+<li class="chapter" data-level="8.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>8.4</b> Interactive visualisation</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>8</b> Normalisation</a><ul>
-<li class="chapter" data-level="8.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>8.1</b> Approaches</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>8.1.1</b> First: adjust direction</a></li>
-<li class="chapter" data-level="8.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>8.1.2</b> Linear transformations</a></li>
-<li class="chapter" data-level="8.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>8.1.3</b> Nonlinear transformations</a></li>
-<li class="chapter" data-level="8.1.4" data-path="normalisation.html"><a href="normalisation.html#distances"><i class="fa fa-check"></i><b>8.1.4</b> Distances</a></li>
+<li class="chapter" data-level="9" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>9</b> Normalisation</a><ul>
+<li class="chapter" data-level="9.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>9.1</b> Approaches</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>9.1.1</b> First: adjust direction</a></li>
+<li class="chapter" data-level="9.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>9.1.2</b> Linear transformations</a></li>
+<li class="chapter" data-level="9.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>9.1.3</b> Nonlinear transformations</a></li>
+<li class="chapter" data-level="9.1.4" data-path="normalisation.html"><a href="normalisation.html#distances"><i class="fa fa-check"></i><b>9.1.4</b> Distances</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>8.2</b> Normalisation in COINr</a></li>
-<li class="chapter" data-level="8.3" data-path="normalisation.html"><a href="normalisation.html#individual-normalisation"><i class="fa fa-check"></i><b>8.3</b> Individual normalisation</a></li>
+<li class="chapter" data-level="9.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>9.2</b> Normalisation in COINr</a></li>
+<li class="chapter" data-level="9.3" data-path="normalisation.html"><a href="normalisation.html#individual-normalisation"><i class="fa fa-check"></i><b>9.3</b> Individual normalisation</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>9</b> Aggregation</a><ul>
-<li class="chapter" data-level="9.1" data-path="aggregation.html"><a href="aggregation.html#weighting"><i class="fa fa-check"></i><b>9.1</b> Weighting</a></li>
-<li class="chapter" data-level="9.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>9.2</b> Approaches</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="aggregation.html"><a href="aggregation.html#means"><i class="fa fa-check"></i><b>9.2.1</b> Means</a></li>
-<li class="chapter" data-level="9.2.2" data-path="aggregation.html"><a href="aggregation.html#other-methods"><i class="fa fa-check"></i><b>9.2.2</b> Other methods</a></li>
+<li class="chapter" data-level="10" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>10</b> Aggregation</a><ul>
+<li class="chapter" data-level="10.1" data-path="aggregation.html"><a href="aggregation.html#weighting"><i class="fa fa-check"></i><b>10.1</b> Weighting</a></li>
+<li class="chapter" data-level="10.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>10.2</b> Approaches</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="aggregation.html"><a href="aggregation.html#means"><i class="fa fa-check"></i><b>10.2.1</b> Means</a></li>
+<li class="chapter" data-level="10.2.2" data-path="aggregation.html"><a href="aggregation.html#other-methods"><i class="fa fa-check"></i><b>10.2.2</b> Other methods</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>9.3</b> Aggregation in COINr</a></li>
+<li class="chapter" data-level="10.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>10.3</b> Aggregation in COINr</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>10</b> Weighting</a><ul>
-<li class="chapter" data-level="10.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>10.1</b> Approaches to weighting</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>10.1.1</b> Budget allocation</a></li>
-<li class="chapter" data-level="10.1.2" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>10.1.2</b> Principle component analysis</a></li>
-<li class="chapter" data-level="10.1.3" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>10.1.3</b> Weight optimisation</a></li>
+<li class="chapter" data-level="11" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>11</b> Weighting</a><ul>
+<li class="chapter" data-level="11.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>11.1.1</b> Budget allocation</a></li>
+<li class="chapter" data-level="11.1.2" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>11.1.2</b> Principle component analysis</a></li>
+<li class="chapter" data-level="11.1.3" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>11.1.3</b> Weight optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>10.2</b> Interactive re-weighting with ReW8R</a></li>
-<li class="chapter" data-level="10.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>10.3</b> Automatic re-weighting</a></li>
-<li class="chapter" data-level="10.4" data-path="weighting-1.html"><a href="weighting-1.html#manual-re-weighting"><i class="fa fa-check"></i><b>10.4</b> Manual re-weighting</a></li>
+<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2</b> Interactive re-weighting with ReW8R</a></li>
+<li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.3</b> Automatic re-weighting</a></li>
+<li class="chapter" data-level="11.4" data-path="weighting-1.html"><a href="weighting-1.html#manual-re-weighting"><i class="fa fa-check"></i><b>11.4</b> Manual re-weighting</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>11</b> Helper functions</a><ul>
-<li class="chapter" data-level="11.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>11.1</b> R Interfaces</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="helper-functions.html"><a href="helper-functions.html#data-import"><i class="fa fa-check"></i><b>11.1.1</b> Data import</a></li>
-<li class="chapter" data-level="11.1.2" data-path="helper-functions.html"><a href="helper-functions.html#export-to-excel"><i class="fa fa-check"></i><b>11.1.2</b> Export to Excel</a></li>
+<li class="chapter" data-level="12" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>12</b> Helper functions</a><ul>
+<li class="chapter" data-level="12.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>12.1</b> R Interfaces</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="helper-functions.html"><a href="helper-functions.html#data-import"><i class="fa fa-check"></i><b>12.1.1</b> Data import</a></li>
+<li class="chapter" data-level="12.1.2" data-path="helper-functions.html"><a href="helper-functions.html#export-to-excel"><i class="fa fa-check"></i><b>12.1.2</b> Export to Excel</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>11.2</b> Selecting data sets and indicators</a></li>
-<li class="chapter" data-level="11.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>11.3</b> Rounding data frames</a></li>
+<li class="chapter" data-level="12.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>12.2</b> Selecting data sets and indicators</a></li>
+<li class="chapter" data-level="12.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>12.3</b> Rounding data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>12</b> Appendix: R Resources</a><ul>
-<li class="chapter" data-level="12.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>12.1</b> Introduction to R</a></li>
-<li class="chapter" data-level="12.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>12.2</b> Advanced resources</a><ul>
-<li class="chapter" data-level="12.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>12.2.1</b> Programming</a></li>
-<li class="chapter" data-level="12.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>12.2.2</b> Visualisation</a></li>
-<li class="chapter" data-level="12.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>12.2.3</b> Other</a></li>
+<li class="chapter" data-level="13" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>13</b> Appendix: R Resources</a><ul>
+<li class="chapter" data-level="13.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>13.1</b> Introduction to R</a></li>
+<li class="chapter" data-level="13.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>13.2</b> Advanced resources</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>13.2.1</b> Programming</a></li>
+<li class="chapter" data-level="13.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>13.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="13.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>13.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>13</b> Acknowledgements</a></li>
+<li class="chapter" data-level="14" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>14</b> Acknowledgements</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -272,45 +276,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="missing-data-and-imputation" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> Missing data and Imputation</h1>
+<h1><span class="header-section-number">Chapter 6</span> Missing data and Imputation</h1>
 <p>Imputation is the process of estimating missing data points. This can be done in any number of ways, and as usual, the “best” way depends on the problem.</p>
 <p>Of course, you don’t <em>have</em> to impute data. You can also simply delete any indicator or unit that has missing values, although in many cases this can be too restrictive. Reasonable results can still be obtained despite small amounts of missing data, although if too much data is missing, the uncertainty can be too high to give a meaningful analysis. As usual, it is a balance.</p>
 <p>A good first step is to check how much data is missing, and where (see below). Units with very high amounts of missing data can be screened out. Small amounts of missing data can then be imputed.</p>
 <div id="concept" class="section level2">
-<h2><span class="header-section-number">5.1</span> Concept</h2>
+<h2><span class="header-section-number">6.1</span> Concept</h2>
 <p>The simplest imputation approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here’s some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let’s view the last few rows:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="missing-data-and-imputation.html#cb19-1"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb19-2"><a href="missing-data-and-imputation.html#cb19-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
-<span id="cb19-3"><a href="missing-data-and-imputation.html#cb19-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span>
-<span id="cb19-4"><a href="missing-data-and-imputation.html#cb19-4"></a><span class="co">##               Country ConSpeed</span></span>
-<span id="cb19-5"><a href="missing-data-and-imputation.html#cb19-5"></a><span class="co">## 40              Korea     28.6</span></span>
-<span id="cb19-6"><a href="missing-data-and-imputation.html#cb19-6"></a><span class="co">## 41            Lao PDR       NA</span></span>
-<span id="cb19-7"><a href="missing-data-and-imputation.html#cb19-7"></a><span class="co">## 42           Malaysia      8.9</span></span>
-<span id="cb19-8"><a href="missing-data-and-imputation.html#cb19-8"></a><span class="co">## 43           Mongolia       NA</span></span>
-<span id="cb19-9"><a href="missing-data-and-imputation.html#cb19-9"></a><span class="co">## 44            Myanmar       NA</span></span>
-<span id="cb19-10"><a href="missing-data-and-imputation.html#cb19-10"></a><span class="co">## 45        New Zealand     14.7</span></span>
-<span id="cb19-11"><a href="missing-data-and-imputation.html#cb19-11"></a><span class="co">## 46           Pakistan       NA</span></span>
-<span id="cb19-12"><a href="missing-data-and-imputation.html#cb19-12"></a><span class="co">## 47        Philippines      5.5</span></span>
-<span id="cb19-13"><a href="missing-data-and-imputation.html#cb19-13"></a><span class="co">## 48 Russian Federation     11.8</span></span>
-<span id="cb19-14"><a href="missing-data-and-imputation.html#cb19-14"></a><span class="co">## 49          Singapore     20.3</span></span>
-<span id="cb19-15"><a href="missing-data-and-imputation.html#cb19-15"></a><span class="co">## 50           Thailand     16.0</span></span>
-<span id="cb19-16"><a href="missing-data-and-imputation.html#cb19-16"></a><span class="co">## 51            Vietnam      9.5</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="missing-data-and-imputation.html#cb20-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb20-2"><a href="missing-data-and-imputation.html#cb20-2"></a>Ind1 &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Country =</span> ASEMIndData<span class="op">$</span>UnitName, <span class="dt">ConSpeed =</span> ASEMIndData<span class="op">$</span>ConSpeed)</span>
+<span id="cb20-3"><a href="missing-data-and-imputation.html#cb20-3"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span>
+<span id="cb20-4"><a href="missing-data-and-imputation.html#cb20-4"></a><span class="co">##               Country ConSpeed</span></span>
+<span id="cb20-5"><a href="missing-data-and-imputation.html#cb20-5"></a><span class="co">## 40              Korea     28.6</span></span>
+<span id="cb20-6"><a href="missing-data-and-imputation.html#cb20-6"></a><span class="co">## 41            Lao PDR       NA</span></span>
+<span id="cb20-7"><a href="missing-data-and-imputation.html#cb20-7"></a><span class="co">## 42           Malaysia      8.9</span></span>
+<span id="cb20-8"><a href="missing-data-and-imputation.html#cb20-8"></a><span class="co">## 43           Mongolia       NA</span></span>
+<span id="cb20-9"><a href="missing-data-and-imputation.html#cb20-9"></a><span class="co">## 44            Myanmar       NA</span></span>
+<span id="cb20-10"><a href="missing-data-and-imputation.html#cb20-10"></a><span class="co">## 45        New Zealand     14.7</span></span>
+<span id="cb20-11"><a href="missing-data-and-imputation.html#cb20-11"></a><span class="co">## 46           Pakistan       NA</span></span>
+<span id="cb20-12"><a href="missing-data-and-imputation.html#cb20-12"></a><span class="co">## 47        Philippines      5.5</span></span>
+<span id="cb20-13"><a href="missing-data-and-imputation.html#cb20-13"></a><span class="co">## 48 Russian Federation     11.8</span></span>
+<span id="cb20-14"><a href="missing-data-and-imputation.html#cb20-14"></a><span class="co">## 49          Singapore     20.3</span></span>
+<span id="cb20-15"><a href="missing-data-and-imputation.html#cb20-15"></a><span class="co">## 50           Thailand     16.0</span></span>
+<span id="cb20-16"><a href="missing-data-and-imputation.html#cb20-16"></a><span class="co">## 51            Vietnam      9.5</span></span></code></pre></div>
 <p>Using our simple imputation method, we just replace the <code>NA</code> values with the sample mean.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="missing-data-and-imputation.html#cb20-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
-<span id="cb20-2"><a href="missing-data-and-imputation.html#cb20-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span>
-<span id="cb20-3"><a href="missing-data-and-imputation.html#cb20-3"></a><span class="co">##               Country ConSpeed</span></span>
-<span id="cb20-4"><a href="missing-data-and-imputation.html#cb20-4"></a><span class="co">## 40              Korea 28.60000</span></span>
-<span id="cb20-5"><a href="missing-data-and-imputation.html#cb20-5"></a><span class="co">## 41            Lao PDR 14.28605</span></span>
-<span id="cb20-6"><a href="missing-data-and-imputation.html#cb20-6"></a><span class="co">## 42           Malaysia  8.90000</span></span>
-<span id="cb20-7"><a href="missing-data-and-imputation.html#cb20-7"></a><span class="co">## 43           Mongolia 14.28605</span></span>
-<span id="cb20-8"><a href="missing-data-and-imputation.html#cb20-8"></a><span class="co">## 44            Myanmar 14.28605</span></span>
-<span id="cb20-9"><a href="missing-data-and-imputation.html#cb20-9"></a><span class="co">## 45        New Zealand 14.70000</span></span>
-<span id="cb20-10"><a href="missing-data-and-imputation.html#cb20-10"></a><span class="co">## 46           Pakistan 14.28605</span></span>
-<span id="cb20-11"><a href="missing-data-and-imputation.html#cb20-11"></a><span class="co">## 47        Philippines  5.50000</span></span>
-<span id="cb20-12"><a href="missing-data-and-imputation.html#cb20-12"></a><span class="co">## 48 Russian Federation 11.80000</span></span>
-<span id="cb20-13"><a href="missing-data-and-imputation.html#cb20-13"></a><span class="co">## 49          Singapore 20.30000</span></span>
-<span id="cb20-14"><a href="missing-data-and-imputation.html#cb20-14"></a><span class="co">## 50           Thailand 16.00000</span></span>
-<span id="cb20-15"><a href="missing-data-and-imputation.html#cb20-15"></a><span class="co">## 51            Vietnam  9.50000</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="missing-data-and-imputation.html#cb21-1"></a>Ind1<span class="op">$</span>ConSpeed &lt;-<span class="st"> </span><span class="kw">replace</span>(Ind1<span class="op">$</span>ConSpeed, <span class="kw">is.na</span>(Ind1<span class="op">$</span>ConSpeed), <span class="kw">mean</span>(Ind1<span class="op">$</span>ConSpeed, <span class="dt">na.rm =</span> T))</span>
+<span id="cb21-2"><a href="missing-data-and-imputation.html#cb21-2"></a>Ind1[<span class="dv">40</span><span class="op">:</span><span class="kw">nrow</span>(Ind1),]</span>
+<span id="cb21-3"><a href="missing-data-and-imputation.html#cb21-3"></a><span class="co">##               Country ConSpeed</span></span>
+<span id="cb21-4"><a href="missing-data-and-imputation.html#cb21-4"></a><span class="co">## 40              Korea 28.60000</span></span>
+<span id="cb21-5"><a href="missing-data-and-imputation.html#cb21-5"></a><span class="co">## 41            Lao PDR 14.28605</span></span>
+<span id="cb21-6"><a href="missing-data-and-imputation.html#cb21-6"></a><span class="co">## 42           Malaysia  8.90000</span></span>
+<span id="cb21-7"><a href="missing-data-and-imputation.html#cb21-7"></a><span class="co">## 43           Mongolia 14.28605</span></span>
+<span id="cb21-8"><a href="missing-data-and-imputation.html#cb21-8"></a><span class="co">## 44            Myanmar 14.28605</span></span>
+<span id="cb21-9"><a href="missing-data-and-imputation.html#cb21-9"></a><span class="co">## 45        New Zealand 14.70000</span></span>
+<span id="cb21-10"><a href="missing-data-and-imputation.html#cb21-10"></a><span class="co">## 46           Pakistan 14.28605</span></span>
+<span id="cb21-11"><a href="missing-data-and-imputation.html#cb21-11"></a><span class="co">## 47        Philippines  5.50000</span></span>
+<span id="cb21-12"><a href="missing-data-and-imputation.html#cb21-12"></a><span class="co">## 48 Russian Federation 11.80000</span></span>
+<span id="cb21-13"><a href="missing-data-and-imputation.html#cb21-13"></a><span class="co">## 49          Singapore 20.30000</span></span>
+<span id="cb21-14"><a href="missing-data-and-imputation.html#cb21-14"></a><span class="co">## 50           Thailand 16.00000</span></span>
+<span id="cb21-15"><a href="missing-data-and-imputation.html#cb21-15"></a><span class="co">## 51            Vietnam  9.50000</span></span></code></pre></div>
 <p>This approach can be reasonable if countries are somehow similar in that indicator. However, other perhaps more informative ways are available:</p>
 <ul>
 <li>Substituting by the mean or median of the country group (e.g. income group or continent)</li>
@@ -325,75 +329,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s explore the options available in COINr</p>
 </div>
 <div id="data-checks-and-screening" class="section level2">
-<h2><span class="header-section-number">5.2</span> Data checks and screening</h2>
+<h2><span class="header-section-number">6.2</span> Data checks and screening</h2>
 <p>A first step is to check in detail how much data missing. The function <code>checkData()</code> does this, and also has the option to screen units based on data availability.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="missing-data-and-imputation.html#cb21-1"></a><span class="co"># Assemble ASEM data first</span></span>
-<span id="cb21-2"><a href="missing-data-and-imputation.html#cb21-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> COINr<span class="op">::</span>ASEMIndData, <span class="dt">IndMeta =</span> COINr<span class="op">::</span>ASEMIndMeta,</span>
-<span id="cb21-3"><a href="missing-data-and-imputation.html#cb21-3"></a>                 <span class="dt">AggMeta =</span> COINr<span class="op">::</span>ASEMAggMeta)</span>
-<span id="cb21-4"><a href="missing-data-and-imputation.html#cb21-4"></a><span class="co">## -----------------</span></span>
-<span id="cb21-5"><a href="missing-data-and-imputation.html#cb21-5"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb21-6"><a href="missing-data-and-imputation.html#cb21-6"></a><span class="co">## -----------------</span></span>
-<span id="cb21-7"><a href="missing-data-and-imputation.html#cb21-7"></a><span class="co">## -----------------</span></span>
-<span id="cb21-8"><a href="missing-data-and-imputation.html#cb21-8"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb21-9"><a href="missing-data-and-imputation.html#cb21-9"></a><span class="co">## -----------------</span></span>
-<span id="cb21-10"><a href="missing-data-and-imputation.html#cb21-10"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb21-11"><a href="missing-data-and-imputation.html#cb21-11"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb21-12"><a href="missing-data-and-imputation.html#cb21-12"></a><span class="co">## Number of reference years of data = 1</span></span>
-<span id="cb21-13"><a href="missing-data-and-imputation.html#cb21-13"></a><span class="co">## Years from 2018 to 2018</span></span>
-<span id="cb21-14"><a href="missing-data-and-imputation.html#cb21-14"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb21-15"><a href="missing-data-and-imputation.html#cb21-15"></a><span class="co">## -----------------</span></span>
-<span id="cb21-16"><a href="missing-data-and-imputation.html#cb21-16"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb21-17"><a href="missing-data-and-imputation.html#cb21-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb21-18"><a href="missing-data-and-imputation.html#cb21-18"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb21-19"><a href="missing-data-and-imputation.html#cb21-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb21-20"><a href="missing-data-and-imputation.html#cb21-20"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb21-21"><a href="missing-data-and-imputation.html#cb21-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb21-22"><a href="missing-data-and-imputation.html#cb21-22"></a><span class="co">## -----------------</span></span>
-<span id="cb21-23"><a href="missing-data-and-imputation.html#cb21-23"></a><span class="co"># Missing data check on the raw data set</span></span>
-<span id="cb21-24"><a href="missing-data-and-imputation.html#cb21-24"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
-<span id="cb21-25"><a href="missing-data-and-imputation.html#cb21-25"></a><span class="kw">head</span>(ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>MissDatSummary)</span>
-<span id="cb21-26"><a href="missing-data-and-imputation.html#cb21-26"></a><span class="co">##   UnitCode N_missing PrcDataAll LowDataAll</span></span>
-<span id="cb21-27"><a href="missing-data-and-imputation.html#cb21-27"></a><span class="co">## 1      AUT         0        100      FALSE</span></span>
-<span id="cb21-28"><a href="missing-data-and-imputation.html#cb21-28"></a><span class="co">## 2      BEL         0        100      FALSE</span></span>
-<span id="cb21-29"><a href="missing-data-and-imputation.html#cb21-29"></a><span class="co">## 3      BGR         0        100      FALSE</span></span>
-<span id="cb21-30"><a href="missing-data-and-imputation.html#cb21-30"></a><span class="co">## 4      HRV         0        100      FALSE</span></span>
-<span id="cb21-31"><a href="missing-data-and-imputation.html#cb21-31"></a><span class="co">## 5      CYP         0        100      FALSE</span></span>
-<span id="cb21-32"><a href="missing-data-and-imputation.html#cb21-32"></a><span class="co">## 6      CZE         0        100      FALSE</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="missing-data-and-imputation.html#cb22-1"></a><span class="co"># Assemble ASEM data first</span></span>
+<span id="cb22-2"><a href="missing-data-and-imputation.html#cb22-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> COINr<span class="op">::</span>ASEMIndData, <span class="dt">IndMeta =</span> COINr<span class="op">::</span>ASEMIndMeta,</span>
+<span id="cb22-3"><a href="missing-data-and-imputation.html#cb22-3"></a>                 <span class="dt">AggMeta =</span> COINr<span class="op">::</span>ASEMAggMeta)</span>
+<span id="cb22-4"><a href="missing-data-and-imputation.html#cb22-4"></a><span class="co">## -----------------</span></span>
+<span id="cb22-5"><a href="missing-data-and-imputation.html#cb22-5"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb22-6"><a href="missing-data-and-imputation.html#cb22-6"></a><span class="co">## -----------------</span></span>
+<span id="cb22-7"><a href="missing-data-and-imputation.html#cb22-7"></a><span class="co">## -----------------</span></span>
+<span id="cb22-8"><a href="missing-data-and-imputation.html#cb22-8"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb22-9"><a href="missing-data-and-imputation.html#cb22-9"></a><span class="co">## -----------------</span></span>
+<span id="cb22-10"><a href="missing-data-and-imputation.html#cb22-10"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb22-11"><a href="missing-data-and-imputation.html#cb22-11"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb22-12"><a href="missing-data-and-imputation.html#cb22-12"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb22-13"><a href="missing-data-and-imputation.html#cb22-13"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb22-14"><a href="missing-data-and-imputation.html#cb22-14"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb22-15"><a href="missing-data-and-imputation.html#cb22-15"></a><span class="co">## -----------------</span></span>
+<span id="cb22-16"><a href="missing-data-and-imputation.html#cb22-16"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb22-17"><a href="missing-data-and-imputation.html#cb22-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb22-18"><a href="missing-data-and-imputation.html#cb22-18"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb22-19"><a href="missing-data-and-imputation.html#cb22-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb22-20"><a href="missing-data-and-imputation.html#cb22-20"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb22-21"><a href="missing-data-and-imputation.html#cb22-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb22-22"><a href="missing-data-and-imputation.html#cb22-22"></a><span class="co">## -----------------</span></span>
+<span id="cb22-23"><a href="missing-data-and-imputation.html#cb22-23"></a><span class="co"># Missing data check on the raw data set</span></span>
+<span id="cb22-24"><a href="missing-data-and-imputation.html#cb22-24"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb22-25"><a href="missing-data-and-imputation.html#cb22-25"></a><span class="kw">head</span>(ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>MissDatSummary)</span>
+<span id="cb22-26"><a href="missing-data-and-imputation.html#cb22-26"></a><span class="co">##   UnitCode N_missing PrcDataAll LowDataAll</span></span>
+<span id="cb22-27"><a href="missing-data-and-imputation.html#cb22-27"></a><span class="co">## 1      AUT         0        100      FALSE</span></span>
+<span id="cb22-28"><a href="missing-data-and-imputation.html#cb22-28"></a><span class="co">## 2      BEL         0        100      FALSE</span></span>
+<span id="cb22-29"><a href="missing-data-and-imputation.html#cb22-29"></a><span class="co">## 3      BGR         0        100      FALSE</span></span>
+<span id="cb22-30"><a href="missing-data-and-imputation.html#cb22-30"></a><span class="co">## 4      HRV         0        100      FALSE</span></span>
+<span id="cb22-31"><a href="missing-data-and-imputation.html#cb22-31"></a><span class="co">## 5      CYP         0        100      FALSE</span></span>
+<span id="cb22-32"><a href="missing-data-and-imputation.html#cb22-32"></a><span class="co">## 6      CZE         0        100      FALSE</span></span></code></pre></div>
 <p>The <code>MissDataSummary</code> table shows the unit code, number of missing observations, and overall percentage data availability. Finally, the <code>LowDataAll</code> column can be used as a flag for units with data availability lower than a set amount <code>ind_thresh</code> which is one of the input arguments to <code>checkData()</code>. ASEM indicators were already chosen to fulfill minimum data requirements, for which reason the data availability is all above the default of 2/3.</p>
 <p>We will set the minimum data threshold a bit higher, and in doing so also demonstrate another feature of <code>checkData()</code>, which is to automatically screen units based on data availability. Setting <code>unit_screen = TRUE</code> will generate a new data set <code>.$Data$Screened</code> which only includes units with data availability above the set threshold. This data set can then be passed on to subsequent operations.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="missing-data-and-imputation.html#cb22-1"></a><span class="co"># Missing data check on the raw data set</span></span>
-<span id="cb22-2"><a href="missing-data-and-imputation.html#cb22-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">ind_thresh =</span> <span class="fl">0.85</span>, <span class="dt">unit_screen =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb22-3"><a href="missing-data-and-imputation.html#cb22-3"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>RemovedUnits</span>
-<span id="cb22-4"><a href="missing-data-and-imputation.html#cb22-4"></a><span class="co">## [1] &quot;BRN&quot; &quot;LAO&quot; &quot;MMR&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="missing-data-and-imputation.html#cb23-1"></a><span class="co"># Missing data check on the raw data set</span></span>
+<span id="cb23-2"><a href="missing-data-and-imputation.html#cb23-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">ind_thresh =</span> <span class="fl">0.85</span>, <span class="dt">unit_screen =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb23-3"><a href="missing-data-and-imputation.html#cb23-3"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>RemovedUnits</span>
+<span id="cb23-4"><a href="missing-data-and-imputation.html#cb23-4"></a><span class="co">## [1] &quot;BRN&quot; &quot;LAO&quot; &quot;MMR&quot;</span></span></code></pre></div>
 <p>This generates a new data set <code>.$Data$Screened</code> with the removed units recorded in <code>.$Analysis$Raw$RemovedUnits</code>, which in this case are Brunei, Laos and Myanmar. As a final option to mention, you can manually include or exclude units. So for example, a unit that doesn’t have sufficient data coverage could be manually included anyway, and another unit could be excluded.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="missing-data-and-imputation.html#cb23-1"></a><span class="co"># Countries to include and exclude</span></span>
-<span id="cb23-2"><a href="missing-data-and-imputation.html#cb23-2"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">UnitCode =</span> <span class="kw">c</span>(<span class="st">&quot;AUT&quot;</span>,<span class="st">&quot;BRN&quot;</span>), <span class="dt">Status =</span> <span class="kw">c</span>(<span class="st">&quot;Exclude&quot;</span>, <span class="st">&quot;Include&quot;</span>))</span>
-<span id="cb23-3"><a href="missing-data-and-imputation.html#cb23-3"></a></span>
-<span id="cb23-4"><a href="missing-data-and-imputation.html#cb23-4"></a><span class="co"># Missing data check on the raw data set</span></span>
-<span id="cb23-5"><a href="missing-data-and-imputation.html#cb23-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">ind_thresh =</span> <span class="fl">0.85</span>, <span class="dt">unit_screen =</span> <span class="ot">TRUE</span>, <span class="dt">Force =</span> df)</span>
-<span id="cb23-6"><a href="missing-data-and-imputation.html#cb23-6"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>RemovedUnits</span>
-<span id="cb23-7"><a href="missing-data-and-imputation.html#cb23-7"></a><span class="co">## [1] &quot;AUT&quot; &quot;LAO&quot; &quot;MMR&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="missing-data-and-imputation.html#cb24-1"></a><span class="co"># Countries to include and exclude</span></span>
+<span id="cb24-2"><a href="missing-data-and-imputation.html#cb24-2"></a>df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">UnitCode =</span> <span class="kw">c</span>(<span class="st">&quot;AUT&quot;</span>,<span class="st">&quot;BRN&quot;</span>), <span class="dt">Status =</span> <span class="kw">c</span>(<span class="st">&quot;Exclude&quot;</span>, <span class="st">&quot;Include&quot;</span>))</span>
+<span id="cb24-3"><a href="missing-data-and-imputation.html#cb24-3"></a></span>
+<span id="cb24-4"><a href="missing-data-and-imputation.html#cb24-4"></a><span class="co"># Missing data check on the raw data set</span></span>
+<span id="cb24-5"><a href="missing-data-and-imputation.html#cb24-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">ind_thresh =</span> <span class="fl">0.85</span>, <span class="dt">unit_screen =</span> <span class="ot">TRUE</span>, <span class="dt">Force =</span> df)</span>
+<span id="cb24-6"><a href="missing-data-and-imputation.html#cb24-6"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>RemovedUnits</span>
+<span id="cb24-7"><a href="missing-data-and-imputation.html#cb24-7"></a><span class="co">## [1] &quot;AUT&quot; &quot;LAO&quot; &quot;MMR&quot;</span></span></code></pre></div>
 <p>Now AUT has been excluded, even though it had sufficient data coverage, and BRN has been manually included, even though it didn’t. The intention is to give some flexibility to make exceptions for hard rules.</p>
 <p>The other output of interest from <code>checkData()</code> is missing data by group:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="missing-data-and-imputation.html#cb24-1"></a><span class="kw">head</span>(ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>MissDatByGroup[<span class="dv">30</span><span class="op">:</span><span class="dv">40</span>,])</span>
-<span id="cb24-2"><a href="missing-data-and-imputation.html#cb24-2"></a><span class="co">##    UnitCode Physical ConEcFin Political    Instit P2P Environ    Social</span></span>
-<span id="cb24-3"><a href="missing-data-and-imputation.html#cb24-3"></a><span class="co">## 30      GBR    100.0      100       100 100.00000 100     100 100.00000</span></span>
-<span id="cb24-4"><a href="missing-data-and-imputation.html#cb24-4"></a><span class="co">## 31      AUS    100.0      100       100 100.00000 100     100 100.00000</span></span>
-<span id="cb24-5"><a href="missing-data-and-imputation.html#cb24-5"></a><span class="co">## 32      BGD     87.5      100       100  83.33333  75     100  88.88889</span></span>
-<span id="cb24-6"><a href="missing-data-and-imputation.html#cb24-6"></a><span class="co">## 33      BRN     87.5       80       100 100.00000  75     100  55.55556</span></span>
-<span id="cb24-7"><a href="missing-data-and-imputation.html#cb24-7"></a><span class="co">## 34      KHM     87.5       80       100 100.00000  75     100  77.77778</span></span>
-<span id="cb24-8"><a href="missing-data-and-imputation.html#cb24-8"></a><span class="co">## 35      CHN    100.0      100       100 100.00000 100     100 100.00000</span></span>
-<span id="cb24-9"><a href="missing-data-and-imputation.html#cb24-9"></a><span class="co">##    SusEcFin      Conn      Sust     Index</span></span>
-<span id="cb24-10"><a href="missing-data-and-imputation.html#cb24-10"></a><span class="co">## 30      100 100.00000 100.00000 100.00000</span></span>
-<span id="cb24-11"><a href="missing-data-and-imputation.html#cb24-11"></a><span class="co">## 31      100 100.00000 100.00000 100.00000</span></span>
-<span id="cb24-12"><a href="missing-data-and-imputation.html#cb24-12"></a><span class="co">## 32       80  86.66667  89.47368  87.75510</span></span>
-<span id="cb24-13"><a href="missing-data-and-imputation.html#cb24-13"></a><span class="co">## 33       60  86.66667  68.42105  79.59184</span></span>
-<span id="cb24-14"><a href="missing-data-and-imputation.html#cb24-14"></a><span class="co">## 34      100  86.66667  89.47368  87.75510</span></span>
-<span id="cb24-15"><a href="missing-data-and-imputation.html#cb24-15"></a><span class="co">## 35       80 100.00000  94.73684  97.95918</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="missing-data-and-imputation.html#cb25-1"></a><span class="kw">head</span>(ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>MissDatByGroup[<span class="dv">30</span><span class="op">:</span><span class="dv">40</span>,])</span>
+<span id="cb25-2"><a href="missing-data-and-imputation.html#cb25-2"></a><span class="co">##    UnitCode Physical ConEcFin Political    Instit P2P Environ    Social</span></span>
+<span id="cb25-3"><a href="missing-data-and-imputation.html#cb25-3"></a><span class="co">## 30      GBR    100.0      100       100 100.00000 100     100 100.00000</span></span>
+<span id="cb25-4"><a href="missing-data-and-imputation.html#cb25-4"></a><span class="co">## 31      AUS    100.0      100       100 100.00000 100     100 100.00000</span></span>
+<span id="cb25-5"><a href="missing-data-and-imputation.html#cb25-5"></a><span class="co">## 32      BGD     87.5      100       100  83.33333  75     100  88.88889</span></span>
+<span id="cb25-6"><a href="missing-data-and-imputation.html#cb25-6"></a><span class="co">## 33      BRN     87.5       80       100 100.00000  75     100  55.55556</span></span>
+<span id="cb25-7"><a href="missing-data-and-imputation.html#cb25-7"></a><span class="co">## 34      KHM     87.5       80       100 100.00000  75     100  77.77778</span></span>
+<span id="cb25-8"><a href="missing-data-and-imputation.html#cb25-8"></a><span class="co">## 35      CHN    100.0      100       100 100.00000 100     100 100.00000</span></span>
+<span id="cb25-9"><a href="missing-data-and-imputation.html#cb25-9"></a><span class="co">##    SusEcFin      Conn      Sust     Index</span></span>
+<span id="cb25-10"><a href="missing-data-and-imputation.html#cb25-10"></a><span class="co">## 30      100 100.00000 100.00000 100.00000</span></span>
+<span id="cb25-11"><a href="missing-data-and-imputation.html#cb25-11"></a><span class="co">## 31      100 100.00000 100.00000 100.00000</span></span>
+<span id="cb25-12"><a href="missing-data-and-imputation.html#cb25-12"></a><span class="co">## 32       80  86.66667  89.47368  87.75510</span></span>
+<span id="cb25-13"><a href="missing-data-and-imputation.html#cb25-13"></a><span class="co">## 33       60  86.66667  68.42105  79.59184</span></span>
+<span id="cb25-14"><a href="missing-data-and-imputation.html#cb25-14"></a><span class="co">## 34      100  86.66667  89.47368  87.75510</span></span>
+<span id="cb25-15"><a href="missing-data-and-imputation.html#cb25-15"></a><span class="co">## 35       80 100.00000  94.73684  97.95918</span></span></code></pre></div>
 <p>This gives the percentage indicator data availability inside each aggregation group.</p>
 </div>
 <div id="imputation-in-coinr" class="section level2">
-<h2><span class="header-section-number">5.3</span> Imputation in COINr</h2>
+<h2><span class="header-section-number">6.3</span> Imputation in COINr</h2>
 <p>Now we turn to estimating missing data points in COINr. The function of interest is <code>impute()</code>, which gives a number of options, corresponding to the types of imputation discussed above. Briefly, COINr can impute using:</p>
 <ul>
 <li>The indicator mean, either across all countries or within a specified group</li>
@@ -402,34 +406,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The expectation maximisation algorithm, via the <a href="https://cran.r-project.org/web/packages/Amelia/index.html">AMELIA</a> package</li>
 </ul>
 <div id="by-column" class="section level3">
-<h3><span class="header-section-number">5.3.1</span> By column</h3>
+<h3><span class="header-section-number">6.3.1</span> By column</h3>
 <p>The <code>impute()</code> function follows a similar logic to other COINr functions. We can enter a COIN or a data frame, and get a COIN or a data frame back. Let’s impute on a COIN first, using the raw ASEM data.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="missing-data-and-imputation.html#cb25-1"></a><span class="co"># Assemble ASEM data if not done already (uncomment the following)</span></span>
-<span id="cb25-2"><a href="missing-data-and-imputation.html#cb25-2"></a><span class="co"># ASEM &lt;- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta,</span></span>
-<span id="cb25-3"><a href="missing-data-and-imputation.html#cb25-3"></a><span class="co">#                 AggMeta = COINr::ASEMAggMeta)</span></span>
-<span id="cb25-4"><a href="missing-data-and-imputation.html#cb25-4"></a></span>
-<span id="cb25-5"><a href="missing-data-and-imputation.html#cb25-5"></a><span class="co"># check how many NAs we have</span></span>
-<span id="cb25-6"><a href="missing-data-and-imputation.html#cb25-6"></a><span class="kw">sum</span>(<span class="kw">is.na</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Raw))</span>
-<span id="cb25-7"><a href="missing-data-and-imputation.html#cb25-7"></a><span class="co">## [1] 63</span></span>
-<span id="cb25-8"><a href="missing-data-and-imputation.html#cb25-8"></a></span>
-<span id="cb25-9"><a href="missing-data-and-imputation.html#cb25-9"></a><span class="co"># impute using indicator mean</span></span>
-<span id="cb25-10"><a href="missing-data-and-imputation.html#cb25-10"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">imtype =</span> <span class="st">&quot;ind_mean&quot;</span>)</span>
-<span id="cb25-11"><a href="missing-data-and-imputation.html#cb25-11"></a><span class="co">## Missing data points detected = 63</span></span>
-<span id="cb25-12"><a href="missing-data-and-imputation.html#cb25-12"></a><span class="co">## Missing data points imputed = 63, using method = ind_mean</span></span>
-<span id="cb25-13"><a href="missing-data-and-imputation.html#cb25-13"></a></span>
-<span id="cb25-14"><a href="missing-data-and-imputation.html#cb25-14"></a><span class="co"># check how many NAs after imputation</span></span>
-<span id="cb25-15"><a href="missing-data-and-imputation.html#cb25-15"></a><span class="kw">sum</span>(<span class="kw">is.na</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed))</span>
-<span id="cb25-16"><a href="missing-data-and-imputation.html#cb25-16"></a><span class="co">## [1] 0</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="missing-data-and-imputation.html#cb26-1"></a><span class="co"># Assemble ASEM data if not done already (uncomment the following)</span></span>
+<span id="cb26-2"><a href="missing-data-and-imputation.html#cb26-2"></a><span class="co"># ASEM &lt;- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta,</span></span>
+<span id="cb26-3"><a href="missing-data-and-imputation.html#cb26-3"></a><span class="co">#                 AggMeta = COINr::ASEMAggMeta)</span></span>
+<span id="cb26-4"><a href="missing-data-and-imputation.html#cb26-4"></a></span>
+<span id="cb26-5"><a href="missing-data-and-imputation.html#cb26-5"></a><span class="co"># check how many NAs we have</span></span>
+<span id="cb26-6"><a href="missing-data-and-imputation.html#cb26-6"></a><span class="kw">sum</span>(<span class="kw">is.na</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Raw))</span>
+<span id="cb26-7"><a href="missing-data-and-imputation.html#cb26-7"></a><span class="co">## [1] 63</span></span>
+<span id="cb26-8"><a href="missing-data-and-imputation.html#cb26-8"></a></span>
+<span id="cb26-9"><a href="missing-data-and-imputation.html#cb26-9"></a><span class="co"># impute using indicator mean</span></span>
+<span id="cb26-10"><a href="missing-data-and-imputation.html#cb26-10"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">imtype =</span> <span class="st">&quot;ind_mean&quot;</span>)</span>
+<span id="cb26-11"><a href="missing-data-and-imputation.html#cb26-11"></a><span class="co">## Missing data points detected = 63</span></span>
+<span id="cb26-12"><a href="missing-data-and-imputation.html#cb26-12"></a><span class="co">## Missing data points imputed = 63, using method = ind_mean</span></span>
+<span id="cb26-13"><a href="missing-data-and-imputation.html#cb26-13"></a></span>
+<span id="cb26-14"><a href="missing-data-and-imputation.html#cb26-14"></a><span class="co"># check how many NAs after imputation</span></span>
+<span id="cb26-15"><a href="missing-data-and-imputation.html#cb26-15"></a><span class="kw">sum</span>(<span class="kw">is.na</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed))</span>
+<span id="cb26-16"><a href="missing-data-and-imputation.html#cb26-16"></a><span class="co">## [1] 0</span></span></code></pre></div>
 <p>If the input is a COIN, by default the output is an updated COIN, with a new data set <code>.$Data$Imputed</code>. We can also set <code>out2 = "df"</code> to output the imputed data frame on its own.</p>
 <p>The above example replaces <code>NA</code> values with the mean of the indicator, and setting <code>imtype = ind_median</code> will instead use the indicator median. In this respect, we are using information from other units, inside the same indicator, to estimate the missing values.</p>
 <p>Imputing by group may be more informative if you have meaningful grouping variables. For example, the ASEM data set has groupings by GDP, population, GDP per capita and whether the country is European or Asian. We might hypothesise that it is better to replace <code>NA</code> values with the median inside a group, say by GDP group. This would imply that countries with a similar GDP are likely to have similar indicator values.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="missing-data-and-imputation.html#cb26-1"></a><span class="co"># impute using GDP group median</span></span>
-<span id="cb26-2"><a href="missing-data-and-imputation.html#cb26-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">imtype =</span> <span class="st">&quot;indgroup_median&quot;</span>, <span class="dt">groupvar =</span> <span class="st">&quot;Group_GDP&quot;</span>)</span>
-<span id="cb26-3"><a href="missing-data-and-imputation.html#cb26-3"></a><span class="co">## Missing data points detected = 63</span></span>
-<span id="cb26-4"><a href="missing-data-and-imputation.html#cb26-4"></a><span class="co">## Missing data points imputed = 63, using method = indgroup_median</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="missing-data-and-imputation.html#cb27-1"></a><span class="co"># impute using GDP group median</span></span>
+<span id="cb27-2"><a href="missing-data-and-imputation.html#cb27-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">imtype =</span> <span class="st">&quot;indgroup_median&quot;</span>, <span class="dt">groupvar =</span> <span class="st">&quot;Group_GDP&quot;</span>)</span>
+<span id="cb27-3"><a href="missing-data-and-imputation.html#cb27-3"></a><span class="co">## Missing data points detected = 63</span></span>
+<span id="cb27-4"><a href="missing-data-and-imputation.html#cb27-4"></a><span class="co">## Missing data points imputed = 63, using method = indgroup_median</span></span></code></pre></div>
 </div>
 <div id="by-row" class="section level3">
-<h3><span class="header-section-number">5.3.2</span> By row</h3>
+<h3><span class="header-section-number">6.3.2</span> By row</h3>
 <p>So far, the imputation has been using values from the same column (indicator). Another possibility is to use values from other indicators, i.e operate row-wise. COINr offers two basic options in this respect: either to take the mean or median of the other indicators inside the aggregation group, and this can be done by setting <code>imtype = "agg_mean"</code> or <code>imtype = "agg_median"</code> respectively.</p>
 <p>Both of these imputation methods will, for a given unit, take the mean or median of the <em>normalised</em> values of the other indicators in the aggregation group in the level above indicator level. The process is as follows, for each <code>NA</code> value:</p>
 <ol style="list-style-type: decimal">
@@ -441,13 +445,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It’s important to realise that this is equivalent to aggregating with the mean or median without imputing first. This is because in the aggregation step, if we take the mean of a group of indicators, and there is a <code>NA</code> present, this value is excluded from the mean calculation. Doing this is mathematically equivalent to assigning the mean to that missing value. Therefore, one reason to use this imputation method is to see which values are being implicitly assigned as a result of excluding missing values from the aggregation step. This is sometimes known as “shadow imputation”.</p>
 </div>
 <div id="by-column-and-row" class="section level3">
-<h3><span class="header-section-number">5.3.3</span> By column and row</h3>
+<h3><span class="header-section-number">6.3.3</span> By column and row</h3>
 <p>Finally, we can use a regression-based <em>expectation maximisation</em> algorithm, imported via the <code>AMELIA</code> package. This estimates missing values using the values of the other indicators <em>and</em> the other units. This effectively involves regressing each indicator on other indicators, and predicting missing values.</p>
 <p>A catch of this approach is that if the number of units is small compared to the number of indicators, there will not be enough observations to estimate the parameters of the model. This is definitely the case if you have more indicators than observations. To use the EM algorithm in this case, imputation is performed on aggregation groups. So, to use the EM approach in <code>COINr</code>, you have to specify the aggregation level to group indicators by.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="missing-data-and-imputation.html#cb27-1"></a><span class="co"># impute using EM, grouping indicators inside their pillars (level 2)</span></span>
-<span id="cb27-2"><a href="missing-data-and-imputation.html#cb27-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">imtype =</span> <span class="st">&quot;EM&quot;</span>, <span class="dt">EMaglev =</span> <span class="dv">2</span>)</span>
-<span id="cb27-3"><a href="missing-data-and-imputation.html#cb27-3"></a><span class="co">## Missing data points detected = 63</span></span>
-<span id="cb27-4"><a href="missing-data-and-imputation.html#cb27-4"></a><span class="co">## Missing data points imputed = 63, using method = EM</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="missing-data-and-imputation.html#cb28-1"></a><span class="co"># impute using EM, grouping indicators inside their pillars (level 2)</span></span>
+<span id="cb28-2"><a href="missing-data-and-imputation.html#cb28-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">impute</span>(ASEM, <span class="dt">imtype =</span> <span class="st">&quot;EM&quot;</span>, <span class="dt">EMaglev =</span> <span class="dv">2</span>)</span>
+<span id="cb28-3"><a href="missing-data-and-imputation.html#cb28-3"></a><span class="co">## Missing data points detected = 63</span></span>
+<span id="cb28-4"><a href="missing-data-and-imputation.html#cb28-4"></a><span class="co">## Missing data points imputed = 63, using method = EM</span></span></code></pre></div>
 <p>This works, because the ASEM data set has 51 units and no more thann eight indicators per pillar. However, if we were to use <code>EMaglev = 3</code>, i.e. try imputing indicators grouped into the two sub-indexes, it does not work.</p>
 <p>Finding the right aggregation level to impute at might involve a bit of trial and error, but the advantage of imputing by groups of indicators is that aggregation groups are usually composed of indicators that are similar in some respect. This makes it more likely that they are good predictors of the other indicators in their group.</p>
 <p>The <code>AMELIA</code> package offers many more options for imputation that are not available through the <code>impute()</code> function, such as bootstrapping, time-series imputation and more. As with plotting packages <code>COINr</code> aims to provide an easy and quick interface to standard imputation in <code>AMELIA</code>, but if you want to have full control you should use the <code>AMELIA</code> package directly. Other good imputation options are the <a href="https://cran.r-project.org/web/packages/mice/index.html"><code>MICE</code></a> package (Multivariate Imputation via Chained Equations) and the <a href="https://cran.rstudio.com/web/packages/missForest/index.html"><code>missForest</code></a> package (using random forests).</p>
@@ -460,7 +464,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="initial-visualisation-and-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="multivariate-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="denomination.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

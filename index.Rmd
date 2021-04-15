@@ -18,25 +18,31 @@ knitr::opts_chunk$set(fig.width = 8, collapse = TRUE, warning = FALSE)
 
 # Overview
 
+## Background
+
 This documentation describes in detail the COINr package, which is an open source R package for developing and analysing composite indicators. In fact, this is slightly more than technical documentation, and also gives some tips on composite indicator development along the way.
+
+A composite indicator is an aggregation of indicators which aims to measure a particular concept. Composite indicators are typically used to measure complex and multidimensional concepts which are difficult to define, and cannot be measured directly. Examples include innovation, human development, environmental performance, and so on. Composite indicators are closely related to scoreboards, which are also groups of indicators aiming to capture a concept. However, scoreboards do not aggregate indicator values. Composite indicators also usually use a hierarchical structure which breaks the concept down into elements, sometimes known as sub-pillars, pillars, sub-indexes, dimensions, and so on.
 
 COINr is currently still under development, therefore the package itself, and this documentation, are a work in progress but are being continually updated. You can find the latest version of COINr at its [GitHub repo](https://github.com/bluefoxr/COINr), and also the source code for this documentation [here](https://github.com/bluefoxr/COINrDoc).
 
 ## Installation
 
-Although COINr is under development, but a limited pre-beta version can be installed via Github. First, install the `devtools` package if you don't already have it, then run:
+Although COINr is under development, a pre-beta version can be installed via Github. First, install the `devtools` package if you don't already have it, then run:
 
-```{r eval=FALSE}
+```{r InstallCOINr, eval=FALSE}
 devtools::install_github("bluefoxr/COINr")
 ```
 
 This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also skip this step.
 
-It should go without saying that as a non-even-beta version of the package, this is made available more as a preview than anything else. Many functions will work, but bugs are likely in many places. In case you do spot a bug, or have a suggestion, the best way is to [open an issue](https://github.com/bluefoxr/COINr/issues) on the repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).
+At the time of writing (April 2021), the functionalities of the package are perhaps 75% complete. Roughly speaking, the features that are described in detail in this documentation are more or less complete and have survived an initial round of testing and checks. Any functions that are not described in detail here should be treated with more caution and it is likely that bugs would be encountered here and there. The entire package will need to beta tested before a more official “release”.
+
+In case you do spot a bug, or have a suggestion, the best way is to [open an issue](https://github.com/bluefoxr/COINr/issues) on the repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).
 
 ## What's it for?
 
-COINr is the first fully-flexible development and analysis environment for composite indicators and scoreboards. It allows:
+COINr is the first fully-flexible development and analysis environment for composite indicators and scoreboards. The main features are:
 
 * Flexible and fast development of composite indicators with no limits on aggregation levels, numbers of indicators, highly flexible set of methodological choices.
 
@@ -44,17 +50,28 @@ COINr is the first fully-flexible development and analysis environment for compo
 
 * Interactive data exploration and visualisation via Shiny apps which can be hosted online. HTML widgets for incorporation in interactive markdown documents.
 
-## Quick-start guide
+In short, COINr aims to allow composite indicators to be developed and prototyped very quickly and in a structured fashion, with the results immediately available and able to be explored interactively. Although it is built in R, it is a high-level package that aims to make command simple and intuitive, with the hard work performed behind the scenes, therefore it is also accessible to less experienced R users.
+
+## Demo
 
 COINr is highly customisable, but equally allows composite indicator construction in a few commands. Taking the built-in ASEM dataset, we can assemble a composite indicator in a few steps.
 
-```{r, collapse=T}
+```{r demo_assemble, collapse=T}
 library(COINr)
 
 # assemble basic composite indicator object from input data
 ASEM <- assemble(IndData = ASEMIndData,
                  IndMeta = ASEMIndMeta,
                  AggMeta = ASEMAggMeta)
+```
+
+Here, we have loaded the COINr package, and assembled a so-called “COIN”, which is a structured object used universally within COINr. It contains a complete record of all data sets, parameters, methodological choices, analysis and results generated during the construction and analysis process. A COIN is initially assembled by supplying a table of indicator data, a table of indicator metadata, and a table of aggregation metadata. More details can be found in the chapter on [COINs: the currency of COINr].
+
+Currently, the COIN (composite indicator) only contains the input data set and other metadata. To actually get the aggregated results (i.e. and index), we have to denominate, normalise and aggregate it. These operations are performed by dedicated functions in COINr.
+
+
+```{r demo_construct, collapse=T}
+
 # denominate data using specifications in ASEMIndMeta
 ASEM <- denominate(ASEM)
 # normalise data
@@ -64,13 +81,21 @@ ASEM <- aggregate(ASEM, dset = "Normalised")
 
 ```
 
-At this point, the dashboard for viewing the results interactively is still under development. Still, we can view a number of things. First, we may want to see the index structure:
+Of course, there are many ways to aggregate data, and other steps could be performed before aggregating, such as (multivariate) analysis, data treatment and so forth. Here, we have simply taken three basic steps.
+
+Each of the functions generates a new data set – here, respectively “Denominated”, “Normalised” and “Aggregated” data sets which are added to and stored within the COIN. Although in the example here the default specifications have been used, the functions have many options, and can be directed to operate on any of the data sets within the COIN. Details on this are left to later chapters in this book.
+
+At this point, let us examine some of the outputs in the COIN. First, we may want to see the index structure:
 
 ```{r, warning=F, message=F}
 plotframework(ASEM)
 ```
 
-This is an interactive "HTML widget" which can be embedded into HTML documents (such as this page). We can also analyse indicator statistics:
+In the online version of this documentation, this plot appears as an interactive “HTML widget” which can be embedded into HTML documents. COINr leverages existing R packages, and interactive graphics (like that of Figure 6) are generated using bindings to the plotly package, which is based on Javascript libraries. Static graphics are largely produced by the ggplot2 package.
+
+The framework plot is called a “sunburst plot” and summarises the structure of the index and the relative weight of each indicator in each aggregation level and the index.
+
+We can also get indicator statistics in table format:
 
 ```{r, warning=F, message=F}
 library(reactable)
@@ -80,17 +105,23 @@ ASEM$Analysis$Raw$StatTable %>%
   reactable::reactable(defaultPageSize = 5, highlight = TRUE, wrap = F)
 ```
 
-plot indicator distributions,
+Again, this table is an presented as an interactive HTML table and is easier explored using the online version of this book. In short, `getstats()` provides key statistics on each indicator, relating to data availability, outliers, summary statistics such as mean, median, skew, kurtosis, and so on. This can be applied to any data set within the COIN.
+
+Indicator distributions can also be easily plotted:
 
 ```{r, warning=F, message=F}
 plotIndDist(ASEM, type = "Violindot", icodes = "Political")
 ```
 
-and visualise and explore overall results in an interactive dashboard
+Finally, results can be visualised and explored in an interactive dashboard. This can be useful as a rapid prototype of the index. The app may even be hosted online, or can be used as the basis for a more customised indicator visualisation platform. Here, a basic screenshot is provided.
 
 ```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Results dashboard screenshot"}
 knitr::include_graphics("images/demo_resultsdash.png")
 ```
+
+Clearly, this is not meant to replace a dedicated composite indicator visualisation site, but is a fast first step.
+
+## Features and status
 
 COINr has, or will have, many more features. Among those that are already implemented and in various stages of testing:
 
@@ -105,6 +136,7 @@ COINr has, or will have, many more features. Among those that are already implem
 * Multivariate analysis (PCA) and correlation analysis
 * Interactive re-weighting
 * Export to Excel
+* Import from the [COIN Tool](https://composite-indicators.jrc.ec.europa.eu/?q=coin-tool)
 
 And those that will be included soon, among others:
 
@@ -113,4 +145,3 @@ And those that will be included soon, among others:
 * Support for panel data, i.e. indexes for multiple years
 * What-if experiments, comparing alternative versions of the index
 * Sensitivity analysis, robustness to methodological assumptions, weights, etc.
-* Import/export to the [COIN Tool](https://composite-indicators.jrc.ec.europa.eu/?q=coin-tool)

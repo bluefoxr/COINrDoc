@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 10 Aggregation | Composite Indicator Development and Analysis in R with COINr</title>
+  <title>Chapter 5 Multivariate analysis | Composite Indicator Development and Analysis in R with COINr</title>
   <meta name="description" content="Composite indicators with COINr" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Aggregation | Composite Indicator Development and Analysis in R with COINr" />
+  <meta property="og:title" content="Chapter 5 Multivariate analysis | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Aggregation | Composite Indicator Development and Analysis in R with COINr" />
+  <meta name="twitter:title" content="Chapter 5 Multivariate analysis | Composite Indicator Development and Analysis in R with COINr" />
   
   <meta name="twitter:description" content="Composite indicators with COINr" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="normalisation.html"/>
-<link rel="next" href="weighting-1.html"/>
+<link rel="prev" href="initial-visualisation-and-analysis.html"/>
+<link rel="next" href="missing-data-and-imputation.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -275,141 +275,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="aggregation" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> Aggregation</h1>
-<p>Aggregation is the operation of combining multiple indicators into one value. Many composite indicators have a hierarchical structure, so in practice this often involves multiple aggregations, for example aggregating groups of indicators into aggregate values, then aggregating those values into higher-level aggregates, and so on, until the final index value.</p>
-<p>Aggregating should almost always be done on normalised data, unless the indicators are already on very similar scales. Otherwise the relative influence of indicators will be very uneven.</p>
-<p>Of course you don’t <em>have</em> to aggregate indicators at all, and you might be content with a scoreboard, or perhaps aggregating into several aggregate values rather than a single index. However, consider that aggregation should not substitute the underlying indicator data, but complement it.</p>
-<p>Overall, aggregating indicators is a form of information compression - you are trying to combine many indicator values into one, and inevitably information will be lost. As long as this is kept in mind, and indicator data is presented and made available along side aggregate values, then aggregate (index) values can complement indicators and be used as a useful tool for summarising the underlying data, and identifying overall trends and patterns.</p>
-<div id="weighting" class="section level2">
-<h2><span class="header-section-number">10.1</span> Weighting</h2>
-<p>Many aggregation methods involve some kind of weighting, i.e. coefficients that define the relative weight of the indicators/aggregates in the aggregation. In order to aggregate, weights need to first be specified, but to effectively adjust weights it is necessary to aggregate.</p>
-<p>This chicken and egg conundrum is best solved by aggregating initially with a trial set of weights, perhaps equal weights, then seeing the effects of the weighting, and making any weight adjustments necessary. For this reason, weighting is dealt with in the following chapter on <a href="weighting-1.html#weighting-1">Weighting</a>.</p>
-</div>
-<div id="approaches-1" class="section level2">
-<h2><span class="header-section-number">10.2</span> Approaches</h2>
-<div id="means" class="section level3">
-<h3><span class="header-section-number">10.2.1</span> Means</h3>
-<p>The most straightforward and widely-used approach to aggregation is the <strong>weighted arithmetic mean</strong>. Denoting the indicators as <span class="math inline">\(x_i \in \{x_1, x_2, ... , x_d \}\)</span>, a weighted arithmetic mean is calculated as:</p>
-<p><span class="math display">\[ y = \frac{\sum_{i=1}^d x_iw_i}{\sum_{i=1}^d w_i}  \]</span></p>
-<p>where the <span class="math inline">\(w_i\)</span> are the weights corresponding to each <span class="math inline">\(x_i\)</span>. Here, if the weights are chosen to sum to 1, it will simplify to the weighted sum of the indicators. In any case, the weighted mean is scaled by the sum of the weights, so weights operate relative to each other.</p>
-<p>Clearly, if the index has more than two levels, then there will be multiple aggregations. For example, there may be three groups of indicators which give three separate aggregate scores. These aggregate scores would then be fed back into the weighted arithmetic mean above to calculate the overall index.</p>
-<p>The arithmetic mean has “perfect compensability”, which means that a high score in one indicator will perfectly compensate a low score in another. In a simple example with two indicators scaled between 0 and 10 and equal weighting, a unit with scores (0, 10) would be given the same score as a unit with scores (5, 5) – both have a score of 5.</p>
-<p>An alternative is the <strong>weighted geometric mean</strong>, which uses the product of the indicators rather than the sum.</p>
-<p><span class="math display">\[ y = \left( \prod_{i=1}^d x_i^{w_i} \right)^{1 / \sum_{i=1}^d w_i} \]</span></p>
-<p>This is simply the product of each indicator to the power of its weight, all raised the the power of the inverse of the sum of the weights.</p>
-<p>The geometric mean is less compensatory than the arithmetic mean – low values in one indicator only partially substitute high values in others. For this reason, the geometric mean may sometimes be preferred when indicators represent “essentials”. An example might be quality of life: a longer life expectancy perhaps should not compensate severe restrictions on personal freedoms.</p>
-<p>A third type of mean, in fact the third of the so-called <a href="https://en.wikipedia.org/wiki/Pythagorean_means">Pythagorean means</a> is the <strong>weighted harmonic mean</strong>. This uses the mean of the reciprocals of the indicators:</p>
-<p><span class="math display">\[ y = \frac{\sum_{i=1}^d w_i}{\sum_{i=1}^d w_i/x_i} \]</span></p>
-<p>The harmonic mean is the the least compensatory of the the three means, even less so than the geometric mean. It is often used for taking the mean of rates and ratios.</p>
-</div>
-<div id="other-methods" class="section level3">
-<h3><span class="header-section-number">10.2.2</span> Other methods</h3>
-<p>The <em>weighted median</em> is also a simple alternative candidate. It is defined by ordering indicator values, then picking the value which has half of the assigned weight above it, and half below it. For <em>ordered</em> indicators <span class="math inline">\(x_1, x_2, ..., x_d\)</span> and corresponding weights <span class="math inline">\(w_1, w_2, ..., w_d\)</span> the weighted median is the indicator value <span class="math inline">\(x_m\)</span> that satisfies:</p>
-<p><span class="math display">\[ \sum_{i=1}^{m-1} w_i \leq \frac{1}{2}, \: \: \text{and} \sum_{i=m+1}^{d} w_i \leq \frac{1}{2} \]</span></p>
-<p>The median is known to be robust to outliers, and this may be of interest if the distribution of scores across indicators is skewed.</p>
-<p>Another somewhat different approach to aggregation is to use the <a href="https://en.wikipedia.org/wiki/Copeland%27s_method">Copeland method</a>. This approach is based pairwise comparisons between units and proceeds as follows. First, an <em>outranking matrix</em> is constructed, which is a square matrix with <span class="math inline">\(N\)</span> columns and <span class="math inline">\(N\)</span> rows, where <span class="math inline">\(N\)</span> is the number of units.</p>
-<p>The element in the <span class="math inline">\(p\)</span>th row and <span class="math inline">\(q\)</span>th column of the matrix is calculated by summing all the indicator weights where unit <span class="math inline">\(p\)</span> has a higher value in those indicators than unit <span class="math inline">\(q\)</span>. Similarly, the cell in the <span class="math inline">\(q\)</span>th row and <span class="math inline">\(p\)</span>th column (which is the cell opposite on the other side of the diagonal), is calculated as the sum of the weights unit where <span class="math inline">\(q\)</span> has a higher value than unit <span class="math inline">\(p\)</span>. If the indicator weights sum to one over all indicators, then these two scores will also sum to 1 by definition. The outranking matrix effectively summarises to what extent each unit scores better or worse than all other units, for all unit pairs.</p>
-<p>The Copeland score for each unit is calculated by taking the sum of the row values in the outranking matrix. This can be seen as an average measure of to what extent that unit performs above other units.</p>
-<p>Clearly, this can be applied at any level of aggregation and used hierarchically like the other aggregation methods presented here.</p>
-<p>In some cases, one unit may score higher than the other in all indicators. This is called a <em>dominance pair</em>, and corresponds to any pair scores equal to one (equivalent to any pair scores equal to zero).</p>
-<p>The percentage of dominance pairs is an indication of robustness. Under dominance, there is no way methodological choices (weighting, normalisation, etc.) can affect the relative standing of the pair in the ranking. One will always be ranked higher than the other. The greater the number of dominance (or robust) pairs in a classification, the less sensitive country ranks will be to methodological assumptions.</p>
-</div>
-</div>
-<div id="aggregation-in-coinr" class="section level2">
-<h2><span class="header-section-number">10.3</span> Aggregation in COINr</h2>
-<p>Many will be amazed to learn that the function to aggregate in COINr is called <code>aggregate()</code>. First, let’s build the ASEM data set up to the point of normalisation, then aggregate it using the default approaches.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="aggregation.html#cb50-1"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb50-2"><a href="aggregation.html#cb50-2"></a></span>
-<span id="cb50-3"><a href="aggregation.html#cb50-3"></a><span class="co"># Build ASEM data up to the normalisation step</span></span>
-<span id="cb50-4"><a href="aggregation.html#cb50-4"></a><span class="co"># Assemble data and metadata into a COIN</span></span>
-<span id="cb50-5"><a href="aggregation.html#cb50-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> COINr<span class="op">::</span>ASEMIndData, <span class="dt">IndMeta =</span> COINr<span class="op">::</span>ASEMIndMeta, <span class="dt">AggMeta =</span> COINr<span class="op">::</span>ASEMAggMeta)</span>
-<span id="cb50-6"><a href="aggregation.html#cb50-6"></a><span class="co">## -----------------</span></span>
-<span id="cb50-7"><a href="aggregation.html#cb50-7"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb50-8"><a href="aggregation.html#cb50-8"></a><span class="co">## -----------------</span></span>
-<span id="cb50-9"><a href="aggregation.html#cb50-9"></a><span class="co">## -----------------</span></span>
-<span id="cb50-10"><a href="aggregation.html#cb50-10"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb50-11"><a href="aggregation.html#cb50-11"></a><span class="co">## -----------------</span></span>
-<span id="cb50-12"><a href="aggregation.html#cb50-12"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb50-13"><a href="aggregation.html#cb50-13"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb50-14"><a href="aggregation.html#cb50-14"></a><span class="co">## Number of reference years of data = 1</span></span>
-<span id="cb50-15"><a href="aggregation.html#cb50-15"></a><span class="co">## Years from 2018 to 2018</span></span>
-<span id="cb50-16"><a href="aggregation.html#cb50-16"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb50-17"><a href="aggregation.html#cb50-17"></a><span class="co">## -----------------</span></span>
-<span id="cb50-18"><a href="aggregation.html#cb50-18"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb50-19"><a href="aggregation.html#cb50-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb50-20"><a href="aggregation.html#cb50-20"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb50-21"><a href="aggregation.html#cb50-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb50-22"><a href="aggregation.html#cb50-22"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb50-23"><a href="aggregation.html#cb50-23"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb50-24"><a href="aggregation.html#cb50-24"></a><span class="co">## -----------------</span></span>
-<span id="cb50-25"><a href="aggregation.html#cb50-25"></a><span class="co"># Denominate as specified in metadata</span></span>
-<span id="cb50-26"><a href="aggregation.html#cb50-26"></a>ASEM &lt;-<span class="st"> </span><span class="kw">denominate</span>(ASEM)</span>
-<span id="cb50-27"><a href="aggregation.html#cb50-27"></a><span class="co"># Normalise using default method: min-max scaled between 0 and 100.</span></span>
-<span id="cb50-28"><a href="aggregation.html#cb50-28"></a>ASEM &lt;-<span class="st"> </span><span class="kw">normalise</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Denominated&quot;</span>)</span>
-<span id="cb50-29"><a href="aggregation.html#cb50-29"></a></span>
-<span id="cb50-30"><a href="aggregation.html#cb50-30"></a><span class="co"># Now aggregate using default method: arithmetic mean, using weights found in the COIN</span></span>
-<span id="cb50-31"><a href="aggregation.html#cb50-31"></a>ASEM &lt;-<span class="st"> </span><span class="kw">aggregate</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb50-32"><a href="aggregation.html#cb50-32"></a></span>
-<span id="cb50-33"><a href="aggregation.html#cb50-33"></a><span class="co"># show last few columns of aggregated data set</span></span>
-<span id="cb50-34"><a href="aggregation.html#cb50-34"></a>ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated[(<span class="kw">ncol</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated)<span class="op">-</span><span class="dv">5</span>)<span class="op">:</span><span class="st"> </span><span class="kw">ncol</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated)]</span>
-<span id="cb50-35"><a href="aggregation.html#cb50-35"></a><span class="co">## # A tibble: 51 x 6</span></span>
-<span id="cb50-36"><a href="aggregation.html#cb50-36"></a><span class="co">##    Environ Social SusEcFin  Conn  Sust Index</span></span>
-<span id="cb50-37"><a href="aggregation.html#cb50-37"></a><span class="co">##      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb50-38"><a href="aggregation.html#cb50-38"></a><span class="co">##  1    71.0   67.0     65.7  50.4  67.9  59.1</span></span>
-<span id="cb50-39"><a href="aggregation.html#cb50-39"></a><span class="co">##  2    55.9   86.3     53.5  54.8  65.3  60.0</span></span>
-<span id="cb50-40"><a href="aggregation.html#cb50-40"></a><span class="co">##  3    56.4   54.0     62.5  42.4  57.6  50.0</span></span>
-<span id="cb50-41"><a href="aggregation.html#cb50-41"></a><span class="co">##  4    76.0   54.8     55.5  45.9  62.1  54.0</span></span>
-<span id="cb50-42"><a href="aggregation.html#cb50-42"></a><span class="co">##  5    61.9   59.5     31.1  45.5  50.8  48.2</span></span>
-<span id="cb50-43"><a href="aggregation.html#cb50-43"></a><span class="co">##  6    53.7   61.1     72.0  48.9  62.3  55.6</span></span>
-<span id="cb50-44"><a href="aggregation.html#cb50-44"></a><span class="co">##  7    72.5   79.8     62.7  51.0  71.7  61.4</span></span>
-<span id="cb50-45"><a href="aggregation.html#cb50-45"></a><span class="co">##  8    35.7   68.3     70.1  49.5  58.0  53.8</span></span>
-<span id="cb50-46"><a href="aggregation.html#cb50-46"></a><span class="co">##  9    52.9   82.1     63.8  48.2  66.3  57.2</span></span>
-<span id="cb50-47"><a href="aggregation.html#cb50-47"></a><span class="co">## 10    66.5   60.8     54.2  47.0  60.5  53.7</span></span>
-<span id="cb50-48"><a href="aggregation.html#cb50-48"></a><span class="co">## # ... with 41 more rows</span></span></code></pre></div>
-<p>By default, the aggregation function performs the following steps:</p>
+<div id="multivariate-analysis" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> Multivariate analysis</h1>
+<p>Correlations, and other relationships between indicators, can help to understand the structure of the data and to see whether indicators are redundant or are mistakenly encoded.</p>
 <ul>
-<li>Uses the weights that were attached to <code>IndMeta</code> and <code>AggMeta</code> in <code>assemble()</code></li>
-<li>Aggregates hierarchically (with default method of weighted arithmetic mean), following the index structure specified in <code>IndMeta</code> and using the data specified in <code>dset</code></li>
-<li>Creates a new data set <code>.$Data$Aggregated</code>, which consists of the data in <code>dset</code>, plus extra columns with scores for each aggregation group, at each aggregation level.</li>
+<li>Correlations</li>
+<li>PCA</li>
+<li>Cronbach</li>
 </ul>
-<p>Like other COINr functions <code>aggregate()</code> has arguments <code>dset</code> which specifies which data set to aggregate, and <code>out2</code> which specifies whether to output an updated COIN, or a data frame. Unlike other COINr functions however, <code>aggregate()</code> only works on COINs, because it requires a number of inputs, including data, weights, and the index structure.</p>
-<p>The types of aggregation supported by <code>aggregate()</code> are specified by <code>agtype</code> from the following options:</p>
-<ul>
-<li><code>agtype = arith_mean</code> uses the arithmetic mean, and is the default.</li>
-<li><code>agtype = geom_mean</code> uses the geometric mean. This only works if all data values are positive, otherwise it will throw an error.</li>
-<li><code>agtype = harm_mean</code> uses the harmonic mean. This only works if all data values are non-zero, otherwise it will throw an error.</li>
-<li><code>agtype = median</code> uses the weighted median</li>
-<li><code>agtype = copeland</code> uses the Copeland method. This may take a few seconds to process depending on the number of units, because it involves pairwise comparisons across units.</li>
-<li><code>agtype = custom</code> allows you to pass a custom aggregation function.</li>
-</ul>
-<p>For the last option here, if <code>agtype = custom</code> then you need to also specify the custom function via the <code>agfunc</code> argument. As an example:</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="aggregation.html#cb51-1"></a><span class="co"># define an aggregation function which is the weighted minimum</span></span>
-<span id="cb51-2"><a href="aggregation.html#cb51-2"></a>weightedMin &lt;-<span class="st"> </span><span class="cf">function</span>(x,w) <span class="kw">min</span>(x<span class="op">*</span>w, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb51-3"><a href="aggregation.html#cb51-3"></a></span>
-<span id="cb51-4"><a href="aggregation.html#cb51-4"></a><span class="co"># pass to aggregate() and aggregate</span></span>
-<span id="cb51-5"><a href="aggregation.html#cb51-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">aggregate</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="dt">agtype =</span> <span class="st">&quot;custom&quot;</span>,</span>
-<span id="cb51-6"><a href="aggregation.html#cb51-6"></a>                  <span class="dt">agfunc =</span> weightedMin, <span class="dt">out2 =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
-<p>Any custom function should have the form <code>functionName &lt;- function(x,w)</code>, i.e. it accepts x and w as vectors of indicator values and weights respectively, and returns a scalar aggregated value. Ensure that NAs are handled (e.g. set na.rm = T) if your data has missing values, otherwise NAs will be passed through to higher levels.</p>
-<p>A number of sophisticated aggregation approaches and linked weighting methods are available in the <a href="https://cran.r-project.org/web/packages/Compind/index.html">compind package</a>. These can nicely complement the features in COINr and may be of interest to those looking for more technical approaches to aggregation, such as those based on benefit of the doubt methods.</p>
-<p>A further argument, <code>agtype_bylevel</code>, allows specification of different normalisation types at different aggregation levels. For example, <code>agtype_bylevel = c("arith_mean", "geom_mean", "median")</code> would use the arithmetic mean at the indicator level, the geometric mean at the pillar level, and the median at the sub-index level (for the ASEM data structure).</p>
-<p>Finally, alternative weights can be used for aggregation by specifying the <code>agweights</code> argument. This can either be:</p>
-<ul>
-<li><code>NULL</code>, in which case it will use the weights that were attached to IndMeta and AggMeta in GII_assemble (if they exist), or</li>
-<li>A character string which corresponds to a named list of weights stored in <code>.$Parameters$Weights</code>. You can either add these manually or through <code>rew8r</code> (see chapter on <a href="weighting-1.html#weighting-1">Weighting</a>). E.g. entering <code>agweights = "Original"</code> will use the original weights read in on assembly. This is equivalent to <code>agweights = NULL</code>.</li>
-<li>A list of weights to use in the aggregation, where each element of the list is a numeric vector of weights for a given level.</li>
-</ul>
-<p>Now that the data has been aggregated, a natural next step is to explore the results. This is dealt with in the chapter on [Results visualisation].</p>
+<p>To finish.</p>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="normalisation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="weighting-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="initial-visualisation-and-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="missing-data-and-imputation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -440,7 +323,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/06-aggregation.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02b-Multivariate.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -1,0 +1,9 @@
+# Multivariate analysis
+
+Correlations, and other relationships between indicators, can help to understand the structure of the data and to see whether indicators are redundant or are mistakenly encoded.
+
+* Correlations
+* PCA
+* Cronbach
+
+To finish.

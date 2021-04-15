@@ -20,6 +20,12 @@ Overall, weighting is a large topic which cannot be covered in detail here. Neve
 
 Broadly, weighting approaches can be divided into those that are based on expert judgment, and those that are based on statistical considerations. Then there are approaches that combine the two.
 
+### Equal weighting
+
+The most common approach to weighting is simply to make all weights equal to one another. This may seem like an unjustifiable simplification, but in practice, experts often give near-equal weights when asked, and statistical approaches may give weights that are so unequal that it may be hard to justify them to stakeholders. This is why many composite indicators use equal weights. A further consideration is that the results of a composite indicator are often less sensitive to their weights than you might think.
+
+That said, a number of other methods exist, some of which are discussed in the following sections.
+
 ### Budget allocation
 
 Fundamentally, composite indicators involve breaking down a complex multidimensional concept into sub-concepts, and possibly breaking those sub-concepts down into sub-sub-concepts, and so on. Generally, you keep doing this until you arrive at the point where the (sub-)^n-concepts are sufficiently specific that they can be directly measured with a small group of indicators.

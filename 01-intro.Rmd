@@ -38,6 +38,14 @@ Together, indicators and units form the main input data frame for COINr (units a
 
 ## Tips for using COINr
 
+### Missing data
+
+It's very important to understand the difference between missing data and zeros. A zero means that you know that the value of the indicator is zero, whereas missing data (in R this is denoted as `NA`) means you don't know what the value is at all.
+
+When aggregating indicators, this difference becomes particularly important. If a data point is missing, it is often excluded from the aggregation, which effectively means reassigning it with the mean (or similar) value of the indicators in the same group. If you impute the data, missing values could be assigned with mean or median indicator values, for example. Clearly, these values will be very different from zeros.
+
+This point is made here, because data may sometimes come with missing values denoted as zeros, or with zeros denoted as missing values. Ensure that these are checked carefully before proceeding with construction.
+
 ### Ordering
 
 Currently, COINr is somewhat dependent on the order of the units. Although you can input your data in any order you like (as long as you follow the rules in [Data Input]), in some cases the order does matter. For example, if you want to denominate your data by a separate data frame of indicators (not in the COIN), you will have to make sure that the units (rows) correspond to the same order of rows as your indicator data.
