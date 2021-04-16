@@ -240,7 +240,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.2.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2.2</b> Interactive re-weighting with ReW8R</a></li>
 <li class="chapter" data-level="11.2.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.2.3</b> Automatic re-weighting</a></li>
 </ul></li>
-<li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#final-points"><i class="fa fa-check"></i><b>11.3</b> Final points</a></li>
+<li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#effective-weights"><i class="fa fa-check"></i><b>11.3</b> Effective weights</a></li>
+<li class="chapter" data-level="11.4" data-path="weighting-1.html"><a href="weighting-1.html#final-points"><i class="fa fa-check"></i><b>11.4</b> Final points</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>12</b> Helper functions</a><ul>
 <li class="chapter" data-level="12.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>12.1</b> R Interfaces</a><ul>
@@ -459,10 +460,95 @@ Figure 11.4: Correlation scatter plot screenshots in rew8r().
 </div>
 <div id="automatic-re-weighting" class="section level3">
 <h3><span class="header-section-number">11.2.3</span> Automatic re-weighting</h3>
+<p>As discussed earlier, weighting can also be performed statistically, by optimising or targeting some statistical criteria of interest. COINr includes a few possibilities in this respect.</p>
+<div id="with-pca" class="section level4">
+<h4><span class="header-section-number">11.2.3.1</span> With PCA</h4>
+<p>The <code>cPCA()</code> function is used as a quick way to perform PCA on COINs. This does two things: first, to output PCA results for any aggregation level; and second, to provide PCA weights corresponding to the “loadings” of the first principle component. As discussed above, this is the linear combination that results in the most explained variance.</p>
+<p>The other outputs of <code>cPCA()</code> are left to the <a href="multivariate-analysis.html#multivariate-analysis">Multivariate analysis</a> section. Here, we will focus on weighting. To obtain PCA weights, simply run something like:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="weighting-1.html#cb57-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">cPCA</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">aglev =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p>This calls the aggregated data set, and performs PCA on aggregation level 2, i.e. the pillars in the case of ASEM. The result is an updated COIN, with a new set of weights called <code>.Parameters$Weights$PCA_AggregatedL2</code>. This is automatically named according to the data set used and the aggregation level.</p>
+<p>An important point here is that this weighting represents optimal properties if the components (pillars here) are aggregated directly into a single value. In this example, it is not strictly correct because above the pillar level we have another aggregation (sub-index) before reaching the final index. This means that these weights wouldn’t be strictly correct, because they don’t account for the intermediate level. However, depending on the aggregation structure and weighting (i.e. if it is fairly even) it may give a fairly good approximation.</p>
+<p><em>Note: PCA weights have not been fully tested at the time of writing, treat with skepticism.</em></p>
 </div>
+<div id="weight-optimisation-1" class="section level4">
+<h4><span class="header-section-number">11.2.3.2</span> Weight optimisation</h4>
+<p>An alternative approach is to optimise weight iteratively. This is in a way less elegant (and slower) because it uses numerical optimisation, but allows much more flexibility.</p>
+<p>The <code>weightOpt()</code> function gives several options in this respect. In short, it allows weights to be optimised to agree with either (a) some pre-specified “importances” (perhaps obtained by the budget allocation method, or perhaps simply equal importance), or (b) to maximise the information conveyed by the composite indicator. Starting with the first option, this is how it can be applied to our example data:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="weighting-1.html#cb58-1"></a></span>
+<span id="cb58-2"><a href="weighting-1.html#cb58-2"></a>ASEM &lt;-<span class="st"> </span><span class="kw">weightOpt</span>(ASEM, <span class="dt">itarg =</span> <span class="st">&quot;equal&quot;</span>, <span class="dt">aglev =</span> <span class="dv">3</span>, <span class="dt">out2 =</span> <span class="st">&quot;COIN&quot;</span>)</span>
+<span id="cb58-3"><a href="weighting-1.html#cb58-3"></a><span class="co">## iterating... squared difference = 0.000814548399872482</span></span>
+<span id="cb58-4"><a href="weighting-1.html#cb58-4"></a><span class="co">## iterating... squared difference = 0.00116234608542398</span></span>
+<span id="cb58-5"><a href="weighting-1.html#cb58-5"></a><span class="co">## iterating... squared difference = 0.00052279688155717</span></span>
+<span id="cb58-6"><a href="weighting-1.html#cb58-6"></a><span class="co">## iterating... squared difference = 0.0002714288504979</span></span>
+<span id="cb58-7"><a href="weighting-1.html#cb58-7"></a><span class="co">## iterating... squared difference = 4.19003122660245e-05</span></span>
+<span id="cb58-8"><a href="weighting-1.html#cb58-8"></a><span class="co">## iterating... squared difference = 1.66726715407502e-06</span></span>
+<span id="cb58-9"><a href="weighting-1.html#cb58-9"></a><span class="co">## iterating... squared difference = 0.000166401854209433</span></span>
+<span id="cb58-10"><a href="weighting-1.html#cb58-10"></a><span class="co">## iterating... squared difference = 0.000357199714112591</span></span>
+<span id="cb58-11"><a href="weighting-1.html#cb58-11"></a><span class="co">## iterating... squared difference = 4.91262049731255e-05</span></span>
+<span id="cb58-12"><a href="weighting-1.html#cb58-12"></a><span class="co">## iterating... squared difference = 0.000189074238231706</span></span>
+<span id="cb58-13"><a href="weighting-1.html#cb58-13"></a><span class="co">## iterating... squared difference = 2.15217457991656e-06</span></span>
+<span id="cb58-14"><a href="weighting-1.html#cb58-14"></a><span class="co">## iterating... squared difference = 4.02429806062667e-05</span></span>
+<span id="cb58-15"><a href="weighting-1.html#cb58-15"></a><span class="co">## iterating... squared difference = 1.04404840785834e-05</span></span>
+<span id="cb58-16"><a href="weighting-1.html#cb58-16"></a><span class="co">## iterating... squared difference = 1.00833908145386e-05</span></span>
+<span id="cb58-17"><a href="weighting-1.html#cb58-17"></a><span class="co">## iterating... squared difference = 2.40420217478915e-06</span></span>
+<span id="cb58-18"><a href="weighting-1.html#cb58-18"></a><span class="co">## Optimisation successful!</span></span></code></pre></div>
+<p>This targets the aggregation level 3 (sub-index), and the <code>itarg</code> argument here is set to “equal”, which means that the objective is to make the correlations between each sub-index and the index equal to one another. More details of the results of this optimisation are found in the <code>.$Analysis$Weights</code> folder of the object. In particular, we can see the final correlations and the optimised weights:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="weighting-1.html#cb59-1"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Weights<span class="op">$</span>OptimsedLev3<span class="op">$</span>CorrResults</span>
+<span id="cb59-2"><a href="weighting-1.html#cb59-2"></a><span class="co">##   Desired  Obtained OptWeight</span></span>
+<span id="cb59-3"><a href="weighting-1.html#cb59-3"></a><span class="co">## 1     0.5 0.8971336     0.400</span></span>
+<span id="cb59-4"><a href="weighting-1.html#cb59-4"></a><span class="co">## 2     0.5 0.8925119     0.625</span></span></code></pre></div>
+<p>In this case, the weights are slightly uneven but seem reasonable. The correlations are also almost exactly equal. The full set of weights is found as a new weight set under <code>.$Parameters$Weights</code>.</p>
+<p>Other possibilities with the <code>weightOpt()</code> function include:</p>
+<ul>
+<li>Specifying an unequal vector of target importances using the <code>itarg</code> argument. E.g. taking the sub-pillar level, specifying <code>itarg = c(0.5, 1)</code> would optimise the weights so that the first sub-pillar has half the correlation of the second sub-pillar with the index.</li>
+<li>Optimising the weights at other aggregation levels using the <code>aglev</code> argument</li>
+<li>Optimising over other correlation types, e.g. rank correlations, using the <code>cortype</code> argument</li>
+<li>Aiming to maximise overall correlations by setting <code>optype = infomax</code></li>
+</ul>
+<p>It’s important to point out that only one level can be optimised at a time, and the optimisation is “conditional” on the weights at other levels. For example, optmising at the sub-index level produces optimal correlations for the sub-indexes, but not for any other level. If we then optimise at lower levels, this will change the correlations of the sub-indexes! So probably the most sensible strategy is to optimise for the last aggregation level (before the index).</p>
+<p>That said, an advantage of <code>weightOpt()</code> is that since it is numerical, it can be used for any type of aggregation method, any correlation type, and with any index structure. It calls the aggregation method that you last used to aggregate the index, so it rebuilds the index according to your specifications.</p>
+<p>Other correlation types may be of interest when linear correlation (i.e. Pearson correlation) is not a sufficient measure. This is the case for example, when distributions are highly skewed. Rank correlations are robust to outliers and can handle some nonlinearity (but not non-monotonicity). Fully nonlinear correlation methods <a href="https://www.sciencedirect.com/science/article/pii/S1470160X17301759">also exist</a> but most of the time, relationships between indicators are fairly linear. Nonlinear correlation may be included in a future version of COINr.</p>
+<p>Setting <code>optype = infomax</code> changes the optimisation criterion, to instead <em>maximise</em> the sum of the correlations, which is equivalent to maximising the information transferred to the index, and is similar to PCA. Like PCA, this can however result in fairly unequal weights, and not infrequently in negative weights.</p>
+<p>The <code>weightOpt()</code> function uses a numerical optimisation algorithm which does not always succeed in finding a good solution. Optimisation is a large field in its own right, and is more difficult the more variables you optimise over. If <code>weightOpt()</code> fails to find a good solution, try:</p>
+<ul>
+<li>Decreasing the <code>toler</code> argument - this decreases the acceptable error between the target importance and the importance with the final set of weights.</li>
+<li>Increasing the <code>maxiter</code> argument - this is the number of iterations allowed to find a solution within the specified tolerance. By default it is set at 500.</li>
+</ul>
+<p>Even then, the algorithm may not always converge, depending on the problem.</p>
+</div>
+</div>
+</div>
+<div id="effective-weights" class="section level2">
+<h2><span class="header-section-number">11.3</span> Effective weights</h2>
+<p>By now, you may know or have realised that the weight of an indicator is not only affected by its own weight, but also the weights of any aggregate groups to which it belongs. If the aggregation method is the arithmetic mean, the “effective weight”, i.e. the final weight of each indicator, including its parent weights, can be be easily obtained by COINr’s <code>effectiveWeight()</code> function:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="weighting-1.html#cb60-1"></a><span class="co"># get effective weight info</span></span>
+<span id="cb60-2"><a href="weighting-1.html#cb60-2"></a>EffWeights &lt;-<span class="st"> </span><span class="kw">effectiveWeight</span>(ASEM)</span>
+<span id="cb60-3"><a href="weighting-1.html#cb60-3"></a></span>
+<span id="cb60-4"><a href="weighting-1.html#cb60-4"></a>EffWeights<span class="op">$</span>EffectiveWeightsList</span>
+<span id="cb60-5"><a href="weighting-1.html#cb60-5"></a><span class="co">## $IndWeight</span></span>
+<span id="cb60-6"><a href="weighting-1.html#cb60-6"></a><span class="co">##  [1] 0.01250000 0.01250000 0.01250000 0.01250000 0.01250000 0.01250000</span></span>
+<span id="cb60-7"><a href="weighting-1.html#cb60-7"></a><span class="co">##  [7] 0.01250000 0.01250000 0.02000000 0.02000000 0.02000000 0.02000000</span></span>
+<span id="cb60-8"><a href="weighting-1.html#cb60-8"></a><span class="co">## [13] 0.02000000 0.03333333 0.03333333 0.03333333 0.01666667 0.01666667</span></span>
+<span id="cb60-9"><a href="weighting-1.html#cb60-9"></a><span class="co">## [19] 0.01666667 0.01666667 0.01666667 0.01666667 0.01250000 0.01250000</span></span>
+<span id="cb60-10"><a href="weighting-1.html#cb60-10"></a><span class="co">## [25] 0.01250000 0.01250000 0.01250000 0.01250000 0.01250000 0.01250000</span></span>
+<span id="cb60-11"><a href="weighting-1.html#cb60-11"></a><span class="co">## [31] 0.03333333 0.03333333 0.03333333 0.03333333 0.03333333 0.01851852</span></span>
+<span id="cb60-12"><a href="weighting-1.html#cb60-12"></a><span class="co">## [37] 0.01851852 0.01851852 0.01851852 0.01851852 0.01851852 0.01851852</span></span>
+<span id="cb60-13"><a href="weighting-1.html#cb60-13"></a><span class="co">## [43] 0.01851852 0.01851852 0.03333333 0.03333333 0.03333333 0.03333333</span></span>
+<span id="cb60-14"><a href="weighting-1.html#cb60-14"></a><span class="co">## [49] 0.03333333</span></span>
+<span id="cb60-15"><a href="weighting-1.html#cb60-15"></a><span class="co">## </span></span>
+<span id="cb60-16"><a href="weighting-1.html#cb60-16"></a><span class="co">## [[2]]</span></span>
+<span id="cb60-17"><a href="weighting-1.html#cb60-17"></a><span class="co">## [1] 0.1000000 0.1000000 0.1000000 0.1000000 0.1000000 0.1666667 0.1666667</span></span>
+<span id="cb60-18"><a href="weighting-1.html#cb60-18"></a><span class="co">## [8] 0.1666667</span></span>
+<span id="cb60-19"><a href="weighting-1.html#cb60-19"></a><span class="co">## </span></span>
+<span id="cb60-20"><a href="weighting-1.html#cb60-20"></a><span class="co">## [[3]]</span></span>
+<span id="cb60-21"><a href="weighting-1.html#cb60-21"></a><span class="co">## [1] 0.5 0.5</span></span>
+<span id="cb60-22"><a href="weighting-1.html#cb60-22"></a><span class="co">## </span></span>
+<span id="cb60-23"><a href="weighting-1.html#cb60-23"></a><span class="co">## [[4]]</span></span>
+<span id="cb60-24"><a href="weighting-1.html#cb60-24"></a><span class="co">## [1] 1</span></span></code></pre></div>
+<p>A nice way to visualise this is to call <code>plotframework()</code> (see <a href="initial-visualisation-and-analysis.html#initial-visualisation-and-analysis">Initial visualisation and analysis</a>). <code>effectiveWeight()</code> also gives other info on the parents of each indicator/aggregate which may be useful for some purposes (e.g. some types of plots external to COIN).</p>
 </div>
 <div id="final-points" class="section level2">
-<h2><span class="header-section-number">11.3</span> Final points</h2>
+<h2><span class="header-section-number">11.4</span> Final points</h2>
 <p>Weighting and correlations is a complex topic, which is important to explore and address. On the other hand, weighting and correlations are just one part of a composite indicator, and balancing and optimising weights probably not be pursued at the expense of building a confusing composite indicator that makes no sense to most people (depending on the context and application).</p>
 
 </div>

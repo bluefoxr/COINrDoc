@@ -82,6 +82,9 @@ correlations
 weighting-2
 remarks
 automatic-re-weighting
+with-pca
+weight-optimisation-1
+effective-weights
 final-points
 helper-functions
 r-interfaces

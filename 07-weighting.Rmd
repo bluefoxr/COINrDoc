@@ -196,7 +196,78 @@ The `rew8r()` app is something of a work in progress - it is difficult to strike
 
 ### Automatic re-weighting
 
+As discussed earlier, weighting can also be performed statistically, by optimising or targeting some statistical criteria of interest. COINr includes a few possibilities in this respect.
 
+#### With PCA
+
+The `cPCA()` function is used as a quick way to perform PCA on COINs. This does two things: first, to output PCA results for any aggregation level; and second, to provide PCA weights corresponding to the "loadings" of the first principle component. As discussed above, this is the linear combination that results in the most explained variance.
+
+The other outputs of `cPCA()` are left to the [Multivariate analysis] section. Here, we will focus on weighting. To obtain PCA weights, simply run something like:
+
+```{r PCAweights}
+ASEM <- cPCA(ASEM, dset = "Aggregated", aglev = 2)
+```
+
+This calls the aggregated data set, and performs PCA on aggregation level 2, i.e. the pillars in the case of ASEM. The result is an updated COIN, with a new set of weights called `.Parameters$Weights$PCA_AggregatedL2`. This is automatically named according to the data set used and the aggregation level.
+
+An important point here is that this weighting represents optimal properties if the components (pillars here) are aggregated directly into a single value. In this example, it is not strictly correct because above the pillar level we have another aggregation (sub-index) before reaching the final index. This means that these weights wouldn't be strictly correct, because they don't account for the intermediate level. However, depending on the aggregation structure and weighting (i.e. if it is fairly even) it may give a fairly good approximation.
+
+*Note: PCA weights have not been fully tested at the time of writing, treat with skepticism.*
+
+#### Weight optimisation
+
+An alternative approach is to optimise weight iteratively. This is in a way less elegant (and slower) because it uses numerical optimisation, but allows much more flexibility.
+
+The `weightOpt()` function gives several options in this respect. In short, it allows weights to be optimised to agree with either (a) some pre-specified "importances" (perhaps obtained by the budget allocation method, or perhaps simply equal importance), or (b) to maximise the information conveyed by the composite indicator. Starting with the first option, this is how it can be applied to our example data:
+
+```{r OptWeightsBalance}
+
+ASEM <- weightOpt(ASEM, itarg = "equal", aglev = 3, out2 = "COIN")
+
+```
+
+This targets the aggregation level 3 (sub-index), and the `itarg` argument here is set to "equal", which means that the objective is to make the correlations between each sub-index and the index equal to one another. More details of the results of this optimisation are found in the `.$Analysis$Weights` folder of the object. In particular, we can see the final correlations and the optimised weights:
+
+```{r OptResTable}
+ASEM$Analysis$Weights$OptimsedLev3$CorrResults
+```
+
+In this case, the weights are slightly uneven but seem reasonable. The correlations are also almost exactly equal. The full set of weights is found as a new weight set under `.$Parameters$Weights`.
+
+Other possibilities with the `weightOpt()` function include:
+
+* Specifying an unequal vector of target importances using the `itarg` argument. E.g. taking the sub-pillar level, specifying `itarg = c(0.5, 1)` would optimise the weights so that the first sub-pillar has half the correlation of the second sub-pillar with the index.
+* Optimising the weights at other aggregation levels using the `aglev` argument
+* Optimising over other correlation types, e.g. rank correlations, using the `cortype` argument
+* Aiming to maximise overall correlations by setting `optype = infomax`
+
+It's important to point out that only one level can be optimised at a time, and the optimisation is "conditional" on the weights at other levels. For example, optmising at the sub-index level produces optimal correlations for the sub-indexes, but not for any other level. If we then optimise at lower levels, this will change the correlations of the sub-indexes! So probably the most sensible strategy is to optimise for the last aggregation level (before the index).
+
+That said, an advantage of `weightOpt()` is that since it is numerical, it can be used for any type of aggregation method, any correlation type, and with any index structure. It calls the aggregation method that you last used to aggregate the index, so it rebuilds the index according to your specifications.
+
+Other correlation types may be of interest when linear correlation (i.e. Pearson correlation) is not a sufficient measure. This is the case for example, when distributions are highly skewed. Rank correlations are robust to outliers and can handle some nonlinearity (but not non-monotonicity). Fully nonlinear correlation methods [also exist](https://www.sciencedirect.com/science/article/pii/S1470160X17301759) but most of the time, relationships between indicators are fairly linear. Nonlinear correlation may be included in a future version of COINr.
+
+Setting `optype = infomax` changes the optimisation criterion, to instead *maximise* the sum of the correlations, which is equivalent to maximising the information transferred to the index, and is similar to PCA. Like PCA, this can however result in fairly unequal weights, and not infrequently in negative weights.
+
+The `weightOpt()` function uses a numerical optimisation algorithm which does not always succeed in finding a good solution. Optimisation is a large field in its own right, and is more difficult the more variables you optimise over. If `weightOpt()` fails to find a good solution, try:
+
+* Decreasing the `toler` argument - this decreases the acceptable error between the target importance and the importance with the final set of weights.
+* Increasing the `maxiter` argument - this is the number of iterations allowed to find a solution within the specified tolerance. By default it is set at 500.
+
+Even then, the algorithm may not always converge, depending on the problem.
+
+## Effective weights
+
+By now, you may know or have realised that the weight of an indicator is not only affected by its own weight, but also the weights of any aggregate groups to which it belongs. If the aggregation method is the arithmetic mean, the "effective weight", i.e. the final weight of each indicator, including its parent weights, can be be easily obtained by COINr's `effectiveWeight()` function:
+
+```{r}
+# get effective weight info
+EffWeights <- effectiveWeight(ASEM)
+
+EffWeights$EffectiveWeightsList
+```
+
+A nice way to visualise this is to call `plotframework()` (see [Initial visualisation and analysis]). `effectiveWeight()` also gives other info on the parents of each indicator/aggregate which may be useful for some purposes (e.g. some types of plots external to COINr). 
 
 ## Final points
 
