@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-04-14" />
+<meta name="date" content="2021-04-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -230,13 +230,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="11" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>11</b> Weighting</a><ul>
 <li class="chapter" data-level="11.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a><ul>
-<li class="chapter" data-level="11.1.1" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>11.1.1</b> Budget allocation</a></li>
-<li class="chapter" data-level="11.1.2" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>11.1.2</b> Principle component analysis</a></li>
-<li class="chapter" data-level="11.1.3" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>11.1.3</b> Weight optimisation</a></li>
+<li class="chapter" data-level="11.1.1" data-path="weighting-1.html"><a href="weighting-1.html#equal-weighting"><i class="fa fa-check"></i><b>11.1.1</b> Equal weighting</a></li>
+<li class="chapter" data-level="11.1.2" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>11.1.2</b> Budget allocation</a></li>
+<li class="chapter" data-level="11.1.3" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>11.1.3</b> Principle component analysis</a></li>
+<li class="chapter" data-level="11.1.4" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>11.1.4</b> Weight optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2</b> Interactive re-weighting with ReW8R</a></li>
-<li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.3</b> Automatic re-weighting</a></li>
-<li class="chapter" data-level="11.4" data-path="weighting-1.html"><a href="weighting-1.html#manual-re-weighting"><i class="fa fa-check"></i><b>11.4</b> Manual re-weighting</a></li>
+<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#weighting-tools-in-coinr"><i class="fa fa-check"></i><b>11.2</b> Weighting tools in COINr</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="weighting-1.html"><a href="weighting-1.html#manual-weighting"><i class="fa fa-check"></i><b>11.2.1</b> Manual weighting</a></li>
+<li class="chapter" data-level="11.2.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2.2</b> Interactive re-weighting with ReW8R</a></li>
+<li class="chapter" data-level="11.2.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.2.3</b> Automatic re-weighting</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#final-points"><i class="fa fa-check"></i><b>11.3</b> Final points</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>12</b> Helper functions</a><ul>
 <li class="chapter" data-level="12.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>12.1</b> R Interfaces</a><ul>
@@ -291,8 +295,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="approaches-to-weighting" class="section level2">
 <h2><span class="header-section-number">11.1</span> Approaches to weighting</h2>
 <p>Broadly, weighting approaches can be divided into those that are based on expert judgment, and those that are based on statistical considerations. Then there are approaches that combine the two.</p>
+<div id="equal-weighting" class="section level3">
+<h3><span class="header-section-number">11.1.1</span> Equal weighting</h3>
+<p>The most common approach to weighting is simply to make all weights equal to one another. This may seem like an unjustifiable simplification, but in practice, experts often give near-equal weights when asked, and statistical approaches may give weights that are so unequal that it may be hard to justify them to stakeholders. This is why many composite indicators use equal weights. A further consideration is that the results of a composite indicator are often less sensitive to their weights than you might think.</p>
+<p>That said, a number of other methods exist, some of which are discussed in the following sections.</p>
+</div>
 <div id="budget-allocation" class="section level3">
-<h3><span class="header-section-number">11.1.1</span> Budget allocation</h3>
+<h3><span class="header-section-number">11.1.2</span> Budget allocation</h3>
 <p>Fundamentally, composite indicators involve breaking down a complex multidimensional concept into sub-concepts, and possibly breaking those sub-concepts down into sub-sub-concepts, and so on. Generally, you keep doing this until you arrive at the point where the (sub-)^n-concepts are sufficiently specific that they can be directly measured with a small group of indicators.</p>
 <p>Regardless of the aggregation level that you are at, however, some of the indicators (or aggregates) in the group are likely to be more or less important to the concept you are trying to measure than others.</p>
 <p>Take the example of university rankings. One might consider the following indicators to be relevant to the notion of “excellence” for a university:</p>
@@ -314,7 +323,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This is a simple way of distributing weight to indicators, in a way that is easy for people to understand and to give their opinions. You can take the results, and take the average weight for each indicator. You can even infer a weight-distribution over each indicator which could feed into an uncertainty analysis.</p>
 </div>
 <div id="principle-component-analysis" class="section level3">
-<h3><span class="header-section-number">11.1.2</span> Principle component analysis</h3>
+<h3><span class="header-section-number">11.1.3</span> Principle component analysis</h3>
 <p>A very different approach is to use principle component analysis (PCA). PCA is a statistical approach, which rotates your indicator data into a new set of coordinates with special properties.</p>
 <p>One way of looking at indicator data is as data points in a multidimensional space. If we only have two indicators, then any unit can be plotted as a point on a two-dimensional plot, where the x-axis is the first indicator, and the y-axis is the second.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="weighting-1.html#cb52-1"></a>Ind1 &lt;-<span class="st"> </span><span class="dv">35</span></span>
@@ -330,33 +339,131 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This sounds perfect, but the downside is that PCA weights do not care about the relative importance of indicators. Typically, PCA assigns the highest weights to indicators with the highest correlations with other indicators, and this can result in a very unbalanced combination of indicators. Still, PCA has a number of nice properties, and has the advantage of being a purely statistical approach.</p>
 </div>
 <div id="weight-optimisation" class="section level3">
-<h3><span class="header-section-number">11.1.3</span> Weight optimisation</h3>
+<h3><span class="header-section-number">11.1.4</span> Weight optimisation</h3>
 <p>If you choose to go for the budget allocation approach, to match weights to the opinions of experts, or indeed your own opinion, there is a catch that is not very obvious. Put simply, weights do not directly translate into importance.</p>
-<p>To understand why, we must first define what “importance” means. Actually there is more than one way to look at this, but one possible measure is to use the correlation between each indicator and the overall index. If the correlation is high, the indicator is well-reflected in the index scores, and vice versa.</p>
+<p>To understand why, we must first define what “importance” means. Actually there is more than one way to look at this, but one possible measure is to use the (nonlinear) correlation between each indicator and the overall index. If the correlation is high, the indicator is well-reflected in the index scores, and vice versa.</p>
 <p>If we accept this definition of importance, then it’s important to realise that this correlation is affected not only by the weights attached to each indicator, but also by the correlations <em>between indicators</em>. This means that these correlations must be accounted for in choosing weights that agree with the budgets assigned by the group of experts.</p>
-<ul>
-<li>First, eliciting weights from experts</li>
-<li>Equal weighting</li>
-<li>Statistical weighting
-<ul>
-<li>Using PCA</li>
-<li>Using weight-optimisation</li>
-</ul></li>
-</ul>
-<p>Outline of some key approaches</p>
+<p>In fact, it is possible to reverse-engineer the weights either <a href="https://doi.org/10.1111/j.1467-985X.2012.01059.x">analytically using a linear solution</a> or <a href="https://doi.org/10.1016/j.ecolind.2017.03.056">numerically using a nonlinear solution</a>. While the former method is far quicker than a nonlinear optimisation, it is only applicable in the case of a single level of aggregation, with an arithmetic mean, and using linear correlation as a measure. Therefore in COINr, the second method is used.</p>
 </div>
 </div>
-<div id="interactive-re-weighting-with-rew8r" class="section level2">
-<h2><span class="header-section-number">11.2</span> Interactive re-weighting with ReW8R</h2>
-<p>A description</p>
+<div id="weighting-tools-in-coinr" class="section level2">
+<h2><span class="header-section-number">11.2</span> Weighting tools in COINr</h2>
+<p>As seen in the chapter on <a href="aggregation.html#aggregation">Aggregation</a>, weights are used to calculate the aggregated data set, and are one of the inputs to the <code>aggregate()</code> function. These can either be directly specified as a list, or as a character string which points to one of the sets of weights stored under <code>.$Parameters$Weights</code>. There is no limit to the number of sets of weights that can be stored here. So how do we create new sets of weights?</p>
+<div id="manual-weighting" class="section level3">
+<h3><span class="header-section-number">11.2.1</span> Manual weighting</h3>
+<p>The simplest approach is to make manual adjustments. First, make a copy of the existing weights.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="weighting-1.html#cb53-1"></a></span>
+<span id="cb53-2"><a href="weighting-1.html#cb53-2"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb53-3"><a href="weighting-1.html#cb53-3"></a><span class="co"># quietly build data set</span></span>
+<span id="cb53-4"><a href="weighting-1.html#cb53-4"></a>ASEM &lt;-<span class="st"> </span><span class="kw">build_ASEM</span>()</span>
+<span id="cb53-5"><a href="weighting-1.html#cb53-5"></a></span>
+<span id="cb53-6"><a href="weighting-1.html#cb53-6"></a>NewWeights &lt;-<span class="st"> </span>ASEM<span class="op">$</span>Parameters<span class="op">$</span>Weights<span class="op">$</span>Original</span>
+<span id="cb53-7"><a href="weighting-1.html#cb53-7"></a></span>
+<span id="cb53-8"><a href="weighting-1.html#cb53-8"></a>NewWeights</span>
+<span id="cb53-9"><a href="weighting-1.html#cb53-9"></a><span class="co">## $IndWeight</span></span>
+<span id="cb53-10"><a href="weighting-1.html#cb53-10"></a><span class="co">##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
+<span id="cb53-11"><a href="weighting-1.html#cb53-11"></a><span class="co">## [39] 1 1 1 1 1 1 1 1 1 1 1</span></span>
+<span id="cb53-12"><a href="weighting-1.html#cb53-12"></a><span class="co">## </span></span>
+<span id="cb53-13"><a href="weighting-1.html#cb53-13"></a><span class="co">## [[2]]</span></span>
+<span id="cb53-14"><a href="weighting-1.html#cb53-14"></a><span class="co">## [1] 1 1 1 1 1 1 1 1</span></span>
+<span id="cb53-15"><a href="weighting-1.html#cb53-15"></a><span class="co">## </span></span>
+<span id="cb53-16"><a href="weighting-1.html#cb53-16"></a><span class="co">## [[3]]</span></span>
+<span id="cb53-17"><a href="weighting-1.html#cb53-17"></a><span class="co">## [1] 1 1</span></span>
+<span id="cb53-18"><a href="weighting-1.html#cb53-18"></a><span class="co">## </span></span>
+<span id="cb53-19"><a href="weighting-1.html#cb53-19"></a><span class="co">## [[4]]</span></span>
+<span id="cb53-20"><a href="weighting-1.html#cb53-20"></a><span class="co">## [1] 1</span></span></code></pre></div>
+<p>The structure of the weights is a list, with one element per aggregation level, and each element is a vector of weights for that level. For example here, <code>NewWeights[[1]]</code> is the indicator weights, <code>NewWeights[[2]]</code> is the pillar weights, and so on.</p>
+<p>We can just directly modify this. Let’s say we want to set the weight of the connectivity sub-index to 0.5.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="weighting-1.html#cb54-1"></a>NewWeights[[<span class="dv">3</span>]][<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb54-2"><a href="weighting-1.html#cb54-2"></a></span>
+<span id="cb54-3"><a href="weighting-1.html#cb54-3"></a>NewWeights</span>
+<span id="cb54-4"><a href="weighting-1.html#cb54-4"></a><span class="co">## $IndWeight</span></span>
+<span id="cb54-5"><a href="weighting-1.html#cb54-5"></a><span class="co">##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
+<span id="cb54-6"><a href="weighting-1.html#cb54-6"></a><span class="co">## [39] 1 1 1 1 1 1 1 1 1 1 1</span></span>
+<span id="cb54-7"><a href="weighting-1.html#cb54-7"></a><span class="co">## </span></span>
+<span id="cb54-8"><a href="weighting-1.html#cb54-8"></a><span class="co">## [[2]]</span></span>
+<span id="cb54-9"><a href="weighting-1.html#cb54-9"></a><span class="co">## [1] 1 1 1 1 1 1 1 1</span></span>
+<span id="cb54-10"><a href="weighting-1.html#cb54-10"></a><span class="co">## </span></span>
+<span id="cb54-11"><a href="weighting-1.html#cb54-11"></a><span class="co">## [[3]]</span></span>
+<span id="cb54-12"><a href="weighting-1.html#cb54-12"></a><span class="co">## [1] 0.5 1.0</span></span>
+<span id="cb54-13"><a href="weighting-1.html#cb54-13"></a><span class="co">## </span></span>
+<span id="cb54-14"><a href="weighting-1.html#cb54-14"></a><span class="co">## [[4]]</span></span>
+<span id="cb54-15"><a href="weighting-1.html#cb54-15"></a><span class="co">## [1] 1</span></span></code></pre></div>
+<p>Remember that <em>weights are relative</em>, and are re-scaled to sum to 1 during aggregation. To actually use these weights, we can either (a) input them directly in the <code>aggregate()</code> function, or first attach them to the COIN and the call <code>aggregate()</code>, pointing to the new set of weights. The latter option seems more sensible because that way, all our sets of weights are neatly stored. Also, we can access this in the reweighting app as explained in the next section.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="weighting-1.html#cb55-1"></a><span class="co"># put new weights in the COIN</span></span>
+<span id="cb55-2"><a href="weighting-1.html#cb55-2"></a>ASEM<span class="op">$</span>Parameters<span class="op">$</span>Weights<span class="op">$</span>NewWeights &lt;-<span class="st"> </span>NewWeights</span>
+<span id="cb55-3"><a href="weighting-1.html#cb55-3"></a></span>
+<span id="cb55-4"><a href="weighting-1.html#cb55-4"></a><span class="co"># Aggregate again to get new results</span></span>
+<span id="cb55-5"><a href="weighting-1.html#cb55-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">aggregate</span>(ASEM, <span class="dt">agweights =</span> <span class="st">&quot;NewWeights&quot;</span>)</span></code></pre></div>
+<p>Now the <code>ASEM</code> COIN contains the updated results using the new weights.</p>
 </div>
-<div id="automatic-re-weighting" class="section level2">
-<h2><span class="header-section-number">11.3</span> Automatic re-weighting</h2>
-<p>The weight optimisation algorithm</p>
+<div id="interactive-re-weighting-with-rew8r" class="section level3">
+<h3><span class="header-section-number">11.2.2</span> Interactive re-weighting with ReW8R</h3>
+<p>Re-weighting manually, as we have just seen, is quite simple. However, depending on your objectives, weighting can be an iterative process along the lines of:</p>
+<ol style="list-style-type: decimal">
+<li>Try a set of weights</li>
+<li>Examine correlations</li>
+<li>Check results, rankings</li>
+<li>Adjust weights</li>
+<li>Return to 1.</li>
+</ol>
+<p>Doing this at the command line can be time consuming, so COINr includes a “re-weighting app” called <code>rew8r()</code> which lets you interactively adjust weights and explore the effects of doing so.</p>
+<p>To run <code>rew8r()</code> you must have already aggregated your data using <code>aggregate()</code>. This is because every time weights are adjusted, <code>rew8r()</code> re-aggregates to find new results, and it needs to know <em>which</em> aggregation method you are using. So, with your pre-aggregated COIN at hand, simply run:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="weighting-1.html#cb56-1"></a>ASEM &lt;-<span class="st"> </span><span class="kw">rew8r</span>(ASEM)</span></code></pre></div>
+<p>At this point, a window/tab should open in your browser with the <code>rew8r()</code> app, which looks something like this:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-42"></span>
+<img src="images/rew8r_screenshot.png" alt="rew8r() screenshot" width="100%" />
+<p class="caption">
+Figure 11.1: rew8r() screenshot
+</p>
 </div>
-<div id="manual-re-weighting" class="section level2">
-<h2><span class="header-section-number">11.4</span> Manual re-weighting</h2>
-<p>Further options for weighting.</p>
+<p>This may look a little over-complicated to begin with, but let’s go through it step by step.</p>
+<div id="correlations" class="section level4">
+<h4><span class="header-section-number">11.2.2.1</span> Correlations</h4>
+<p>First of all, <code>rew8r()</code> is based around correlations. Why are correlations important? Because they give an idea of how each indicator is represented in the final index, and at other aggregation levels (see earlier discussion in this chapter).</p>
+<p>The <code>rew8r()</code> app allows you to check the correlations of anything against anything else. The two dropdown menus in the top left allow you to select which aggregation level to correlate against which other. In the screenshot above, the indicators (Level 1) are being correlated against the pillars (Level 2), but this can be changed to any of the levels in the index (the first level should always be below the second level otherwise it can cause errors). You can also select which type of correlation to examine, either Pearson (i.e. “standard” correlation), Spearman rank correlation, or Kendall’s tau (an alternative rank correlation).</p>
+<p>The correlations themselves are shown in two plots - the first is the scatter plot in the upper right part of the window, which plots the <em>correlation</em> of each indicator in Level 1 on the horizontal axis with its parent in Level 2, against its <em>weight</em> (in Level 1) on the vertical axis. We will come back to this shortly.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-43"></span>
+<img src="images/corr_heatmap_screenshot_rew8r.png" alt="Heatmap screenshot (in rew8r)" width="100%" />
+<p class="caption">
+Figure 11.2: Heatmap screenshot (in rew8r)
+</p>
+</div>
+<p>The second plot is a heatmap of the correlation matrix (between Level 1 and Level 2 in this case) which is shown in the lower right corner. This gives the correlation values between all the indicators/groups of each level as colours according to a discrete colour map. This colour map intends to highlight highly correlated indicators (green), as well as negative or low-correlated indicators (red). These thresholds can be adjusted by adjusting the low and high correlation threshold dropdown menus in the side panel (on the left). The aggregation groups are also shown as overlaid rectangles, and correlation values can be turned on and off using the checkbox below the heatmap. The point of this plot is to show at a glance, where there are very high or low correlations, possibly within aggregation groups. For example, indicators that are negatively correlated with their aggregation group can be problematic. Note that correlation heatmaps can also be generated independently of the app using the <code>plotCorr()</code> function - this is described more in the <a href="multivariate-analysis.html#multivariate-analysis">Multivariate analysis</a> section.</p>
+<p>Highly-correlated indicators are also listed in a table at the lower middle of the window. The “Ind-Ind” tab flags any indicators that are above the high correlation threshold, and within the same aggregation group (the aggregation level immediately above the indicator level). Note that this is <em>not</em> dependent on the weights since it regards correlations between indicators only. The “Cross-level” tab instead gives a table which flags any correlations across the two levels selected in side panel, which are above the threshold.</p>
+</div>
+<div id="weighting-2" class="section level4">
+<h4><span class="header-section-number">11.2.2.2</span> Weighting</h4>
+<p>Let us now turn back to the scatter plot. The scatter plot shows the correlation values on the horizontal axis, but also shows the weight of each indicator or aggregate in the first level selected in the dropdown menu. The purpose here is to show at a glance the weighting, and to make adjustments. To adjust a weight, either click on one of the points in the plot (hovering will show the names of the indicators or aggregates), or select the indicator/aggregate in the dropdown menu in the side panel under the “Weighting” subsection. Then adjust the weight using the slider. Doing this will automatically update all of the plots and tables, so you can see interactively how the correlations change as a result.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-44-1"></span>
+<img src="images/corr_scat_screenshot_rew8r.png" alt="Correlation scatter plot screenshots in rew8r()." width="100%" />
+<p class="caption">
+Figure 11.3: Correlation scatter plot screenshots in rew8r().
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-44-2"></span>
+<img src="images/corr_scat_sep_screenshot_rew8r.png" alt="Correlation scatter plot screenshots in rew8r()." width="100%" />
+<p class="caption">
+Figure 11.4: Correlation scatter plot screenshots in rew8r().
+</p>
+</div>
+<p>Importantly, the scatter plot only shows correlations between each indicator/aggregate in the first level <em>with its parent</em> in the second selected level. When everything is plotted on one plot, this may not be so clear, so the “Separate groups” checkbox in the side panel changes the plot to multiple sub-plots, one for each group in the second selected level. This helps to show how correlations are distributed within each group.</p>
+<p>The results of the index, in terms of ranks and scores of units, can be found by switching to the “Results” tab in the main window.</p>
+<p>Other than adjusting individual weights, any set of weights that is stored in <code>.$Parameters$Weights</code> can be selected, and this will automatically show the correlations. The button “Equal weights” sets weights to be equal at the current level.</p>
+<p>Finally, if you have adjusted the weights and you wish to save the new set of weights back to the COIN, you can do this in the “Weights output” subsection of the side panel. The current set of weights is saved by entering a name and clicking the “Save” button. This saves the set of weights to a list, and when the app is closed (using the “Close app” button), it will return them to the updated COIN under <code>.$Parameters$Weights</code>, with the specified name. You can save multiple sets of weights in the same session, by making adjustments, and assigning a name, and clicking “Save”. When you close the app, all the weight sets will be attached to the COIN. If you don’t click “Close app”, any new weight sets created in the session will be lost.</p>
+</div>
+<div id="remarks" class="section level4">
+<h4><span class="header-section-number">11.2.2.3</span> Remarks</h4>
+<p>The <code>rew8r()</code> app is something of a work in progress - it is difficult to strike a balance between conveying the relevant information and conveying too much information. In future versions, it may be updated to become more streamlined.</p>
+</div>
+</div>
+<div id="automatic-re-weighting" class="section level3">
+<h3><span class="header-section-number">11.2.3</span> Automatic re-weighting</h3>
+</div>
+</div>
+<div id="final-points" class="section level2">
+<h2><span class="header-section-number">11.3</span> Final points</h2>
+<p>Weighting and correlations is a complex topic, which is important to explore and address. On the other hand, weighting and correlations are just one part of a composite indicator, and balancing and optimising weights probably not be pursued at the expense of building a confusing composite indicator that makes no sense to most people (depending on the context and application).</p>
 
 </div>
 </div>

@@ -1,5 +1,7 @@
 # Acknowledgements
 
+The construction of this package was funded by the European Commission's Joint Research Centre, in particular by the [Competence Centre for Composite Indicators and Scoreboards](https://composite-indicators.jrc.ec.europa.eu/). It was also developed with and inspired by colleagues from the same group.
+
 COINr, like all R packages, has been built off of the back of many other packages. Some that COINr uses in particular are:
 
 * Plotly, for beautiful javascript plots
