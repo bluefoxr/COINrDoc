@@ -1,0 +1,13 @@
+# Sensitivity analysis
+
+Composite indicators, like any model, have many associated uncertainties.
+
+Sensitivity analysis can help to quantify the uncertainty in the scores and rankings of the composite indicator, and to identify which assumptions are driving this uncertainty, and which are less important.
+
+## About sensitivity analysis
+
+ss
+
+## Sensitivity analysis in COINr
+
+ss

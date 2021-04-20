@@ -1,0 +1,3 @@
+# Visualising results
+
+COINr offers a number of options for visualising results

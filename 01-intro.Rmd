@@ -1,8 +1,6 @@
-# Introduction
+# Foundations
 
-The `COINr` package is a comprehensive development and analysis environment for composite indicators and scoreboards, featuring a range of tools for building, visualising and analysing.
-
-This vignette is a work in progress and will be expanded as the COINr project progresses.
+This chapter aims to explain some important principles about how COINr works, as well as giving an overview of the package and suggested workflows. If you want to immediately get to COINr functions without any further ado, skip this chapter for now. However if you want to understand COINr better, this might be worth reading.
 
 ## How to use COINr
 
@@ -24,7 +22,100 @@ Comparisons
 
 ## A map of COINr
 
-Showing all the functions and the types (e.g. construction, visualisation, analysis, import/export)
+COINr consists of many functions that do a number of different types of operations. Here is a summary.
+
+### Construction
+
+The following functions are the main functions for building a composite indicator in COINr.
+
+Function            Description                                 
+------------------  ---------------------------------------------
+`assemble()`        Assembles indicator data/metadata into a COIN
+`checkData()`       Data availability check and unit screening
+`denominate()`      Denominate (divide) indicators by other indicators
+`impute()`          Impute missing data using various methods
+`treat()`           Treat outliers with Winsorisation and transformations
+`normalise()`       Normalise data using various methods
+`aggregate()`       Aggregate indicators into hierarchical levels, up to index
+`regen()`           Regenerates COIN results using specifications stored in `.$Method`
+
+### Visualisation
+
+These functions are for visualising data.
+
+Function            Description                                 
+------------------  ---------------------------------------------
+`iplotBar()`        Interactive bar chart for any indicator
+`iplotIndDist()`    Interactive indicator distribution plots for a single indicator
+`iplotIndDist2()`   Interactive indicator distribution plots for two indicators simultaneously
+`iplotMap()`        Interactive choropleth map for any indicator (only works for countries)
+`plotCorr()`        Interactive correlation heatmap between any levels of the index
+`plotframework()`   Interactive sunburst plot visualising the indicator framework
+`plotIndDist()`     Static plot of distributions for indicators and groups of indicators
+
+### Analysis
+
+The following functions analyse indicator data.
+
+Function            Description                                 
+------------------  ---------------------------------------------
+`cPCA()`            Principle component analysis on a specified data set and subset of indicators. Returns PCA weights.
+`effectiveWeight()` Calculates the effective weights of each element in the indicator hierarchy.
+`getStats()`        Get table of indicator statistics for any data set
+`weightOpt()`       Weight optimisation according to a pre-specified vector of "importances"
+
+
+### Interactive apps
+
+These are interactive apps, built using Shiny, which allow fast interactive exploration and adjustments.
+
+Function            Description                                 
+------------------  ---------------------------------------------
+`indDash()`         Indicator visualisation (distribution) dashboard for one or two indicators
+`rew8r()`           Interactively re-weight indicators and check updated results and correlations
+
+### Import/export
+
+Functions to import and export data and results to and from COINr and R.
+
+Function            Description                                 
+------------------  ---------------------------------------------
+`COINToolIn()`      Import indicator data and metadata from COIN Tool
+`coin_2Excel()`     Write data, analysis and results from a COIN to Excel
+
+### Other functions
+
+These are other functions that may be of interest, but do not neatly fit in the previous categories. Many of them are called from the other functions listed above, but may still be useful on their own.
+
+Function            Description                                 
+------------------  ---------------------------------------------
+`BoxCox()`          Box Cox transformation on a vector of data
+`build_ASEM()`      Build ASEM (example) composite indicator in one command
+`coin_win()`        Winsorise one column of data according to skew/kurtosis thresholds
+`copeland()`        Aggregates a data frame into a single column using the Copeland method.
+`geoMean()`         Weighted geometric mean of a vector
+`getIn()`           Useful function for subsetting indicator data. See [Helper functions].
+`harMean()`         Weighted harmonic mean of a vector
+`loggish()`         Log-type transformation, of various types, for a vector
+`names2Codes()`     Given a character vector of long names (probably with spaces), generates short codes.
+`outrankMatrix()`   Outranking matrix based on a data frame of indicator data and corresponding weights
+`roundDF()`         Round down a data frame (i.e. for presentation)
+
+
+### Data
+
+COINr comes with some example data embedded into the package.
+
+Function            Description                                 
+------------------  ---------------------------------------------
+`ASEMIndData`       ASEM (example) indicator data as input for `assemble()`
+`ASEMIndMeta`       ASEM (example) indicator metadata as input for `assemble()`
+`ASEMAggMeta`       ASEM (example) aggregate metadata as input for `assemble()`
+`WorldDenoms`       National denomination data (GDP, population, etc) worldwide
+
+### Finally
+
+There are also a number functions which are mainly for internal use, and are not listed here.
 
 ## Terminology
 

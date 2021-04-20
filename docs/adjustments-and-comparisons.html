@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 16 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr</title>
+  <title>Chapter 13 Adjustments and comparisons | Composite Indicator Development and Analysis in R with COINr</title>
   <meta name="description" content="Composite indicators with COINr" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 16 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr" />
+  <meta property="og:title" content="Chapter 13 Adjustments and comparisons | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 16 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr" />
+  <meta name="twitter:title" content="Chapter 13 Adjustments and comparisons | Composite Indicator Development and Analysis in R with COINr" />
   
   <meta name="twitter:description" content="Composite indicators with COINr" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="helper-functions.html"/>
-<link rel="next" href="acknowledgements.html"/>
+<link rel="prev" href="visualising-results.html"/>
+<link rel="next" href="sensitivity-analysis.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -299,45 +299,143 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="appendix-r-resources" class="section level1">
-<h1><span class="header-section-number">Chapter 16</span> Appendix: R Resources</h1>
-<p>One of the great things about R is the sheer number of freely-available resources that are out there. Not just the software and packages, but also online books and materials to learn everything you need to know about pretty much anything.</p>
-<p>Here are a list of resources for users who (a) are interested in R and want to get started, and (b) are proficient R users but want to learn more. I am focusing here on resources that have really helped me in the work that I have done. Of course there is far more out there and you only have to look.</p>
-<div id="introduction-to-r" class="section level2">
-<h2><span class="header-section-number">16.1</span> Introduction to R</h2>
-<p>If you’re just starting out, these are good places to start.</p>
-<p><strong>R for Data Science</strong> is a modern classic that starts from the beginning and leads you into the world of R, from a data science perspective. It uses the “tidyverse” approach which is developed by R Guru Hadley Wickham. Even advanced users can probably learn something here.</p>
-<p><a href="https://r4ds.had.co.nz/index.html" class="uri">https://r4ds.had.co.nz/index.html</a></p>
-<p><strong>Swirl</strong> is an R package which lets you learn R at the command line. Also very good for beginners.</p>
-<p><a href="https://swirlstats.com/" class="uri">https://swirlstats.com/</a></p>
+<div id="adjustments-and-comparisons" class="section level1">
+<h1><span class="header-section-number">Chapter 13</span> Adjustments and comparisons</h1>
+<p>It’s fairly common to make adjustments to the index, perhaps in terms of alternative data sets, indicators, methodological decisions, and so on. COINr allows you to (a) make fast adjustments, and (b) to compare alternative versions of the index relatively easily.</p>
+<div id="regeneration" class="section level2">
+<h2><span class="header-section-number">13.1</span> Regeneration</h2>
+<p>One of the key advantages of working within the COINrverse is that (nearly) all the methodology that is applied when building a composite indicator (COIN) is stored automatically in a folder of the COIN called <code>.$Method</code>. To see what this looks like:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="adjustments-and-comparisons.html#cb61-1"></a><span class="co"># load COINr if not loaded</span></span>
+<span id="cb61-2"><a href="adjustments-and-comparisons.html#cb61-2"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb61-3"><a href="adjustments-and-comparisons.html#cb61-3"></a></span>
+<span id="cb61-4"><a href="adjustments-and-comparisons.html#cb61-4"></a><span class="co"># build example COIN</span></span>
+<span id="cb61-5"><a href="adjustments-and-comparisons.html#cb61-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">build_ASEM</span>()</span>
+<span id="cb61-6"><a href="adjustments-and-comparisons.html#cb61-6"></a><span class="co">## -----------------</span></span>
+<span id="cb61-7"><a href="adjustments-and-comparisons.html#cb61-7"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb61-8"><a href="adjustments-and-comparisons.html#cb61-8"></a><span class="co">## -----------------</span></span>
+<span id="cb61-9"><a href="adjustments-and-comparisons.html#cb61-9"></a><span class="co">## -----------------</span></span>
+<span id="cb61-10"><a href="adjustments-and-comparisons.html#cb61-10"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb61-11"><a href="adjustments-and-comparisons.html#cb61-11"></a><span class="co">## -----------------</span></span>
+<span id="cb61-12"><a href="adjustments-and-comparisons.html#cb61-12"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb61-13"><a href="adjustments-and-comparisons.html#cb61-13"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb61-14"><a href="adjustments-and-comparisons.html#cb61-14"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb61-15"><a href="adjustments-and-comparisons.html#cb61-15"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb61-16"><a href="adjustments-and-comparisons.html#cb61-16"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb61-17"><a href="adjustments-and-comparisons.html#cb61-17"></a><span class="co">## -----------------</span></span>
+<span id="cb61-18"><a href="adjustments-and-comparisons.html#cb61-18"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb61-19"><a href="adjustments-and-comparisons.html#cb61-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb61-20"><a href="adjustments-and-comparisons.html#cb61-20"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb61-21"><a href="adjustments-and-comparisons.html#cb61-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb61-22"><a href="adjustments-and-comparisons.html#cb61-22"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb61-23"><a href="adjustments-and-comparisons.html#cb61-23"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb61-24"><a href="adjustments-and-comparisons.html#cb61-24"></a><span class="co">## -----------------</span></span>
+<span id="cb61-25"><a href="adjustments-and-comparisons.html#cb61-25"></a><span class="co">## Missing data points detected = 65</span></span>
+<span id="cb61-26"><a href="adjustments-and-comparisons.html#cb61-26"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span>
+<span id="cb61-27"><a href="adjustments-and-comparisons.html#cb61-27"></a></span>
+<span id="cb61-28"><a href="adjustments-and-comparisons.html#cb61-28"></a><span class="co"># look in ASEM$Method folder in R Studio...</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-46"></span>
+<img src="images/method_folder.png" alt="Method folder in ASEM example" width="60%" />
+<p class="caption">
+Figure 13.1: Method folder in ASEM example
+</p>
 </div>
-<div id="advanced-resources" class="section level2">
-<h2><span class="header-section-number">16.2</span> Advanced resources</h2>
-<div id="programming" class="section level3">
-<h3><span class="header-section-number">16.2.1</span> Programming</h3>
-<p>If you really want to sharpen your programming skills in R, Hadley Wickham has another book: this one digs around in the roots of R and teaches you all kinds of tricks and quirks.</p>
-<p><a href="https://adv-r.hadley.nz/" class="uri">https://adv-r.hadley.nz/</a></p>
-<p>Want to build your own R package? Hadley come to the rescue, again.</p>
-<p><a href="https://r-pkgs.org/" class="uri">https://r-pkgs.org/</a></p>
+<p>The easiest way to view it is by looking in the viewer of R Studio as in the screenshot above. Essentially, the <code>.$Method</code> folder has one entry for each COINr function that was used to build the COIN, and inside each of these folders are the arguments to the function that were input. Notice that the names inside <code>.$Method$Denomination</code> correspond exactly to arguments to <code>denominate()</code>, for example.</p>
+<p>Every time a COINr “construction function” is run, the inputs to the function are automatically recorded inside the COIN. Construction functions are any of the following seven:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>assemble()</code></td>
+<td align="left">Assembles indicator data/metadata into a COIN</td>
+</tr>
+<tr class="even">
+<td align="left"><code>checkData()</code></td>
+<td align="left">Data availability check and unit screening</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>denominate()</code></td>
+<td align="left">Denominate (divide) indicators by other indicators</td>
+</tr>
+<tr class="even">
+<td align="left"><code>impute()</code></td>
+<td align="left">Impute missing data using various methods</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>treat()</code></td>
+<td align="left">Treat outliers with Winsorisation and transformations</td>
+</tr>
+<tr class="even">
+<td align="left"><code>normalise()</code></td>
+<td align="left">Normalise data using various methods</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>aggregate()</code></td>
+<td align="left">Aggregate indicators into hierarchical levels, up to index</td>
+</tr>
+</tbody>
+</table>
+<p>These are the core functions that are used to build a composite indicator, from assembling from the original data, up to aggregation.</p>
+<p>One reason to do this is simply to have a record of what you did to arrive at the results. However, this is not the main reason (and in fact, it would be anyway good practice to make your own record by creating a script or markdown doc which records the steps). The real advantage is that results can be automatically regenerated with a handy function called <code>regen()</code>.</p>
+<p>To regenerate the results, simply run e.g.:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="adjustments-and-comparisons.html#cb62-1"></a>ASEM2 &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM)</span>
+<span id="cb62-2"><a href="adjustments-and-comparisons.html#cb62-2"></a><span class="co">## -----------------</span></span>
+<span id="cb62-3"><a href="adjustments-and-comparisons.html#cb62-3"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb62-4"><a href="adjustments-and-comparisons.html#cb62-4"></a><span class="co">## -----------------</span></span>
+<span id="cb62-5"><a href="adjustments-and-comparisons.html#cb62-5"></a><span class="co">## -----------------</span></span>
+<span id="cb62-6"><a href="adjustments-and-comparisons.html#cb62-6"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb62-7"><a href="adjustments-and-comparisons.html#cb62-7"></a><span class="co">## -----------------</span></span>
+<span id="cb62-8"><a href="adjustments-and-comparisons.html#cb62-8"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb62-9"><a href="adjustments-and-comparisons.html#cb62-9"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb62-10"><a href="adjustments-and-comparisons.html#cb62-10"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb62-11"><a href="adjustments-and-comparisons.html#cb62-11"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb62-12"><a href="adjustments-and-comparisons.html#cb62-12"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb62-13"><a href="adjustments-and-comparisons.html#cb62-13"></a><span class="co">## -----------------</span></span>
+<span id="cb62-14"><a href="adjustments-and-comparisons.html#cb62-14"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb62-15"><a href="adjustments-and-comparisons.html#cb62-15"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb62-16"><a href="adjustments-and-comparisons.html#cb62-16"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb62-17"><a href="adjustments-and-comparisons.html#cb62-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb62-18"><a href="adjustments-and-comparisons.html#cb62-18"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb62-19"><a href="adjustments-and-comparisons.html#cb62-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb62-20"><a href="adjustments-and-comparisons.html#cb62-20"></a><span class="co">## -----------------</span></span>
+<span id="cb62-21"><a href="adjustments-and-comparisons.html#cb62-21"></a><span class="co">## Missing data points detected = 65</span></span>
+<span id="cb62-22"><a href="adjustments-and-comparisons.html#cb62-22"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span></code></pre></div>
+<p>The <code>regen()</code> function reruns all functions that are recorded in the <code>.$Method</code> folder <em>in the order they appear in the folder</em>. In this example, it runs, in order, <code>assemble()</code>, <code>denominate()</code>, <code>impute()</code>, <code>treat()</code>, <code>normalise()</code>and <code>aggregate()</code>. This replicates exactly the results. But what is the point of that? Well, it means that we can make changes to the index, generally by altering parameters in the <code>.$Method</code> folder, and then rerun everything very quickly with a single command. This will be demonstrated in the following section. After that, we will also see how to compare between alternative versions of the index.</p>
+<p>Before that, there is one extra feature of <code>regen()</code> which is worth mentioning. The <code>regen()</code> function only runs the seven construction functions as listed above. These functions are very flexible and should encompass most needs for constructing a composite indicator. But what happens if you want to build in an extra operation, or operations, that are outside of these seven functions?</p>
+<p>It is possible to also include “custom” chunks of code inside the COIN. Custom chunks should be written manually using the <code>quote()</code> function, to a special folder <code>.$Method$Custom</code>. These chunks can be any type of code, but the important thing is to also know <em>when</em> to run the code, i.e. at what point in the construction process.</p>
+<p>More specifically, custom code chunks are written as a named list. The <strong>name</strong> of the item in the list specifies <em>when</em> to perform the operation. For example, “AfterTreatment” means to perform this immediately after the treatment step. Other options are e.g. “AfterNormalisation” or “AfterScreening” – in general it should be “After” followed by a name of one of the existing folders in the <code>.$Method</code> folder.</p>
+<p>The corresponding <strong>value</strong> in the list should be an operation which <em>must</em> be enclosed in the <code>quote()</code> function. Clearly, the list can feature multiple operations at different points in construction.</p>
+<p>This is slightly complicated, but can be clarified a bit with an example. Let’s imagine that after Winsorisation, we would like to “reset” one of the Winsorised points to its original value. This is currently not possible inside the <code>treat()</code> function so has to be done manually. But we would like this operation to be kept when we regenerate the index with variations in methodology (e.g. trying different aggregation functions, weights, etc.).</p>
+<p>We create a list with one operation: resetting the point after the treatment step.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="adjustments-and-comparisons.html#cb63-1"></a><span class="co"># Create list. </span><span class="al">NOTE</span><span class="co"> the use of the quote() function!</span></span>
+<span id="cb63-2"><a href="adjustments-and-comparisons.html#cb63-2"></a>custlist =<span class="st"> </span><span class="kw">list</span>(<span class="dt">AfterTreatment =</span> <span class="kw">quote</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>] &lt;-<span class="st"> </span>ASEM2<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>]))</span>
+<span id="cb63-3"><a href="adjustments-and-comparisons.html#cb63-3"></a></span>
+<span id="cb63-4"><a href="adjustments-and-comparisons.html#cb63-4"></a><span class="co"># Add the list to the $Method$Custom folder</span></span>
+<span id="cb63-5"><a href="adjustments-and-comparisons.html#cb63-5"></a>ASEM2<span class="op">$</span>Method<span class="op">$</span>Custom &lt;-<span class="st"> </span>custlist</span></code></pre></div>
+<p>Specifically, we have replaced the Winsorised value of Belgium, for the “Bord” indicator, with its imputed value (i.e. the value it had before it was treated).</p>
+<p>Now, when we regenerate the COIN using <code>regen()</code>, it will insert this extra line of code immediately after the treatment step.</p>
+<p>Using custom code may seem a bit confusing but it adds an extra layer of flexibility. It is however intended for small snippets of custom code, rather than large blocks of custom operations. If you are doing a lot of operations outside COINr, it may be better to do this in your own dedicated script or function, rather than trying to encode absolutely everything inside the COIN.</p>
 </div>
-<div id="visualisation-1" class="section level3">
-<h3><span class="header-section-number">16.2.2</span> Visualisation</h3>
-<p>Plotly is a big R package which generates interactive graphics using Javascript (there are many others, by the way). This book tells you all you need to know about that.</p>
-<p><a href="https://plotly-r.com/" class="uri">https://plotly-r.com/</a></p>
-<p>Shiny is another R package which lets you build interactive web apps based on R code. It’s tricky to get your head around at first, but this book really helps.</p>
-<p><a href="https://mastering-shiny.org/index.html" class="uri">https://mastering-shiny.org/index.html</a></p>
+<div id="adjustments" class="section level2">
+<h2><span class="header-section-number">13.2</span> Adjustments</h2>
+<p>Let us now explore how the COIN can be adjusted and regenerated. This will (hopefully) clarify why regenerating is a useful thing.</p>
+<p>The general steps for adjustments are:</p>
+<ol style="list-style-type: decimal">
+<li>Copy the object</li>
+<li>Adjust the methodology by editing the <code>.$Method</code> folder and/or the underlying data</li>
+<li>Regenerate the results</li>
+<li>Compare alternatives</li>
+</ol>
+<p>The last point is dealt with in the following section. For now, let’s see some examples of changing methodology.</p>
+<p>First of all, let’s consider an alternative index where we decide to remove one of the indicators. In fact, COINr has a short-cut function for this, because to remove/add an indicator, it entails changing both the indicator data and the metadata.</p>
 </div>
-<div id="other" class="section level3">
-<h3><span class="header-section-number">16.2.3</span> Other</h3>
-<p>If you’re not using GitHub, ask yourself, why not? GitHub is the best way to collaborate and share code, and you can also host documentation and websites. This book is hosted on GitHub, to take a random example. The Happy Git with R Book gives an easy introduction to hooking up R Studio to work seamlessly with Git and Github.</p>
-<p><a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a></p>
-<p>You wouldn’t think that R would be a good tool for writing books, but actually it turns out that… it’s a pretty good tool for writing books. The Bookdown package lets you build nifty online books with a simple and neat layout. You can include equations and importantly, R code, outputs and HTML widgets, etc.</p>
-<p><a href="https://bookdown.org/yihui/bookdown/" class="uri">https://bookdown.org/yihui/bookdown/</a></p>
-<p>Finally, you wouldn’t think that R would be a good tool for building website, but actually it turns out… it’s a pretty good tool for building websites. OK, yes, if you want to build something really complicated and/or highly customised, then it’s not the way forward. But for building fairly simple sites and blogs, personal pages etc (especially if you want to stick in some R code), then the <em>Blogdown</em> package gives a great way to do this. And guess what, you can link it to Github and it automatically updates your website when you push any changes from R Studio. And it’s all free. An example of this is my very humble website which you can find at <a href="http://www.bluefoxdata.eu" class="uri">http://www.bluefoxdata.eu</a>.</p>
-<p>What’s that you say, if only there were a book to teach me how to do all this? Well you’re in luck - here it is.</p>
-<p><a href="https://bookdown.org/yihui/blogdown/" class="uri">https://bookdown.org/yihui/blogdown/</a></p>
+<div id="comparisons" class="section level2">
+<h2><span class="header-section-number">13.3</span> Comparisons</h2>
 
-</div>
 </div>
 </div>
             </section>
@@ -345,8 +443,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="helper-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="acknowledgements.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="visualising-results.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sensitivity-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -377,7 +475,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/15-Appendix-R.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/09-Adjustments.Rmd",
 "text": "Edit"
 },
 "history": {

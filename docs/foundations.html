@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 16 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr</title>
+  <title>Chapter 2 Foundations | Composite Indicator Development and Analysis in R with COINr</title>
   <meta name="description" content="Composite indicators with COINr" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 16 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr" />
+  <meta property="og:title" content="Chapter 2 Foundations | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 16 Appendix: R Resources | Composite Indicator Development and Analysis in R with COINr" />
+  <meta name="twitter:title" content="Chapter 2 Foundations | Composite Indicator Development and Analysis in R with COINr" />
   
   <meta name="twitter:description" content="Composite indicators with COINr" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="helper-functions.html"/>
-<link rel="next" href="acknowledgements.html"/>
+<link rel="prev" href="index.html"/>
+<link rel="next" href="coins-the-currency-of-coinr.html"/>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -299,43 +299,310 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="appendix-r-resources" class="section level1">
-<h1><span class="header-section-number">Chapter 16</span> Appendix: R Resources</h1>
-<p>One of the great things about R is the sheer number of freely-available resources that are out there. Not just the software and packages, but also online books and materials to learn everything you need to know about pretty much anything.</p>
-<p>Here are a list of resources for users who (a) are interested in R and want to get started, and (b) are proficient R users but want to learn more. I am focusing here on resources that have really helped me in the work that I have done. Of course there is far more out there and you only have to look.</p>
-<div id="introduction-to-r" class="section level2">
-<h2><span class="header-section-number">16.1</span> Introduction to R</h2>
-<p>If you’re just starting out, these are good places to start.</p>
-<p><strong>R for Data Science</strong> is a modern classic that starts from the beginning and leads you into the world of R, from a data science perspective. It uses the “tidyverse” approach which is developed by R Guru Hadley Wickham. Even advanced users can probably learn something here.</p>
-<p><a href="https://r4ds.had.co.nz/index.html" class="uri">https://r4ds.had.co.nz/index.html</a></p>
-<p><strong>Swirl</strong> is an R package which lets you learn R at the command line. Also very good for beginners.</p>
-<p><a href="https://swirlstats.com/" class="uri">https://swirlstats.com/</a></p>
+<div id="foundations" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Foundations</h1>
+<p>This chapter aims to explain some important principles about how COINr works, as well as giving an overview of the package and suggested workflows. If you want to immediately get to COINr functions without any further ado, skip this chapter for now. However if you want to understand COINr better, this might be worth reading.</p>
+<div id="how-to-use-coinr" class="section level2">
+<h2><span class="header-section-number">2.1</span> How to use COINr</h2>
+<p>There are two main ways to use COINr. The first is to use the functions as standalone tools for your own specific use. For example, <code>coin_normalise.R</code> will take a data frame as an input, and normalise the columns according to the options specified in its input, outputting another data frame.</p>
+<p>The second way is to work inside what I’ll call the ‘COINrverse’ (with tongue firmly in cheek). What this means is that all operations are performed on a single object, the “COIN object”, which stores all data, all analysis, parameters, and methodological choices made along the way.</p>
+<p>The COINrverse approach enables the full feature set of COINr, because some functions only work on COIN objects - for example, exporting all results to Excel in one command, or running an uncertainty/sensitivity analysis. Indeed, COINr is built mainly for COINrverse use, but functions have been written with the flexibility to also accommodate independent use where possible.</p>
+<p>More details on how the COINrverse works can be found in XXX.</p>
 </div>
-<div id="advanced-resources" class="section level2">
-<h2><span class="header-section-number">16.2</span> Advanced resources</h2>
-<div id="programming" class="section level3">
-<h3><span class="header-section-number">16.2.1</span> Programming</h3>
-<p>If you really want to sharpen your programming skills in R, Hadley Wickham has another book: this one digs around in the roots of R and teaches you all kinds of tricks and quirks.</p>
-<p><a href="https://adv-r.hadley.nz/" class="uri">https://adv-r.hadley.nz/</a></p>
-<p>Want to build your own R package? Hadley come to the rescue, again.</p>
-<p><a href="https://r-pkgs.org/" class="uri">https://r-pkgs.org/</a></p>
+<div id="suggested-workflows" class="section level2">
+<h2><span class="header-section-number">2.2</span> Suggested workflows</h2>
+<p>E.g. quick construction</p>
+<p>Analysis, audit</p>
+<p>Comparisons</p>
 </div>
-<div id="visualisation-1" class="section level3">
-<h3><span class="header-section-number">16.2.2</span> Visualisation</h3>
-<p>Plotly is a big R package which generates interactive graphics using Javascript (there are many others, by the way). This book tells you all you need to know about that.</p>
-<p><a href="https://plotly-r.com/" class="uri">https://plotly-r.com/</a></p>
-<p>Shiny is another R package which lets you build interactive web apps based on R code. It’s tricky to get your head around at first, but this book really helps.</p>
-<p><a href="https://mastering-shiny.org/index.html" class="uri">https://mastering-shiny.org/index.html</a></p>
+<div id="a-map-of-coinr" class="section level2">
+<h2><span class="header-section-number">2.3</span> A map of COINr</h2>
+<p>COINr consists of many functions that do a number of different types of operations. Here is a summary.</p>
+<div id="construction" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Construction</h3>
+<p>The following functions are the main functions for building a composite indicator in COINr.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>assemble()</code></td>
+<td align="left">Assembles indicator data/metadata into a COIN</td>
+</tr>
+<tr class="even">
+<td align="left"><code>checkData()</code></td>
+<td align="left">Data availability check and unit screening</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>denominate()</code></td>
+<td align="left">Denominate (divide) indicators by other indicators</td>
+</tr>
+<tr class="even">
+<td align="left"><code>impute()</code></td>
+<td align="left">Impute missing data using various methods</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>treat()</code></td>
+<td align="left">Treat outliers with Winsorisation and transformations</td>
+</tr>
+<tr class="even">
+<td align="left"><code>normalise()</code></td>
+<td align="left">Normalise data using various methods</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>aggregate()</code></td>
+<td align="left">Aggregate indicators into hierarchical levels, up to index</td>
+</tr>
+<tr class="even">
+<td align="left"><code>regen()</code></td>
+<td align="left">Regenerates COIN results using specifications stored in <code>.$Method</code></td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="other" class="section level3">
-<h3><span class="header-section-number">16.2.3</span> Other</h3>
-<p>If you’re not using GitHub, ask yourself, why not? GitHub is the best way to collaborate and share code, and you can also host documentation and websites. This book is hosted on GitHub, to take a random example. The Happy Git with R Book gives an easy introduction to hooking up R Studio to work seamlessly with Git and Github.</p>
-<p><a href="https://happygitwithr.com/" class="uri">https://happygitwithr.com/</a></p>
-<p>You wouldn’t think that R would be a good tool for writing books, but actually it turns out that… it’s a pretty good tool for writing books. The Bookdown package lets you build nifty online books with a simple and neat layout. You can include equations and importantly, R code, outputs and HTML widgets, etc.</p>
-<p><a href="https://bookdown.org/yihui/bookdown/" class="uri">https://bookdown.org/yihui/bookdown/</a></p>
-<p>Finally, you wouldn’t think that R would be a good tool for building website, but actually it turns out… it’s a pretty good tool for building websites. OK, yes, if you want to build something really complicated and/or highly customised, then it’s not the way forward. But for building fairly simple sites and blogs, personal pages etc (especially if you want to stick in some R code), then the <em>Blogdown</em> package gives a great way to do this. And guess what, you can link it to Github and it automatically updates your website when you push any changes from R Studio. And it’s all free. An example of this is my very humble website which you can find at <a href="http://www.bluefoxdata.eu" class="uri">http://www.bluefoxdata.eu</a>.</p>
-<p>What’s that you say, if only there were a book to teach me how to do all this? Well you’re in luck - here it is.</p>
-<p><a href="https://bookdown.org/yihui/blogdown/" class="uri">https://bookdown.org/yihui/blogdown/</a></p>
+<div id="visualisation" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Visualisation</h3>
+<p>These functions are for visualising data.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>iplotBar()</code></td>
+<td align="left">Interactive bar chart for any indicator</td>
+</tr>
+<tr class="even">
+<td align="left"><code>iplotIndDist()</code></td>
+<td align="left">Interactive indicator distribution plots for a single indicator</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>iplotIndDist2()</code></td>
+<td align="left">Interactive indicator distribution plots for two indicators simultaneously</td>
+</tr>
+<tr class="even">
+<td align="left"><code>iplotMap()</code></td>
+<td align="left">Interactive choropleth map for any indicator (only works for countries)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>plotCorr()</code></td>
+<td align="left">Interactive correlation heatmap between any levels of the index</td>
+</tr>
+<tr class="even">
+<td align="left"><code>plotframework()</code></td>
+<td align="left">Interactive sunburst plot visualising the indicator framework</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>plotIndDist()</code></td>
+<td align="left">Static plot of distributions for indicators and groups of indicators</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="analysis" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Analysis</h3>
+<p>The following functions analyse indicator data.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>cPCA()</code></td>
+<td align="left">Principle component analysis on a specified data set and subset of indicators. Returns PCA weights.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>effectiveWeight()</code></td>
+<td align="left">Calculates the effective weights of each element in the indicator hierarchy.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>getStats()</code></td>
+<td align="left">Get table of indicator statistics for any data set</td>
+</tr>
+<tr class="even">
+<td align="left"><code>weightOpt()</code></td>
+<td align="left">Weight optimisation according to a pre-specified vector of “importances”</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="interactive-apps" class="section level3">
+<h3><span class="header-section-number">2.3.4</span> Interactive apps</h3>
+<p>These are interactive apps, built using Shiny, which allow fast interactive exploration and adjustments.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>indDash()</code></td>
+<td align="left">Indicator visualisation (distribution) dashboard for one or two indicators</td>
+</tr>
+<tr class="even">
+<td align="left"><code>rew8r()</code></td>
+<td align="left">Interactively re-weight indicators and check updated results and correlations</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="importexport" class="section level3">
+<h3><span class="header-section-number">2.3.5</span> Import/export</h3>
+<p>Functions to import and export data and results to and from COINr and R.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>COINToolIn()</code></td>
+<td align="left">Import indicator data and metadata from COIN Tool</td>
+</tr>
+<tr class="even">
+<td align="left"><code>coin_2Excel()</code></td>
+<td align="left">Write data, analysis and results from a COIN to Excel</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="other-functions" class="section level3">
+<h3><span class="header-section-number">2.3.6</span> Other functions</h3>
+<p>These are other functions that may be of interest, but do not neatly fit in the previous categories. Many of them are called from the other functions listed above, but may still be useful on their own.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>BoxCox()</code></td>
+<td align="left">Box Cox transformation on a vector of data</td>
+</tr>
+<tr class="even">
+<td align="left"><code>build_ASEM()</code></td>
+<td align="left">Build ASEM (example) composite indicator in one command</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>coin_win()</code></td>
+<td align="left">Winsorise one column of data according to skew/kurtosis thresholds</td>
+</tr>
+<tr class="even">
+<td align="left"><code>copeland()</code></td>
+<td align="left">Aggregates a data frame into a single column using the Copeland method.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>geoMean()</code></td>
+<td align="left">Weighted geometric mean of a vector</td>
+</tr>
+<tr class="even">
+<td align="left"><code>getIn()</code></td>
+<td align="left">Useful function for subsetting indicator data. See <a href="helper-functions.html#helper-functions">Helper functions</a>.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>harMean()</code></td>
+<td align="left">Weighted harmonic mean of a vector</td>
+</tr>
+<tr class="even">
+<td align="left"><code>loggish()</code></td>
+<td align="left">Log-type transformation, of various types, for a vector</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>names2Codes()</code></td>
+<td align="left">Given a character vector of long names (probably with spaces), generates short codes.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>outrankMatrix()</code></td>
+<td align="left">Outranking matrix based on a data frame of indicator data and corresponding weights</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>roundDF()</code></td>
+<td align="left">Round down a data frame (i.e. for presentation)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="data" class="section level3">
+<h3><span class="header-section-number">2.3.7</span> Data</h3>
+<p>COINr comes with some example data embedded into the package.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>ASEMIndData</code></td>
+<td align="left">ASEM (example) indicator data as input for <code>assemble()</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>ASEMIndMeta</code></td>
+<td align="left">ASEM (example) indicator metadata as input for <code>assemble()</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>ASEMAggMeta</code></td>
+<td align="left">ASEM (example) aggregate metadata as input for <code>assemble()</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>WorldDenoms</code></td>
+<td align="left">National denomination data (GDP, population, etc) worldwide</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="finally" class="section level3">
+<h3><span class="header-section-number">2.3.8</span> Finally</h3>
+<p>There are also a number functions which are mainly for internal use, and are not listed here.</p>
+</div>
+</div>
+<div id="terminology" class="section level2">
+<h2><span class="header-section-number">2.4</span> Terminology</h2>
+<p>Let’s clearly define a few terms first to avoid confusion later on.</p>
+<ul>
+<li><p>An <em>indicator</em> is a variable which has an observed value for each unit. Indicators might be things like life expectancy, CO2 emissions, number of tertiary graduates, and so on.</p></li>
+<li><p>A <em>unit</em> is one of the entities that you are comparing using indicators. Often, units are countries, but they could also be regions, universities, individuals or even competing policy options (the latter is the realm of multicriteria decision analysis).</p></li>
+</ul>
+<p>Together, indicators and units form the main input data frame for COINr (units as rows, and indicators as columns).</p>
+</div>
+<div id="tips-for-using-coinr" class="section level2">
+<h2><span class="header-section-number">2.5</span> Tips for using COINr</h2>
+<div id="missing-data" class="section level3">
+<h3><span class="header-section-number">2.5.1</span> Missing data</h3>
+<p>It’s very important to understand the difference between missing data and zeros. A zero means that you know that the value of the indicator is zero, whereas missing data (in R this is denoted as <code>NA</code>) means you don’t know what the value is at all.</p>
+<p>When aggregating indicators, this difference becomes particularly important. If a data point is missing, it is often excluded from the aggregation, which effectively means reassigning it with the mean (or similar) value of the indicators in the same group. If you impute the data, missing values could be assigned with mean or median indicator values, for example. Clearly, these values will be very different from zeros.</p>
+<p>This point is made here, because data may sometimes come with missing values denoted as zeros, or with zeros denoted as missing values. Ensure that these are checked carefully before proceeding with construction.</p>
+</div>
+<div id="ordering" class="section level3">
+<h3><span class="header-section-number">2.5.2</span> Ordering</h3>
+<p>Currently, COINr is somewhat dependent on the order of the units. Although you can input your data in any order you like (as long as you follow the rules in [Data Input]), in some cases the order does matter. For example, if you want to denominate your data by a separate data frame of indicators (not in the COIN), you will have to make sure that the units (rows) correspond to the same order of rows as your indicator data.</p>
+<p>In future updates this dependence on order should be removed, because it is a possible source of errors. For now though, just keep ordering in mind.</p>
+<p>It’s worth mentioning that the row order never changes in the <code>.$Data</code> folder. However, if you screen units using a minimum data requirement (e.g. using <code>datacheck()</code>), then the number of units can change. This should also be kept in mind.</p>
+</div>
+<div id="syntax" class="section level3">
+<h3><span class="header-section-number">2.5.3</span> Syntax</h3>
+<p>Where possible, COINr functions use a common syntax to keep things simple. For example:</p>
+<ul>
+<li><code>dset</code> always refers to the name of the data set that is found in <code>.$Data</code>. For example, <code>dset = "Normalised"</code> will return <code>.$Data$Normalised</code>. The only exception is <code>dset = "Denominators"</code>, which returns <code>.$Input$Denominators</code>. The argument <code>dset</code> is used in many COINr functions because they have to know which data set to operate on.</li>
+<li>More to be added here.</li>
+</ul>
 
 </div>
 </div>
@@ -345,8 +612,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="helper-functions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="acknowledgements.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="coins-the-currency-of-coinr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -377,7 +644,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/15-Appendix-R.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-intro.Rmd",
 "text": "Edit"
 },
 "history": {
