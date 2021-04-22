@@ -79,12 +79,93 @@ Let us now explore how the COIN can be adjusted and regenerated. This will (hope
 The general steps for adjustments are:
 
 1. Copy the object
-2. Adjust the methodology by editing the `.$Method` folder and/or the underlying data
+2. Adjust the index methodology or data by editing the `.$Method` folder and/or the underlying data
 3. Regenerate the results
 4. Compare alternatives
 
-The last point is dealt with in the following section. For now, let's see some examples of changing methodology.
+Copying the object is straightforward, and regeneration has been dealt with in the previous section. Comparison is also addressed in the following section. Here we will focus on adjustments and changing methodology.
 
-First of all, let's consider an alternative index where we decide to remove one of the indicators. In fact, COINr has a short-cut function for this, because to remove/add an indicator, it entails changing both the indicator data and the metadata.
+### Adding/removing indicators
+
+First of all, let's consider an alternative index where we decide to add or remove one or more  indicators. There are different ways that we could consider doing this.
+
+A first possibility would be to manually create a new data frame of indicator data and indicator metadata, i.e. the `IndData` and `IndMeta` inputs for `assemble()`. This is fine, but we would have to start the index again from scratch and rebuild it.
+
+A better idea is that when we first supply the set of indicators to `assemble()`, we include all indicators that we might possibly want to include in the index, including e.g. alternative indicators with alternative data sources. Then we build different versions of the index using subsets of these indicators. This allows us to use `regen()` and therefore to make fast copies of the index.
+
+To illustrate, consider again the ASEM example. We can rebuild the ASEM index using a subset of the indicators by using the `include` or `exclude` arguments of the `assemble()` function. Because these are stored in `.$Method`, we can easily regenerate the new results.
+
+```{r ASEMRemoveInd_Method}
+# Make a copy
+ASEM_NoLPIShip <- ASEM
+
+# Edit method: exclude two indicators
+ASEM_NoLPIShip$Method$Assemble$exclude <- c("LPI", "Ship")
+
+# Regenerate results (suppress any messages)
+ASEM_NoLPIShip <- regen(ASEM_NoLPIShip, quietly = TRUE)
+```
+
+Note that, in the ASEM example, by default, `ASEM$Method$Assemble` doesn't exist because the `include` or `exclude` arguments of `assemble()` are empty, and these are the only arguments to `assemble()` that are recorded in `.$Method$Assemble`.
+
+In summary, we have removed two indicators, then regenerated the results using exactly the same methodology as used before. Importantly, `include` and `exclude` operate *relative to the original data* input to `assemble()`, i.e. the data found in `.$Input$Original`. This means that if we now were to make a copy of the version excluding the two indicators above, and exclude another different indicator:
+
+```{r ASEMRemoveInd_Method2}
+# Make a copy
+ASEM_NoBord <- ASEM_NoLPIShip
+
+# Edit method: exclude two indicators
+ASEM_NoBord$Method$Assemble$exclude <- "Bord"
+
+# Regenerate results
+ASEM_NoBord <- regen(ASEM_NoBord, quietly = TRUE)
+
+ASEM_NoBord$Parameters$IndCodes
+```
+
+...we see that "LPI" and "Ship" are once again present.
+
+In fact, COINr has an even quicker way to add and remove indicators, which is a short cut function called `indChange()`. In one command you can add or remove indicators and regenerate the results. Unlike the method above, `indChange()` also adds and removes relative to the existing index, which may be more convenient in some circumstances. To demonstrate this, we can use the same example as above:
+
+```{r ASEMIndChange}
+# Make a copy
+ASEM_NoBord2 <- indChange(ASEM_NoLPIShip, drop = "Bord", regen = TRUE)
+
+ASEM_NoBord2$Parameters$IndCodes
+```
+
+And here we see that now, "Bord" has been excluded *as well as* "LPI" and "Ship".
+
+### Other adjustments
+
+We can make any methodological adjustments we want by editing any parameters in `.$Method` and then running `regen()`. For example, we can change the imputation method:
+
+```{r ASEMAltImpute}
+# Make a copy
+ASEMAltImpute <- ASEM
+
+# Edit .$Method
+ASEMAltImpute$Method$Imputation$imtype <- "indgroup_median"
+
+# Regenerate
+ASEMAltImpute <- regen(ASEMAltImpute, quietly = TRUE)
+```
+
+We could also change the normalisation method, e.g. to use Borda scores:
+
+```{r ASEMAltNorm}
+# Make a copy
+ASEMAltNorm <- ASEM
+
+# Edit .$Method
+ASEMAltNorm$Method$Normalisation$ntype <- "borda"
+
+# Regenerate
+ASEMAltNorm <- regen(ASEMAltNorm, quietly = TRUE)
+```
+
+and of course this extends to any parameters of any of the "construction" functions. We can even alter the underlying data directly if we want, e.g. by altering values in `.$Input$Original$Data`. In short, anything inside the COIN can be edited and then the results regenerated. This allows a fast way to make different alternative indexes and explore the effects of different methodology very quickly.
 
 ## Comparisons
+
+A logical follow up to making alternative indexes is to try to understand the differences between these indexes. This can of course be done manually. But to make this quicker, COINr includes

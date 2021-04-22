@@ -99,6 +99,8 @@ visualising-results
 adjustments-and-comparisons
 regeneration
 adjustments
+addingremoving-indicators
+other-adjustments
 comparisons
 sensitivity-analysis
 about-sensitivity-analysis

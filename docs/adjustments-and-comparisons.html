@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-04-20" />
+<meta name="date" content="2021-04-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -255,7 +255,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12" data-path="visualising-results.html"><a href="visualising-results.html"><i class="fa fa-check"></i><b>12</b> Visualising results</a></li>
 <li class="chapter" data-level="13" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html"><i class="fa fa-check"></i><b>13</b> Adjustments and comparisons</a><ul>
 <li class="chapter" data-level="13.1" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#regeneration"><i class="fa fa-check"></i><b>13.1</b> Regeneration</a></li>
-<li class="chapter" data-level="13.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#adjustments"><i class="fa fa-check"></i><b>13.2</b> Adjustments</a></li>
+<li class="chapter" data-level="13.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#adjustments"><i class="fa fa-check"></i><b>13.2</b> Adjustments</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#addingremoving-indicators"><i class="fa fa-check"></i><b>13.2.1</b> Adding/removing indicators</a></li>
+<li class="chapter" data-level="13.2.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#other-adjustments"><i class="fa fa-check"></i><b>13.2.2</b> Other adjustments</a></li>
+</ul></li>
 <li class="chapter" data-level="13.3" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#comparisons"><i class="fa fa-check"></i><b>13.3</b> Comparisons</a></li>
 </ul></li>
 <li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a><ul>
@@ -426,15 +429,88 @@ Figure 13.1: Method folder in ASEM example
 <p>The general steps for adjustments are:</p>
 <ol style="list-style-type: decimal">
 <li>Copy the object</li>
-<li>Adjust the methodology by editing the <code>.$Method</code> folder and/or the underlying data</li>
+<li>Adjust the index methodology or data by editing the <code>.$Method</code> folder and/or the underlying data</li>
 <li>Regenerate the results</li>
 <li>Compare alternatives</li>
 </ol>
-<p>The last point is dealt with in the following section. For now, let’s see some examples of changing methodology.</p>
-<p>First of all, let’s consider an alternative index where we decide to remove one of the indicators. In fact, COINr has a short-cut function for this, because to remove/add an indicator, it entails changing both the indicator data and the metadata.</p>
+<p>Copying the object is straightforward, and regeneration has been dealt with in the previous section. Comparison is also addressed in the following section. Here we will focus on adjustments and changing methodology.</p>
+<div id="addingremoving-indicators" class="section level3">
+<h3><span class="header-section-number">13.2.1</span> Adding/removing indicators</h3>
+<p>First of all, let’s consider an alternative index where we decide to add or remove one or more indicators. There are different ways that we could consider doing this.</p>
+<p>A first possibility would be to manually create a new data frame of indicator data and indicator metadata, i.e. the <code>IndData</code> and <code>IndMeta</code> inputs for <code>assemble()</code>. This is fine, but we would have to start the index again from scratch and rebuild it.</p>
+<p>A better idea is that when we first supply the set of indicators to <code>assemble()</code>, we include all indicators that we might possibly want to include in the index, including e.g. alternative indicators with alternative data sources. Then we build different versions of the index using subsets of these indicators. This allows us to use <code>regen()</code> and therefore to make fast copies of the index.</p>
+<p>To illustrate, consider again the ASEM example. We can rebuild the ASEM index using a subset of the indicators by using the <code>include</code> or <code>exclude</code> arguments of the <code>assemble()</code> function. Because these are stored in <code>.$Method</code>, we can easily regenerate the new results.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="adjustments-and-comparisons.html#cb64-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb64-2"><a href="adjustments-and-comparisons.html#cb64-2"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span>ASEM</span>
+<span id="cb64-3"><a href="adjustments-and-comparisons.html#cb64-3"></a></span>
+<span id="cb64-4"><a href="adjustments-and-comparisons.html#cb64-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
+<span id="cb64-5"><a href="adjustments-and-comparisons.html#cb64-5"></a>ASEM_NoLPIShip<span class="op">$</span>Method<span class="op">$</span>Assemble<span class="op">$</span>exclude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Ship&quot;</span>)</span>
+<span id="cb64-6"><a href="adjustments-and-comparisons.html#cb64-6"></a></span>
+<span id="cb64-7"><a href="adjustments-and-comparisons.html#cb64-7"></a><span class="co"># Regenerate results (suppress any messages)</span></span>
+<span id="cb64-8"><a href="adjustments-and-comparisons.html#cb64-8"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoLPIShip, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>Note that, in the ASEM example, by default, <code>ASEM$Method$Assemble</code> doesn’t exist because the <code>include</code> or <code>exclude</code> arguments of <code>assemble()</code> are empty, and these are the only arguments to <code>assemble()</code> that are recorded in <code>.$Method$Assemble</code>.</p>
+<p>In summary, we have removed two indicators, then regenerated the results using exactly the same methodology as used before. Importantly, <code>include</code> and <code>exclude</code> operate <em>relative to the original data</em> input to <code>assemble()</code>, i.e. the data found in <code>.$Input$Original</code>. This means that if we now were to make a copy of the version excluding the two indicators above, and exclude another different indicator:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="adjustments-and-comparisons.html#cb65-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb65-2"><a href="adjustments-and-comparisons.html#cb65-2"></a>ASEM_NoBord &lt;-<span class="st"> </span>ASEM_NoLPIShip</span>
+<span id="cb65-3"><a href="adjustments-and-comparisons.html#cb65-3"></a></span>
+<span id="cb65-4"><a href="adjustments-and-comparisons.html#cb65-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
+<span id="cb65-5"><a href="adjustments-and-comparisons.html#cb65-5"></a>ASEM_NoBord<span class="op">$</span>Method<span class="op">$</span>Assemble<span class="op">$</span>exclude &lt;-<span class="st"> &quot;Bord&quot;</span></span>
+<span id="cb65-6"><a href="adjustments-and-comparisons.html#cb65-6"></a></span>
+<span id="cb65-7"><a href="adjustments-and-comparisons.html#cb65-7"></a><span class="co"># Regenerate results</span></span>
+<span id="cb65-8"><a href="adjustments-and-comparisons.html#cb65-8"></a>ASEM_NoBord &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoBord, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb65-9"><a href="adjustments-and-comparisons.html#cb65-9"></a></span>
+<span id="cb65-10"><a href="adjustments-and-comparisons.html#cb65-10"></a>ASEM_NoBord<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
+<span id="cb65-11"><a href="adjustments-and-comparisons.html#cb65-11"></a><span class="co">##  [1] &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Goods&quot;    </span></span>
+<span id="cb65-12"><a href="adjustments-and-comparisons.html#cb65-12"></a><span class="co">##  [7] &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;Embs&quot;      &quot;IGOs&quot;     </span></span>
+<span id="cb65-13"><a href="adjustments-and-comparisons.html#cb65-13"></a><span class="co">## [13] &quot;UNVote&quot;    &quot;CostImpEx&quot; &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;     </span></span>
+<span id="cb65-14"><a href="adjustments-and-comparisons.html#cb65-14"></a><span class="co">## [19] &quot;Visa&quot;      &quot;StMob&quot;     &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot; </span></span>
+<span id="cb65-15"><a href="adjustments-and-comparisons.html#cb65-15"></a><span class="co">## [25] &quot;Tourist&quot;   &quot;MigStock&quot;  &quot;Lang&quot;      &quot;Renew&quot;     &quot;PrimEner&quot;  &quot;CO2&quot;      </span></span>
+<span id="cb65-16"><a href="adjustments-and-comparisons.html#cb65-16"></a><span class="co">## [31] &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
+<span id="cb65-17"><a href="adjustments-and-comparisons.html#cb65-17"></a><span class="co">## [37] &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;    &quot;WomParl&quot;   &quot;PubDebt&quot;  </span></span>
+<span id="cb65-18"><a href="adjustments-and-comparisons.html#cb65-18"></a><span class="co">## [43] &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
+<p>…we see that “LPI” and “Ship” are once again present.</p>
+<p>In fact, COINr has an even quicker way to add and remove indicators, which is a short cut function called <code>indChange()</code>. In one command you can add or remove indicators and regenerate the results. Unlike the method above, <code>indChange()</code> also adds and removes relative to the existing index, which may be more convenient in some circumstances. To demonstrate this, we can use the same example as above:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="adjustments-and-comparisons.html#cb66-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb66-2"><a href="adjustments-and-comparisons.html#cb66-2"></a>ASEM_NoBord2 &lt;-<span class="st"> </span><span class="kw">indChange</span>(ASEM_NoLPIShip, <span class="dt">drop =</span> <span class="st">&quot;Bord&quot;</span>, <span class="dt">regen =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb66-3"><a href="adjustments-and-comparisons.html#cb66-3"></a><span class="co">## COIN has been regenerated using new specs.</span></span>
+<span id="cb66-4"><a href="adjustments-and-comparisons.html#cb66-4"></a></span>
+<span id="cb66-5"><a href="adjustments-and-comparisons.html#cb66-5"></a>ASEM_NoBord2<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
+<span id="cb66-6"><a href="adjustments-and-comparisons.html#cb66-6"></a><span class="co">##  [1] &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Goods&quot;    </span></span>
+<span id="cb66-7"><a href="adjustments-and-comparisons.html#cb66-7"></a><span class="co">##  [7] &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;Embs&quot;      &quot;IGOs&quot;     </span></span>
+<span id="cb66-8"><a href="adjustments-and-comparisons.html#cb66-8"></a><span class="co">## [13] &quot;UNVote&quot;    &quot;CostImpEx&quot; &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;     </span></span>
+<span id="cb66-9"><a href="adjustments-and-comparisons.html#cb66-9"></a><span class="co">## [19] &quot;Visa&quot;      &quot;StMob&quot;     &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot; </span></span>
+<span id="cb66-10"><a href="adjustments-and-comparisons.html#cb66-10"></a><span class="co">## [25] &quot;Tourist&quot;   &quot;MigStock&quot;  &quot;Lang&quot;      &quot;Renew&quot;     &quot;PrimEner&quot;  &quot;CO2&quot;      </span></span>
+<span id="cb66-11"><a href="adjustments-and-comparisons.html#cb66-11"></a><span class="co">## [31] &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
+<span id="cb66-12"><a href="adjustments-and-comparisons.html#cb66-12"></a><span class="co">## [37] &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;    &quot;WomParl&quot;   &quot;PubDebt&quot;  </span></span>
+<span id="cb66-13"><a href="adjustments-and-comparisons.html#cb66-13"></a><span class="co">## [43] &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
+<p>And here we see that now, “Bord” has been excluded <em>as well as</em> “LPI” and “Ship”.</p>
+</div>
+<div id="other-adjustments" class="section level3">
+<h3><span class="header-section-number">13.2.2</span> Other adjustments</h3>
+<p>We can make any methodological adjustments we want by editing any parameters in <code>.$Method</code> and then running <code>regen()</code>. For example, we can change the imputation method:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="adjustments-and-comparisons.html#cb67-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb67-2"><a href="adjustments-and-comparisons.html#cb67-2"></a>ASEMAltImpute &lt;-<span class="st"> </span>ASEM</span>
+<span id="cb67-3"><a href="adjustments-and-comparisons.html#cb67-3"></a></span>
+<span id="cb67-4"><a href="adjustments-and-comparisons.html#cb67-4"></a><span class="co"># Edit .$Method</span></span>
+<span id="cb67-5"><a href="adjustments-and-comparisons.html#cb67-5"></a>ASEMAltImpute<span class="op">$</span>Method<span class="op">$</span>Imputation<span class="op">$</span>imtype &lt;-<span class="st"> &quot;indgroup_median&quot;</span></span>
+<span id="cb67-6"><a href="adjustments-and-comparisons.html#cb67-6"></a></span>
+<span id="cb67-7"><a href="adjustments-and-comparisons.html#cb67-7"></a><span class="co"># Regenerate</span></span>
+<span id="cb67-8"><a href="adjustments-and-comparisons.html#cb67-8"></a>ASEMAltImpute &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltImpute, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>We could also change the normalisation method, e.g. to use Borda scores:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="adjustments-and-comparisons.html#cb68-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb68-2"><a href="adjustments-and-comparisons.html#cb68-2"></a>ASEMAltNorm &lt;-<span class="st"> </span>ASEM</span>
+<span id="cb68-3"><a href="adjustments-and-comparisons.html#cb68-3"></a></span>
+<span id="cb68-4"><a href="adjustments-and-comparisons.html#cb68-4"></a><span class="co"># Edit .$Method</span></span>
+<span id="cb68-5"><a href="adjustments-and-comparisons.html#cb68-5"></a>ASEMAltNorm<span class="op">$</span>Method<span class="op">$</span>Normalisation<span class="op">$</span>ntype &lt;-<span class="st"> &quot;borda&quot;</span></span>
+<span id="cb68-6"><a href="adjustments-and-comparisons.html#cb68-6"></a></span>
+<span id="cb68-7"><a href="adjustments-and-comparisons.html#cb68-7"></a><span class="co"># Regenerate</span></span>
+<span id="cb68-8"><a href="adjustments-and-comparisons.html#cb68-8"></a>ASEMAltNorm &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltNorm, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>and of course this extends to any parameters of any of the “construction” functions. We can even alter the underlying data directly if we want, e.g. by altering values in <code>.$Input$Original$Data</code>. In short, anything inside the COIN can be edited and then the results regenerated. This allows a fast way to make different alternative indexes and explore the effects of different methodology very quickly.</p>
+</div>
 </div>
 <div id="comparisons" class="section level2">
 <h2><span class="header-section-number">13.3</span> Comparisons</h2>
+<p>A logical follow up to making alternative indexes is to try to understand the differences between these indexes. COINr</p>
 
 </div>
 </div>
