@@ -104,17 +104,17 @@ ASEM <- build_ASEM()
 
 NewWeights <- ASEM$Parameters$Weights$Original
 
-NewWeights
+head(NewWeights)
 ```
 
-The structure of the weights is a list, with one element per aggregation level, and each element is a vector of weights for that level. For example here, `NewWeights[[1]]` is the indicator weights, `NewWeights[[2]]` is the pillar weights, and so on.
+The structure of the weights is a data frame, with each row being either an indicator or aggregation. The `AgLevel` column points to the aggregation level, and the `Weight` column is the (relative) weight.
 
 We can just directly modify this. Let's say we want to set the weight of the connectivity sub-index to 0.5.
 
 ```{r DownWeightConn}
-NewWeights[[3]][1] <- 0.5
+NewWeights$Weight[NewWeights$Code == "Conn"] <- 0.5
 
-NewWeights
+tail(NewWeights)
 ```
 
 Remember that *weights are relative*, and are re-scaled to sum to 1 during aggregation. To actually use these weights, we can either (a) input them directly in the `aggregate()` function, or first attach them to the COIN and the call `aggregate()`, pointing to the new set of weights. The latter option seems more sensible because that way, all our sets of weights are neatly stored. Also, we can access this in the reweighting app as explained in the next section.
@@ -130,6 +130,8 @@ ASEM <- aggregate(ASEM, agweights = "NewWeights")
 Now the `ASEM` COIN contains the updated results using the new weights. 
 
 ### Interactive re-weighting with ReW8R
+
+*NOTE: at this moment, rew8r is temporarily out of action until I get it updated to the new weight format.*
 
 Re-weighting manually, as we have just seen, is quite simple. However, depending on your objectives, weighting can be an iterative process along the lines of:
 

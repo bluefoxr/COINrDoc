@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-04-22" />
+<meta name="date" content="2021-05-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -263,7 +263,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a><ul>
 <li class="chapter" data-level="14.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#about-sensitivity-analysis"><i class="fa fa-check"></i><b>14.1</b> About sensitivity analysis</a></li>
-<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-analysis-in-coinr"><i class="fa fa-check"></i><b>14.2</b> Sensitivity analysis in COINr</a></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-analysis-in-coinr"><i class="fa fa-check"></i><b>14.2</b> Sensitivity analysis in COINr</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#input-distributions"><i class="fa fa-check"></i><b>14.2.1</b> Input distributions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a><ul>
 <li class="chapter" data-level="15.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>15.1</b> R Interfaces</a><ul>
@@ -342,7 +344,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Figure 13.1: Method folder in ASEM example
 </p>
 </div>
-<p>The easiest way to view it is by looking in the viewer of R Studio as in the screenshot above. Essentially, the <code>.$Method</code> folder has one entry for each COINr function that was used to build the COIN, and inside each of these folders are the arguments to the function that were input. Notice that the names inside <code>.$Method$Denomination</code> correspond exactly to arguments to <code>denominate()</code>, for example.</p>
+<p>The easiest way to view it is by looking in the viewer of R Studio as in the screenshot above. Essentially, the <code>.$Method</code> folder has one entry for each COINr function that was used to build the COIN, and inside each of these folders are the arguments to the function that were input. Notice that the names inside <code>.$Method$denominate</code> correspond exactly to arguments to <code>denominate()</code>, for example.</p>
 <p>Every time a COINr “construction function” is run, the inputs to the function are automatically recorded inside the COIN. Construction functions are any of the following seven:</p>
 <table>
 <thead>
@@ -410,12 +412,12 @@ Figure 13.1: Method folder in ASEM example
 <p>The <code>regen()</code> function reruns all functions that are recorded in the <code>.$Method</code> folder <em>in the order they appear in the folder</em>. In this example, it runs, in order, <code>assemble()</code>, <code>denominate()</code>, <code>impute()</code>, <code>treat()</code>, <code>normalise()</code>and <code>aggregate()</code>. This replicates exactly the results. But what is the point of that? Well, it means that we can make changes to the index, generally by altering parameters in the <code>.$Method</code> folder, and then rerun everything very quickly with a single command. This will be demonstrated in the following section. After that, we will also see how to compare between alternative versions of the index.</p>
 <p>Before that, there is one extra feature of <code>regen()</code> which is worth mentioning. The <code>regen()</code> function only runs the seven construction functions as listed above. These functions are very flexible and should encompass most needs for constructing a composite indicator. But what happens if you want to build in an extra operation, or operations, that are outside of these seven functions?</p>
 <p>It is possible to also include “custom” chunks of code inside the COIN. Custom chunks should be written manually using the <code>quote()</code> function, to a special folder <code>.$Method$Custom</code>. These chunks can be any type of code, but the important thing is to also know <em>when</em> to run the code, i.e. at what point in the construction process.</p>
-<p>More specifically, custom code chunks are written as a named list. The <strong>name</strong> of the item in the list specifies <em>when</em> to perform the operation. For example, “AfterTreatment” means to perform this immediately after the treatment step. Other options are e.g. “AfterNormalisation” or “AfterScreening” – in general it should be “After” followed by a name of one of the existing folders in the <code>.$Method</code> folder.</p>
+<p>More specifically, custom code chunks are written as a named list. The <strong>name</strong> of the item in the list specifies <em>when</em> to perform the operation. For example, “after_treat” means to perform this immediately after the treatment step. Other options are e.g. “after_normalise” or “after_impute” – in general it should be “after_” followed by a name of one of the names of the construction functions.</p>
 <p>The corresponding <strong>value</strong> in the list should be an operation which <em>must</em> be enclosed in the <code>quote()</code> function. Clearly, the list can feature multiple operations at different points in construction.</p>
 <p>This is slightly complicated, but can be clarified a bit with an example. Let’s imagine that after Winsorisation, we would like to “reset” one of the Winsorised points to its original value. This is currently not possible inside the <code>treat()</code> function so has to be done manually. But we would like this operation to be kept when we regenerate the index with variations in methodology (e.g. trying different aggregation functions, weights, etc.).</p>
 <p>We create a list with one operation: resetting the point after the treatment step.</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="adjustments-and-comparisons.html#cb63-1"></a><span class="co"># Create list. </span><span class="al">NOTE</span><span class="co"> the use of the quote() function!</span></span>
-<span id="cb63-2"><a href="adjustments-and-comparisons.html#cb63-2"></a>custlist =<span class="st"> </span><span class="kw">list</span>(<span class="dt">AfterTreatment =</span> <span class="kw">quote</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>] &lt;-<span class="st"> </span>ASEM2<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>]))</span>
+<span id="cb63-2"><a href="adjustments-and-comparisons.html#cb63-2"></a>custlist =<span class="st"> </span><span class="kw">list</span>(<span class="dt">after_treat =</span> <span class="kw">quote</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>] &lt;-<span class="st"> </span>ASEM2<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>]))</span>
 <span id="cb63-3"><a href="adjustments-and-comparisons.html#cb63-3"></a></span>
 <span id="cb63-4"><a href="adjustments-and-comparisons.html#cb63-4"></a><span class="co"># Add the list to the $Method$Custom folder</span></span>
 <span id="cb63-5"><a href="adjustments-and-comparisons.html#cb63-5"></a>ASEM2<span class="op">$</span>Method<span class="op">$</span>Custom &lt;-<span class="st"> </span>custlist</span></code></pre></div>
@@ -444,30 +446,30 @@ Figure 13.1: Method folder in ASEM example
 <span id="cb64-2"><a href="adjustments-and-comparisons.html#cb64-2"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span>ASEM</span>
 <span id="cb64-3"><a href="adjustments-and-comparisons.html#cb64-3"></a></span>
 <span id="cb64-4"><a href="adjustments-and-comparisons.html#cb64-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
-<span id="cb64-5"><a href="adjustments-and-comparisons.html#cb64-5"></a>ASEM_NoLPIShip<span class="op">$</span>Method<span class="op">$</span>Assemble<span class="op">$</span>exclude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Ship&quot;</span>)</span>
+<span id="cb64-5"><a href="adjustments-and-comparisons.html#cb64-5"></a>ASEM_NoLPIShip<span class="op">$</span>Method<span class="op">$</span>assemble<span class="op">$</span>exclude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Ship&quot;</span>)</span>
 <span id="cb64-6"><a href="adjustments-and-comparisons.html#cb64-6"></a></span>
 <span id="cb64-7"><a href="adjustments-and-comparisons.html#cb64-7"></a><span class="co"># Regenerate results (suppress any messages)</span></span>
 <span id="cb64-8"><a href="adjustments-and-comparisons.html#cb64-8"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoLPIShip, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<p>Note that, in the ASEM example, by default, <code>ASEM$Method$Assemble</code> doesn’t exist because the <code>include</code> or <code>exclude</code> arguments of <code>assemble()</code> are empty, and these are the only arguments to <code>assemble()</code> that are recorded in <code>.$Method$Assemble</code>.</p>
+<p>Note that, in the ASEM example, by default, <code>ASEM$Method$assemble</code> doesn’t exist because the <code>include</code> or <code>exclude</code> arguments of <code>assemble()</code> are empty, and these are the only arguments to <code>assemble()</code> that are recorded in <code>.$Method$assemble</code>.</p>
 <p>In summary, we have removed two indicators, then regenerated the results using exactly the same methodology as used before. Importantly, <code>include</code> and <code>exclude</code> operate <em>relative to the original data</em> input to <code>assemble()</code>, i.e. the data found in <code>.$Input$Original</code>. This means that if we now were to make a copy of the version excluding the two indicators above, and exclude another different indicator:</p>
 <div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="adjustments-and-comparisons.html#cb65-1"></a><span class="co"># Make a copy</span></span>
 <span id="cb65-2"><a href="adjustments-and-comparisons.html#cb65-2"></a>ASEM_NoBord &lt;-<span class="st"> </span>ASEM_NoLPIShip</span>
 <span id="cb65-3"><a href="adjustments-and-comparisons.html#cb65-3"></a></span>
 <span id="cb65-4"><a href="adjustments-and-comparisons.html#cb65-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
-<span id="cb65-5"><a href="adjustments-and-comparisons.html#cb65-5"></a>ASEM_NoBord<span class="op">$</span>Method<span class="op">$</span>Assemble<span class="op">$</span>exclude &lt;-<span class="st"> &quot;Bord&quot;</span></span>
+<span id="cb65-5"><a href="adjustments-and-comparisons.html#cb65-5"></a>ASEM_NoBord<span class="op">$</span>Method<span class="op">$</span>assemble<span class="op">$</span>exclude &lt;-<span class="st"> &quot;Bord&quot;</span></span>
 <span id="cb65-6"><a href="adjustments-and-comparisons.html#cb65-6"></a></span>
 <span id="cb65-7"><a href="adjustments-and-comparisons.html#cb65-7"></a><span class="co"># Regenerate results</span></span>
 <span id="cb65-8"><a href="adjustments-and-comparisons.html#cb65-8"></a>ASEM_NoBord &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoBord, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
 <span id="cb65-9"><a href="adjustments-and-comparisons.html#cb65-9"></a></span>
 <span id="cb65-10"><a href="adjustments-and-comparisons.html#cb65-10"></a>ASEM_NoBord<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
-<span id="cb65-11"><a href="adjustments-and-comparisons.html#cb65-11"></a><span class="co">##  [1] &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Goods&quot;    </span></span>
-<span id="cb65-12"><a href="adjustments-and-comparisons.html#cb65-12"></a><span class="co">##  [7] &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;Embs&quot;      &quot;IGOs&quot;     </span></span>
-<span id="cb65-13"><a href="adjustments-and-comparisons.html#cb65-13"></a><span class="co">## [13] &quot;UNVote&quot;    &quot;CostImpEx&quot; &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;     </span></span>
-<span id="cb65-14"><a href="adjustments-and-comparisons.html#cb65-14"></a><span class="co">## [19] &quot;Visa&quot;      &quot;StMob&quot;     &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot; </span></span>
-<span id="cb65-15"><a href="adjustments-and-comparisons.html#cb65-15"></a><span class="co">## [25] &quot;Tourist&quot;   &quot;MigStock&quot;  &quot;Lang&quot;      &quot;Renew&quot;     &quot;PrimEner&quot;  &quot;CO2&quot;      </span></span>
-<span id="cb65-16"><a href="adjustments-and-comparisons.html#cb65-16"></a><span class="co">## [31] &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
-<span id="cb65-17"><a href="adjustments-and-comparisons.html#cb65-17"></a><span class="co">## [37] &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;    &quot;WomParl&quot;   &quot;PubDebt&quot;  </span></span>
-<span id="cb65-18"><a href="adjustments-and-comparisons.html#cb65-18"></a><span class="co">## [43] &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
+<span id="cb65-11"><a href="adjustments-and-comparisons.html#cb65-11"></a><span class="co">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;Renew&quot;    </span></span>
+<span id="cb65-12"><a href="adjustments-and-comparisons.html#cb65-12"></a><span class="co">##  [7] &quot;PrimEner&quot;  &quot;CO2&quot;       &quot;MatCon&quot;    &quot;Forest&quot;    &quot;CostImpEx&quot; &quot;Tariff&quot;   </span></span>
+<span id="cb65-13"><a href="adjustments-and-comparisons.html#cb65-13"></a><span class="co">## [13] &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;     &quot;Research&quot; </span></span>
+<span id="cb65-14"><a href="adjustments-and-comparisons.html#cb65-14"></a><span class="co">## [19] &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot;  &quot;Lang&quot;     </span></span>
+<span id="cb65-15"><a href="adjustments-and-comparisons.html#cb65-15"></a><span class="co">## [25] &quot;LPI&quot;       &quot;Flights&quot;   &quot;Ship&quot;      &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot; </span></span>
+<span id="cb65-16"><a href="adjustments-and-comparisons.html#cb65-16"></a><span class="co">## [31] &quot;Cov4G&quot;     &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Poverty&quot;   &quot;Palma&quot;    </span></span>
+<span id="cb65-17"><a href="adjustments-and-comparisons.html#cb65-17"></a><span class="co">## [37] &quot;TertGrad&quot;  &quot;FreePress&quot; &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;   </span></span>
+<span id="cb65-18"><a href="adjustments-and-comparisons.html#cb65-18"></a><span class="co">## [43] &quot;WomParl&quot;   &quot;PubDebt&quot;   &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
 <p>…we see that “LPI” and “Ship” are once again present.</p>
 <p>In fact, COINr has an even quicker way to add and remove indicators, which is a short cut function called <code>indChange()</code>. In one command you can add or remove indicators and regenerate the results. Unlike the method above, <code>indChange()</code> also adds and removes relative to the existing index, which may be more convenient in some circumstances. To demonstrate this, we can use the same example as above:</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="adjustments-and-comparisons.html#cb66-1"></a><span class="co"># Make a copy</span></span>
@@ -475,12 +477,12 @@ Figure 13.1: Method folder in ASEM example
 <span id="cb66-3"><a href="adjustments-and-comparisons.html#cb66-3"></a><span class="co">## COIN has been regenerated using new specs.</span></span>
 <span id="cb66-4"><a href="adjustments-and-comparisons.html#cb66-4"></a></span>
 <span id="cb66-5"><a href="adjustments-and-comparisons.html#cb66-5"></a>ASEM_NoBord2<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
-<span id="cb66-6"><a href="adjustments-and-comparisons.html#cb66-6"></a><span class="co">##  [1] &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Goods&quot;    </span></span>
-<span id="cb66-7"><a href="adjustments-and-comparisons.html#cb66-7"></a><span class="co">##  [7] &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;Embs&quot;      &quot;IGOs&quot;     </span></span>
-<span id="cb66-8"><a href="adjustments-and-comparisons.html#cb66-8"></a><span class="co">## [13] &quot;UNVote&quot;    &quot;CostImpEx&quot; &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;     </span></span>
-<span id="cb66-9"><a href="adjustments-and-comparisons.html#cb66-9"></a><span class="co">## [19] &quot;Visa&quot;      &quot;StMob&quot;     &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot; </span></span>
-<span id="cb66-10"><a href="adjustments-and-comparisons.html#cb66-10"></a><span class="co">## [25] &quot;Tourist&quot;   &quot;MigStock&quot;  &quot;Lang&quot;      &quot;Renew&quot;     &quot;PrimEner&quot;  &quot;CO2&quot;      </span></span>
-<span id="cb66-11"><a href="adjustments-and-comparisons.html#cb66-11"></a><span class="co">## [31] &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
+<span id="cb66-6"><a href="adjustments-and-comparisons.html#cb66-6"></a><span class="co">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;Renew&quot;    </span></span>
+<span id="cb66-7"><a href="adjustments-and-comparisons.html#cb66-7"></a><span class="co">##  [7] &quot;PrimEner&quot;  &quot;CO2&quot;       &quot;MatCon&quot;    &quot;Forest&quot;    &quot;CostImpEx&quot; &quot;Tariff&quot;   </span></span>
+<span id="cb66-8"><a href="adjustments-and-comparisons.html#cb66-8"></a><span class="co">## [13] &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;     &quot;Research&quot; </span></span>
+<span id="cb66-9"><a href="adjustments-and-comparisons.html#cb66-9"></a><span class="co">## [19] &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot;  &quot;Lang&quot;     </span></span>
+<span id="cb66-10"><a href="adjustments-and-comparisons.html#cb66-10"></a><span class="co">## [25] &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Embs&quot;     </span></span>
+<span id="cb66-11"><a href="adjustments-and-comparisons.html#cb66-11"></a><span class="co">## [31] &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
 <span id="cb66-12"><a href="adjustments-and-comparisons.html#cb66-12"></a><span class="co">## [37] &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;    &quot;WomParl&quot;   &quot;PubDebt&quot;  </span></span>
 <span id="cb66-13"><a href="adjustments-and-comparisons.html#cb66-13"></a><span class="co">## [43] &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
 <p>And here we see that now, “Bord” has been excluded <em>as well as</em> “LPI” and “Ship”.</p>
@@ -492,7 +494,7 @@ Figure 13.1: Method folder in ASEM example
 <span id="cb67-2"><a href="adjustments-and-comparisons.html#cb67-2"></a>ASEMAltImpute &lt;-<span class="st"> </span>ASEM</span>
 <span id="cb67-3"><a href="adjustments-and-comparisons.html#cb67-3"></a></span>
 <span id="cb67-4"><a href="adjustments-and-comparisons.html#cb67-4"></a><span class="co"># Edit .$Method</span></span>
-<span id="cb67-5"><a href="adjustments-and-comparisons.html#cb67-5"></a>ASEMAltImpute<span class="op">$</span>Method<span class="op">$</span>Imputation<span class="op">$</span>imtype &lt;-<span class="st"> &quot;indgroup_median&quot;</span></span>
+<span id="cb67-5"><a href="adjustments-and-comparisons.html#cb67-5"></a>ASEMAltImpute<span class="op">$</span>Method<span class="op">$</span>impute<span class="op">$</span>imtype &lt;-<span class="st"> &quot;indgroup_median&quot;</span></span>
 <span id="cb67-6"><a href="adjustments-and-comparisons.html#cb67-6"></a></span>
 <span id="cb67-7"><a href="adjustments-and-comparisons.html#cb67-7"></a><span class="co"># Regenerate</span></span>
 <span id="cb67-8"><a href="adjustments-and-comparisons.html#cb67-8"></a>ASEMAltImpute &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltImpute, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
@@ -501,7 +503,7 @@ Figure 13.1: Method folder in ASEM example
 <span id="cb68-2"><a href="adjustments-and-comparisons.html#cb68-2"></a>ASEMAltNorm &lt;-<span class="st"> </span>ASEM</span>
 <span id="cb68-3"><a href="adjustments-and-comparisons.html#cb68-3"></a></span>
 <span id="cb68-4"><a href="adjustments-and-comparisons.html#cb68-4"></a><span class="co"># Edit .$Method</span></span>
-<span id="cb68-5"><a href="adjustments-and-comparisons.html#cb68-5"></a>ASEMAltNorm<span class="op">$</span>Method<span class="op">$</span>Normalisation<span class="op">$</span>ntype &lt;-<span class="st"> &quot;borda&quot;</span></span>
+<span id="cb68-5"><a href="adjustments-and-comparisons.html#cb68-5"></a>ASEMAltNorm<span class="op">$</span>Method<span class="op">$</span>normalise<span class="op">$</span>ntype &lt;-<span class="st"> &quot;borda&quot;</span></span>
 <span id="cb68-6"><a href="adjustments-and-comparisons.html#cb68-6"></a></span>
 <span id="cb68-7"><a href="adjustments-and-comparisons.html#cb68-7"></a><span class="co"># Regenerate</span></span>
 <span id="cb68-8"><a href="adjustments-and-comparisons.html#cb68-8"></a>ASEMAltNorm &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltNorm, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
@@ -510,7 +512,7 @@ Figure 13.1: Method folder in ASEM example
 </div>
 <div id="comparisons" class="section level2">
 <h2><span class="header-section-number">13.3</span> Comparisons</h2>
-<p>A logical follow up to making alternative indexes is to try to understand the differences between these indexes. COINr</p>
+<p>A logical follow up to making alternative indexes is to try to understand the differences between these indexes. This can of course be done manually. But to make this quicker, COINr includes</p>
 
 </div>
 </div>

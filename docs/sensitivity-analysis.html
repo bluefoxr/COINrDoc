@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-04-22" />
+<meta name="date" content="2021-05-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -263,7 +263,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a><ul>
 <li class="chapter" data-level="14.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#about-sensitivity-analysis"><i class="fa fa-check"></i><b>14.1</b> About sensitivity analysis</a></li>
-<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-analysis-in-coinr"><i class="fa fa-check"></i><b>14.2</b> Sensitivity analysis in COINr</a></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-analysis-in-coinr"><i class="fa fa-check"></i><b>14.2</b> Sensitivity analysis in COINr</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#input-distributions"><i class="fa fa-check"></i><b>14.2.1</b> Input distributions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a><ul>
 <li class="chapter" data-level="15.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>15.1</b> R Interfaces</a><ul>
@@ -305,15 +307,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="sensitivity-analysis" class="section level1">
 <h1><span class="header-section-number">Chapter 14</span> Sensitivity analysis</h1>
 <p>Composite indicators, like any model, have many associated uncertainties.</p>
-<p>Sensitivity analysis can help to quantify the uncertainty in the scores and rankings of the composite indicator, and to identify which assumptions are driving this uncertainty, and which are less important.</p>
+<p><em>Sensitivity analysis</em> can help to quantify the uncertainty in the scores and rankings of the composite indicator, and to identify which assumptions are driving this uncertainty, and which are less important.</p>
 <div id="about-sensitivity-analysis" class="section level2">
 <h2><span class="header-section-number">14.1</span> About sensitivity analysis</h2>
-<p>ss</p>
+<p>Sensitivity analysis is often confused with <em>uncertainty analysis</em>. Uncertainty analysis involves estimating the uncertainty in the ouputs of a system (here, the scores and ranks of the composite indicator), given the uncertainties in the inputs (here, methodological decisions, weights, etc.). The results of an uncertainty include for example confidence intervals over the ranks, median ranks, and so on.</p>
+<p>Sensitivity analysis is an extra step after uncertainty analysis, and estimates which of the input uncertainties are driving the output uncertainty, and by how much. A rule of thumb, known as the <a href="https://en.wikipedia.org/wiki/Pareto_principle">Pareto Principle</a> (or the 80/20 Rule) suggests that often, only a small proportion of the input uncertainties are causing the majority of the output uncertainty. Sensitivity analysis allows us to find which input uncertainties are significant (and therefore perhaps worthy of extra attention), and which are not important.</p>
+<p>In reality, sensitivity analysis and uncertainty analysis can be performed simultaneously. However in both cases, the main technique is to use Monte Carlo methods. This essentially involves re-calculating the composite indicator many times, each time randomly varying the uncertain variables (assumptions, parameters), in order to estimate the output distributions.</p>
+<p>At first glance, one might think that sensitivity analysis can be performed by switching one assumption at a time, using the tools outlined in <a href="adjustments-and-comparisons.html#adjustments-and-comparisons">Adjustments and comparisons</a>. However, uncertainties interact with one another, and to properly understand the impact of uncertainties, one must vary uncertain parameters and assumptions <em>simultaneously</em>.</p>
+<p>Sensitivity analysis and uncertainty analysis are large topics and are in fact research fields in their own right. To better understand them, a good starting point is <a href="https://onlinelibrary.wiley.com/doi/book/10.1002/9780470725184">Global Sensitivity Analysis: The Primer</a>, and a recent summary of sensitivity analysis research can be found <a href="https://www.sciencedirect.com/science/article/pii/S1364815220310112?via%3Dihub">here</a>.</p>
 </div>
 <div id="sensitivity-analysis-in-coinr" class="section level2">
 <h2><span class="header-section-number">14.2</span> Sensitivity analysis in COINr</h2>
-<p>ss</p>
+<p>To perform an uncertainty or sensitivity analysis, one must define several things:</p>
+<ol style="list-style-type: decimal">
+<li>The system or model (in this case it is a composite indicator, represented as a COIN)</li>
+<li>Which assumptions to treat as uncertain</li>
+<li>The alternative values or distributions assigned to each uncertain assumption</li>
+<li>Which output or outputs to target (i.e. to calculate confidence intervals for)</li>
+<li>Methodological specifications for the sensitivity analysis itself, for example the method and the number of replications to run.</li>
+</ol>
+<p>This should dispel the common idea that one can simply “run a sensitivity analysis”. In fact, all of these steps require some thought and attention, and the results of the sensitivity analysis will be themselves dependent on these choices. Let’s go through them one by one.</p>
+<p>First, the <strong>system or model</strong>. This should be clear: you need to have already built your (nominal) composite indicator in order to check the uncertainties. Usually this would involve calculating the results up to and including the aggregated index.</p>
+<div id="input-distributions" class="section level3">
+<h3><span class="header-section-number">14.2.1</span> Input distributions</h3>
+<p>Specifying <strong>which assumptions to vary</strong> is more complicated. It is impossible to fully quantify the uncertainty in a composite indicator (or any model, for that matter) because there are simply so many sources of uncertainty, ranging from the input data, the choice of indicators, the structure of the index, and all the methodological steps along the way (imputation, treatment, normalisation, etc.). A reasonable approach is to identify specific assumptions and parameters that could have plausible alternatives, and can be practically varied.</p>
 
+</div>
 </div>
 </div>
             </section>

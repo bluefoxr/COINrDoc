@@ -105,6 +105,7 @@ comparisons
 sensitivity-analysis
 about-sensitivity-analysis
 sensitivity-analysis-in-coinr
+input-distributions
 helper-functions
 r-interfaces
 data-import

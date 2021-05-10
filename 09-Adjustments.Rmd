@@ -20,7 +20,7 @@ ASEM <- build_ASEM()
 knitr::include_graphics("images/method_folder.png")
 ```
 
-The easiest way to view it is by looking in the viewer of R Studio as in the screenshot above. Essentially, the `.$Method` folder has one entry for each COINr function that was used to build the COIN, and inside each of these folders are the arguments to the function that were input. Notice that the names inside `.$Method$Denomination` correspond exactly to arguments to `denominate()`, for example.
+The easiest way to view it is by looking in the viewer of R Studio as in the screenshot above. Essentially, the `.$Method` folder has one entry for each COINr function that was used to build the COIN, and inside each of these folders are the arguments to the function that were input. Notice that the names inside `.$Method$denominate` correspond exactly to arguments to `denominate()`, for example.
 
 Every time a COINr "construction function" is run, the inputs to the function are automatically recorded inside the COIN. Construction functions are any of the following seven:
 
@@ -50,7 +50,7 @@ Before that, there is one extra feature of `regen()` which is worth mentioning. 
 
 It is possible to also include "custom" chunks of code inside the COIN. Custom chunks should be written manually using the `quote()` function, to a special folder `.$Method$Custom`. These chunks can be any type of code, but the important thing is to also know *when* to run the code, i.e. at what point in the construction process.
 
-More specifically, custom code chunks are written as a named list. The **name** of the item in the list specifies *when* to perform the operation. For example, "AfterTreatment" means to perform this immediately after the treatment step. Other options are e.g. "AfterNormalisation" or "AfterScreening" -- in general it should be "After" followed by a name of one of the existing folders in the `.$Method` folder.
+More specifically, custom code chunks are written as a named list. The **name** of the item in the list specifies *when* to perform the operation. For example, "after_treat" means to perform this immediately after the treatment step. Other options are e.g. "after_normalise" or "after_impute" -- in general it should be "after_" followed by a name of one of the names of the construction functions.
 
 The corresponding **value** in the list should be an operation which *must* be enclosed in the `quote()` function. Clearly, the list can feature multiple operations at different points in construction.
 
@@ -60,7 +60,7 @@ We create a list with one operation: resetting the point after the treatment ste
 
 ```{r}
 # Create list. NOTE the use of the quote() function!
-custlist = list(AfterTreatment = quote(ASEM$Data$Treated$Bord[ASEM$Data$Treated$UnitCode=="BEL"] <- ASEM2$Data$Imputed$Bord[ASEM$Data$Imputed$UnitCode=="BEL"]))
+custlist = list(after_treat = quote(ASEM$Data$Treated$Bord[ASEM$Data$Treated$UnitCode=="BEL"] <- ASEM2$Data$Imputed$Bord[ASEM$Data$Imputed$UnitCode=="BEL"]))
 
 # Add the list to the $Method$Custom folder
 ASEM2$Method$Custom <- custlist
@@ -100,13 +100,13 @@ To illustrate, consider again the ASEM example. We can rebuild the ASEM index us
 ASEM_NoLPIShip <- ASEM
 
 # Edit method: exclude two indicators
-ASEM_NoLPIShip$Method$Assemble$exclude <- c("LPI", "Ship")
+ASEM_NoLPIShip$Method$assemble$exclude <- c("LPI", "Ship")
 
 # Regenerate results (suppress any messages)
 ASEM_NoLPIShip <- regen(ASEM_NoLPIShip, quietly = TRUE)
 ```
 
-Note that, in the ASEM example, by default, `ASEM$Method$Assemble` doesn't exist because the `include` or `exclude` arguments of `assemble()` are empty, and these are the only arguments to `assemble()` that are recorded in `.$Method$Assemble`.
+Note that, in the ASEM example, by default, `ASEM$Method$assemble` doesn't exist because the `include` or `exclude` arguments of `assemble()` are empty, and these are the only arguments to `assemble()` that are recorded in `.$Method$assemble`.
 
 In summary, we have removed two indicators, then regenerated the results using exactly the same methodology as used before. Importantly, `include` and `exclude` operate *relative to the original data* input to `assemble()`, i.e. the data found in `.$Input$Original`. This means that if we now were to make a copy of the version excluding the two indicators above, and exclude another different indicator:
 
@@ -115,7 +115,7 @@ In summary, we have removed two indicators, then regenerated the results using e
 ASEM_NoBord <- ASEM_NoLPIShip
 
 # Edit method: exclude two indicators
-ASEM_NoBord$Method$Assemble$exclude <- "Bord"
+ASEM_NoBord$Method$assemble$exclude <- "Bord"
 
 # Regenerate results
 ASEM_NoBord <- regen(ASEM_NoBord, quietly = TRUE)
@@ -145,7 +145,7 @@ We can make any methodological adjustments we want by editing any parameters in 
 ASEMAltImpute <- ASEM
 
 # Edit .$Method
-ASEMAltImpute$Method$Imputation$imtype <- "indgroup_median"
+ASEMAltImpute$Method$impute$imtype <- "indgroup_median"
 
 # Regenerate
 ASEMAltImpute <- regen(ASEMAltImpute, quietly = TRUE)
@@ -158,7 +158,7 @@ We could also change the normalisation method, e.g. to use Borda scores:
 ASEMAltNorm <- ASEM
 
 # Edit .$Method
-ASEMAltNorm$Method$Normalisation$ntype <- "borda"
+ASEMAltNorm$Method$normalise$ntype <- "borda"
 
 # Regenerate
 ASEMAltNorm <- regen(ASEMAltNorm, quietly = TRUE)

@@ -49,6 +49,8 @@ ASEM <- checkData(ASEM, dset = "Raw")
 head(ASEM$Analysis$Raw$MissDatSummary)
 ```
 
+*Note: to include updated checkData() function with screening for zeros.*
+
 The `MissDataSummary` table shows the unit code, number of missing observations, and overall percentage data availability. Finally, the `LowDataAll` column can be used as a flag for units with data availability lower than a set amount `ind_thresh` which is one of the input arguments to `checkData()`. ASEM indicators were already chosen to fulfill minimum data requirements, for which reason the data availability is all above the default of 2/3.
 
 We will set the minimum data threshold a bit higher, and in doing so also demonstrate another feature of `checkData()`, which is to automatically screen units based on data availability. Setting `unit_screen = TRUE` will generate a new data set `.$Data$Screened` which only includes units with data availability above the set threshold. This data set can then be passed on to subsequent operations.

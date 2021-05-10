@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-04-22" />
+<meta name="date" content="2021-05-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -263,7 +263,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a><ul>
 <li class="chapter" data-level="14.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#about-sensitivity-analysis"><i class="fa fa-check"></i><b>14.1</b> About sensitivity analysis</a></li>
-<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-analysis-in-coinr"><i class="fa fa-check"></i><b>14.2</b> Sensitivity analysis in COINr</a></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-analysis-in-coinr"><i class="fa fa-check"></i><b>14.2</b> Sensitivity analysis in COINr</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#input-distributions"><i class="fa fa-check"></i><b>14.2.1</b> Input distributions</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a><ul>
 <li class="chapter" data-level="15.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>15.1</b> R Interfaces</a><ul>
@@ -382,36 +384,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb53-5"><a href="weighting-1.html#cb53-5"></a></span>
 <span id="cb53-6"><a href="weighting-1.html#cb53-6"></a>NewWeights &lt;-<span class="st"> </span>ASEM<span class="op">$</span>Parameters<span class="op">$</span>Weights<span class="op">$</span>Original</span>
 <span id="cb53-7"><a href="weighting-1.html#cb53-7"></a></span>
-<span id="cb53-8"><a href="weighting-1.html#cb53-8"></a>NewWeights</span>
-<span id="cb53-9"><a href="weighting-1.html#cb53-9"></a><span class="co">## $IndWeight</span></span>
-<span id="cb53-10"><a href="weighting-1.html#cb53-10"></a><span class="co">##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
-<span id="cb53-11"><a href="weighting-1.html#cb53-11"></a><span class="co">## [39] 1 1 1 1 1 1 1 1 1 1 1</span></span>
-<span id="cb53-12"><a href="weighting-1.html#cb53-12"></a><span class="co">## </span></span>
-<span id="cb53-13"><a href="weighting-1.html#cb53-13"></a><span class="co">## [[2]]</span></span>
-<span id="cb53-14"><a href="weighting-1.html#cb53-14"></a><span class="co">## [1] 1 1 1 1 1 1 1 1</span></span>
-<span id="cb53-15"><a href="weighting-1.html#cb53-15"></a><span class="co">## </span></span>
-<span id="cb53-16"><a href="weighting-1.html#cb53-16"></a><span class="co">## [[3]]</span></span>
-<span id="cb53-17"><a href="weighting-1.html#cb53-17"></a><span class="co">## [1] 1 1</span></span>
-<span id="cb53-18"><a href="weighting-1.html#cb53-18"></a><span class="co">## </span></span>
-<span id="cb53-19"><a href="weighting-1.html#cb53-19"></a><span class="co">## [[4]]</span></span>
-<span id="cb53-20"><a href="weighting-1.html#cb53-20"></a><span class="co">## [1] 1</span></span></code></pre></div>
-<p>The structure of the weights is a list, with one element per aggregation level, and each element is a vector of weights for that level. For example here, <code>NewWeights[[1]]</code> is the indicator weights, <code>NewWeights[[2]]</code> is the pillar weights, and so on.</p>
+<span id="cb53-8"><a href="weighting-1.html#cb53-8"></a><span class="kw">head</span>(NewWeights)</span>
+<span id="cb53-9"><a href="weighting-1.html#cb53-9"></a><span class="co">##   AgLevel     Code Weight</span></span>
+<span id="cb53-10"><a href="weighting-1.html#cb53-10"></a><span class="co">## 1       1    Goods      1</span></span>
+<span id="cb53-11"><a href="weighting-1.html#cb53-11"></a><span class="co">## 2       1 Services      1</span></span>
+<span id="cb53-12"><a href="weighting-1.html#cb53-12"></a><span class="co">## 3       1      FDI      1</span></span>
+<span id="cb53-13"><a href="weighting-1.html#cb53-13"></a><span class="co">## 4       1   PRemit      1</span></span>
+<span id="cb53-14"><a href="weighting-1.html#cb53-14"></a><span class="co">## 5       1  ForPort      1</span></span>
+<span id="cb53-15"><a href="weighting-1.html#cb53-15"></a><span class="co">## 6       1    Renew      1</span></span></code></pre></div>
+<p>The structure of the weights is a data frame, with each row being either an indicator or aggregation. The <code>AgLevel</code> column points to the aggregation level, and the <code>Weight</code> column is the (relative) weight.</p>
 <p>We can just directly modify this. Let’s say we want to set the weight of the connectivity sub-index to 0.5.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="weighting-1.html#cb54-1"></a>NewWeights[[<span class="dv">3</span>]][<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="weighting-1.html#cb54-1"></a>NewWeights<span class="op">$</span>Weight[NewWeights<span class="op">$</span>Code <span class="op">==</span><span class="st"> &quot;Conn&quot;</span>] &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
 <span id="cb54-2"><a href="weighting-1.html#cb54-2"></a></span>
-<span id="cb54-3"><a href="weighting-1.html#cb54-3"></a>NewWeights</span>
-<span id="cb54-4"><a href="weighting-1.html#cb54-4"></a><span class="co">## $IndWeight</span></span>
-<span id="cb54-5"><a href="weighting-1.html#cb54-5"></a><span class="co">##  [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</span></span>
-<span id="cb54-6"><a href="weighting-1.html#cb54-6"></a><span class="co">## [39] 1 1 1 1 1 1 1 1 1 1 1</span></span>
-<span id="cb54-7"><a href="weighting-1.html#cb54-7"></a><span class="co">## </span></span>
-<span id="cb54-8"><a href="weighting-1.html#cb54-8"></a><span class="co">## [[2]]</span></span>
-<span id="cb54-9"><a href="weighting-1.html#cb54-9"></a><span class="co">## [1] 1 1 1 1 1 1 1 1</span></span>
-<span id="cb54-10"><a href="weighting-1.html#cb54-10"></a><span class="co">## </span></span>
-<span id="cb54-11"><a href="weighting-1.html#cb54-11"></a><span class="co">## [[3]]</span></span>
-<span id="cb54-12"><a href="weighting-1.html#cb54-12"></a><span class="co">## [1] 0.5 1.0</span></span>
-<span id="cb54-13"><a href="weighting-1.html#cb54-13"></a><span class="co">## </span></span>
-<span id="cb54-14"><a href="weighting-1.html#cb54-14"></a><span class="co">## [[4]]</span></span>
-<span id="cb54-15"><a href="weighting-1.html#cb54-15"></a><span class="co">## [1] 1</span></span></code></pre></div>
+<span id="cb54-3"><a href="weighting-1.html#cb54-3"></a><span class="kw">tail</span>(NewWeights)</span>
+<span id="cb54-4"><a href="weighting-1.html#cb54-4"></a><span class="co">##    AgLevel     Code Weight</span></span>
+<span id="cb54-5"><a href="weighting-1.html#cb54-5"></a><span class="co">## 55       2  Environ    1.0</span></span>
+<span id="cb54-6"><a href="weighting-1.html#cb54-6"></a><span class="co">## 56       2   Social    1.0</span></span>
+<span id="cb54-7"><a href="weighting-1.html#cb54-7"></a><span class="co">## 57       2 SusEcFin    1.0</span></span>
+<span id="cb54-8"><a href="weighting-1.html#cb54-8"></a><span class="co">## 58       3     Conn    0.5</span></span>
+<span id="cb54-9"><a href="weighting-1.html#cb54-9"></a><span class="co">## 59       3     Sust    1.0</span></span>
+<span id="cb54-10"><a href="weighting-1.html#cb54-10"></a><span class="co">## 60       4    Index    1.0</span></span></code></pre></div>
 <p>Remember that <em>weights are relative</em>, and are re-scaled to sum to 1 during aggregation. To actually use these weights, we can either (a) input them directly in the <code>aggregate()</code> function, or first attach them to the COIN and the call <code>aggregate()</code>, pointing to the new set of weights. The latter option seems more sensible because that way, all our sets of weights are neatly stored. Also, we can access this in the reweighting app as explained in the next section.</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="weighting-1.html#cb55-1"></a><span class="co"># put new weights in the COIN</span></span>
 <span id="cb55-2"><a href="weighting-1.html#cb55-2"></a>ASEM<span class="op">$</span>Parameters<span class="op">$</span>Weights<span class="op">$</span>NewWeights &lt;-<span class="st"> </span>NewWeights</span>
@@ -422,6 +414,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="interactive-re-weighting-with-rew8r" class="section level3">
 <h3><span class="header-section-number">11.2.2</span> Interactive re-weighting with ReW8R</h3>
+<p><em>NOTE: at this moment, rew8r is temporarily out of action until I get it updated to the new weight format.</em></p>
 <p>Re-weighting manually, as we have just seen, is quite simple. However, depending on your objectives, weighting can be an iterative process along the lines of:</p>
 <ol style="list-style-type: decimal">
 <li>Try a set of weights</li>
@@ -501,18 +494,18 @@ Figure 11.4: Correlation scatter plot screenshots in rew8r().
 <span id="cb58-3"><a href="weighting-1.html#cb58-3"></a><span class="co">## iterating... squared difference = 0.000814548399872482</span></span>
 <span id="cb58-4"><a href="weighting-1.html#cb58-4"></a><span class="co">## iterating... squared difference = 0.00116234608542398</span></span>
 <span id="cb58-5"><a href="weighting-1.html#cb58-5"></a><span class="co">## iterating... squared difference = 0.00052279688155717</span></span>
-<span id="cb58-6"><a href="weighting-1.html#cb58-6"></a><span class="co">## iterating... squared difference = 0.0002714288504979</span></span>
-<span id="cb58-7"><a href="weighting-1.html#cb58-7"></a><span class="co">## iterating... squared difference = 4.19003122660245e-05</span></span>
+<span id="cb58-6"><a href="weighting-1.html#cb58-6"></a><span class="co">## iterating... squared difference = 0.000271428850497901</span></span>
+<span id="cb58-7"><a href="weighting-1.html#cb58-7"></a><span class="co">## iterating... squared difference = 4.19003122660241e-05</span></span>
 <span id="cb58-8"><a href="weighting-1.html#cb58-8"></a><span class="co">## iterating... squared difference = 1.66726715407502e-06</span></span>
 <span id="cb58-9"><a href="weighting-1.html#cb58-9"></a><span class="co">## iterating... squared difference = 0.000166401854209433</span></span>
-<span id="cb58-10"><a href="weighting-1.html#cb58-10"></a><span class="co">## iterating... squared difference = 0.000357199714112591</span></span>
+<span id="cb58-10"><a href="weighting-1.html#cb58-10"></a><span class="co">## iterating... squared difference = 0.000357199714112592</span></span>
 <span id="cb58-11"><a href="weighting-1.html#cb58-11"></a><span class="co">## iterating... squared difference = 4.91262049731255e-05</span></span>
-<span id="cb58-12"><a href="weighting-1.html#cb58-12"></a><span class="co">## iterating... squared difference = 0.000189074238231706</span></span>
-<span id="cb58-13"><a href="weighting-1.html#cb58-13"></a><span class="co">## iterating... squared difference = 2.15217457991656e-06</span></span>
+<span id="cb58-12"><a href="weighting-1.html#cb58-12"></a><span class="co">## iterating... squared difference = 0.000189074238231704</span></span>
+<span id="cb58-13"><a href="weighting-1.html#cb58-13"></a><span class="co">## iterating... squared difference = 2.15217457991648e-06</span></span>
 <span id="cb58-14"><a href="weighting-1.html#cb58-14"></a><span class="co">## iterating... squared difference = 4.02429806062667e-05</span></span>
-<span id="cb58-15"><a href="weighting-1.html#cb58-15"></a><span class="co">## iterating... squared difference = 1.04404840785834e-05</span></span>
+<span id="cb58-15"><a href="weighting-1.html#cb58-15"></a><span class="co">## iterating... squared difference = 1.04404840785835e-05</span></span>
 <span id="cb58-16"><a href="weighting-1.html#cb58-16"></a><span class="co">## iterating... squared difference = 1.00833908145386e-05</span></span>
-<span id="cb58-17"><a href="weighting-1.html#cb58-17"></a><span class="co">## iterating... squared difference = 2.40420217478915e-06</span></span>
+<span id="cb58-17"><a href="weighting-1.html#cb58-17"></a><span class="co">## iterating... squared difference = 2.40420217478906e-06</span></span>
 <span id="cb58-18"><a href="weighting-1.html#cb58-18"></a><span class="co">## Optimisation successful!</span></span></code></pre></div>
 <p>This targets the aggregation level 3 (sub-index), and the <code>itarg</code> argument here is set to “equal”, which means that the objective is to make the correlations between each sub-index and the index equal to one another. More details of the results of this optimisation are found in the <code>.$Analysis$Weights</code> folder of the object. In particular, we can see the final correlations and the optimised weights:</p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="weighting-1.html#cb59-1"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Weights<span class="op">$</span>OptimsedLev3<span class="op">$</span>CorrResults</span>
@@ -547,26 +540,67 @@ Figure 11.4: Correlation scatter plot screenshots in rew8r().
 <span id="cb60-2"><a href="weighting-1.html#cb60-2"></a>EffWeights &lt;-<span class="st"> </span><span class="kw">effectiveWeight</span>(ASEM)</span>
 <span id="cb60-3"><a href="weighting-1.html#cb60-3"></a></span>
 <span id="cb60-4"><a href="weighting-1.html#cb60-4"></a>EffWeights<span class="op">$</span>EffectiveWeightsList</span>
-<span id="cb60-5"><a href="weighting-1.html#cb60-5"></a><span class="co">## $IndWeight</span></span>
-<span id="cb60-6"><a href="weighting-1.html#cb60-6"></a><span class="co">##  [1] 0.01250000 0.01250000 0.01250000 0.01250000 0.01250000 0.01250000</span></span>
-<span id="cb60-7"><a href="weighting-1.html#cb60-7"></a><span class="co">##  [7] 0.01250000 0.01250000 0.02000000 0.02000000 0.02000000 0.02000000</span></span>
-<span id="cb60-8"><a href="weighting-1.html#cb60-8"></a><span class="co">## [13] 0.02000000 0.03333333 0.03333333 0.03333333 0.01666667 0.01666667</span></span>
-<span id="cb60-9"><a href="weighting-1.html#cb60-9"></a><span class="co">## [19] 0.01666667 0.01666667 0.01666667 0.01666667 0.01250000 0.01250000</span></span>
-<span id="cb60-10"><a href="weighting-1.html#cb60-10"></a><span class="co">## [25] 0.01250000 0.01250000 0.01250000 0.01250000 0.01250000 0.01250000</span></span>
-<span id="cb60-11"><a href="weighting-1.html#cb60-11"></a><span class="co">## [31] 0.03333333 0.03333333 0.03333333 0.03333333 0.03333333 0.01851852</span></span>
-<span id="cb60-12"><a href="weighting-1.html#cb60-12"></a><span class="co">## [37] 0.01851852 0.01851852 0.01851852 0.01851852 0.01851852 0.01851852</span></span>
-<span id="cb60-13"><a href="weighting-1.html#cb60-13"></a><span class="co">## [43] 0.01851852 0.01851852 0.03333333 0.03333333 0.03333333 0.03333333</span></span>
-<span id="cb60-14"><a href="weighting-1.html#cb60-14"></a><span class="co">## [49] 0.03333333</span></span>
-<span id="cb60-15"><a href="weighting-1.html#cb60-15"></a><span class="co">## </span></span>
-<span id="cb60-16"><a href="weighting-1.html#cb60-16"></a><span class="co">## [[2]]</span></span>
-<span id="cb60-17"><a href="weighting-1.html#cb60-17"></a><span class="co">## [1] 0.1000000 0.1000000 0.1000000 0.1000000 0.1000000 0.1666667 0.1666667</span></span>
-<span id="cb60-18"><a href="weighting-1.html#cb60-18"></a><span class="co">## [8] 0.1666667</span></span>
-<span id="cb60-19"><a href="weighting-1.html#cb60-19"></a><span class="co">## </span></span>
-<span id="cb60-20"><a href="weighting-1.html#cb60-20"></a><span class="co">## [[3]]</span></span>
-<span id="cb60-21"><a href="weighting-1.html#cb60-21"></a><span class="co">## [1] 0.5 0.5</span></span>
-<span id="cb60-22"><a href="weighting-1.html#cb60-22"></a><span class="co">## </span></span>
-<span id="cb60-23"><a href="weighting-1.html#cb60-23"></a><span class="co">## [[4]]</span></span>
-<span id="cb60-24"><a href="weighting-1.html#cb60-24"></a><span class="co">## [1] 1</span></span></code></pre></div>
+<span id="cb60-5"><a href="weighting-1.html#cb60-5"></a><span class="co">##    AgLevel      Code EffectiveWeight</span></span>
+<span id="cb60-6"><a href="weighting-1.html#cb60-6"></a><span class="co">## 1        1     Goods      0.02000000</span></span>
+<span id="cb60-7"><a href="weighting-1.html#cb60-7"></a><span class="co">## 2        1  Services      0.02000000</span></span>
+<span id="cb60-8"><a href="weighting-1.html#cb60-8"></a><span class="co">## 3        1       FDI      0.02000000</span></span>
+<span id="cb60-9"><a href="weighting-1.html#cb60-9"></a><span class="co">## 4        1    PRemit      0.02000000</span></span>
+<span id="cb60-10"><a href="weighting-1.html#cb60-10"></a><span class="co">## 5        1   ForPort      0.02000000</span></span>
+<span id="cb60-11"><a href="weighting-1.html#cb60-11"></a><span class="co">## 6        1     Renew      0.02000000</span></span>
+<span id="cb60-12"><a href="weighting-1.html#cb60-12"></a><span class="co">## 7        1  PrimEner      0.02000000</span></span>
+<span id="cb60-13"><a href="weighting-1.html#cb60-13"></a><span class="co">## 8        1       CO2      0.02000000</span></span>
+<span id="cb60-14"><a href="weighting-1.html#cb60-14"></a><span class="co">## 9        1    MatCon      0.02000000</span></span>
+<span id="cb60-15"><a href="weighting-1.html#cb60-15"></a><span class="co">## 10       1    Forest      0.02000000</span></span>
+<span id="cb60-16"><a href="weighting-1.html#cb60-16"></a><span class="co">## 11       1 CostImpEx      0.01666667</span></span>
+<span id="cb60-17"><a href="weighting-1.html#cb60-17"></a><span class="co">## 12       1    Tariff      0.01666667</span></span>
+<span id="cb60-18"><a href="weighting-1.html#cb60-18"></a><span class="co">## 13       1      TBTs      0.01666667</span></span>
+<span id="cb60-19"><a href="weighting-1.html#cb60-19"></a><span class="co">## 14       1    TIRcon      0.01666667</span></span>
+<span id="cb60-20"><a href="weighting-1.html#cb60-20"></a><span class="co">## 15       1      RTAs      0.01666667</span></span>
+<span id="cb60-21"><a href="weighting-1.html#cb60-21"></a><span class="co">## 16       1      Visa      0.01666667</span></span>
+<span id="cb60-22"><a href="weighting-1.html#cb60-22"></a><span class="co">## 17       1     StMob      0.01250000</span></span>
+<span id="cb60-23"><a href="weighting-1.html#cb60-23"></a><span class="co">## 18       1  Research      0.01250000</span></span>
+<span id="cb60-24"><a href="weighting-1.html#cb60-24"></a><span class="co">## 19       1       Pat      0.01250000</span></span>
+<span id="cb60-25"><a href="weighting-1.html#cb60-25"></a><span class="co">## 20       1  CultServ      0.01250000</span></span>
+<span id="cb60-26"><a href="weighting-1.html#cb60-26"></a><span class="co">## 21       1  CultGood      0.01250000</span></span>
+<span id="cb60-27"><a href="weighting-1.html#cb60-27"></a><span class="co">## 22       1   Tourist      0.01250000</span></span>
+<span id="cb60-28"><a href="weighting-1.html#cb60-28"></a><span class="co">## 23       1  MigStock      0.01250000</span></span>
+<span id="cb60-29"><a href="weighting-1.html#cb60-29"></a><span class="co">## 24       1      Lang      0.01250000</span></span>
+<span id="cb60-30"><a href="weighting-1.html#cb60-30"></a><span class="co">## 25       1       LPI      0.01250000</span></span>
+<span id="cb60-31"><a href="weighting-1.html#cb60-31"></a><span class="co">## 26       1   Flights      0.01250000</span></span>
+<span id="cb60-32"><a href="weighting-1.html#cb60-32"></a><span class="co">## 27       1      Ship      0.01250000</span></span>
+<span id="cb60-33"><a href="weighting-1.html#cb60-33"></a><span class="co">## 28       1      Bord      0.01250000</span></span>
+<span id="cb60-34"><a href="weighting-1.html#cb60-34"></a><span class="co">## 29       1      Elec      0.01250000</span></span>
+<span id="cb60-35"><a href="weighting-1.html#cb60-35"></a><span class="co">## 30       1       Gas      0.01250000</span></span>
+<span id="cb60-36"><a href="weighting-1.html#cb60-36"></a><span class="co">## 31       1  ConSpeed      0.01250000</span></span>
+<span id="cb60-37"><a href="weighting-1.html#cb60-37"></a><span class="co">## 32       1     Cov4G      0.01250000</span></span>
+<span id="cb60-38"><a href="weighting-1.html#cb60-38"></a><span class="co">## 33       1      Embs      0.05555556</span></span>
+<span id="cb60-39"><a href="weighting-1.html#cb60-39"></a><span class="co">## 34       1      IGOs      0.05555556</span></span>
+<span id="cb60-40"><a href="weighting-1.html#cb60-40"></a><span class="co">## 35       1    UNVote      0.05555556</span></span>
+<span id="cb60-41"><a href="weighting-1.html#cb60-41"></a><span class="co">## 36       1   Poverty      0.01851852</span></span>
+<span id="cb60-42"><a href="weighting-1.html#cb60-42"></a><span class="co">## 37       1     Palma      0.01851852</span></span>
+<span id="cb60-43"><a href="weighting-1.html#cb60-43"></a><span class="co">## 38       1  TertGrad      0.01851852</span></span>
+<span id="cb60-44"><a href="weighting-1.html#cb60-44"></a><span class="co">## 39       1 FreePress      0.01851852</span></span>
+<span id="cb60-45"><a href="weighting-1.html#cb60-45"></a><span class="co">## 40       1    TolMin      0.01851852</span></span>
+<span id="cb60-46"><a href="weighting-1.html#cb60-46"></a><span class="co">## 41       1      NGOs      0.01851852</span></span>
+<span id="cb60-47"><a href="weighting-1.html#cb60-47"></a><span class="co">## 42       1       CPI      0.01851852</span></span>
+<span id="cb60-48"><a href="weighting-1.html#cb60-48"></a><span class="co">## 43       1    FemLab      0.01851852</span></span>
+<span id="cb60-49"><a href="weighting-1.html#cb60-49"></a><span class="co">## 44       1   WomParl      0.01851852</span></span>
+<span id="cb60-50"><a href="weighting-1.html#cb60-50"></a><span class="co">## 45       1   PubDebt      0.03333333</span></span>
+<span id="cb60-51"><a href="weighting-1.html#cb60-51"></a><span class="co">## 46       1  PrivDebt      0.03333333</span></span>
+<span id="cb60-52"><a href="weighting-1.html#cb60-52"></a><span class="co">## 47       1   GDPGrow      0.03333333</span></span>
+<span id="cb60-53"><a href="weighting-1.html#cb60-53"></a><span class="co">## 48       1     RDExp      0.03333333</span></span>
+<span id="cb60-54"><a href="weighting-1.html#cb60-54"></a><span class="co">## 49       1      NEET      0.03333333</span></span>
+<span id="cb60-55"><a href="weighting-1.html#cb60-55"></a><span class="co">## 50       2  Physical      0.10000000</span></span>
+<span id="cb60-56"><a href="weighting-1.html#cb60-56"></a><span class="co">## 51       2  ConEcFin      0.10000000</span></span>
+<span id="cb60-57"><a href="weighting-1.html#cb60-57"></a><span class="co">## 52       2 Political      0.10000000</span></span>
+<span id="cb60-58"><a href="weighting-1.html#cb60-58"></a><span class="co">## 53       2    Instit      0.10000000</span></span>
+<span id="cb60-59"><a href="weighting-1.html#cb60-59"></a><span class="co">## 54       2       P2P      0.10000000</span></span>
+<span id="cb60-60"><a href="weighting-1.html#cb60-60"></a><span class="co">## 55       2   Environ      0.16666667</span></span>
+<span id="cb60-61"><a href="weighting-1.html#cb60-61"></a><span class="co">## 56       2    Social      0.16666667</span></span>
+<span id="cb60-62"><a href="weighting-1.html#cb60-62"></a><span class="co">## 57       2  SusEcFin      0.16666667</span></span>
+<span id="cb60-63"><a href="weighting-1.html#cb60-63"></a><span class="co">## 58       3      Conn      0.50000000</span></span>
+<span id="cb60-64"><a href="weighting-1.html#cb60-64"></a><span class="co">## 59       3      Sust      0.50000000</span></span>
+<span id="cb60-65"><a href="weighting-1.html#cb60-65"></a><span class="co">## 60       4     Index      1.00000000</span></span></code></pre></div>
 <p>A nice way to visualise this is to call <code>plotframework()</code> (see <a href="initial-visualisation-and-analysis.html#initial-visualisation-and-analysis">Initial visualisation and analysis</a>). <code>effectiveWeight()</code> also gives other info on the parents of each indicator/aggregate which may be useful for some purposes (e.g. some types of plots external to COINr).</p>
 </div>
 <div id="final-points" class="section level2">
