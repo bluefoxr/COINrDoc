@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-05-10" />
+<meta name="date" content="2021-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -385,13 +385,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb53-6"><a href="weighting-1.html#cb53-6"></a>NewWeights &lt;-<span class="st"> </span>ASEM<span class="op">$</span>Parameters<span class="op">$</span>Weights<span class="op">$</span>Original</span>
 <span id="cb53-7"><a href="weighting-1.html#cb53-7"></a></span>
 <span id="cb53-8"><a href="weighting-1.html#cb53-8"></a><span class="kw">head</span>(NewWeights)</span>
-<span id="cb53-9"><a href="weighting-1.html#cb53-9"></a><span class="co">##   AgLevel     Code Weight</span></span>
-<span id="cb53-10"><a href="weighting-1.html#cb53-10"></a><span class="co">## 1       1    Goods      1</span></span>
-<span id="cb53-11"><a href="weighting-1.html#cb53-11"></a><span class="co">## 2       1 Services      1</span></span>
-<span id="cb53-12"><a href="weighting-1.html#cb53-12"></a><span class="co">## 3       1      FDI      1</span></span>
-<span id="cb53-13"><a href="weighting-1.html#cb53-13"></a><span class="co">## 4       1   PRemit      1</span></span>
-<span id="cb53-14"><a href="weighting-1.html#cb53-14"></a><span class="co">## 5       1  ForPort      1</span></span>
-<span id="cb53-15"><a href="weighting-1.html#cb53-15"></a><span class="co">## 6       1    Renew      1</span></span></code></pre></div>
+<span id="cb53-9"><a href="weighting-1.html#cb53-9"></a><span class="co">##   AgLevel      Code Weight</span></span>
+<span id="cb53-10"><a href="weighting-1.html#cb53-10"></a><span class="co">## 1       1     Goods      1</span></span>
+<span id="cb53-11"><a href="weighting-1.html#cb53-11"></a><span class="co">## 2       1  Services      1</span></span>
+<span id="cb53-12"><a href="weighting-1.html#cb53-12"></a><span class="co">## 3       1       FDI      1</span></span>
+<span id="cb53-13"><a href="weighting-1.html#cb53-13"></a><span class="co">## 4       1    PRemit      1</span></span>
+<span id="cb53-14"><a href="weighting-1.html#cb53-14"></a><span class="co">## 5       1   ForPort      1</span></span>
+<span id="cb53-15"><a href="weighting-1.html#cb53-15"></a><span class="co">## 6       1 CostImpEx      1</span></span></code></pre></div>
 <p>The structure of the weights is a data frame, with each row being either an indicator or aggregation. The <code>AgLevel</code> column points to the aggregation level, and the <code>Weight</code> column is the (relative) weight.</p>
 <p>We can just directly modify this. Let’s say we want to set the weight of the connectivity sub-index to 0.5.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="weighting-1.html#cb54-1"></a>NewWeights<span class="op">$</span>Weight[NewWeights<span class="op">$</span>Code <span class="op">==</span><span class="st"> &quot;Conn&quot;</span>] &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
@@ -546,36 +546,36 @@ Figure 11.4: Correlation scatter plot screenshots in rew8r().
 <span id="cb60-8"><a href="weighting-1.html#cb60-8"></a><span class="co">## 3        1       FDI      0.02000000</span></span>
 <span id="cb60-9"><a href="weighting-1.html#cb60-9"></a><span class="co">## 4        1    PRemit      0.02000000</span></span>
 <span id="cb60-10"><a href="weighting-1.html#cb60-10"></a><span class="co">## 5        1   ForPort      0.02000000</span></span>
-<span id="cb60-11"><a href="weighting-1.html#cb60-11"></a><span class="co">## 6        1     Renew      0.02000000</span></span>
-<span id="cb60-12"><a href="weighting-1.html#cb60-12"></a><span class="co">## 7        1  PrimEner      0.02000000</span></span>
-<span id="cb60-13"><a href="weighting-1.html#cb60-13"></a><span class="co">## 8        1       CO2      0.02000000</span></span>
-<span id="cb60-14"><a href="weighting-1.html#cb60-14"></a><span class="co">## 9        1    MatCon      0.02000000</span></span>
-<span id="cb60-15"><a href="weighting-1.html#cb60-15"></a><span class="co">## 10       1    Forest      0.02000000</span></span>
-<span id="cb60-16"><a href="weighting-1.html#cb60-16"></a><span class="co">## 11       1 CostImpEx      0.01666667</span></span>
-<span id="cb60-17"><a href="weighting-1.html#cb60-17"></a><span class="co">## 12       1    Tariff      0.01666667</span></span>
-<span id="cb60-18"><a href="weighting-1.html#cb60-18"></a><span class="co">## 13       1      TBTs      0.01666667</span></span>
-<span id="cb60-19"><a href="weighting-1.html#cb60-19"></a><span class="co">## 14       1    TIRcon      0.01666667</span></span>
-<span id="cb60-20"><a href="weighting-1.html#cb60-20"></a><span class="co">## 15       1      RTAs      0.01666667</span></span>
-<span id="cb60-21"><a href="weighting-1.html#cb60-21"></a><span class="co">## 16       1      Visa      0.01666667</span></span>
-<span id="cb60-22"><a href="weighting-1.html#cb60-22"></a><span class="co">## 17       1     StMob      0.01250000</span></span>
-<span id="cb60-23"><a href="weighting-1.html#cb60-23"></a><span class="co">## 18       1  Research      0.01250000</span></span>
-<span id="cb60-24"><a href="weighting-1.html#cb60-24"></a><span class="co">## 19       1       Pat      0.01250000</span></span>
-<span id="cb60-25"><a href="weighting-1.html#cb60-25"></a><span class="co">## 20       1  CultServ      0.01250000</span></span>
-<span id="cb60-26"><a href="weighting-1.html#cb60-26"></a><span class="co">## 21       1  CultGood      0.01250000</span></span>
-<span id="cb60-27"><a href="weighting-1.html#cb60-27"></a><span class="co">## 22       1   Tourist      0.01250000</span></span>
-<span id="cb60-28"><a href="weighting-1.html#cb60-28"></a><span class="co">## 23       1  MigStock      0.01250000</span></span>
-<span id="cb60-29"><a href="weighting-1.html#cb60-29"></a><span class="co">## 24       1      Lang      0.01250000</span></span>
-<span id="cb60-30"><a href="weighting-1.html#cb60-30"></a><span class="co">## 25       1       LPI      0.01250000</span></span>
-<span id="cb60-31"><a href="weighting-1.html#cb60-31"></a><span class="co">## 26       1   Flights      0.01250000</span></span>
-<span id="cb60-32"><a href="weighting-1.html#cb60-32"></a><span class="co">## 27       1      Ship      0.01250000</span></span>
-<span id="cb60-33"><a href="weighting-1.html#cb60-33"></a><span class="co">## 28       1      Bord      0.01250000</span></span>
-<span id="cb60-34"><a href="weighting-1.html#cb60-34"></a><span class="co">## 29       1      Elec      0.01250000</span></span>
-<span id="cb60-35"><a href="weighting-1.html#cb60-35"></a><span class="co">## 30       1       Gas      0.01250000</span></span>
-<span id="cb60-36"><a href="weighting-1.html#cb60-36"></a><span class="co">## 31       1  ConSpeed      0.01250000</span></span>
-<span id="cb60-37"><a href="weighting-1.html#cb60-37"></a><span class="co">## 32       1     Cov4G      0.01250000</span></span>
-<span id="cb60-38"><a href="weighting-1.html#cb60-38"></a><span class="co">## 33       1      Embs      0.05555556</span></span>
-<span id="cb60-39"><a href="weighting-1.html#cb60-39"></a><span class="co">## 34       1      IGOs      0.05555556</span></span>
-<span id="cb60-40"><a href="weighting-1.html#cb60-40"></a><span class="co">## 35       1    UNVote      0.05555556</span></span>
+<span id="cb60-11"><a href="weighting-1.html#cb60-11"></a><span class="co">## 6        1 CostImpEx      0.01666667</span></span>
+<span id="cb60-12"><a href="weighting-1.html#cb60-12"></a><span class="co">## 7        1    Tariff      0.01666667</span></span>
+<span id="cb60-13"><a href="weighting-1.html#cb60-13"></a><span class="co">## 8        1      TBTs      0.01666667</span></span>
+<span id="cb60-14"><a href="weighting-1.html#cb60-14"></a><span class="co">## 9        1    TIRcon      0.01666667</span></span>
+<span id="cb60-15"><a href="weighting-1.html#cb60-15"></a><span class="co">## 10       1      RTAs      0.01666667</span></span>
+<span id="cb60-16"><a href="weighting-1.html#cb60-16"></a><span class="co">## 11       1      Visa      0.01666667</span></span>
+<span id="cb60-17"><a href="weighting-1.html#cb60-17"></a><span class="co">## 12       1     StMob      0.01250000</span></span>
+<span id="cb60-18"><a href="weighting-1.html#cb60-18"></a><span class="co">## 13       1  Research      0.01250000</span></span>
+<span id="cb60-19"><a href="weighting-1.html#cb60-19"></a><span class="co">## 14       1       Pat      0.01250000</span></span>
+<span id="cb60-20"><a href="weighting-1.html#cb60-20"></a><span class="co">## 15       1  CultServ      0.01250000</span></span>
+<span id="cb60-21"><a href="weighting-1.html#cb60-21"></a><span class="co">## 16       1  CultGood      0.01250000</span></span>
+<span id="cb60-22"><a href="weighting-1.html#cb60-22"></a><span class="co">## 17       1   Tourist      0.01250000</span></span>
+<span id="cb60-23"><a href="weighting-1.html#cb60-23"></a><span class="co">## 18       1  MigStock      0.01250000</span></span>
+<span id="cb60-24"><a href="weighting-1.html#cb60-24"></a><span class="co">## 19       1      Lang      0.01250000</span></span>
+<span id="cb60-25"><a href="weighting-1.html#cb60-25"></a><span class="co">## 20       1       LPI      0.01250000</span></span>
+<span id="cb60-26"><a href="weighting-1.html#cb60-26"></a><span class="co">## 21       1   Flights      0.01250000</span></span>
+<span id="cb60-27"><a href="weighting-1.html#cb60-27"></a><span class="co">## 22       1      Ship      0.01250000</span></span>
+<span id="cb60-28"><a href="weighting-1.html#cb60-28"></a><span class="co">## 23       1      Bord      0.01250000</span></span>
+<span id="cb60-29"><a href="weighting-1.html#cb60-29"></a><span class="co">## 24       1      Elec      0.01250000</span></span>
+<span id="cb60-30"><a href="weighting-1.html#cb60-30"></a><span class="co">## 25       1       Gas      0.01250000</span></span>
+<span id="cb60-31"><a href="weighting-1.html#cb60-31"></a><span class="co">## 26       1  ConSpeed      0.01250000</span></span>
+<span id="cb60-32"><a href="weighting-1.html#cb60-32"></a><span class="co">## 27       1     Cov4G      0.01250000</span></span>
+<span id="cb60-33"><a href="weighting-1.html#cb60-33"></a><span class="co">## 28       1      Embs      0.03333333</span></span>
+<span id="cb60-34"><a href="weighting-1.html#cb60-34"></a><span class="co">## 29       1      IGOs      0.03333333</span></span>
+<span id="cb60-35"><a href="weighting-1.html#cb60-35"></a><span class="co">## 30       1    UNVote      0.03333333</span></span>
+<span id="cb60-36"><a href="weighting-1.html#cb60-36"></a><span class="co">## 31       1     Renew      0.03333333</span></span>
+<span id="cb60-37"><a href="weighting-1.html#cb60-37"></a><span class="co">## 32       1  PrimEner      0.03333333</span></span>
+<span id="cb60-38"><a href="weighting-1.html#cb60-38"></a><span class="co">## 33       1       CO2      0.03333333</span></span>
+<span id="cb60-39"><a href="weighting-1.html#cb60-39"></a><span class="co">## 34       1    MatCon      0.03333333</span></span>
+<span id="cb60-40"><a href="weighting-1.html#cb60-40"></a><span class="co">## 35       1    Forest      0.03333333</span></span>
 <span id="cb60-41"><a href="weighting-1.html#cb60-41"></a><span class="co">## 36       1   Poverty      0.01851852</span></span>
 <span id="cb60-42"><a href="weighting-1.html#cb60-42"></a><span class="co">## 37       1     Palma      0.01851852</span></span>
 <span id="cb60-43"><a href="weighting-1.html#cb60-43"></a><span class="co">## 38       1  TertGrad      0.01851852</span></span>

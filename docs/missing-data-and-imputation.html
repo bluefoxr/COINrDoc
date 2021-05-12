@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-05-10" />
+<meta name="date" content="2021-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -412,65 +412,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb24-3"><a href="missing-data-and-imputation.html#cb24-3"></a></span>
 <span id="cb24-4"><a href="missing-data-and-imputation.html#cb24-4"></a><span class="co"># Missing data check on the raw data set</span></span>
 <span id="cb24-5"><a href="missing-data-and-imputation.html#cb24-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">checkData</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">ind_thresh =</span> <span class="fl">0.85</span>, <span class="dt">unit_screen =</span> <span class="ot">TRUE</span>, <span class="dt">Force =</span> df)</span>
-<span id="cb24-6"><a href="missing-data-and-imputation.html#cb24-6"></a><span class="co">## Called from: checkData(ASEM, dset = &quot;Raw&quot;, ind_thresh = 0.85, unit_screen = TRUE, </span></span>
-<span id="cb24-7"><a href="missing-data-and-imputation.html#cb24-7"></a><span class="co">##     Force = df)</span></span>
-<span id="cb24-8"><a href="missing-data-and-imputation.html#cb24-8"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#124: Force[2] &lt;- Force[2] == &quot;Include&quot;</span></span>
-<span id="cb24-9"><a href="missing-data-and-imputation.html#cb24-9"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#127: data_avail$Included[data_avail$UnitCode %in% Force$UnitCode[Force$Status == </span></span>
-<span id="cb24-10"><a href="missing-data-and-imputation.html#cb24-10"></a><span class="co">##     TRUE]] &lt;- TRUE</span></span>
-<span id="cb24-11"><a href="missing-data-and-imputation.html#cb24-11"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#128: data_avail$Included[data_avail$UnitCode %in% Force$UnitCode[Force$Status == </span></span>
-<span id="cb24-12"><a href="missing-data-and-imputation.html#cb24-12"></a><span class="co">##     FALSE]] &lt;- FALSE</span></span>
-<span id="cb24-13"><a href="missing-data-and-imputation.html#cb24-13"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#131: if (unit_screen != &quot;none&quot;) {</span></span>
-<span id="cb24-14"><a href="missing-data-and-imputation.html#cb24-14"></a><span class="co">##     ScreenedData &lt;- dplyr::filter(out1$ind_data, data_avail$Included)</span></span>
-<span id="cb24-15"><a href="missing-data-and-imputation.html#cb24-15"></a><span class="co">##     ScreenedUnits &lt;- data_avail$UnitCode[!data_avail$Included]</span></span>
-<span id="cb24-16"><a href="missing-data-and-imputation.html#cb24-16"></a><span class="co">## }</span></span>
-<span id="cb24-17"><a href="missing-data-and-imputation.html#cb24-17"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#133: ScreenedData &lt;- dplyr::filter(out1$ind_data, data_avail$Included)</span></span>
-<span id="cb24-18"><a href="missing-data-and-imputation.html#cb24-18"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#135: ScreenedUnits &lt;- data_avail$UnitCode[!data_avail$Included]</span></span>
-<span id="cb24-19"><a href="missing-data-and-imputation.html#cb24-19"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#138: if (out2 == &quot;list&quot;) {</span></span>
-<span id="cb24-20"><a href="missing-data-and-imputation.html#cb24-20"></a><span class="co">##     return(list(MissDatSummary = data_avail, MissDatByGroup = data_avail_bygroup, </span></span>
-<span id="cb24-21"><a href="missing-data-and-imputation.html#cb24-21"></a><span class="co">##         ScreenedData = ScreenedData, RemovedUnits = ScreenedUnits))</span></span>
-<span id="cb24-22"><a href="missing-data-and-imputation.html#cb24-22"></a><span class="co">## } else if (out2 == &quot;COIN&quot;) {</span></span>
-<span id="cb24-23"><a href="missing-data-and-imputation.html#cb24-23"></a><span class="co">##     eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$MissDatSummary&lt;- data_avail&quot;)))</span></span>
-<span id="cb24-24"><a href="missing-data-and-imputation.html#cb24-24"></a><span class="co">##     eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$MissDatByGroup&lt;- data_avail_bygroup&quot;)))</span></span>
-<span id="cb24-25"><a href="missing-data-and-imputation.html#cb24-25"></a><span class="co">##     if (unit_screen != &quot;none&quot;) {</span></span>
-<span id="cb24-26"><a href="missing-data-and-imputation.html#cb24-26"></a><span class="co">##         COIN$Data$Screened &lt;- ScreenedData</span></span>
-<span id="cb24-27"><a href="missing-data-and-imputation.html#cb24-27"></a><span class="co">##         eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$RemovedUnits&lt;- ScreenedUnits&quot;)))</span></span>
-<span id="cb24-28"><a href="missing-data-and-imputation.html#cb24-28"></a><span class="co">##     }</span></span>
-<span id="cb24-29"><a href="missing-data-and-imputation.html#cb24-29"></a><span class="co">##     return(COIN)</span></span>
-<span id="cb24-30"><a href="missing-data-and-imputation.html#cb24-30"></a><span class="co">## } else {</span></span>
-<span id="cb24-31"><a href="missing-data-and-imputation.html#cb24-31"></a><span class="co">##     stop(&quot;out2 not recognised, should be either COIN or list&quot;)</span></span>
-<span id="cb24-32"><a href="missing-data-and-imputation.html#cb24-32"></a><span class="co">## }</span></span>
-<span id="cb24-33"><a href="missing-data-and-imputation.html#cb24-33"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#138: if (out2 == &quot;COIN&quot;) {</span></span>
-<span id="cb24-34"><a href="missing-data-and-imputation.html#cb24-34"></a><span class="co">##     eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$MissDatSummary&lt;- data_avail&quot;)))</span></span>
-<span id="cb24-35"><a href="missing-data-and-imputation.html#cb24-35"></a><span class="co">##     eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$MissDatByGroup&lt;- data_avail_bygroup&quot;)))</span></span>
-<span id="cb24-36"><a href="missing-data-and-imputation.html#cb24-36"></a><span class="co">##     if (unit_screen != &quot;none&quot;) {</span></span>
-<span id="cb24-37"><a href="missing-data-and-imputation.html#cb24-37"></a><span class="co">##         COIN$Data$Screened &lt;- ScreenedData</span></span>
-<span id="cb24-38"><a href="missing-data-and-imputation.html#cb24-38"></a><span class="co">##         eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$RemovedUnits&lt;- ScreenedUnits&quot;)))</span></span>
-<span id="cb24-39"><a href="missing-data-and-imputation.html#cb24-39"></a><span class="co">##     }</span></span>
-<span id="cb24-40"><a href="missing-data-and-imputation.html#cb24-40"></a><span class="co">##     return(COIN)</span></span>
-<span id="cb24-41"><a href="missing-data-and-imputation.html#cb24-41"></a><span class="co">## } else {</span></span>
-<span id="cb24-42"><a href="missing-data-and-imputation.html#cb24-42"></a><span class="co">##     stop(&quot;out2 not recognised, should be either COIN or list&quot;)</span></span>
-<span id="cb24-43"><a href="missing-data-and-imputation.html#cb24-43"></a><span class="co">## }</span></span>
-<span id="cb24-44"><a href="missing-data-and-imputation.html#cb24-44"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#151: eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$MissDatSummary&lt;- data_avail&quot;)))</span></span>
-<span id="cb24-45"><a href="missing-data-and-imputation.html#cb24-45"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#152: eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$MissDatByGroup&lt;- data_avail_bygroup&quot;)))</span></span>
-<span id="cb24-46"><a href="missing-data-and-imputation.html#cb24-46"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#154: if (unit_screen != &quot;none&quot;) {</span></span>
-<span id="cb24-47"><a href="missing-data-and-imputation.html#cb24-47"></a><span class="co">##     COIN$Data$Screened &lt;- ScreenedData</span></span>
-<span id="cb24-48"><a href="missing-data-and-imputation.html#cb24-48"></a><span class="co">##     eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$RemovedUnits&lt;- ScreenedUnits&quot;)))</span></span>
-<span id="cb24-49"><a href="missing-data-and-imputation.html#cb24-49"></a><span class="co">## }</span></span>
-<span id="cb24-50"><a href="missing-data-and-imputation.html#cb24-50"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#155: COIN$Data$Screened &lt;- ScreenedData</span></span>
-<span id="cb24-51"><a href="missing-data-and-imputation.html#cb24-51"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#156: eval(parse(text = paste0(&quot;COIN$Analysis$&quot;, dset, &quot;$RemovedUnits&lt;- ScreenedUnits&quot;)))</span></span>
-<span id="cb24-52"><a href="missing-data-and-imputation.html#cb24-52"></a><span class="co">## debug at C:/Users/becke/OneDrive/Work/Consultancy/COINr/COINr/R/coin_datacheck.R#158: return(COIN)</span></span>
-<span id="cb24-53"><a href="missing-data-and-imputation.html#cb24-53"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>RemovedUnits</span>
-<span id="cb24-54"><a href="missing-data-and-imputation.html#cb24-54"></a><span class="co">## [1] &quot;AUT&quot;</span></span></code></pre></div>
+<span id="cb24-6"><a href="missing-data-and-imputation.html#cb24-6"></a>ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>RemovedUnits</span>
+<span id="cb24-7"><a href="missing-data-and-imputation.html#cb24-7"></a><span class="co">## [1] &quot;AUT&quot;</span></span></code></pre></div>
 <p>Now AUT has been excluded, even though it had sufficient data coverage, and BRN has been manually included, even though it didn’t. The intention is to give some flexibility to make exceptions for hard rules.</p>
 <p>The other output of interest from <code>checkData()</code> is missing data by group:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="missing-data-and-imputation.html#cb25-1"></a><span class="kw">head</span>(ASEM<span class="op">$</span>Analysis<span class="op">$</span>Raw<span class="op">$</span>MissDatByGroup[<span class="dv">30</span><span class="op">:</span><span class="dv">40</span>,])</span>
-<span id="cb25-2"><a href="missing-data-and-imputation.html#cb25-2"></a><span class="co">##    UnitCode ConEcFin Environ    Instit P2P Physical Political    Social</span></span>
-<span id="cb25-3"><a href="missing-data-and-imputation.html#cb25-3"></a><span class="co">## 30      GBR      100     100 100.00000 100    100.0       100 100.00000</span></span>
-<span id="cb25-4"><a href="missing-data-and-imputation.html#cb25-4"></a><span class="co">## 31      AUS      100     100 100.00000 100    100.0       100 100.00000</span></span>
-<span id="cb25-5"><a href="missing-data-and-imputation.html#cb25-5"></a><span class="co">## 32      BGD      100     100  83.33333  75     87.5       100  88.88889</span></span>
-<span id="cb25-6"><a href="missing-data-and-imputation.html#cb25-6"></a><span class="co">## 33      BRN       80     100 100.00000  75     87.5       100  55.55556</span></span>
-<span id="cb25-7"><a href="missing-data-and-imputation.html#cb25-7"></a><span class="co">## 34      KHM       80     100 100.00000  75     87.5       100  77.77778</span></span>
-<span id="cb25-8"><a href="missing-data-and-imputation.html#cb25-8"></a><span class="co">## 35      CHN      100     100 100.00000 100    100.0       100 100.00000</span></span>
+<span id="cb25-2"><a href="missing-data-and-imputation.html#cb25-2"></a><span class="co">##    UnitCode ConEcFin    Instit P2P Physical Political Environ    Social</span></span>
+<span id="cb25-3"><a href="missing-data-and-imputation.html#cb25-3"></a><span class="co">## 30      GBR      100 100.00000 100    100.0       100     100 100.00000</span></span>
+<span id="cb25-4"><a href="missing-data-and-imputation.html#cb25-4"></a><span class="co">## 31      AUS      100 100.00000 100    100.0       100     100 100.00000</span></span>
+<span id="cb25-5"><a href="missing-data-and-imputation.html#cb25-5"></a><span class="co">## 32      BGD      100  83.33333  75     87.5       100     100  88.88889</span></span>
+<span id="cb25-6"><a href="missing-data-and-imputation.html#cb25-6"></a><span class="co">## 33      BRN       80 100.00000  75     87.5       100     100  55.55556</span></span>
+<span id="cb25-7"><a href="missing-data-and-imputation.html#cb25-7"></a><span class="co">## 34      KHM       80 100.00000  75     87.5       100     100  77.77778</span></span>
+<span id="cb25-8"><a href="missing-data-and-imputation.html#cb25-8"></a><span class="co">## 35      CHN      100 100.00000 100    100.0       100     100 100.00000</span></span>
 <span id="cb25-9"><a href="missing-data-and-imputation.html#cb25-9"></a><span class="co">##    SusEcFin      Conn      Sust     Index</span></span>
 <span id="cb25-10"><a href="missing-data-and-imputation.html#cb25-10"></a><span class="co">## 30      100 100.00000 100.00000 100.00000</span></span>
 <span id="cb25-11"><a href="missing-data-and-imputation.html#cb25-11"></a><span class="co">## 31      100 100.00000 100.00000 100.00000</span></span>
