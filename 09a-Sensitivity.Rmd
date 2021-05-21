@@ -4,7 +4,7 @@ Composite indicators, like any model, have many associated uncertainties.
 
 *Sensitivity analysis* can help to quantify the uncertainty in the scores and rankings of the composite indicator, and to identify which assumptions are driving this uncertainty, and which are less important.
 
-## About sensitivity analysis
+## About
 
 Sensitivity analysis is often confused with *uncertainty analysis*. Uncertainty analysis involves estimating the uncertainty in the ouputs of a system (here, the scores and ranks of the composite indicator), given the uncertainties in the inputs (here, methodological decisions, weights, etc.). The results of an uncertainty include for example confidence intervals over the ranks, median ranks, and so on.
 
@@ -16,7 +16,7 @@ At first glance, one might think that sensitivity analysis can be performed by s
 
 Sensitivity analysis and uncertainty analysis are large topics and are in fact research fields in their own right. To better understand them, a good starting point is [Global Sensitivity Analysis: The Primer](https://onlinelibrary.wiley.com/doi/book/10.1002/9780470725184), and a recent summary of sensitivity analysis research can be found [here](https://www.sciencedirect.com/science/article/pii/S1364815220310112?via%3Dihub).
 
-## Sensitivity analysis in COINr
+## Five steps
 
 To perform an uncertainty or sensitivity analysis, one must define several things:
 
@@ -28,10 +28,183 @@ To perform an uncertainty or sensitivity analysis, one must define several thing
 
 This should dispel the common idea that one can simply "run a sensitivity analysis". In fact, all of these steps require some thought and attention, and the results of the sensitivity analysis will be themselves dependent on these choices. Let's go through them one by one.
 
-First, the **system or model**. This should be clear: you need to have already built your (nominal) composite indicator in order to check the uncertainties. Usually this would involve calculating the results up to and including the aggregated index.
+### Specifying the model
 
-### Input distributions
+First, the **system or model**. This should be clear: you need to have already built your (nominal) composite indicator in order to check the uncertainties. Usually this would involve calculating the results up to and including the aggregated index. The choices in this model should represent your "best" choices for each methodological step, for example your preferred aggregration method, preferred set of weights, and so on.
+
+### Which assumptions to vary
 
 Specifying **which assumptions to vary** is more complicated. It is impossible to fully quantify the uncertainty in a composite indicator (or any model, for that matter) because there are simply so many sources of uncertainty, ranging from the input data, the choice of indicators, the structure of the index, and all the methodological steps along the way (imputation, treatment, normalisation, etc.). A reasonable approach is to identify specific assumptions and parameters that could have plausible alternatives, and can be practically varied.
 
+The construction of composite indicators in COINr (deliberately) lends itself well to uncertainty analysis, because as we have seen in the [Adjustments and comparisons] chapter, all the methodological choices used to build the composite indicator are recorded inside the COIN, and changes can be made by simply altering these parameters and calling the `regen()` function. Sensitivity and uncertainty analysis is simply an extension of this concept - where we create a large number of alternative COINs, each with methodological variations following the distributions assigned to each uncertain assumption.
 
+The upshot here is that (at least in theory) any parameter from any of the construction functions (see again the table in [Adjustments and comparisons]) can be varied as part of a sensitivity analysis. This includes, for example:
+
+* Inclusion and exclusion of indicators
+* Data availability thresholds for screening units
+* Alternative choices of denominators
+* Alternative imputation methods
+* Alternative data treatment, Winsorisation thresholds, skew and kurtosis values, transformations
+* Alternative normalisation methods and parameters
+* Alternative aggregration methods and weight sets
+
+On top of this, it is possible to randomly perturb weights at each level by a specified noise factor. This is explained in more detail later in this chapter.
+
+The reason that these can be varied *in theory* is because there may arise conflicts between methodological choices. For example, if a normalisation method results in negative values, we cannot use a default geometric mean aggregation method. For this reason, it is recommended to focus on key uncertainties and start modestly with a sensitivity analysis, working up to a more complex version if required.
+
+### Alternative values
+
+Having selected some key uncertain assumptions, we must assign plausible alternative values. For example, let's say that an uncertain assumption is the normalisation method. By default, we have used min-max, but perhaps other methods could be reasonable alternatives. The question is then, which alternatives to test?
+
+The answer here should not be to blindly apply all possible alternatives available, but rather to select some alternatives that represent **plausible** alternatives, ruling out any that do not fit the requirements of the index. For example, using rank normalisation is a robust method that neatly deals with outliers but by doing so, also ignores whether a unit is an exceptional performer. This may be good or bad depending on what you want to capture. If it is "good" then it could be considered as an alternative. If it does not fit the objectives, it is not a plausible alternative, so should not be included in the sensitivity analysis.
+
+Finding plausible alternatives is not necessarily an easy task, and we must recall that in any case we will end up with a lower bound on the uncertainty, since we cannot fully test all uncertainties, as discussed previously (we recall that this is the same in any model, not just in composite indicators). Yet, we can still do a lot better than no uncertainty analysis at all.
+
+In the end, for each uncertain parameter, we should end up with a list of alternative plausible values. Note that at the moment, COINr assumes equal probability for all alternatives, i.e. uniform distributions. This may be extended to other distributions in future releases.
+
+### Selecting the output
+
+Composite indicators have multidimensional outputs - one value for each unit and for each aggregate or normalised indicator. Typically, the most interesting outputs to look at in the context of a sensitivity analysis are the final index values, and possibly some of the underlying aggregate scores (sub-indexes, pillars, etc.).
+
+COINr allows us to select which inputs to target, and this is explained more below.
+
+### SA methodology
+
+Finally, we have to specify what kind of analysis to perform, and how many model runs. Currently, COINr offers either an uncertainty analysis (resulting in distributions over ranks), or a sensitivity analysis (additionally showing which input uncertainties cause the most output uncertainty). As mentioned, sensitivity analysis methodology is a rabbit hole in itself, and interested readers could refer to the references at the beginning of this chapter to find out more.
+
+Sensitivity analysis usually requires more model runs (replications of the composite indicator). Still, composite indicators are fairly cheap to evaluate, depending on the number of indicators and the complexity of the construction. Regardless of whether you run an uncertainty or sensitivity analysis, more model runs is always better because it increases the accuracy of the estimations of the distributions over ranks. If you are prepared to wait some minutes or possibly hour(s), normally this is enough to perform a fairly solid sensitivity analysis.
+
+## Sensitivity in COINr
+
+To run a sensitivity analysis in COINr, the function of interest is `sensitivity()`. We must follow the steps outlined above, so first, you should have a nominal composite indicator constructed up to and including the aggregation step. Here, we use our old friend the ASEM index.
+
+```{r SA_buildASEM}
+library(COINr)
+# build ASEM index
+ASEM <- build_ASEM()
+```
+
+### General specifications
+
+Next, we have to decide which parameters to treat as uncertain. Here, we will consider three things:
+
+1. The imputation method
+2. The normalisation method
+3. The weights
+
+These are chosen as a limited set to keep things relatively simple, and because imputation is always a significant uncertainty (we are basically guessing data points). We will also consider a couple of alternative normalisation methods. Finally, we will randomly perturb the weights.
+
+For the distributions (i.e. the plausible alternatives), we will consider the following:
+
+* Imputation using either indicator group mean, indicator mean, or no imputation
+* Normalisation using either min-max, rank, or distance to maximum
+* Perturb pillar and sub index weights by +/-25%
+
+Finally, we will consider the index as the target.
+
+Let's enter these specifications. The most complex part is specifying the `SA_specs` argument of the `sensitivity()` function, which specifies which parameters to vary and which alternative values to use. To explain how this works, the easiest way is to construct the specifications for our example.
+
+```{r SAspecs}
+# define noise to be applied to weights
+nspecs <- data.frame(AgLevel = c(2,3), NoiseFactor = c(0.25,0.25))
+
+# create list specifying assumptions to vary and alternatives
+SAspecs <- list(
+  impute = list(imtype = c("indgroup_mean", "ind_mean", "none")),
+  normalise = list(ntype = c("minmax", "rank", "dist2max")),
+  weights = list(NoiseSpecs = nspecs, Nominal = "Original")
+)
+```
+
+Leaving aside the `nspecs` line for now (but see below for details), we focus on the list `SAspecs`, which will be used as the `SA_specs` argument of `sensitivity()`. The *names* of the first level of this list should be any of the seven construction functions. Each named element of the list is itself a list, which specifies the parameters of that function to vary, and the alternative values. In summary, the general format is:
+
+```{r SAspecsformat, eval=F}
+<function name> = list(<parameter name> = <vector or list of alternatives>)
+```
+
+There is no restriction on the number of parameters that can be varied, or the number of alternatives. You can have multiple parameters from the same function, for example.
+
+### Varying weights
+
+The exception to the above format is regarding weights. Weights are input as an argument of the `aggregate()` function, but since this is a single argument, it only behaves as a single parameter. That means that we could test alternative weight sets as part of the sensitivity analysis:
+
+```{r SAspecsAggweights, eval=F}
+# example entry in SA_specs list of sensitivity() [not used here]
+aggregate = list(agweights = c("Weights1", "Weights2", "Weights3"))
+```
+
+where "Weights1" and friends are alternative sets of weights that we have stored in `.$Parameters$Weights`. This is a useful test but only gives a limited picture of uncertainty because we test between a small set of alternatives. It may be the best approach if we have two or three fairly clear alternatives for weighting (note: this can also be a way to exclude indicators or even entire aggregation groups, by setting certain weights to zero).
+
+If the uncertainty is more general, i.e. we have elicited weights but we feel that there is a reasonable degree of uncertainty surrounding all weight values (which usually there is), COINr also includes the option to apply random "noise" to the weights. With this approach, for each replication of the composite indicator, a random value is added to each weight, of the form:
+
+$$ w'_i = w_i + \epsilon_i, \; \; \epsilon_i \sim U[-\phi w_i, \phi w_i] $$
+
+where $w_i$ is a weight, $\epsilon_i$ is the added noise, and $\phi$ is a "noise factor". This means that if we set $\phi = 0.25$, for example, it would let $w_i$ vary between +/-25% of its nominal value, following a uniform distribution.
+
+The noise factor can be different from one aggregation level to another in COINr. That means we can choose which aggregation level weights to apply noise to, and how much for each level. To specify this in the `sensitivity()` function, we add it as a "special" `weights` entry in the `SAspecs` list described above. It is special in the sense that this is the only entry that is allowed that is not a construction function name.
+
+The weights entry was already defined above, but let's look at it again here:
+
+```{r SAweightsSpecs, eval=F}
+# define noise to be applied to weights
+nspecs <- data.frame(AgLevel = c(2,3), NoiseFactor = c(0.25,0.25))
+
+nspecs
+
+# create list specifying assumptions to vary and alternatives
+weights = list(NoiseSpecs = nspecs,
+               Nominal = "Original")
+```
+
+The weights list has two entries. The first is a data frame where each row is the specifications for noise to apply to the weights of an aggregation level. It has two columns: `AgLev` which is the aggregation level, and `NoiseFactor`, which is the noise factor described above. In the example here, we have specified that at aggregation levels 2 and 3 (pillars and sub-indexes), there should be noise factors of 0.25 (+/-25% of nominal weight values). Indicator weights remain always at nominal values since they are not specified in this table.
+
+The second entry, `Nominal`, is the name of the weight set to use as the nominal values (i.e. the baseline to apply the noise to). This should correspond to a weight set present in `.$Parameters$Weights`. Here, we have set it to `Original`, which is the original weights that were input to `assemble()`.
+
+## Running an uncertainty analysis
+
+To actually run the analysis, we call the `sensitivity()` function, using the specifications in the `SAspecs` list, and setting `v_targ = "Index"`, meaning that the index will be the target of the sensitivity analysis. Further, we specify that there should be 100 replications (this number is kept fairly low to limit the time taken to compile this book), and that the type of analysis should be an uncertainty analysis.
+
+```{r}
+# run uncertainty analysis
+SAresults <- sensitivity(ASEM, v_targ = "Index",
+                         SA_specs = SAspecs,
+                         N = 100,
+                         SA_type = "UA")
+```
+
+Running a sensitivity/uncertainty analysis can be time consuming and depends on the complexity of the model and the number of runs specified. This particular analysis took less than a minute for me, but could take more or less time depending on the speed of your computer.
+
+The output of the analysis is a list with several entries:
+
+```{r summarySAresults}
+# see summary of analysis
+summary(SAresults)
+```
+
+We will go into more detail in a minute, but first we can plot the results of the uncertainty analysis using a dedicated function `plotSARanks()`:
+
+```{r plotUAranks}
+plotSARanks(SAresults)
+```
+
+This plot orders the units by their nominal ranks, and plots the median rank across all the replications of the uncertainty analysis, as well as the 5th and 95th percentile rank values. The ranks are the focus of an uncertainty analysis because scores can change drastically depending on the method. Ranks are the only comparable metric across different composite indicator methodologies^[This may give a more general hint that focusing on scores in composite indicators is usually not a good idea, because the scores can be extremely different depending on the methodology, while the ranks are much more stable].
+
+Let us now look at the elements in `SAresults`. The data frames `SAresults$Scores` and `SAresults$Ranks` give the scores and ranks respectively for each replication of the composite indicator. The `SAresults$Parameters` data frame gives the uncertain parameter values used for each iteration:
+
+```{r SAparaDFhead}
+head(SAresults$Parameters)
+```
+
+Here, each column is a parameter that was varied in the analysis. Note that this does not include the weights used for each iteration since these are themselves data frames.
+
+The `SAresults$RankStats` table gives a summary of the main statistics of the ranks of each unit, including mean, median, and percentiles:
+
+```{r UAresultRankStats}
+SAresults$RankStats
+```
+
+It also includes the nominal ranks for comparison. Finally, `SAresults$Nominal` gives a summary of nominal ranks and scores.
+
+If this information is not enough, the `store_results` argument to `sensitivity()` gives options of what information to store for each iteration. For example, `store_results = "results+method"` returns the information described so far, plus the full .$Method list of each replication (i.e. the full specifications used to build the composite indicator). Setting  `store_results = "results+COIN"` stores all results and the complete COIN of each replication. Of course, this latter option in particular will take up more memory.
+
+## Running a sensitivity analysis
