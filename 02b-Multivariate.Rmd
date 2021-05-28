@@ -7,3 +7,5 @@ Correlations, and other relationships between indicators, can help to understand
 * Cronbach
 
 To finish.
+
+COINr uses pairwise correlation.
