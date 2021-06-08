@@ -160,7 +160,7 @@ The weights list has two entries. The first is a data frame where each row is th
 
 The second entry, `Nominal`, is the name of the weight set to use as the nominal values (i.e. the baseline to apply the noise to). This should correspond to a weight set present in `.$Parameters$Weights`. Here, we have set it to `Original`, which is the original weights that were input to `assemble()`.
 
-## Running an uncertainty analysis
+### Running an uncertainty analysis
 
 To actually run the analysis, we call the `sensitivity()` function, using the specifications in the `SAspecs` list, and setting `v_targ = "Index"`, meaning that the index will be the target of the sensitivity analysis. Further, we specify that there should be 100 replications (this number is kept fairly low to limit the time taken to compile this book), and that the type of analysis should be an uncertainty analysis.
 
@@ -207,7 +207,7 @@ It also includes the nominal ranks for comparison. Finally, `SAresults$Nominal` 
 
 If this information is not enough, the `store_results` argument to `sensitivity()` gives options of what information to store for each iteration. For example, `store_results = "results+method"` returns the information described so far, plus the full .$Method list of each replication (i.e. the full specifications used to build the composite indicator). Setting  `store_results = "results+COIN"` stores all results and the complete COIN of each replication. Of course, this latter option in particular will take up more memory.
 
-## Running a sensitivity analysis
+### Running a sensitivity analysis
 
 Running a sensitivity analysis, i.e. understanding the individual contributions of input uncertainties, is similar to an uncertainty analysis, but there are some extra considerations to keep in mind.
 

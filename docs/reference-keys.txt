@@ -5,6 +5,7 @@ fig:unnamed-chunk-43
 fig:unnamed-chunk-44-1
 fig:unnamed-chunk-44-2
 fig:unnamed-chunk-46
+fig:unnamed-chunk-47
 overview
 background
 installation
@@ -24,6 +25,7 @@ other-functions
 data
 finally
 terminology
+levels
 tips-for-using-coinr
 missing-data
 ordering
@@ -97,6 +99,9 @@ weight-optimisation-1
 effective-weights
 final-points
 visualising-results
+tables
+plots
+interactive-exploration
 adjustments-and-comparisons
 regeneration
 adjustments

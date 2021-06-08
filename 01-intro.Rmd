@@ -127,6 +127,21 @@ Let's clearly define a few terms first to avoid confusion later on.
 
 Together, indicators and units form the main input data frame for COINr (units as rows, and indicators as columns).
 
+## Levels
+
+COINr frequently refers to "aggregation levels" or equivalently just "levels". Composite indicators are built in a hierarchical structure, such that indicators are aggregated to e.g. sub-pillars, sub-pillars are then aggregated to pillars, and so on up the final index. COINr can handle any number of these "aggregation levels".
+
+Some functions also take the aggregation level as one of their arguments. The convention used by COINr is that the first level (Level 1) is the indicator level, i.e. the columns of data input in `IndData`. Level 2 is aggregated scores resulting from aggregating indicators, Level 3 is the aggregated scores resulting from aggregating the scores in Level 2, and so on.
+
+In the ASEM example, therefore, the levels are defined as follows:
+
+* Level 1 = Indicators
+* Level 2 = Pillars
+* Level 3 = Sub-indexes
+* Level 4 = Index
+
+This means that the ASEM Index has four levels.
+
 ## Tips for using COINr
 
 ### Missing data
