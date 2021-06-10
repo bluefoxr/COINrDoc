@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-06-08" />
+<meta name="date" content="2021-06-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -191,7 +191,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
 <li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#correlations"><i class="fa fa-check"></i><b>5.1</b> Correlations</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#pca"><i class="fa fa-check"></i><b>5.2</b> PCA</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a><ul>
 <li class="chapter" data-level="6.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
 <li class="chapter" data-level="6.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>6.2</b> Data checks and screening</a></li>
@@ -323,14 +326,115 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="multivariate-analysis" class="section level1">
 <h1><span class="header-section-number">Chapter 5</span> Multivariate analysis</h1>
 <p>Correlations, and other relationships between indicators, can help to understand the structure of the data and to see whether indicators are redundant or are mistakenly encoded.</p>
-<ul>
-<li>Correlations</li>
-<li>PCA</li>
-<li>Cronbach</li>
-</ul>
-<p>To finish.</p>
-<p>COINr uses pairwise correlation.</p>
+<div id="correlations" class="section level2">
+<h2><span class="header-section-number">5.1</span> Correlations</h2>
+<p>Correlations are a measure of <em>statistical dependence</em> between one variable and another. Often, what is meant by “correlation”, is the <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient">Pearson correlation coefficient</a>, which is a measure of <em>linear</em> dependence between two variables.</p>
+<p>It’s worth spending a moment to consider what this the implication of the “linear” part actually means. Consider the following example:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="multivariate-analysis.html#cb21-1"></a><span class="co"># numbers in [-1, 1]</span></span>
+<span id="cb21-2"><a href="multivariate-analysis.html#cb21-2"></a>x1 &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.1</span>)</span>
+<span id="cb21-3"><a href="multivariate-analysis.html#cb21-3"></a><span class="co"># x2 is a function of x1</span></span>
+<span id="cb21-4"><a href="multivariate-analysis.html#cb21-4"></a>x2 &lt;-<span class="st"> </span>x1<span class="op">^</span><span class="dv">2</span></span>
+<span id="cb21-5"><a href="multivariate-analysis.html#cb21-5"></a><span class="co"># plot</span></span>
+<span id="cb21-6"><a href="multivariate-analysis.html#cb21-6"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb21-7"><a href="multivariate-analysis.html#cb21-7"></a><span class="kw">qplot</span>(x1, x2)</span></code></pre></div>
+<p><img src="COINr-documentation_files/figure-html/unnamed-chunk-18-1.png" width="768" /></p>
+<p>Now, clearly there is a very strong relationship between x1 and x2. In fact, x2 is completely dependent on x2 (there are no other variables or noise that control its values). So what happens if we check the correlation?</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="multivariate-analysis.html#cb22-1"></a><span class="kw">cor</span>(x1, x2, <span class="dt">method =</span> <span class="st">&quot;pearson&quot;</span>)</span>
+<span id="cb22-2"><a href="multivariate-analysis.html#cb22-2"></a><span class="co">## [1] 1.216307e-16</span></span></code></pre></div>
+<p>We end up with a correlation of zero. This is because although there is a very strong <em>nonlinear</em> relationship between <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span>, the <em>linear</em> relationship is zero. This is made even clearer when we fit a linear regression:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="multivariate-analysis.html#cb23-1"></a><span class="kw">qplot</span>(x1, x2) <span class="op">+</span></span>
+<span id="cb23-2"><a href="multivariate-analysis.html#cb23-2"></a><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method=</span>lm,   <span class="co"># Add linear regression line</span></span>
+<span id="cb23-3"><a href="multivariate-analysis.html#cb23-3"></a>                <span class="dt">se=</span><span class="ot">FALSE</span>)    <span class="co"># Don&#39;t add shaded confidence region</span></span>
+<span id="cb23-4"><a href="multivariate-analysis.html#cb23-4"></a><span class="co">## `geom_smooth()` using formula &#39;y ~ x&#39;</span></span></code></pre></div>
+<p><img src="COINr-documentation_files/figure-html/unnamed-chunk-20-1.png" width="768" /></p>
+<p>Obviously, this is a very contrived example, and it is very unlikely you will see a relationship like this in real indicator data. However the point is that sometimes, linear measures of dependence don’t tell the whole story.</p>
+<p>That said, relationships between indicators can often turn out to be fairly linear. Exceptions arise when indicators are highly skewed, for example. In these cases, a good alternative is to turn to <em>rank correlation</em> measures. Two well-known such measures are the <a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient">Spearman rank correlation</a> and the <a href="https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient">Kendall rank correlation</a>. Rank correlations can handle nonlinearity as long as the relationship is monotonic. You could also argue that since the focus of composite indicators is often on ranks, rank correlation also makes sense on a conceptual level.</p>
+<p>COINr offers a few ways to check correlations that are more convenient than <code>stats::cor()</code>. The first is to call the <code>getStats()</code> function that was already mentioned in <a href="initial-visualisation-and-analysis.html#initial-visualisation-and-analysis">Initial visualisation and analysis</a>. This can be pointed at any data set and indicator subset and will give correlation between all indicators present. For example, taking the raw data of our example data set:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="multivariate-analysis.html#cb24-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb24-2"><a href="multivariate-analysis.html#cb24-2"></a><span class="kw">library</span>(magrittr)</span>
+<span id="cb24-3"><a href="multivariate-analysis.html#cb24-3"></a>ASEM &lt;-<span class="st"> </span><span class="kw">build_ASEM</span>()</span>
+<span id="cb24-4"><a href="multivariate-analysis.html#cb24-4"></a>statlist &lt;-<span class="st"> </span><span class="kw">getStats</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">out2 =</span> <span class="st">&quot;list&quot;</span>)</span>
+<span id="cb24-5"><a href="multivariate-analysis.html#cb24-5"></a></span>
+<span id="cb24-6"><a href="multivariate-analysis.html#cb24-6"></a><span class="co"># see a bit of correlation matrix</span></span>
+<span id="cb24-7"><a href="multivariate-analysis.html#cb24-7"></a>statlist<span class="op">$</span>Correlations[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
+<span id="cb24-8"><a href="multivariate-analysis.html#cb24-8"></a><span class="co">##    IndCode     Goods  Services       FDI    PRemit</span></span>
+<span id="cb24-9"><a href="multivariate-analysis.html#cb24-9"></a><span class="co">## 1    Goods        NA 0.8886729 0.8236043 0.8580885</span></span>
+<span id="cb24-10"><a href="multivariate-analysis.html#cb24-10"></a><span class="co">## 2 Services 0.8886729        NA 0.8567035 0.8322828</span></span>
+<span id="cb24-11"><a href="multivariate-analysis.html#cb24-11"></a><span class="co">## 3      FDI 0.8236043 0.8567035        NA 0.8009064</span></span>
+<span id="cb24-12"><a href="multivariate-analysis.html#cb24-12"></a><span class="co">## 4   PRemit 0.8580885 0.8322828 0.8009064        NA</span></span>
+<span id="cb24-13"><a href="multivariate-analysis.html#cb24-13"></a><span class="co">## 5  ForPort 0.4750653 0.6955028 0.4366541 0.4837038</span></span>
+<span id="cb24-14"><a href="multivariate-analysis.html#cb24-14"></a></span>
+<span id="cb24-15"><a href="multivariate-analysis.html#cb24-15"></a><span class="co"># see a bit of correlations with denominators</span></span>
+<span id="cb24-16"><a href="multivariate-analysis.html#cb24-16"></a>statlist<span class="op">$</span>DenomCorrelations[, <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</span>
+<span id="cb24-17"><a href="multivariate-analysis.html#cb24-17"></a><span class="co">##   Denominator     Goods  Services       FDI    PRemit</span></span>
+<span id="cb24-18"><a href="multivariate-analysis.html#cb24-18"></a><span class="co">## 1    Den_Area 0.2473558 0.2071061 0.3668625 0.2429470</span></span>
+<span id="cb24-19"><a href="multivariate-analysis.html#cb24-19"></a><span class="co">## 2  Den_Energy 0.6276219 0.5916882 0.7405170 0.5312195</span></span>
+<span id="cb24-20"><a href="multivariate-analysis.html#cb24-20"></a><span class="co">## 3     Den_GDP 0.8026770 0.7708846 0.8482453 0.7111943</span></span>
+<span id="cb24-21"><a href="multivariate-analysis.html#cb24-21"></a><span class="co">## 4     Den_Pop 0.4158811 0.4577006 0.6529376 0.4379999</span></span></code></pre></div>
+<p>The type of correlation can be changed by the <code>cortype</code> argument, which can be set to “pearson” or “kendall”.</p>
+<p>The <code>getStats()</code> function also summarises some of this information in its output in the <code>.$StatTable</code> dataframe:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="multivariate-analysis.html#cb25-1"></a>statlist<span class="op">$</span>StatTable[ <span class="kw">c</span>(<span class="st">&quot;Indicator&quot;</span>, <span class="st">&quot;Collinearity&quot;</span>, <span class="st">&quot;Neg.Correls&quot;</span>, <span class="st">&quot;Denom.correlation&quot;</span>)] <span class="op">%&gt;%</span></span>
+<span id="cb25-2"><a href="multivariate-analysis.html#cb25-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>)</span>
+<span id="cb25-3"><a href="multivariate-analysis.html#cb25-3"></a><span class="co">## # A tibble: 10 x 4</span></span>
+<span id="cb25-4"><a href="multivariate-analysis.html#cb25-4"></a><span class="co">##    Indicator Collinearity Neg.Correls Denom.correlation</span></span>
+<span id="cb25-5"><a href="multivariate-analysis.html#cb25-5"></a><span class="co">##    &lt;chr&gt;     &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;            </span></span>
+<span id="cb25-6"><a href="multivariate-analysis.html#cb25-6"></a><span class="co">##  1 Goods     Collinear              1 High             </span></span>
+<span id="cb25-7"><a href="multivariate-analysis.html#cb25-7"></a><span class="co">##  2 Services  OK                     1 High             </span></span>
+<span id="cb25-8"><a href="multivariate-analysis.html#cb25-8"></a><span class="co">##  3 FDI       OK                     1 High             </span></span>
+<span id="cb25-9"><a href="multivariate-analysis.html#cb25-9"></a><span class="co">##  4 PRemit    OK                     0 High             </span></span>
+<span id="cb25-10"><a href="multivariate-analysis.html#cb25-10"></a><span class="co">##  5 ForPort   OK                     6 OK               </span></span>
+<span id="cb25-11"><a href="multivariate-analysis.html#cb25-11"></a><span class="co">##  6 CostImpEx OK                    16 OK               </span></span>
+<span id="cb25-12"><a href="multivariate-analysis.html#cb25-12"></a><span class="co">##  7 Tariff    OK                    15 OK               </span></span>
+<span id="cb25-13"><a href="multivariate-analysis.html#cb25-13"></a><span class="co">##  8 TBTs      OK                     7 OK               </span></span>
+<span id="cb25-14"><a href="multivariate-analysis.html#cb25-14"></a><span class="co">##  9 TIRcon    OK                     5 OK               </span></span>
+<span id="cb25-15"><a href="multivariate-analysis.html#cb25-15"></a><span class="co">## 10 RTAs      OK                     9 OK</span></span></code></pre></div>
+<p>This flags any indicators that have collinearity with any other indicators, or are significantly negatively correlated, or have correlations with denominators. These flags are activated based on thresholds that are inputs to the <code>getStats()</code> function (<code>t_colin</code> and <code>t_denom</code>).</p>
+<p>Correlations can also be plotted using the <code>plotCorr()</code> function. This is a flexible plotting function, powered by ggplot2, which is adapted to the composite indicator context. It has a number of options because there are many ways to plot correlations in a composite indicator, including within an aggregation level, between levels, selecting certain groups, focusing on parents, and so on.</p>
+<p>To see this, here are a few examples. First, let’s plot correlations between raw indicators.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="multivariate-analysis.html#cb26-1"></a><span class="kw">plotCorr</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">aglevs =</span> <span class="dv">1</span>, <span class="dt">showvals =</span> F)</span></code></pre></div>
+<p><img src="COINr-documentation_files/figure-html/unnamed-chunk-23-1.png" width="768" /></p>
+<p>Here, we have plotted raw indicators against indicators. A few things to note:</p>
+<ol style="list-style-type: decimal">
+<li>By default, if a level is plotted against itself, it only plots correlations within the groups of the next aggregation level above. Use the <code>grouplev</code> argument to control the grouping or disable.</li>
+<li>Insignificant correlations (at 5% level) are excluded by default. Use the <code>pval</code> argument to change the significance threshold or to disable.</li>
+</ol>
+<p>We can repeat the same plot with some variations. First, grouping by sub-index:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="multivariate-analysis.html#cb27-1"></a><span class="kw">plotCorr</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">aglevs =</span> <span class="dv">1</span>, <span class="dt">showvals =</span> F, <span class="dt">grouplev =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="COINr-documentation_files/figure-html/unnamed-chunk-24-1.png" width="768" /></p>
+<p>Second, we can plot the whole correlation matrix, and also include insignificant correlations:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="multivariate-analysis.html#cb28-1"></a><span class="kw">plotCorr</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="dt">aglevs =</span> <span class="dv">1</span>, <span class="dt">showvals =</span> F, <span class="dt">grouplev =</span> <span class="dv">0</span>, <span class="dt">pval =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="COINr-documentation_files/figure-html/unnamed-chunk-25-1.png" width="768" /></p>
+<p>It may often be more interesting to plot correlations between aggregation levels. Since there is a bit more space, we will also enable the values of the correlations using <code>showvals = TRUE</code>.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="multivariate-analysis.html#cb29-1"></a><span class="kw">plotCorr</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">aglevs =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">showvals =</span> T)</span></code></pre></div>
+<p><img src="COINr-documentation_files/figure-html/unnamed-chunk-26-1.png" width="768" /></p>
+<p>Note that again, by default the correlations are grouped with the parent level above. This is disabled by setting <code>withparent = "none"</code>. To see correlations with multiple parents at once, we can set <code>withparent = "family"</code></p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="multivariate-analysis.html#cb30-1"></a><span class="kw">plotCorr</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">aglevs =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">showvals =</span> T, <span class="dt">withparent =</span> <span class="st">&quot;family&quot;</span>)</span></code></pre></div>
+<p><img src="COINr-documentation_files/figure-html/unnamed-chunk-27-1.png" width="768" /></p>
+<p>It is also possible to switch to a discrete colour map to highlight negative, weak and collinear values.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="multivariate-analysis.html#cb31-1"></a><span class="kw">plotCorr</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">aglevs =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">showvals =</span> T, <span class="dt">withparent =</span> <span class="st">&quot;family&quot;</span>,</span>
+<span id="cb31-2"><a href="multivariate-analysis.html#cb31-2"></a>         <span class="dt">flagcolours =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p><img src="COINr-documentation_files/figure-html/unnamed-chunk-28-1.png" width="768" /></p>
+<p>The thresholds for these colours can be controlled by the <code>flagthresh</code> argument. This type of plot helps to see at a glance where there might be a problematic indicator. In the example here, we see that TBTs are negatively correlated with all levels of the index.</p>
+<p>Finally, it might be useful to simply have this information as a table rather than a plot. Setting <code>out2</code> to “dflong” or “dfwide” outputs a data frame in long or wide format, instead of a figure. This can be helpful for presenting the information in a report or doing custom formatting.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="multivariate-analysis.html#cb32-1"></a><span class="kw">plotCorr</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">aglevs =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">showvals =</span> T, <span class="dt">withparent =</span> <span class="st">&quot;family&quot;</span>,</span>
+<span id="cb32-2"><a href="multivariate-analysis.html#cb32-2"></a>         <span class="dt">flagcolours =</span> <span class="ot">TRUE</span>, <span class="dt">out2 =</span> <span class="st">&quot;dfwide&quot;</span>)</span>
+<span id="cb32-3"><a href="multivariate-analysis.html#cb32-3"></a><span class="co">## # A tibble: 8 x 3</span></span>
+<span id="cb32-4"><a href="multivariate-analysis.html#cb32-4"></a><span class="co">##   Indicator  Agg2  Agg3</span></span>
+<span id="cb32-5"><a href="multivariate-analysis.html#cb32-5"></a><span class="co">##   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb32-6"><a href="multivariate-analysis.html#cb32-6"></a><span class="co">## 1 ConEcFin   0.53  0.42</span></span>
+<span id="cb32-7"><a href="multivariate-analysis.html#cb32-7"></a><span class="co">## 2 Instit     0.86  0.81</span></span>
+<span id="cb32-8"><a href="multivariate-analysis.html#cb32-8"></a><span class="co">## 3 P2P        0.86  0.78</span></span>
+<span id="cb32-9"><a href="multivariate-analysis.html#cb32-9"></a><span class="co">## 4 Physical   0.87  0.83</span></span>
+<span id="cb32-10"><a href="multivariate-analysis.html#cb32-10"></a><span class="co">## 5 Political  0.64  0.68</span></span>
+<span id="cb32-11"><a href="multivariate-analysis.html#cb32-11"></a><span class="co">## 6 Environ    0.48  0   </span></span>
+<span id="cb32-12"><a href="multivariate-analysis.html#cb32-12"></a><span class="co">## 7 Social     0.74  0.9 </span></span>
+<span id="cb32-13"><a href="multivariate-analysis.html#cb32-13"></a><span class="co">## 8 SusEcFin   0     0</span></span></code></pre></div>
+<p>Arguably it’s not so intuitive for a function called <code>plotCorr()</code> to output tables, but that’s how it is for now.</p>
+</div>
+<div id="pca" class="section level2">
+<h2><span class="header-section-number">5.2</span> PCA</h2>
 
+</div>
 </div>
             </section>
 

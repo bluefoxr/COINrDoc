@@ -1,11 +1,11 @@
 fig:unnamed-chunk-4
-fig:unnamed-chunk-37
-fig:unnamed-chunk-42
-fig:unnamed-chunk-43
-fig:unnamed-chunk-44-1
-fig:unnamed-chunk-44-2
-fig:unnamed-chunk-46
-fig:unnamed-chunk-47
+fig:unnamed-chunk-49
+fig:unnamed-chunk-54
+fig:unnamed-chunk-55
+fig:unnamed-chunk-56-1
+fig:unnamed-chunk-56-2
+fig:unnamed-chunk-58
+fig:unnamed-chunk-59
 overview
 background
 installation
@@ -45,6 +45,8 @@ distributions
 ranks-and-maps
 statistics-and-analysis
 multivariate-analysis
+correlations
+pca
 missing-data-and-imputation
 concept
 data-checks-and-screening
@@ -90,7 +92,7 @@ weight-optimisation
 weighting-tools-in-coinr
 manual-weighting
 interactive-re-weighting-with-rew8r
-correlations
+correlations-1
 weighting-2
 remarks
 automatic-re-weighting
