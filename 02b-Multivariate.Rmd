@@ -102,7 +102,7 @@ plotCorr(ASEM, dset = "Aggregated", aglevs = c(1,2), showvals = T, withparent = 
 It is also possible to switch to a discrete colour map to highlight negative, weak and collinear values.
 
 ```{r}
-plotCorr(ASEM, dset = "Aggregated", aglevs = c(1,2), showvals = T, withparent = "family",
+plotCorr(ASEM, dset = "Aggregated", aglevs = c(2,3), showvals = T, withparent = "family",
          flagcolours = TRUE)
 ```
 
@@ -116,5 +116,19 @@ plotCorr(ASEM, dset = "Aggregated", aglevs = c(2,3), showvals = T, withparent = 
 ```
 
 Arguably it's not so intuitive for a function called `plotCorr()` to output tables, but that's how it is for now.
+
+If you like your correlation heatmaps interactive, COINr has another function called `iplotCorr()`. It functions in a similar way `plotCorr()`, but is designed in particular as a component of the `rew8r()` app and can be used in HTML documents. For a basic correlation map:
+
+```{r}
+iplotCorr(ASEM, aglevs = c(2, 3))
+```
+
+Unlike `plotCorr()`, indicators are grouped by rectangles around the groups. This might be better for small plots but can be a bit confusing when there are many elements plotted at the same time. The `iplotCorr()` function can also show a continuous colour scale, and values can be removed.
+
+```{r}
+iplotCorr(ASEM, aglevs = c(1,2), showvals = F, flagcolours = F)
+```
+
+Like `plotCorr()`, threshold values can be controlled for the discrete colour map. The function is powered by *plotly*, which means it can be further altered by using Plotly commands.
 
 ## PCA
