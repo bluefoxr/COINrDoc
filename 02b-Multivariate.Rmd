@@ -131,4 +131,73 @@ iplotCorr(ASEM, aglevs = c(1,2), showvals = F, flagcolours = F)
 
 Like `plotCorr()`, threshold values can be controlled for the discrete colour map. The function is powered by *plotly*, which means it can be further altered by using Plotly commands.
 
+An additional tool that can be used in checking correlations is [Cronbach's alpha](https://en.wikipedia.org/wiki/Cronbach%27s_alpha) - this is a measure of internal consistency or "reliability" of the data, based on the strength of correlations between indicators. COINr has a simple in-built function for calculating this, which can be directed at any data set and subset of indicators as with other functions. To see the consistency of the entire raw data set:
+
+```{r}
+getCronbach(ASEM, dset = "Raw")
+```
+
+Often, it may be more relevant to look at consistency within aggregation groups. For example, the indicators within the "Physical" pillar of the ASEM data set:
+
+```{r}
+getCronbach(ASEM, dset = "Raw", icodes = "Physical", aglev = 1)
+```
+
+This shows that the consistency is much stronger within a sub-group. This can also apply to the aggregated data:
+
+```{r}
+getCronbach(ASEM, dset = "Aggregated", icodes = "Conn", aglev = 2)
+```
+
+This shows that the consistency of the sub-pillars within the Connectivity sub-index is quite high.
+
 ## PCA
+
+Another facet of multivariate analysis is principle component analysis (PCA). PCA is used in at least two main ways in composite indicators, first to understand the structure of the data and check for latent variables (the subject of this section); and second as a weighting approach (see the chapter on [Weighting]).
+
+PCA often seems to occupy an unusual niche where it's relatively well known, but not always so well-understood. I'm not going to attempt a full explanation of PCA here, because there are many nice explanations available in books and online. However, here is a very rough guide.
+
+The first thing to know is that PCA is based on correlations between indicators, i.e. *linear* relationships (see caveats of this above). PCA tries to find the linear combination of your indicators that explains the most variance. It's a bit easier to understand this visually. Let's consider two variables which are strongly correlated:
+
+```{r}
+library(ggplot2)
+
+# random numbers
+x1 <- rnorm(50, 10, 1)
+# x2 is 0.5*x1 + gaussian noise
+x2 <- 0.5*x1 + rnorm(50, 0, 0.2)
+
+#plot
+qplot(x1, x2)
+```
+
+At the moment, each point/observation lives in a two dimensional space, i.e. it is defined by both its $x_1$ and $x_2$ values. But in a way, this is inefficient because actually the data more or less lives on a straight line.
+
+What PCA does is to rotate the axes (or rotate the data, depending on which way you look at it), so that the first axis aligns itself with the "shape" or "spread" of the data, and the remaining axes are orthoginal to that. We can demonstrate this using R's built in PCA function.
+
+```{r}
+# perform PCA
+PCAres <- stats::prcomp(cbind(x1, x2), scale = F, center = F)
+
+# get rotated data
+xr <- as.data.frame(PCAres$x)
+
+# plot on principle components (set y axis to similar scale to orig data)
+ggplot(xr, aes(x = -PC1, y = PC2)) +
+  geom_point() +
+  ylim(-(max(x2) - min(x2))/2, (max(x2) - min(x2))/2)
+```
+
+If you look carefully, you can see that the data corresponds to the previous plot, but just rotated slightly, so that the direction of greatest spread (i.e. greatest variance) is aligned with the first principle component. Here, I have set the y axis to a similar scale to the previous plot to make it easier to see.
+
+There are many reasons for doing PCA, but they often correspond to two main categories: exploratory analysis and dimension reduction. In the context of composite indicators, both of these goals are relevant.
+
+In terms of exploratory analysis, PCA provides somewhat similar information to correlation analysis and Cronbach's alpha. For any given set of indicators, or aggregates, we can check to see how much variance is explained by the first (few) principle component(s). If the data can be explained by a few PCs, then it suggests that there is a strong latent variable, i.e. the data is shaped something like the figure above, such that if we rotate it, we can find an axis (linear combination) which explains the data pretty well. This is quite similar to the idea of "consistency" in Cronbach's alpha.
+
+R has built in functions for PCA (as shown above), and there is no need to reinvent the wheel here. But COINr has a function `getPCA()` which makes it easier to interact with COINs, and follows the familiar COINr syntax.
+
+```{r, eval = F}
+PCAres <- getPCA(ASEM, dset = "Raw", icodes = "Physical", aglev = 1)
+```
+
+TO FINISH

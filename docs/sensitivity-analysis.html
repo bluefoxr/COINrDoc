@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-06-10" />
+<meta name="date" content="2021-06-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -388,30 +388,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="sensitivity-in-coinr" class="section level2">
 <h2><span class="header-section-number">14.3</span> Sensitivity in COINr</h2>
 <p>To run a sensitivity analysis in COINr, the function of interest is <code>sensitivity()</code>. We must follow the steps outlined above, so first, you should have a nominal composite indicator constructed up to and including the aggregation step. Here, we use our old friend the ASEM index.</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="sensitivity-analysis.html#cb91-1"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb91-2"><a href="sensitivity-analysis.html#cb91-2"></a><span class="co"># build ASEM index</span></span>
-<span id="cb91-3"><a href="sensitivity-analysis.html#cb91-3"></a>ASEM &lt;-<span class="st"> </span><span class="kw">build_ASEM</span>()</span>
-<span id="cb91-4"><a href="sensitivity-analysis.html#cb91-4"></a><span class="co">## -----------------</span></span>
-<span id="cb91-5"><a href="sensitivity-analysis.html#cb91-5"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb91-6"><a href="sensitivity-analysis.html#cb91-6"></a><span class="co">## -----------------</span></span>
-<span id="cb91-7"><a href="sensitivity-analysis.html#cb91-7"></a><span class="co">## -----------------</span></span>
-<span id="cb91-8"><a href="sensitivity-analysis.html#cb91-8"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb91-9"><a href="sensitivity-analysis.html#cb91-9"></a><span class="co">## -----------------</span></span>
-<span id="cb91-10"><a href="sensitivity-analysis.html#cb91-10"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb91-11"><a href="sensitivity-analysis.html#cb91-11"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb91-12"><a href="sensitivity-analysis.html#cb91-12"></a><span class="co">## Number of reference years of data = 1</span></span>
-<span id="cb91-13"><a href="sensitivity-analysis.html#cb91-13"></a><span class="co">## Years from 2018 to 2018</span></span>
-<span id="cb91-14"><a href="sensitivity-analysis.html#cb91-14"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb91-15"><a href="sensitivity-analysis.html#cb91-15"></a><span class="co">## -----------------</span></span>
-<span id="cb91-16"><a href="sensitivity-analysis.html#cb91-16"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb91-17"><a href="sensitivity-analysis.html#cb91-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb91-18"><a href="sensitivity-analysis.html#cb91-18"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb91-19"><a href="sensitivity-analysis.html#cb91-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb91-20"><a href="sensitivity-analysis.html#cb91-20"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb91-21"><a href="sensitivity-analysis.html#cb91-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb91-22"><a href="sensitivity-analysis.html#cb91-22"></a><span class="co">## -----------------</span></span>
-<span id="cb91-23"><a href="sensitivity-analysis.html#cb91-23"></a><span class="co">## Missing data points detected = 65</span></span>
-<span id="cb91-24"><a href="sensitivity-analysis.html#cb91-24"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="sensitivity-analysis.html#cb97-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb97-2"><a href="sensitivity-analysis.html#cb97-2"></a><span class="co"># build ASEM index</span></span>
+<span id="cb97-3"><a href="sensitivity-analysis.html#cb97-3"></a>ASEM &lt;-<span class="st"> </span><span class="kw">build_ASEM</span>()</span>
+<span id="cb97-4"><a href="sensitivity-analysis.html#cb97-4"></a><span class="co">## -----------------</span></span>
+<span id="cb97-5"><a href="sensitivity-analysis.html#cb97-5"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb97-6"><a href="sensitivity-analysis.html#cb97-6"></a><span class="co">## -----------------</span></span>
+<span id="cb97-7"><a href="sensitivity-analysis.html#cb97-7"></a><span class="co">## -----------------</span></span>
+<span id="cb97-8"><a href="sensitivity-analysis.html#cb97-8"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb97-9"><a href="sensitivity-analysis.html#cb97-9"></a><span class="co">## -----------------</span></span>
+<span id="cb97-10"><a href="sensitivity-analysis.html#cb97-10"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb97-11"><a href="sensitivity-analysis.html#cb97-11"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb97-12"><a href="sensitivity-analysis.html#cb97-12"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb97-13"><a href="sensitivity-analysis.html#cb97-13"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb97-14"><a href="sensitivity-analysis.html#cb97-14"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb97-15"><a href="sensitivity-analysis.html#cb97-15"></a><span class="co">## -----------------</span></span>
+<span id="cb97-16"><a href="sensitivity-analysis.html#cb97-16"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb97-17"><a href="sensitivity-analysis.html#cb97-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb97-18"><a href="sensitivity-analysis.html#cb97-18"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb97-19"><a href="sensitivity-analysis.html#cb97-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb97-20"><a href="sensitivity-analysis.html#cb97-20"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb97-21"><a href="sensitivity-analysis.html#cb97-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb97-22"><a href="sensitivity-analysis.html#cb97-22"></a><span class="co">## -----------------</span></span>
+<span id="cb97-23"><a href="sensitivity-analysis.html#cb97-23"></a><span class="co">## Missing data points detected = 65</span></span>
+<span id="cb97-24"><a href="sensitivity-analysis.html#cb97-24"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span></code></pre></div>
 <div id="general-specifications" class="section level3">
 <h3><span class="header-section-number">14.3.1</span> General specifications</h3>
 <p>Next, we have to decide which parameters to treat as uncertain. Here, we will consider three things:</p>
@@ -429,231 +429,231 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Finally, we will consider the index as the target.</p>
 <p>Let’s enter these specifications. The most complex part is specifying the <code>SA_specs</code> argument of the <code>sensitivity()</code> function, which specifies which parameters to vary and which alternative values to use. To explain how this works, the easiest way is to construct the specifications for our example.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="sensitivity-analysis.html#cb92-1"></a><span class="co"># define noise to be applied to weights</span></span>
-<span id="cb92-2"><a href="sensitivity-analysis.html#cb92-2"></a>nspecs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">AgLevel =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">NoiseFactor =</span> <span class="kw">c</span>(<span class="fl">0.25</span>,<span class="fl">0.25</span>))</span>
-<span id="cb92-3"><a href="sensitivity-analysis.html#cb92-3"></a></span>
-<span id="cb92-4"><a href="sensitivity-analysis.html#cb92-4"></a><span class="co"># create list specifying assumptions to vary and alternatives</span></span>
-<span id="cb92-5"><a href="sensitivity-analysis.html#cb92-5"></a>SAspecs &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
-<span id="cb92-6"><a href="sensitivity-analysis.html#cb92-6"></a>  <span class="dt">impute =</span> <span class="kw">list</span>(<span class="dt">imtype =</span> <span class="kw">c</span>(<span class="st">&quot;indgroup_mean&quot;</span>, <span class="st">&quot;ind_mean&quot;</span>, <span class="st">&quot;none&quot;</span>)),</span>
-<span id="cb92-7"><a href="sensitivity-analysis.html#cb92-7"></a>  <span class="dt">normalise =</span> <span class="kw">list</span>(<span class="dt">ntype =</span> <span class="kw">c</span>(<span class="st">&quot;minmax&quot;</span>, <span class="st">&quot;rank&quot;</span>, <span class="st">&quot;dist2max&quot;</span>)),</span>
-<span id="cb92-8"><a href="sensitivity-analysis.html#cb92-8"></a>  <span class="dt">weights =</span> <span class="kw">list</span>(<span class="dt">NoiseSpecs =</span> nspecs, <span class="dt">Nominal =</span> <span class="st">&quot;Original&quot;</span>)</span>
-<span id="cb92-9"><a href="sensitivity-analysis.html#cb92-9"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="sensitivity-analysis.html#cb98-1"></a><span class="co"># define noise to be applied to weights</span></span>
+<span id="cb98-2"><a href="sensitivity-analysis.html#cb98-2"></a>nspecs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">AgLevel =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">NoiseFactor =</span> <span class="kw">c</span>(<span class="fl">0.25</span>,<span class="fl">0.25</span>))</span>
+<span id="cb98-3"><a href="sensitivity-analysis.html#cb98-3"></a></span>
+<span id="cb98-4"><a href="sensitivity-analysis.html#cb98-4"></a><span class="co"># create list specifying assumptions to vary and alternatives</span></span>
+<span id="cb98-5"><a href="sensitivity-analysis.html#cb98-5"></a>SAspecs &lt;-<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb98-6"><a href="sensitivity-analysis.html#cb98-6"></a>  <span class="dt">impute =</span> <span class="kw">list</span>(<span class="dt">imtype =</span> <span class="kw">c</span>(<span class="st">&quot;indgroup_mean&quot;</span>, <span class="st">&quot;ind_mean&quot;</span>, <span class="st">&quot;none&quot;</span>)),</span>
+<span id="cb98-7"><a href="sensitivity-analysis.html#cb98-7"></a>  <span class="dt">normalise =</span> <span class="kw">list</span>(<span class="dt">ntype =</span> <span class="kw">c</span>(<span class="st">&quot;minmax&quot;</span>, <span class="st">&quot;rank&quot;</span>, <span class="st">&quot;dist2max&quot;</span>)),</span>
+<span id="cb98-8"><a href="sensitivity-analysis.html#cb98-8"></a>  <span class="dt">weights =</span> <span class="kw">list</span>(<span class="dt">NoiseSpecs =</span> nspecs, <span class="dt">Nominal =</span> <span class="st">&quot;Original&quot;</span>)</span>
+<span id="cb98-9"><a href="sensitivity-analysis.html#cb98-9"></a>)</span></code></pre></div>
 <p>Leaving aside the <code>nspecs</code> line for now (but see below for details), we focus on the list <code>SAspecs</code>, which will be used as the <code>SA_specs</code> argument of <code>sensitivity()</code>. The <em>names</em> of the first level of this list should be any of the seven construction functions. Each named element of the list is itself a list, which specifies the parameters of that function to vary, and the alternative values. In summary, the general format is:</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="sensitivity-analysis.html#cb93-1"></a><span class="op">&lt;</span>function_name<span class="op">&gt;</span><span class="st"> </span><span class="er">=</span><span class="st"> </span><span class="kw">list</span>(<span class="op">&lt;</span>parameter name<span class="op">&gt;</span><span class="st"> </span><span class="er">=</span><span class="st"> </span><span class="er">&lt;</span>vector or list of alternatives<span class="op">&gt;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="sensitivity-analysis.html#cb99-1"></a><span class="op">&lt;</span>function_name<span class="op">&gt;</span><span class="st"> </span><span class="er">=</span><span class="st"> </span><span class="kw">list</span>(<span class="op">&lt;</span>parameter name<span class="op">&gt;</span><span class="st"> </span><span class="er">=</span><span class="st"> </span><span class="er">&lt;</span>vector or list of alternatives<span class="op">&gt;</span>)</span></code></pre></div>
 <p>There is no restriction on the number of parameters that can be varied, or the number of alternatives. You can have multiple parameters from the same function, for example.</p>
 </div>
 <div id="varying-weights" class="section level3">
 <h3><span class="header-section-number">14.3.2</span> Varying weights</h3>
 <p>The exception to the above format is regarding weights. Weights are input as an argument of the <code>aggregate()</code> function, but since this is a single argument, it only behaves as a single parameter. That means that we could test alternative weight sets as part of the sensitivity analysis:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="sensitivity-analysis.html#cb94-1"></a><span class="co"># example entry in SA_specs list of sensitivity() [not used here]</span></span>
-<span id="cb94-2"><a href="sensitivity-analysis.html#cb94-2"></a>aggregate =<span class="st"> </span><span class="kw">list</span>(<span class="dt">agweights =</span> <span class="kw">c</span>(<span class="st">&quot;Weights1&quot;</span>, <span class="st">&quot;Weights2&quot;</span>, <span class="st">&quot;Weights3&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="sensitivity-analysis.html#cb100-1"></a><span class="co"># example entry in SA_specs list of sensitivity() [not used here]</span></span>
+<span id="cb100-2"><a href="sensitivity-analysis.html#cb100-2"></a>aggregate =<span class="st"> </span><span class="kw">list</span>(<span class="dt">agweights =</span> <span class="kw">c</span>(<span class="st">&quot;Weights1&quot;</span>, <span class="st">&quot;Weights2&quot;</span>, <span class="st">&quot;Weights3&quot;</span>))</span></code></pre></div>
 <p>where “Weights1” and friends are alternative sets of weights that we have stored in <code>.$Parameters$Weights</code>. This is a useful test but only gives a limited picture of uncertainty because we test between a small set of alternatives. It may be the best approach if we have two or three fairly clear alternatives for weighting (note: this can also be a way to exclude indicators or even entire aggregation groups, by setting certain weights to zero).</p>
 <p>If the uncertainty is more general, i.e. we have elicited weights but we feel that there is a reasonable degree of uncertainty surrounding all weight values (which usually there is), COINr also includes the option to apply random “noise” to the weights. With this approach, for each replication of the composite indicator, a random value is added to each weight, of the form:</p>
 <p><span class="math display">\[ w&#39;_i = w_i + \epsilon_i, \; \; \epsilon_i \sim U[-\phi w_i, \phi w_i] \]</span></p>
 <p>where <span class="math inline">\(w_i\)</span> is a weight, <span class="math inline">\(\epsilon_i\)</span> is the added noise, and <span class="math inline">\(\phi\)</span> is a “noise factor”. This means that if we set <span class="math inline">\(\phi = 0.25\)</span>, for example, it would let <span class="math inline">\(w_i\)</span> vary between +/-25% of its nominal value, following a uniform distribution.</p>
 <p>The noise factor can be different from one aggregation level to another in COINr. That means we can choose which aggregation level weights to apply noise to, and how much for each level. To specify this in the <code>sensitivity()</code> function, we add it as a “special” <code>weights</code> entry in the <code>SAspecs</code> list described above. It is special in the sense that this is the only entry that is allowed that is not a construction function name.</p>
 <p>The weights entry was already defined above, but let’s look at it again here:</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="sensitivity-analysis.html#cb95-1"></a><span class="co"># define noise to be applied to weights</span></span>
-<span id="cb95-2"><a href="sensitivity-analysis.html#cb95-2"></a>nspecs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">AgLevel =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">NoiseFactor =</span> <span class="kw">c</span>(<span class="fl">0.25</span>,<span class="fl">0.25</span>))</span>
-<span id="cb95-3"><a href="sensitivity-analysis.html#cb95-3"></a></span>
-<span id="cb95-4"><a href="sensitivity-analysis.html#cb95-4"></a>nspecs</span>
-<span id="cb95-5"><a href="sensitivity-analysis.html#cb95-5"></a></span>
-<span id="cb95-6"><a href="sensitivity-analysis.html#cb95-6"></a><span class="co"># create list specifying assumptions to vary and alternatives</span></span>
-<span id="cb95-7"><a href="sensitivity-analysis.html#cb95-7"></a>weights =<span class="st"> </span><span class="kw">list</span>(<span class="dt">NoiseSpecs =</span> nspecs,</span>
-<span id="cb95-8"><a href="sensitivity-analysis.html#cb95-8"></a>               <span class="dt">Nominal =</span> <span class="st">&quot;Original&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="sensitivity-analysis.html#cb101-1"></a><span class="co"># define noise to be applied to weights</span></span>
+<span id="cb101-2"><a href="sensitivity-analysis.html#cb101-2"></a>nspecs &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">AgLevel =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>), <span class="dt">NoiseFactor =</span> <span class="kw">c</span>(<span class="fl">0.25</span>,<span class="fl">0.25</span>))</span>
+<span id="cb101-3"><a href="sensitivity-analysis.html#cb101-3"></a></span>
+<span id="cb101-4"><a href="sensitivity-analysis.html#cb101-4"></a>nspecs</span>
+<span id="cb101-5"><a href="sensitivity-analysis.html#cb101-5"></a></span>
+<span id="cb101-6"><a href="sensitivity-analysis.html#cb101-6"></a><span class="co"># create list specifying assumptions to vary and alternatives</span></span>
+<span id="cb101-7"><a href="sensitivity-analysis.html#cb101-7"></a>weights =<span class="st"> </span><span class="kw">list</span>(<span class="dt">NoiseSpecs =</span> nspecs,</span>
+<span id="cb101-8"><a href="sensitivity-analysis.html#cb101-8"></a>               <span class="dt">Nominal =</span> <span class="st">&quot;Original&quot;</span>)</span></code></pre></div>
 <p>The weights list has two entries. The first is a data frame where each row is the specifications for noise to apply to the weights of an aggregation level. It has two columns: <code>AgLev</code> which is the aggregation level, and <code>NoiseFactor</code>, which is the noise factor described above. In the example here, we have specified that at aggregation levels 2 and 3 (pillars and sub-indexes), there should be noise factors of 0.25 (+/-25% of nominal weight values). Indicator weights remain always at nominal values since they are not specified in this table.</p>
 <p>The second entry, <code>Nominal</code>, is the name of the weight set to use as the nominal values (i.e. the baseline to apply the noise to). This should correspond to a weight set present in <code>.$Parameters$Weights</code>. Here, we have set it to <code>Original</code>, which is the original weights that were input to <code>assemble()</code>.</p>
 </div>
 <div id="running-an-uncertainty-analysis" class="section level3">
 <h3><span class="header-section-number">14.3.3</span> Running an uncertainty analysis</h3>
 <p>To actually run the analysis, we call the <code>sensitivity()</code> function, using the specifications in the <code>SAspecs</code> list, and setting <code>v_targ = "Index"</code>, meaning that the index will be the target of the sensitivity analysis. Further, we specify that there should be 100 replications (this number is kept fairly low to limit the time taken to compile this book), and that the type of analysis should be an uncertainty analysis.</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="sensitivity-analysis.html#cb96-1"></a><span class="co"># run uncertainty analysis</span></span>
-<span id="cb96-2"><a href="sensitivity-analysis.html#cb96-2"></a>SAresults &lt;-<span class="st"> </span><span class="kw">sensitivity</span>(ASEM, <span class="dt">v_targ =</span> <span class="st">&quot;Index&quot;</span>,</span>
-<span id="cb96-3"><a href="sensitivity-analysis.html#cb96-3"></a>                         <span class="dt">SA_specs =</span> SAspecs,</span>
-<span id="cb96-4"><a href="sensitivity-analysis.html#cb96-4"></a>                         <span class="dt">N =</span> <span class="dv">100</span>,</span>
-<span id="cb96-5"><a href="sensitivity-analysis.html#cb96-5"></a>                         <span class="dt">SA_type =</span> <span class="st">&quot;UA&quot;</span>)</span>
-<span id="cb96-6"><a href="sensitivity-analysis.html#cb96-6"></a><span class="co">## Iteration 1 of 100 ... 1% complete</span></span>
-<span id="cb96-7"><a href="sensitivity-analysis.html#cb96-7"></a><span class="co">## Iteration 2 of 100 ... 2% complete</span></span>
-<span id="cb96-8"><a href="sensitivity-analysis.html#cb96-8"></a><span class="co">## Iteration 3 of 100 ... 3% complete</span></span>
-<span id="cb96-9"><a href="sensitivity-analysis.html#cb96-9"></a><span class="co">## Iteration 4 of 100 ... 4% complete</span></span>
-<span id="cb96-10"><a href="sensitivity-analysis.html#cb96-10"></a><span class="co">## Iteration 5 of 100 ... 5% complete</span></span>
-<span id="cb96-11"><a href="sensitivity-analysis.html#cb96-11"></a><span class="co">## Iteration 6 of 100 ... 6% complete</span></span>
-<span id="cb96-12"><a href="sensitivity-analysis.html#cb96-12"></a><span class="co">## Iteration 7 of 100 ... 7% complete</span></span>
-<span id="cb96-13"><a href="sensitivity-analysis.html#cb96-13"></a><span class="co">## Iteration 8 of 100 ... 8% complete</span></span>
-<span id="cb96-14"><a href="sensitivity-analysis.html#cb96-14"></a><span class="co">## Iteration 9 of 100 ... 9% complete</span></span>
-<span id="cb96-15"><a href="sensitivity-analysis.html#cb96-15"></a><span class="co">## Iteration 10 of 100 ... 10% complete</span></span>
-<span id="cb96-16"><a href="sensitivity-analysis.html#cb96-16"></a><span class="co">## Iteration 11 of 100 ... 11% complete</span></span>
-<span id="cb96-17"><a href="sensitivity-analysis.html#cb96-17"></a><span class="co">## Iteration 12 of 100 ... 12% complete</span></span>
-<span id="cb96-18"><a href="sensitivity-analysis.html#cb96-18"></a><span class="co">## Iteration 13 of 100 ... 13% complete</span></span>
-<span id="cb96-19"><a href="sensitivity-analysis.html#cb96-19"></a><span class="co">## Iteration 14 of 100 ... 14% complete</span></span>
-<span id="cb96-20"><a href="sensitivity-analysis.html#cb96-20"></a><span class="co">## Iteration 15 of 100 ... 15% complete</span></span>
-<span id="cb96-21"><a href="sensitivity-analysis.html#cb96-21"></a><span class="co">## Iteration 16 of 100 ... 16% complete</span></span>
-<span id="cb96-22"><a href="sensitivity-analysis.html#cb96-22"></a><span class="co">## Iteration 17 of 100 ... 17% complete</span></span>
-<span id="cb96-23"><a href="sensitivity-analysis.html#cb96-23"></a><span class="co">## Iteration 18 of 100 ... 18% complete</span></span>
-<span id="cb96-24"><a href="sensitivity-analysis.html#cb96-24"></a><span class="co">## Iteration 19 of 100 ... 19% complete</span></span>
-<span id="cb96-25"><a href="sensitivity-analysis.html#cb96-25"></a><span class="co">## Iteration 20 of 100 ... 20% complete</span></span>
-<span id="cb96-26"><a href="sensitivity-analysis.html#cb96-26"></a><span class="co">## Iteration 21 of 100 ... 21% complete</span></span>
-<span id="cb96-27"><a href="sensitivity-analysis.html#cb96-27"></a><span class="co">## Iteration 22 of 100 ... 22% complete</span></span>
-<span id="cb96-28"><a href="sensitivity-analysis.html#cb96-28"></a><span class="co">## Iteration 23 of 100 ... 23% complete</span></span>
-<span id="cb96-29"><a href="sensitivity-analysis.html#cb96-29"></a><span class="co">## Iteration 24 of 100 ... 24% complete</span></span>
-<span id="cb96-30"><a href="sensitivity-analysis.html#cb96-30"></a><span class="co">## Iteration 25 of 100 ... 25% complete</span></span>
-<span id="cb96-31"><a href="sensitivity-analysis.html#cb96-31"></a><span class="co">## Iteration 26 of 100 ... 26% complete</span></span>
-<span id="cb96-32"><a href="sensitivity-analysis.html#cb96-32"></a><span class="co">## Iteration 27 of 100 ... 27% complete</span></span>
-<span id="cb96-33"><a href="sensitivity-analysis.html#cb96-33"></a><span class="co">## Iteration 28 of 100 ... 28% complete</span></span>
-<span id="cb96-34"><a href="sensitivity-analysis.html#cb96-34"></a><span class="co">## Iteration 29 of 100 ... 29% complete</span></span>
-<span id="cb96-35"><a href="sensitivity-analysis.html#cb96-35"></a><span class="co">## Iteration 30 of 100 ... 30% complete</span></span>
-<span id="cb96-36"><a href="sensitivity-analysis.html#cb96-36"></a><span class="co">## Iteration 31 of 100 ... 31% complete</span></span>
-<span id="cb96-37"><a href="sensitivity-analysis.html#cb96-37"></a><span class="co">## Iteration 32 of 100 ... 32% complete</span></span>
-<span id="cb96-38"><a href="sensitivity-analysis.html#cb96-38"></a><span class="co">## Iteration 33 of 100 ... 33% complete</span></span>
-<span id="cb96-39"><a href="sensitivity-analysis.html#cb96-39"></a><span class="co">## Iteration 34 of 100 ... 34% complete</span></span>
-<span id="cb96-40"><a href="sensitivity-analysis.html#cb96-40"></a><span class="co">## Iteration 35 of 100 ... 35% complete</span></span>
-<span id="cb96-41"><a href="sensitivity-analysis.html#cb96-41"></a><span class="co">## Iteration 36 of 100 ... 36% complete</span></span>
-<span id="cb96-42"><a href="sensitivity-analysis.html#cb96-42"></a><span class="co">## Iteration 37 of 100 ... 37% complete</span></span>
-<span id="cb96-43"><a href="sensitivity-analysis.html#cb96-43"></a><span class="co">## Iteration 38 of 100 ... 38% complete</span></span>
-<span id="cb96-44"><a href="sensitivity-analysis.html#cb96-44"></a><span class="co">## Iteration 39 of 100 ... 39% complete</span></span>
-<span id="cb96-45"><a href="sensitivity-analysis.html#cb96-45"></a><span class="co">## Iteration 40 of 100 ... 40% complete</span></span>
-<span id="cb96-46"><a href="sensitivity-analysis.html#cb96-46"></a><span class="co">## Iteration 41 of 100 ... 41% complete</span></span>
-<span id="cb96-47"><a href="sensitivity-analysis.html#cb96-47"></a><span class="co">## Iteration 42 of 100 ... 42% complete</span></span>
-<span id="cb96-48"><a href="sensitivity-analysis.html#cb96-48"></a><span class="co">## Iteration 43 of 100 ... 43% complete</span></span>
-<span id="cb96-49"><a href="sensitivity-analysis.html#cb96-49"></a><span class="co">## Iteration 44 of 100 ... 44% complete</span></span>
-<span id="cb96-50"><a href="sensitivity-analysis.html#cb96-50"></a><span class="co">## Iteration 45 of 100 ... 45% complete</span></span>
-<span id="cb96-51"><a href="sensitivity-analysis.html#cb96-51"></a><span class="co">## Iteration 46 of 100 ... 46% complete</span></span>
-<span id="cb96-52"><a href="sensitivity-analysis.html#cb96-52"></a><span class="co">## Iteration 47 of 100 ... 47% complete</span></span>
-<span id="cb96-53"><a href="sensitivity-analysis.html#cb96-53"></a><span class="co">## Iteration 48 of 100 ... 48% complete</span></span>
-<span id="cb96-54"><a href="sensitivity-analysis.html#cb96-54"></a><span class="co">## Iteration 49 of 100 ... 49% complete</span></span>
-<span id="cb96-55"><a href="sensitivity-analysis.html#cb96-55"></a><span class="co">## Iteration 50 of 100 ... 50% complete</span></span>
-<span id="cb96-56"><a href="sensitivity-analysis.html#cb96-56"></a><span class="co">## Iteration 51 of 100 ... 51% complete</span></span>
-<span id="cb96-57"><a href="sensitivity-analysis.html#cb96-57"></a><span class="co">## Iteration 52 of 100 ... 52% complete</span></span>
-<span id="cb96-58"><a href="sensitivity-analysis.html#cb96-58"></a><span class="co">## Iteration 53 of 100 ... 53% complete</span></span>
-<span id="cb96-59"><a href="sensitivity-analysis.html#cb96-59"></a><span class="co">## Iteration 54 of 100 ... 54% complete</span></span>
-<span id="cb96-60"><a href="sensitivity-analysis.html#cb96-60"></a><span class="co">## Iteration 55 of 100 ... 55% complete</span></span>
-<span id="cb96-61"><a href="sensitivity-analysis.html#cb96-61"></a><span class="co">## Iteration 56 of 100 ... 56% complete</span></span>
-<span id="cb96-62"><a href="sensitivity-analysis.html#cb96-62"></a><span class="co">## Iteration 57 of 100 ... 57% complete</span></span>
-<span id="cb96-63"><a href="sensitivity-analysis.html#cb96-63"></a><span class="co">## Iteration 58 of 100 ... 58% complete</span></span>
-<span id="cb96-64"><a href="sensitivity-analysis.html#cb96-64"></a><span class="co">## Iteration 59 of 100 ... 59% complete</span></span>
-<span id="cb96-65"><a href="sensitivity-analysis.html#cb96-65"></a><span class="co">## Iteration 60 of 100 ... 60% complete</span></span>
-<span id="cb96-66"><a href="sensitivity-analysis.html#cb96-66"></a><span class="co">## Iteration 61 of 100 ... 61% complete</span></span>
-<span id="cb96-67"><a href="sensitivity-analysis.html#cb96-67"></a><span class="co">## Iteration 62 of 100 ... 62% complete</span></span>
-<span id="cb96-68"><a href="sensitivity-analysis.html#cb96-68"></a><span class="co">## Iteration 63 of 100 ... 63% complete</span></span>
-<span id="cb96-69"><a href="sensitivity-analysis.html#cb96-69"></a><span class="co">## Iteration 64 of 100 ... 64% complete</span></span>
-<span id="cb96-70"><a href="sensitivity-analysis.html#cb96-70"></a><span class="co">## Iteration 65 of 100 ... 65% complete</span></span>
-<span id="cb96-71"><a href="sensitivity-analysis.html#cb96-71"></a><span class="co">## Iteration 66 of 100 ... 66% complete</span></span>
-<span id="cb96-72"><a href="sensitivity-analysis.html#cb96-72"></a><span class="co">## Iteration 67 of 100 ... 67% complete</span></span>
-<span id="cb96-73"><a href="sensitivity-analysis.html#cb96-73"></a><span class="co">## Iteration 68 of 100 ... 68% complete</span></span>
-<span id="cb96-74"><a href="sensitivity-analysis.html#cb96-74"></a><span class="co">## Iteration 69 of 100 ... 69% complete</span></span>
-<span id="cb96-75"><a href="sensitivity-analysis.html#cb96-75"></a><span class="co">## Iteration 70 of 100 ... 70% complete</span></span>
-<span id="cb96-76"><a href="sensitivity-analysis.html#cb96-76"></a><span class="co">## Iteration 71 of 100 ... 71% complete</span></span>
-<span id="cb96-77"><a href="sensitivity-analysis.html#cb96-77"></a><span class="co">## Iteration 72 of 100 ... 72% complete</span></span>
-<span id="cb96-78"><a href="sensitivity-analysis.html#cb96-78"></a><span class="co">## Iteration 73 of 100 ... 73% complete</span></span>
-<span id="cb96-79"><a href="sensitivity-analysis.html#cb96-79"></a><span class="co">## Iteration 74 of 100 ... 74% complete</span></span>
-<span id="cb96-80"><a href="sensitivity-analysis.html#cb96-80"></a><span class="co">## Iteration 75 of 100 ... 75% complete</span></span>
-<span id="cb96-81"><a href="sensitivity-analysis.html#cb96-81"></a><span class="co">## Iteration 76 of 100 ... 76% complete</span></span>
-<span id="cb96-82"><a href="sensitivity-analysis.html#cb96-82"></a><span class="co">## Iteration 77 of 100 ... 77% complete</span></span>
-<span id="cb96-83"><a href="sensitivity-analysis.html#cb96-83"></a><span class="co">## Iteration 78 of 100 ... 78% complete</span></span>
-<span id="cb96-84"><a href="sensitivity-analysis.html#cb96-84"></a><span class="co">## Iteration 79 of 100 ... 79% complete</span></span>
-<span id="cb96-85"><a href="sensitivity-analysis.html#cb96-85"></a><span class="co">## Iteration 80 of 100 ... 80% complete</span></span>
-<span id="cb96-86"><a href="sensitivity-analysis.html#cb96-86"></a><span class="co">## Iteration 81 of 100 ... 81% complete</span></span>
-<span id="cb96-87"><a href="sensitivity-analysis.html#cb96-87"></a><span class="co">## Iteration 82 of 100 ... 82% complete</span></span>
-<span id="cb96-88"><a href="sensitivity-analysis.html#cb96-88"></a><span class="co">## Iteration 83 of 100 ... 83% complete</span></span>
-<span id="cb96-89"><a href="sensitivity-analysis.html#cb96-89"></a><span class="co">## Iteration 84 of 100 ... 84% complete</span></span>
-<span id="cb96-90"><a href="sensitivity-analysis.html#cb96-90"></a><span class="co">## Iteration 85 of 100 ... 85% complete</span></span>
-<span id="cb96-91"><a href="sensitivity-analysis.html#cb96-91"></a><span class="co">## Iteration 86 of 100 ... 86% complete</span></span>
-<span id="cb96-92"><a href="sensitivity-analysis.html#cb96-92"></a><span class="co">## Iteration 87 of 100 ... 87% complete</span></span>
-<span id="cb96-93"><a href="sensitivity-analysis.html#cb96-93"></a><span class="co">## Iteration 88 of 100 ... 88% complete</span></span>
-<span id="cb96-94"><a href="sensitivity-analysis.html#cb96-94"></a><span class="co">## Iteration 89 of 100 ... 89% complete</span></span>
-<span id="cb96-95"><a href="sensitivity-analysis.html#cb96-95"></a><span class="co">## Iteration 90 of 100 ... 90% complete</span></span>
-<span id="cb96-96"><a href="sensitivity-analysis.html#cb96-96"></a><span class="co">## Iteration 91 of 100 ... 91% complete</span></span>
-<span id="cb96-97"><a href="sensitivity-analysis.html#cb96-97"></a><span class="co">## Iteration 92 of 100 ... 92% complete</span></span>
-<span id="cb96-98"><a href="sensitivity-analysis.html#cb96-98"></a><span class="co">## Iteration 93 of 100 ... 93% complete</span></span>
-<span id="cb96-99"><a href="sensitivity-analysis.html#cb96-99"></a><span class="co">## Iteration 94 of 100 ... 94% complete</span></span>
-<span id="cb96-100"><a href="sensitivity-analysis.html#cb96-100"></a><span class="co">## Iteration 95 of 100 ... 95% complete</span></span>
-<span id="cb96-101"><a href="sensitivity-analysis.html#cb96-101"></a><span class="co">## Iteration 96 of 100 ... 96% complete</span></span>
-<span id="cb96-102"><a href="sensitivity-analysis.html#cb96-102"></a><span class="co">## Iteration 97 of 100 ... 97% complete</span></span>
-<span id="cb96-103"><a href="sensitivity-analysis.html#cb96-103"></a><span class="co">## Iteration 98 of 100 ... 98% complete</span></span>
-<span id="cb96-104"><a href="sensitivity-analysis.html#cb96-104"></a><span class="co">## Iteration 99 of 100 ... 99% complete</span></span>
-<span id="cb96-105"><a href="sensitivity-analysis.html#cb96-105"></a><span class="co">## Iteration 100 of 100 ... 100% complete</span></span>
-<span id="cb96-106"><a href="sensitivity-analysis.html#cb96-106"></a><span class="co">## Time elapsed = 17.98s, average 0.18s/rep.</span></span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="sensitivity-analysis.html#cb102-1"></a><span class="co"># run uncertainty analysis</span></span>
+<span id="cb102-2"><a href="sensitivity-analysis.html#cb102-2"></a>SAresults &lt;-<span class="st"> </span><span class="kw">sensitivity</span>(ASEM, <span class="dt">v_targ =</span> <span class="st">&quot;Index&quot;</span>,</span>
+<span id="cb102-3"><a href="sensitivity-analysis.html#cb102-3"></a>                         <span class="dt">SA_specs =</span> SAspecs,</span>
+<span id="cb102-4"><a href="sensitivity-analysis.html#cb102-4"></a>                         <span class="dt">N =</span> <span class="dv">100</span>,</span>
+<span id="cb102-5"><a href="sensitivity-analysis.html#cb102-5"></a>                         <span class="dt">SA_type =</span> <span class="st">&quot;UA&quot;</span>)</span>
+<span id="cb102-6"><a href="sensitivity-analysis.html#cb102-6"></a><span class="co">## Iteration 1 of 100 ... 1% complete</span></span>
+<span id="cb102-7"><a href="sensitivity-analysis.html#cb102-7"></a><span class="co">## Iteration 2 of 100 ... 2% complete</span></span>
+<span id="cb102-8"><a href="sensitivity-analysis.html#cb102-8"></a><span class="co">## Iteration 3 of 100 ... 3% complete</span></span>
+<span id="cb102-9"><a href="sensitivity-analysis.html#cb102-9"></a><span class="co">## Iteration 4 of 100 ... 4% complete</span></span>
+<span id="cb102-10"><a href="sensitivity-analysis.html#cb102-10"></a><span class="co">## Iteration 5 of 100 ... 5% complete</span></span>
+<span id="cb102-11"><a href="sensitivity-analysis.html#cb102-11"></a><span class="co">## Iteration 6 of 100 ... 6% complete</span></span>
+<span id="cb102-12"><a href="sensitivity-analysis.html#cb102-12"></a><span class="co">## Iteration 7 of 100 ... 7% complete</span></span>
+<span id="cb102-13"><a href="sensitivity-analysis.html#cb102-13"></a><span class="co">## Iteration 8 of 100 ... 8% complete</span></span>
+<span id="cb102-14"><a href="sensitivity-analysis.html#cb102-14"></a><span class="co">## Iteration 9 of 100 ... 9% complete</span></span>
+<span id="cb102-15"><a href="sensitivity-analysis.html#cb102-15"></a><span class="co">## Iteration 10 of 100 ... 10% complete</span></span>
+<span id="cb102-16"><a href="sensitivity-analysis.html#cb102-16"></a><span class="co">## Iteration 11 of 100 ... 11% complete</span></span>
+<span id="cb102-17"><a href="sensitivity-analysis.html#cb102-17"></a><span class="co">## Iteration 12 of 100 ... 12% complete</span></span>
+<span id="cb102-18"><a href="sensitivity-analysis.html#cb102-18"></a><span class="co">## Iteration 13 of 100 ... 13% complete</span></span>
+<span id="cb102-19"><a href="sensitivity-analysis.html#cb102-19"></a><span class="co">## Iteration 14 of 100 ... 14% complete</span></span>
+<span id="cb102-20"><a href="sensitivity-analysis.html#cb102-20"></a><span class="co">## Iteration 15 of 100 ... 15% complete</span></span>
+<span id="cb102-21"><a href="sensitivity-analysis.html#cb102-21"></a><span class="co">## Iteration 16 of 100 ... 16% complete</span></span>
+<span id="cb102-22"><a href="sensitivity-analysis.html#cb102-22"></a><span class="co">## Iteration 17 of 100 ... 17% complete</span></span>
+<span id="cb102-23"><a href="sensitivity-analysis.html#cb102-23"></a><span class="co">## Iteration 18 of 100 ... 18% complete</span></span>
+<span id="cb102-24"><a href="sensitivity-analysis.html#cb102-24"></a><span class="co">## Iteration 19 of 100 ... 19% complete</span></span>
+<span id="cb102-25"><a href="sensitivity-analysis.html#cb102-25"></a><span class="co">## Iteration 20 of 100 ... 20% complete</span></span>
+<span id="cb102-26"><a href="sensitivity-analysis.html#cb102-26"></a><span class="co">## Iteration 21 of 100 ... 21% complete</span></span>
+<span id="cb102-27"><a href="sensitivity-analysis.html#cb102-27"></a><span class="co">## Iteration 22 of 100 ... 22% complete</span></span>
+<span id="cb102-28"><a href="sensitivity-analysis.html#cb102-28"></a><span class="co">## Iteration 23 of 100 ... 23% complete</span></span>
+<span id="cb102-29"><a href="sensitivity-analysis.html#cb102-29"></a><span class="co">## Iteration 24 of 100 ... 24% complete</span></span>
+<span id="cb102-30"><a href="sensitivity-analysis.html#cb102-30"></a><span class="co">## Iteration 25 of 100 ... 25% complete</span></span>
+<span id="cb102-31"><a href="sensitivity-analysis.html#cb102-31"></a><span class="co">## Iteration 26 of 100 ... 26% complete</span></span>
+<span id="cb102-32"><a href="sensitivity-analysis.html#cb102-32"></a><span class="co">## Iteration 27 of 100 ... 27% complete</span></span>
+<span id="cb102-33"><a href="sensitivity-analysis.html#cb102-33"></a><span class="co">## Iteration 28 of 100 ... 28% complete</span></span>
+<span id="cb102-34"><a href="sensitivity-analysis.html#cb102-34"></a><span class="co">## Iteration 29 of 100 ... 29% complete</span></span>
+<span id="cb102-35"><a href="sensitivity-analysis.html#cb102-35"></a><span class="co">## Iteration 30 of 100 ... 30% complete</span></span>
+<span id="cb102-36"><a href="sensitivity-analysis.html#cb102-36"></a><span class="co">## Iteration 31 of 100 ... 31% complete</span></span>
+<span id="cb102-37"><a href="sensitivity-analysis.html#cb102-37"></a><span class="co">## Iteration 32 of 100 ... 32% complete</span></span>
+<span id="cb102-38"><a href="sensitivity-analysis.html#cb102-38"></a><span class="co">## Iteration 33 of 100 ... 33% complete</span></span>
+<span id="cb102-39"><a href="sensitivity-analysis.html#cb102-39"></a><span class="co">## Iteration 34 of 100 ... 34% complete</span></span>
+<span id="cb102-40"><a href="sensitivity-analysis.html#cb102-40"></a><span class="co">## Iteration 35 of 100 ... 35% complete</span></span>
+<span id="cb102-41"><a href="sensitivity-analysis.html#cb102-41"></a><span class="co">## Iteration 36 of 100 ... 36% complete</span></span>
+<span id="cb102-42"><a href="sensitivity-analysis.html#cb102-42"></a><span class="co">## Iteration 37 of 100 ... 37% complete</span></span>
+<span id="cb102-43"><a href="sensitivity-analysis.html#cb102-43"></a><span class="co">## Iteration 38 of 100 ... 38% complete</span></span>
+<span id="cb102-44"><a href="sensitivity-analysis.html#cb102-44"></a><span class="co">## Iteration 39 of 100 ... 39% complete</span></span>
+<span id="cb102-45"><a href="sensitivity-analysis.html#cb102-45"></a><span class="co">## Iteration 40 of 100 ... 40% complete</span></span>
+<span id="cb102-46"><a href="sensitivity-analysis.html#cb102-46"></a><span class="co">## Iteration 41 of 100 ... 41% complete</span></span>
+<span id="cb102-47"><a href="sensitivity-analysis.html#cb102-47"></a><span class="co">## Iteration 42 of 100 ... 42% complete</span></span>
+<span id="cb102-48"><a href="sensitivity-analysis.html#cb102-48"></a><span class="co">## Iteration 43 of 100 ... 43% complete</span></span>
+<span id="cb102-49"><a href="sensitivity-analysis.html#cb102-49"></a><span class="co">## Iteration 44 of 100 ... 44% complete</span></span>
+<span id="cb102-50"><a href="sensitivity-analysis.html#cb102-50"></a><span class="co">## Iteration 45 of 100 ... 45% complete</span></span>
+<span id="cb102-51"><a href="sensitivity-analysis.html#cb102-51"></a><span class="co">## Iteration 46 of 100 ... 46% complete</span></span>
+<span id="cb102-52"><a href="sensitivity-analysis.html#cb102-52"></a><span class="co">## Iteration 47 of 100 ... 47% complete</span></span>
+<span id="cb102-53"><a href="sensitivity-analysis.html#cb102-53"></a><span class="co">## Iteration 48 of 100 ... 48% complete</span></span>
+<span id="cb102-54"><a href="sensitivity-analysis.html#cb102-54"></a><span class="co">## Iteration 49 of 100 ... 49% complete</span></span>
+<span id="cb102-55"><a href="sensitivity-analysis.html#cb102-55"></a><span class="co">## Iteration 50 of 100 ... 50% complete</span></span>
+<span id="cb102-56"><a href="sensitivity-analysis.html#cb102-56"></a><span class="co">## Iteration 51 of 100 ... 51% complete</span></span>
+<span id="cb102-57"><a href="sensitivity-analysis.html#cb102-57"></a><span class="co">## Iteration 52 of 100 ... 52% complete</span></span>
+<span id="cb102-58"><a href="sensitivity-analysis.html#cb102-58"></a><span class="co">## Iteration 53 of 100 ... 53% complete</span></span>
+<span id="cb102-59"><a href="sensitivity-analysis.html#cb102-59"></a><span class="co">## Iteration 54 of 100 ... 54% complete</span></span>
+<span id="cb102-60"><a href="sensitivity-analysis.html#cb102-60"></a><span class="co">## Iteration 55 of 100 ... 55% complete</span></span>
+<span id="cb102-61"><a href="sensitivity-analysis.html#cb102-61"></a><span class="co">## Iteration 56 of 100 ... 56% complete</span></span>
+<span id="cb102-62"><a href="sensitivity-analysis.html#cb102-62"></a><span class="co">## Iteration 57 of 100 ... 57% complete</span></span>
+<span id="cb102-63"><a href="sensitivity-analysis.html#cb102-63"></a><span class="co">## Iteration 58 of 100 ... 58% complete</span></span>
+<span id="cb102-64"><a href="sensitivity-analysis.html#cb102-64"></a><span class="co">## Iteration 59 of 100 ... 59% complete</span></span>
+<span id="cb102-65"><a href="sensitivity-analysis.html#cb102-65"></a><span class="co">## Iteration 60 of 100 ... 60% complete</span></span>
+<span id="cb102-66"><a href="sensitivity-analysis.html#cb102-66"></a><span class="co">## Iteration 61 of 100 ... 61% complete</span></span>
+<span id="cb102-67"><a href="sensitivity-analysis.html#cb102-67"></a><span class="co">## Iteration 62 of 100 ... 62% complete</span></span>
+<span id="cb102-68"><a href="sensitivity-analysis.html#cb102-68"></a><span class="co">## Iteration 63 of 100 ... 63% complete</span></span>
+<span id="cb102-69"><a href="sensitivity-analysis.html#cb102-69"></a><span class="co">## Iteration 64 of 100 ... 64% complete</span></span>
+<span id="cb102-70"><a href="sensitivity-analysis.html#cb102-70"></a><span class="co">## Iteration 65 of 100 ... 65% complete</span></span>
+<span id="cb102-71"><a href="sensitivity-analysis.html#cb102-71"></a><span class="co">## Iteration 66 of 100 ... 66% complete</span></span>
+<span id="cb102-72"><a href="sensitivity-analysis.html#cb102-72"></a><span class="co">## Iteration 67 of 100 ... 67% complete</span></span>
+<span id="cb102-73"><a href="sensitivity-analysis.html#cb102-73"></a><span class="co">## Iteration 68 of 100 ... 68% complete</span></span>
+<span id="cb102-74"><a href="sensitivity-analysis.html#cb102-74"></a><span class="co">## Iteration 69 of 100 ... 69% complete</span></span>
+<span id="cb102-75"><a href="sensitivity-analysis.html#cb102-75"></a><span class="co">## Iteration 70 of 100 ... 70% complete</span></span>
+<span id="cb102-76"><a href="sensitivity-analysis.html#cb102-76"></a><span class="co">## Iteration 71 of 100 ... 71% complete</span></span>
+<span id="cb102-77"><a href="sensitivity-analysis.html#cb102-77"></a><span class="co">## Iteration 72 of 100 ... 72% complete</span></span>
+<span id="cb102-78"><a href="sensitivity-analysis.html#cb102-78"></a><span class="co">## Iteration 73 of 100 ... 73% complete</span></span>
+<span id="cb102-79"><a href="sensitivity-analysis.html#cb102-79"></a><span class="co">## Iteration 74 of 100 ... 74% complete</span></span>
+<span id="cb102-80"><a href="sensitivity-analysis.html#cb102-80"></a><span class="co">## Iteration 75 of 100 ... 75% complete</span></span>
+<span id="cb102-81"><a href="sensitivity-analysis.html#cb102-81"></a><span class="co">## Iteration 76 of 100 ... 76% complete</span></span>
+<span id="cb102-82"><a href="sensitivity-analysis.html#cb102-82"></a><span class="co">## Iteration 77 of 100 ... 77% complete</span></span>
+<span id="cb102-83"><a href="sensitivity-analysis.html#cb102-83"></a><span class="co">## Iteration 78 of 100 ... 78% complete</span></span>
+<span id="cb102-84"><a href="sensitivity-analysis.html#cb102-84"></a><span class="co">## Iteration 79 of 100 ... 79% complete</span></span>
+<span id="cb102-85"><a href="sensitivity-analysis.html#cb102-85"></a><span class="co">## Iteration 80 of 100 ... 80% complete</span></span>
+<span id="cb102-86"><a href="sensitivity-analysis.html#cb102-86"></a><span class="co">## Iteration 81 of 100 ... 81% complete</span></span>
+<span id="cb102-87"><a href="sensitivity-analysis.html#cb102-87"></a><span class="co">## Iteration 82 of 100 ... 82% complete</span></span>
+<span id="cb102-88"><a href="sensitivity-analysis.html#cb102-88"></a><span class="co">## Iteration 83 of 100 ... 83% complete</span></span>
+<span id="cb102-89"><a href="sensitivity-analysis.html#cb102-89"></a><span class="co">## Iteration 84 of 100 ... 84% complete</span></span>
+<span id="cb102-90"><a href="sensitivity-analysis.html#cb102-90"></a><span class="co">## Iteration 85 of 100 ... 85% complete</span></span>
+<span id="cb102-91"><a href="sensitivity-analysis.html#cb102-91"></a><span class="co">## Iteration 86 of 100 ... 86% complete</span></span>
+<span id="cb102-92"><a href="sensitivity-analysis.html#cb102-92"></a><span class="co">## Iteration 87 of 100 ... 87% complete</span></span>
+<span id="cb102-93"><a href="sensitivity-analysis.html#cb102-93"></a><span class="co">## Iteration 88 of 100 ... 88% complete</span></span>
+<span id="cb102-94"><a href="sensitivity-analysis.html#cb102-94"></a><span class="co">## Iteration 89 of 100 ... 89% complete</span></span>
+<span id="cb102-95"><a href="sensitivity-analysis.html#cb102-95"></a><span class="co">## Iteration 90 of 100 ... 90% complete</span></span>
+<span id="cb102-96"><a href="sensitivity-analysis.html#cb102-96"></a><span class="co">## Iteration 91 of 100 ... 91% complete</span></span>
+<span id="cb102-97"><a href="sensitivity-analysis.html#cb102-97"></a><span class="co">## Iteration 92 of 100 ... 92% complete</span></span>
+<span id="cb102-98"><a href="sensitivity-analysis.html#cb102-98"></a><span class="co">## Iteration 93 of 100 ... 93% complete</span></span>
+<span id="cb102-99"><a href="sensitivity-analysis.html#cb102-99"></a><span class="co">## Iteration 94 of 100 ... 94% complete</span></span>
+<span id="cb102-100"><a href="sensitivity-analysis.html#cb102-100"></a><span class="co">## Iteration 95 of 100 ... 95% complete</span></span>
+<span id="cb102-101"><a href="sensitivity-analysis.html#cb102-101"></a><span class="co">## Iteration 96 of 100 ... 96% complete</span></span>
+<span id="cb102-102"><a href="sensitivity-analysis.html#cb102-102"></a><span class="co">## Iteration 97 of 100 ... 97% complete</span></span>
+<span id="cb102-103"><a href="sensitivity-analysis.html#cb102-103"></a><span class="co">## Iteration 98 of 100 ... 98% complete</span></span>
+<span id="cb102-104"><a href="sensitivity-analysis.html#cb102-104"></a><span class="co">## Iteration 99 of 100 ... 99% complete</span></span>
+<span id="cb102-105"><a href="sensitivity-analysis.html#cb102-105"></a><span class="co">## Iteration 100 of 100 ... 100% complete</span></span>
+<span id="cb102-106"><a href="sensitivity-analysis.html#cb102-106"></a><span class="co">## Time elapsed = 24.29s, average 0.24s/rep.</span></span></code></pre></div>
 <p>Running a sensitivity/uncertainty analysis can be time consuming and depends on the complexity of the model and the number of runs specified. This particular analysis took less than a minute for me, but could take more or less time depending on the speed of your computer.</p>
 <p>The output of the analysis is a list with several entries:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="sensitivity-analysis.html#cb97-1"></a><span class="co"># see summary of analysis</span></span>
-<span id="cb97-2"><a href="sensitivity-analysis.html#cb97-2"></a><span class="kw">summary</span>(SAresults)</span>
-<span id="cb97-3"><a href="sensitivity-analysis.html#cb97-3"></a><span class="co">##            Length Class      Mode     </span></span>
-<span id="cb97-4"><a href="sensitivity-analysis.html#cb97-4"></a><span class="co">## Scores     101    data.frame list     </span></span>
-<span id="cb97-5"><a href="sensitivity-analysis.html#cb97-5"></a><span class="co">## Parameters   2    data.frame list     </span></span>
-<span id="cb97-6"><a href="sensitivity-analysis.html#cb97-6"></a><span class="co">## Ranks      101    data.frame list     </span></span>
-<span id="cb97-7"><a href="sensitivity-analysis.html#cb97-7"></a><span class="co">## RankStats    6    data.frame list     </span></span>
-<span id="cb97-8"><a href="sensitivity-analysis.html#cb97-8"></a><span class="co">## Nominal      3    data.frame list     </span></span>
-<span id="cb97-9"><a href="sensitivity-analysis.html#cb97-9"></a><span class="co">## t_elapse     1    -none-     numeric  </span></span>
-<span id="cb97-10"><a href="sensitivity-analysis.html#cb97-10"></a><span class="co">## t_average    1    -none-     numeric  </span></span>
-<span id="cb97-11"><a href="sensitivity-analysis.html#cb97-11"></a><span class="co">## ParaNames    3    -none-     character</span></span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="sensitivity-analysis.html#cb103-1"></a><span class="co"># see summary of analysis</span></span>
+<span id="cb103-2"><a href="sensitivity-analysis.html#cb103-2"></a><span class="kw">summary</span>(SAresults)</span>
+<span id="cb103-3"><a href="sensitivity-analysis.html#cb103-3"></a><span class="co">##            Length Class      Mode     </span></span>
+<span id="cb103-4"><a href="sensitivity-analysis.html#cb103-4"></a><span class="co">## Scores     101    data.frame list     </span></span>
+<span id="cb103-5"><a href="sensitivity-analysis.html#cb103-5"></a><span class="co">## Parameters   2    data.frame list     </span></span>
+<span id="cb103-6"><a href="sensitivity-analysis.html#cb103-6"></a><span class="co">## Ranks      101    data.frame list     </span></span>
+<span id="cb103-7"><a href="sensitivity-analysis.html#cb103-7"></a><span class="co">## RankStats    6    data.frame list     </span></span>
+<span id="cb103-8"><a href="sensitivity-analysis.html#cb103-8"></a><span class="co">## Nominal      3    data.frame list     </span></span>
+<span id="cb103-9"><a href="sensitivity-analysis.html#cb103-9"></a><span class="co">## t_elapse     1    -none-     numeric  </span></span>
+<span id="cb103-10"><a href="sensitivity-analysis.html#cb103-10"></a><span class="co">## t_average    1    -none-     numeric  </span></span>
+<span id="cb103-11"><a href="sensitivity-analysis.html#cb103-11"></a><span class="co">## ParaNames    3    -none-     character</span></span></code></pre></div>
 <p>We will go into more detail in a minute, but first we can plot the results of the uncertainty analysis using a dedicated function <code>plotSARanks()</code>:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="sensitivity-analysis.html#cb98-1"></a><span class="kw">plotSARanks</span>(SAresults)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="sensitivity-analysis.html#cb104-1"></a><span class="kw">plotSARanks</span>(SAresults)</span></code></pre></div>
 <p><img src="COINr-documentation_files/figure-html/plotUAranks-1.png" width="768" /></p>
 <p>This plot orders the units by their nominal ranks, and plots the median rank across all the replications of the uncertainty analysis, as well as the 5th and 95th percentile rank values. The ranks are the focus of an uncertainty analysis because scores can change drastically depending on the method. Ranks are the only comparable metric across different composite indicator methodologies<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
 <p>Let us now look at the elements in <code>SAresults</code>. The data frames <code>SAresults$Scores</code> and <code>SAresults$Ranks</code> give the scores and ranks respectively for each replication of the composite indicator. The <code>SAresults$Parameters</code> data frame gives the uncertain parameter values used for each iteration:</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="sensitivity-analysis.html#cb99-1"></a><span class="kw">head</span>(SAresults<span class="op">$</span>Parameters)</span>
-<span id="cb99-2"><a href="sensitivity-analysis.html#cb99-2"></a><span class="co">##          imtype    ntype</span></span>
-<span id="cb99-3"><a href="sensitivity-analysis.html#cb99-3"></a><span class="co">## 1      ind_mean dist2max</span></span>
-<span id="cb99-4"><a href="sensitivity-analysis.html#cb99-4"></a><span class="co">## 2          none   minmax</span></span>
-<span id="cb99-5"><a href="sensitivity-analysis.html#cb99-5"></a><span class="co">## 3      ind_mean   minmax</span></span>
-<span id="cb99-6"><a href="sensitivity-analysis.html#cb99-6"></a><span class="co">## 4      ind_mean dist2max</span></span>
-<span id="cb99-7"><a href="sensitivity-analysis.html#cb99-7"></a><span class="co">## 5          none     rank</span></span>
-<span id="cb99-8"><a href="sensitivity-analysis.html#cb99-8"></a><span class="co">## 6 indgroup_mean   minmax</span></span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="sensitivity-analysis.html#cb105-1"></a><span class="kw">head</span>(SAresults<span class="op">$</span>Parameters)</span>
+<span id="cb105-2"><a href="sensitivity-analysis.html#cb105-2"></a><span class="co">##          imtype    ntype</span></span>
+<span id="cb105-3"><a href="sensitivity-analysis.html#cb105-3"></a><span class="co">## 1      ind_mean dist2max</span></span>
+<span id="cb105-4"><a href="sensitivity-analysis.html#cb105-4"></a><span class="co">## 2          none     rank</span></span>
+<span id="cb105-5"><a href="sensitivity-analysis.html#cb105-5"></a><span class="co">## 3      ind_mean dist2max</span></span>
+<span id="cb105-6"><a href="sensitivity-analysis.html#cb105-6"></a><span class="co">## 4 indgroup_mean dist2max</span></span>
+<span id="cb105-7"><a href="sensitivity-analysis.html#cb105-7"></a><span class="co">## 5 indgroup_mean dist2max</span></span>
+<span id="cb105-8"><a href="sensitivity-analysis.html#cb105-8"></a><span class="co">## 6          none     rank</span></span></code></pre></div>
 <p>Here, each column is a parameter that was varied in the analysis. Note that this does not include the weights used for each iteration since these are themselves data frames.</p>
 <p>The <code>SAresults$RankStats</code> table gives a summary of the main statistics of the ranks of each unit, including mean, median, and percentiles:</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="sensitivity-analysis.html#cb100-1"></a>SAresults<span class="op">$</span>RankStats</span>
-<span id="cb100-2"><a href="sensitivity-analysis.html#cb100-2"></a><span class="co">##    UnitCode Nominal  Mean Median    Q5   Q95</span></span>
-<span id="cb100-3"><a href="sensitivity-analysis.html#cb100-3"></a><span class="co">## 1       AUT       7  6.94    7.0  5.00  8.00</span></span>
-<span id="cb100-4"><a href="sensitivity-analysis.html#cb100-4"></a><span class="co">## 2       BEL       5  5.44    5.0  3.00  9.00</span></span>
-<span id="cb100-5"><a href="sensitivity-analysis.html#cb100-5"></a><span class="co">## 3       BGR      30 29.50   29.0 28.00 31.00</span></span>
-<span id="cb100-6"><a href="sensitivity-analysis.html#cb100-6"></a><span class="co">## 4       HRV      18 20.60   20.0 17.00 25.00</span></span>
-<span id="cb100-7"><a href="sensitivity-analysis.html#cb100-7"></a><span class="co">## 5       CYP      29 30.19   30.0 28.00 33.00</span></span>
-<span id="cb100-8"><a href="sensitivity-analysis.html#cb100-8"></a><span class="co">## 6       CZE      17 17.11   17.0 16.00 19.00</span></span>
-<span id="cb100-9"><a href="sensitivity-analysis.html#cb100-9"></a><span class="co">## 7       DNK       3  2.72    2.0  2.00  5.00</span></span>
-<span id="cb100-10"><a href="sensitivity-analysis.html#cb100-10"></a><span class="co">## 8       EST      22 19.31   19.0 12.95 26.00</span></span>
-<span id="cb100-11"><a href="sensitivity-analysis.html#cb100-11"></a><span class="co">## 9       FIN      13 13.48   14.0 11.00 16.05</span></span>
-<span id="cb100-12"><a href="sensitivity-analysis.html#cb100-12"></a><span class="co">## 10      FRA      21 20.61   20.5 18.00 24.00</span></span>
-<span id="cb100-13"><a href="sensitivity-analysis.html#cb100-13"></a><span class="co">## 11      DEU       9  8.76    8.0  7.00 11.00</span></span>
-<span id="cb100-14"><a href="sensitivity-analysis.html#cb100-14"></a><span class="co">## 12      GRC      32 32.03   32.0 30.00 34.00</span></span>
-<span id="cb100-15"><a href="sensitivity-analysis.html#cb100-15"></a><span class="co">## 13      HUN      20 20.81   21.0 18.00 24.00</span></span>
-<span id="cb100-16"><a href="sensitivity-analysis.html#cb100-16"></a><span class="co">## 14      IRL      12 12.30   12.0 10.00 16.00</span></span>
-<span id="cb100-17"><a href="sensitivity-analysis.html#cb100-17"></a><span class="co">## 15      ITA      28 27.84   28.0 26.95 29.00</span></span>
-<span id="cb100-18"><a href="sensitivity-analysis.html#cb100-18"></a><span class="co">## 16      LVA      23 22.43   23.0 20.00 25.00</span></span>
-<span id="cb100-19"><a href="sensitivity-analysis.html#cb100-19"></a><span class="co">## 17      LTU      16 14.81   16.0 11.00 17.00</span></span>
-<span id="cb100-20"><a href="sensitivity-analysis.html#cb100-20"></a><span class="co">## 18      LUX       8  8.87    9.0  6.00 12.00</span></span>
-<span id="cb100-21"><a href="sensitivity-analysis.html#cb100-21"></a><span class="co">## 19      MLT      10 13.44   12.0  9.00 19.00</span></span>
-<span id="cb100-22"><a href="sensitivity-analysis.html#cb100-22"></a><span class="co">## 20      NLD       2  3.07    3.0  2.00  4.00</span></span>
-<span id="cb100-23"><a href="sensitivity-analysis.html#cb100-23"></a><span class="co">## 21      NOR       4  3.55    3.0  2.00  5.00</span></span>
-<span id="cb100-24"><a href="sensitivity-analysis.html#cb100-24"></a><span class="co">## 22      POL      26 26.08   26.0 24.00 28.00</span></span>
-<span id="cb100-25"><a href="sensitivity-analysis.html#cb100-25"></a><span class="co">## 23      PRT      27 23.24   26.0 15.00 27.00</span></span>
-<span id="cb100-26"><a href="sensitivity-analysis.html#cb100-26"></a><span class="co">## 24      ROU      25 23.93   25.0 18.95 27.00</span></span>
-<span id="cb100-27"><a href="sensitivity-analysis.html#cb100-27"></a><span class="co">## 25      SVK      24 23.53   23.0 22.00 26.00</span></span>
-<span id="cb100-28"><a href="sensitivity-analysis.html#cb100-28"></a><span class="co">## 26      SVN      11  9.96   10.0  8.00 13.00</span></span>
-<span id="cb100-29"><a href="sensitivity-analysis.html#cb100-29"></a><span class="co">## 27      ESP      19 22.58   22.0 18.00 27.00</span></span>
-<span id="cb100-30"><a href="sensitivity-analysis.html#cb100-30"></a><span class="co">## 28      SWE       6  6.03    6.0  5.00  8.00</span></span>
-<span id="cb100-31"><a href="sensitivity-analysis.html#cb100-31"></a><span class="co">## 29      CHE       1  1.00    1.0  1.00  1.00</span></span>
-<span id="cb100-32"><a href="sensitivity-analysis.html#cb100-32"></a><span class="co">## 30      GBR      15 14.08   15.0 11.00 16.00</span></span>
-<span id="cb100-33"><a href="sensitivity-analysis.html#cb100-33"></a><span class="co">## 31      AUS      35 35.80   35.0 34.00 39.05</span></span>
-<span id="cb100-34"><a href="sensitivity-analysis.html#cb100-34"></a><span class="co">## 32      BGD      46 45.55   46.0 40.95 49.00</span></span>
-<span id="cb100-35"><a href="sensitivity-analysis.html#cb100-35"></a><span class="co">## 33      BRN      40 38.84   38.0 35.00 45.05</span></span>
-<span id="cb100-36"><a href="sensitivity-analysis.html#cb100-36"></a><span class="co">## 34      KHM      37 36.51   37.0 34.90 39.00</span></span>
-<span id="cb100-37"><a href="sensitivity-analysis.html#cb100-37"></a><span class="co">## 35      CHN      49 49.28   49.5 46.95 51.00</span></span>
-<span id="cb100-38"><a href="sensitivity-analysis.html#cb100-38"></a><span class="co">## 36      IND      45 45.00   46.0 41.95 48.00</span></span>
-<span id="cb100-39"><a href="sensitivity-analysis.html#cb100-39"></a><span class="co">## 37      IDN      43 45.44   45.0 40.00 49.00</span></span>
-<span id="cb100-40"><a href="sensitivity-analysis.html#cb100-40"></a><span class="co">## 38      JPN      34 33.45   34.0 30.00 35.00</span></span>
-<span id="cb100-41"><a href="sensitivity-analysis.html#cb100-41"></a><span class="co">## 39      KAZ      47 45.49   45.0 42.00 49.00</span></span>
-<span id="cb100-42"><a href="sensitivity-analysis.html#cb100-42"></a><span class="co">## 40      KOR      31 31.06   31.0 29.00 33.05</span></span>
-<span id="cb100-43"><a href="sensitivity-analysis.html#cb100-43"></a><span class="co">## 41      LAO      48 42.39   41.5 35.00 49.00</span></span>
-<span id="cb100-44"><a href="sensitivity-analysis.html#cb100-44"></a><span class="co">## 42      MYS      39 39.77   39.0 36.00 46.00</span></span>
-<span id="cb100-45"><a href="sensitivity-analysis.html#cb100-45"></a><span class="co">## 43      MNG      44 45.61   46.0 41.00 49.00</span></span>
-<span id="cb100-46"><a href="sensitivity-analysis.html#cb100-46"></a><span class="co">## 44      MMR      41 41.85   42.0 38.00 47.00</span></span>
-<span id="cb100-47"><a href="sensitivity-analysis.html#cb100-47"></a><span class="co">## 45      NZL      33 33.04   33.0 31.00 35.05</span></span>
-<span id="cb100-48"><a href="sensitivity-analysis.html#cb100-48"></a><span class="co">## 46      PAK      50 48.39   49.0 43.00 51.00</span></span>
-<span id="cb100-49"><a href="sensitivity-analysis.html#cb100-49"></a><span class="co">## 47      PHL      38 40.81   41.0 38.00 44.00</span></span>
-<span id="cb100-50"><a href="sensitivity-analysis.html#cb100-50"></a><span class="co">## 48      RUS      51 50.64   51.0 50.00 51.00</span></span>
-<span id="cb100-51"><a href="sensitivity-analysis.html#cb100-51"></a><span class="co">## 49      SGP      14 13.69   13.0  9.00 19.00</span></span>
-<span id="cb100-52"><a href="sensitivity-analysis.html#cb100-52"></a><span class="co">## 50      THA      42 41.60   41.0 39.00 44.00</span></span>
-<span id="cb100-53"><a href="sensitivity-analysis.html#cb100-53"></a><span class="co">## 51      VNM      36 37.55   38.0 36.00 40.00</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="sensitivity-analysis.html#cb106-1"></a>SAresults<span class="op">$</span>RankStats</span>
+<span id="cb106-2"><a href="sensitivity-analysis.html#cb106-2"></a><span class="co">##    UnitCode Nominal  Mean Median    Q5   Q95</span></span>
+<span id="cb106-3"><a href="sensitivity-analysis.html#cb106-3"></a><span class="co">## 1       AUT       7  7.12    7.0  6.00  8.00</span></span>
+<span id="cb106-4"><a href="sensitivity-analysis.html#cb106-4"></a><span class="co">## 2       BEL       5  5.38    5.0  3.00  7.00</span></span>
+<span id="cb106-5"><a href="sensitivity-analysis.html#cb106-5"></a><span class="co">## 3       BGR      30 29.72   30.0 29.00 31.00</span></span>
+<span id="cb106-6"><a href="sensitivity-analysis.html#cb106-6"></a><span class="co">## 4       HRV      18 20.27   20.0 17.00 25.00</span></span>
+<span id="cb106-7"><a href="sensitivity-analysis.html#cb106-7"></a><span class="co">## 5       CYP      29 29.89   30.0 28.00 33.00</span></span>
+<span id="cb106-8"><a href="sensitivity-analysis.html#cb106-8"></a><span class="co">## 6       CZE      17 17.09   17.0 16.00 19.00</span></span>
+<span id="cb106-9"><a href="sensitivity-analysis.html#cb106-9"></a><span class="co">## 7       DNK       3  2.64    2.0  2.00  4.00</span></span>
+<span id="cb106-10"><a href="sensitivity-analysis.html#cb106-10"></a><span class="co">## 8       EST      22 20.06   19.0 14.00 26.00</span></span>
+<span id="cb106-11"><a href="sensitivity-analysis.html#cb106-11"></a><span class="co">## 9       FIN      13 13.11   13.0 11.00 14.00</span></span>
+<span id="cb106-12"><a href="sensitivity-analysis.html#cb106-12"></a><span class="co">## 10      FRA      21 20.58   20.0 18.00 24.00</span></span>
+<span id="cb106-13"><a href="sensitivity-analysis.html#cb106-13"></a><span class="co">## 11      DEU       9  9.11    8.0  7.95 13.00</span></span>
+<span id="cb106-14"><a href="sensitivity-analysis.html#cb106-14"></a><span class="co">## 12      GRC      32 32.15   32.0 31.00 34.00</span></span>
+<span id="cb106-15"><a href="sensitivity-analysis.html#cb106-15"></a><span class="co">## 13      HUN      20 20.96   21.0 19.00 24.00</span></span>
+<span id="cb106-16"><a href="sensitivity-analysis.html#cb106-16"></a><span class="co">## 14      IRL      12 11.82   11.0 10.00 15.05</span></span>
+<span id="cb106-17"><a href="sensitivity-analysis.html#cb106-17"></a><span class="co">## 15      ITA      28 28.06   28.0 27.00 29.00</span></span>
+<span id="cb106-18"><a href="sensitivity-analysis.html#cb106-18"></a><span class="co">## 16      LVA      23 22.15   22.0 20.00 24.00</span></span>
+<span id="cb106-19"><a href="sensitivity-analysis.html#cb106-19"></a><span class="co">## 17      LTU      16 15.12   16.0 11.00 17.00</span></span>
+<span id="cb106-20"><a href="sensitivity-analysis.html#cb106-20"></a><span class="co">## 18      LUX       8  8.88    9.0  6.00 12.00</span></span>
+<span id="cb106-21"><a href="sensitivity-analysis.html#cb106-21"></a><span class="co">## 19      MLT      10 12.82   12.0  9.00 19.00</span></span>
+<span id="cb106-22"><a href="sensitivity-analysis.html#cb106-22"></a><span class="co">## 20      NLD       2  3.05    3.0  2.00  4.00</span></span>
+<span id="cb106-23"><a href="sensitivity-analysis.html#cb106-23"></a><span class="co">## 21      NOR       4  3.57    4.0  2.00  5.00</span></span>
+<span id="cb106-24"><a href="sensitivity-analysis.html#cb106-24"></a><span class="co">## 22      POL      26 26.05   26.0 25.00 28.00</span></span>
+<span id="cb106-25"><a href="sensitivity-analysis.html#cb106-25"></a><span class="co">## 23      PRT      27 24.33   27.0 15.00 27.00</span></span>
+<span id="cb106-26"><a href="sensitivity-analysis.html#cb106-26"></a><span class="co">## 24      ROU      25 23.80   24.5 19.00 27.00</span></span>
+<span id="cb106-27"><a href="sensitivity-analysis.html#cb106-27"></a><span class="co">## 25      SVK      24 23.52   24.0 21.95 26.00</span></span>
+<span id="cb106-28"><a href="sensitivity-analysis.html#cb106-28"></a><span class="co">## 26      SVN      11  9.96   10.0  8.95 12.00</span></span>
+<span id="cb106-29"><a href="sensitivity-analysis.html#cb106-29"></a><span class="co">## 27      ESP      19 22.01   22.0 18.00 26.00</span></span>
+<span id="cb106-30"><a href="sensitivity-analysis.html#cb106-30"></a><span class="co">## 28      SWE       6  5.80    6.0  5.00  7.00</span></span>
+<span id="cb106-31"><a href="sensitivity-analysis.html#cb106-31"></a><span class="co">## 29      CHE       1  1.00    1.0  1.00  1.00</span></span>
+<span id="cb106-32"><a href="sensitivity-analysis.html#cb106-32"></a><span class="co">## 30      GBR      15 14.27   15.0 11.00 16.00</span></span>
+<span id="cb106-33"><a href="sensitivity-analysis.html#cb106-33"></a><span class="co">## 31      AUS      35 35.58   35.0 34.00 38.05</span></span>
+<span id="cb106-34"><a href="sensitivity-analysis.html#cb106-34"></a><span class="co">## 32      BGD      46 45.60   46.0 40.00 49.00</span></span>
+<span id="cb106-35"><a href="sensitivity-analysis.html#cb106-35"></a><span class="co">## 33      BRN      40 39.23   38.0 35.00 46.00</span></span>
+<span id="cb106-36"><a href="sensitivity-analysis.html#cb106-36"></a><span class="co">## 34      KHM      37 36.75   37.0 35.00 39.00</span></span>
+<span id="cb106-37"><a href="sensitivity-analysis.html#cb106-37"></a><span class="co">## 35      CHN      49 49.30   49.0 46.95 51.00</span></span>
+<span id="cb106-38"><a href="sensitivity-analysis.html#cb106-38"></a><span class="co">## 36      IND      45 45.28   46.0 42.00 48.00</span></span>
+<span id="cb106-39"><a href="sensitivity-analysis.html#cb106-39"></a><span class="co">## 37      IDN      43 44.93   45.0 41.00 49.00</span></span>
+<span id="cb106-40"><a href="sensitivity-analysis.html#cb106-40"></a><span class="co">## 38      JPN      34 33.66   34.0 32.00 35.00</span></span>
+<span id="cb106-41"><a href="sensitivity-analysis.html#cb106-41"></a><span class="co">## 39      KAZ      47 45.87   46.0 42.00 49.00</span></span>
+<span id="cb106-42"><a href="sensitivity-analysis.html#cb106-42"></a><span class="co">## 40      KOR      31 30.87   31.0 28.95 33.00</span></span>
+<span id="cb106-43"><a href="sensitivity-analysis.html#cb106-43"></a><span class="co">## 41      LAO      48 42.90   41.5 36.00 49.00</span></span>
+<span id="cb106-44"><a href="sensitivity-analysis.html#cb106-44"></a><span class="co">## 42      MYS      39 40.44   40.0 36.00 46.00</span></span>
+<span id="cb106-45"><a href="sensitivity-analysis.html#cb106-45"></a><span class="co">## 43      MNG      44 45.05   45.0 40.95 49.00</span></span>
+<span id="cb106-46"><a href="sensitivity-analysis.html#cb106-46"></a><span class="co">## 44      MMR      41 41.26   41.0 37.95 46.05</span></span>
+<span id="cb106-47"><a href="sensitivity-analysis.html#cb106-47"></a><span class="co">## 45      NZL      33 32.63   33.0 30.95 34.00</span></span>
+<span id="cb106-48"><a href="sensitivity-analysis.html#cb106-48"></a><span class="co">## 46      PAK      50 48.60   49.0 45.95 51.00</span></span>
+<span id="cb106-49"><a href="sensitivity-analysis.html#cb106-49"></a><span class="co">## 47      PHL      38 40.68   41.0 37.00 44.05</span></span>
+<span id="cb106-50"><a href="sensitivity-analysis.html#cb106-50"></a><span class="co">## 48      RUS      51 50.69   51.0 50.00 51.00</span></span>
+<span id="cb106-51"><a href="sensitivity-analysis.html#cb106-51"></a><span class="co">## 49      SGP      14 13.72   14.0  9.00 18.00</span></span>
+<span id="cb106-52"><a href="sensitivity-analysis.html#cb106-52"></a><span class="co">## 50      THA      42 41.56   41.5 40.00 44.00</span></span>
+<span id="cb106-53"><a href="sensitivity-analysis.html#cb106-53"></a><span class="co">## 51      VNM      36 37.11   37.0 36.00 39.00</span></span></code></pre></div>
 <p>It also includes the nominal ranks for comparison. Finally, <code>SAresults$Nominal</code> gives a summary of nominal ranks and scores.</p>
 <p>If this information is not enough, the <code>store_results</code> argument to <code>sensitivity()</code> gives options of what information to store for each iteration. For example, <code>store_results = "results+method"</code> returns the information described so far, plus the full .$Method list of each replication (i.e. the full specifications used to build the composite indicator). Setting <code>store_results = "results+COIN"</code> stores all results and the complete COIN of each replication. Of course, this latter option in particular will take up more memory.</p>
 </div>
@@ -663,34 +663,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The first is that the target of the sensitivity analysis will be different. Whereas when you run an uncertainty analysis, you can calculate confidence intervals for each unit, with a sensitivity analysis a different approach is taken because otherwise, you would have a set of sensitivity indices for each single unit, and this would be hard to interpret. Instead, COINr calculates sensitivity with respect to the <em>average absolute rank change</em>, between nominal and perturbed values.</p>
 <p>The second consideration is that the number of replications required to a sensitivity analysis is quite a bit higher than the number required for an uncertainty analysis. In fact, when you specify <code>N</code> in the <code>sensitivity()</code> function, and set to <code>SAtype = "SA"</code>, the actual number of replications is <span class="math inline">\(N_T = N(d +2)\)</span>, where <span class="math inline">\(d\)</span> is the number of uncertain input parameters/assumptions.</p>
 <p>To run the sensitivity analysis, the format is very similar to the uncertainty analysis. We simply run <code>sensitivity()</code> with <code>SA_specs</code> in exactly the same format as previously (we can use the same list), and set <code>SA_type = "SA"</code>.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="sensitivity-analysis.html#cb101-1"></a><span class="co"># Not actually run here. If you run this, it will take a few minutes</span></span>
-<span id="cb101-2"><a href="sensitivity-analysis.html#cb101-2"></a>SAresults &lt;-<span class="st"> </span><span class="kw">sensitivity</span>(ASEM, <span class="dt">v_targ =</span> <span class="st">&quot;Index&quot;</span>,</span>
-<span id="cb101-3"><a href="sensitivity-analysis.html#cb101-3"></a>                         <span class="dt">SA_specs =</span> SAspecs,</span>
-<span id="cb101-4"><a href="sensitivity-analysis.html#cb101-4"></a>                         <span class="dt">N =</span> <span class="dv">500</span>,</span>
-<span id="cb101-5"><a href="sensitivity-analysis.html#cb101-5"></a>                         <span class="dt">SA_type =</span> <span class="st">&quot;SA&quot;</span>, <span class="dt">Nboot =</span> <span class="dv">1000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="sensitivity-analysis.html#cb107-1"></a><span class="co"># Not actually run here. If you run this, it will take a few minutes</span></span>
+<span id="cb107-2"><a href="sensitivity-analysis.html#cb107-2"></a>SAresults &lt;-<span class="st"> </span><span class="kw">sensitivity</span>(ASEM, <span class="dt">v_targ =</span> <span class="st">&quot;Index&quot;</span>,</span>
+<span id="cb107-3"><a href="sensitivity-analysis.html#cb107-3"></a>                         <span class="dt">SA_specs =</span> SAspecs,</span>
+<span id="cb107-4"><a href="sensitivity-analysis.html#cb107-4"></a>                         <span class="dt">N =</span> <span class="dv">500</span>,</span>
+<span id="cb107-5"><a href="sensitivity-analysis.html#cb107-5"></a>                         <span class="dt">SA_type =</span> <span class="st">&quot;SA&quot;</span>, <span class="dt">Nboot =</span> <span class="dv">1000</span>)</span></code></pre></div>
 <p>The output of the sensitivity analysis is a list. This is in fact an extended version of the list when <code>SA_type = "UA"</code>, in that it has the recorded scores for each iteration, ranks for each iteration, as well as confidence intervals for ranks, and all the other outputs associated with <code>SA_type = "SA"</code>.</p>
 <p>Additionally it outputs a data frame <code>.$Sensitivity</code>, which gives first and total order sensitivity indices for each input variable. Moreover, if <code>Nboot</code> is specified in <code>sensitivity()</code>, it provides estimated confidence intervals for each sensitivity index using bootstrapping.</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="sensitivity-analysis.html#cb102-1"></a><span class="kw">roundDF</span>(SAresults<span class="op">$</span>Sensitivity)</span>
-<span id="cb102-2"><a href="sensitivity-analysis.html#cb102-2"></a><span class="co">##   Variable   Si  STi Si_q5 Si_q95 STi_q5 STi_q95</span></span>
-<span id="cb102-3"><a href="sensitivity-analysis.html#cb102-3"></a><span class="co">## 1   imtype 0.00 0.04 -0.04   0.05   0.03    0.04</span></span>
-<span id="cb102-4"><a href="sensitivity-analysis.html#cb102-4"></a><span class="co">## 2    ntype 0.54 0.80  0.30   0.77   0.72    0.88</span></span>
-<span id="cb102-5"><a href="sensitivity-analysis.html#cb102-5"></a><span class="co">## 3  weights 0.23 0.17  0.12   0.34   0.15    0.19</span></span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="sensitivity-analysis.html#cb108-1"></a><span class="kw">roundDF</span>(SAresults<span class="op">$</span>Sensitivity)</span>
+<span id="cb108-2"><a href="sensitivity-analysis.html#cb108-2"></a><span class="co">##   Variable   Si  STi Si_q5 Si_q95 STi_q5 STi_q95</span></span>
+<span id="cb108-3"><a href="sensitivity-analysis.html#cb108-3"></a><span class="co">## 1   imtype 0.00 0.04 -0.04   0.05   0.03    0.04</span></span>
+<span id="cb108-4"><a href="sensitivity-analysis.html#cb108-4"></a><span class="co">## 2    ntype 0.54 0.80  0.30   0.77   0.72    0.88</span></span>
+<span id="cb108-5"><a href="sensitivity-analysis.html#cb108-5"></a><span class="co">## 3  weights 0.23 0.17  0.12   0.34   0.15    0.19</span></span></code></pre></div>
 <p>Recall that the target output in the sensitivity analysis is the mean absolute rank change (let’s call it the MARC from here). How do we interpret these results? The first order sensitivity index <span class="math inline">\(S_i\)</span> can be interpreted as the uncertainty caused by the effect of the <span class="math inline">\(i\)</span>th uncertain parameter/assumption <em>on its own</em>. The total order sensitivity index is the uncertainty caused by the effect of the <span class="math inline">\(i\)</span>th uncertain parameter/assumption, <em>including its interactions with other inputs</em>.</p>
 <p>To help understand this, we will use COINr’s plotting function for sensitivity analysis, <code>plotSA</code>.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="sensitivity-analysis.html#cb103-1"></a><span class="co"># plot bar chart</span></span>
-<span id="cb103-2"><a href="sensitivity-analysis.html#cb103-2"></a><span class="kw">plotSA</span>(SAresults, <span class="dt">ptype =</span> <span class="st">&quot;bar&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="sensitivity-analysis.html#cb109-1"></a><span class="co"># plot bar chart</span></span>
+<span id="cb109-2"><a href="sensitivity-analysis.html#cb109-2"></a><span class="kw">plotSA</span>(SAresults, <span class="dt">ptype =</span> <span class="st">&quot;bar&quot;</span>)</span></code></pre></div>
 <p><img src="COINr-documentation_files/figure-html/plotSAbar-1.png" width="768" /></p>
 <p>This plot shows the three uncertainties that we introduced on the x-axis: the imputation type, the normalisation type, and the weights. The y-axis is the sensitivity index, and the total height of each bar is the total effect index <span class="math inline">\(S_{Ti}\)</span>, i.e. the uncertainty caused by the variable on its own (the <em>main effect</em>) as well as its interactions. Then each bar is divided into the interaction effects and the main effects.</p>
 <p>What this shows is that the normalisation type is the most important uncertainty, followed by the weights, and last by the imputation type. In fact, the choice of imputation method (between the ones specified) is effectively insignificant. We can also see that the nomalisation has a significant interaction effect, probably with the imputation method. Whereas the weights don’t seem to interact with the other inputs.</p>
 <p>Another way of looking at this is in a pie chart:</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="sensitivity-analysis.html#cb104-1"></a><span class="co"># plot bar chart</span></span>
-<span id="cb104-2"><a href="sensitivity-analysis.html#cb104-2"></a><span class="kw">plotSA</span>(SAresults, <span class="dt">ptype =</span> <span class="st">&quot;pie&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="sensitivity-analysis.html#cb110-1"></a><span class="co"># plot bar chart</span></span>
+<span id="cb110-2"><a href="sensitivity-analysis.html#cb110-2"></a><span class="kw">plotSA</span>(SAresults, <span class="dt">ptype =</span> <span class="st">&quot;pie&quot;</span>)</span></code></pre></div>
 <p><img src="COINr-documentation_files/figure-html/plotSApie-1.png" width="768" /></p>
 <p>Here we can see that more than half of the uncertainty is caused by the normalisation method choice alone, while a bit less than a quarter is caused by the weights, and the remainder by interactions.</p>
 <p>It is likely that the normalisation method is important because one of the choices was rank normalisation, which radically alters the distribution of each indicator.</p>
 <p>Finally, to see the uncertainty on the estimates of each sensitivity index we can use a box plot (or error bars):</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="sensitivity-analysis.html#cb105-1"></a><span class="co"># plot bar chart</span></span>
-<span id="cb105-2"><a href="sensitivity-analysis.html#cb105-2"></a><span class="kw">plotSA</span>(SAresults, <span class="dt">ptype =</span> <span class="st">&quot;box&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="sensitivity-analysis.html#cb111-1"></a><span class="co"># plot bar chart</span></span>
+<span id="cb111-2"><a href="sensitivity-analysis.html#cb111-2"></a><span class="kw">plotSA</span>(SAresults, <span class="dt">ptype =</span> <span class="st">&quot;box&quot;</span>)</span></code></pre></div>
 <p><img src="COINr-documentation_files/figure-html/plotSAbox-1.png" width="768" /></p>
 <p>This will not work unless <code>Nboot</code> was specified. Bootstrapping allows confidence intervals to be estimated, and this shows that the estimates of total effect indices (<span class="math inline">\(S_{Ti}\)</span>) are quite reliable. Whereas the confidence intervals are much wider on the first order indices (<span class="math inline">\(S_{i}\)</span>). Still, with the number of runs applied, it is possible to draw robust conclusions. If the confidence intervals were still too wide here, you could consider increasing <code>N</code> - this should lead to narrower intervals, although you might have to wait for a bit.</p>
 

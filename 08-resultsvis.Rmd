@@ -12,7 +12,7 @@ These latter platforms are not usually built in R, but in Javascript. However, C
 
 ## Tables
 
-To see the aggregated results, one way is to look in `.$Data$Aggregated`, which contains the aggregated scores, along with any grouping variables that were attached with the original data. However, this is not always convenient because the table can be quite large, and also the index itself will be the last column. You can of course manually select columns, but to make life easier COINr has a dedicated function, `resultsTable()`.
+To see the aggregated results, one way is to look in `.$Data$Aggregated`, which contains the aggregated scores, along with any grouping variables that were attached with the original data. However, this is not always convenient because the table can be quite large, and also the index itself will be the last column. You can of course manually select columns, but to make life easier COINr has a dedicated function, `getResults()`.
 
 ```{r resultsSummary}
 library(COINr)
@@ -22,19 +22,19 @@ library(magrittr)
 ASEM <- build_ASEM() %>% suppressMessages()
 
 # get results table, top 10
-resultsTable(ASEM) %>% head(10)
+getResults(ASEM) %>% head(10)
 ```
 
-By default, `resultsTable()` gives a table of the highest level of aggregation (i.e. typically the index), along with the scores, and the ranks. Scores are rounded to two decimal places, and this can be controlled by the `nround` argument. To see all aggregate scores, we can change the `tab_type` argument:
+By default, `getResults()` gives a table of the highest level of aggregation (i.e. typically the index), along with the scores, and the ranks. Scores are rounded to two decimal places, and this can be controlled by the `nround` argument. To see all aggregate scores, we can change the `tab_type` argument:
 
 ```{r resultsAgg}
-resultsTable(ASEM, tab_type = "Aggregates") %>%
+getResults(ASEM, tab_type = "Aggregates") %>%
   reactable::reactable()
 ```
 
 Here, we have used the reactable package to display the full table interactively. Notice that the aggregation levels are ordered from the highest level downwards, which is a more intuitive way to read the table. Other options for `tab_type` are "Full", which shows all columns in `.$Data$Aggregated` (but rearranged to make them easier to read), and "FullWithDenoms", which also attaches the denominators. These latter two are probably mostly useful for further data processing, or passing the results on to someone else.
 
-Additionally to the `resultsTable()` function, the `iplotTable()` function also plots tables, but interactively (and indeed using the reactable package underneath). Like many other COINr functions it takes the `isel` and `aglev` arguments to select subsets of the indicator data. Moreover, it colours table cells, similar to conditional formatting in Excel.
+Additionally to the `getResults()` function, the `iplotTable()` function also plots tables, but interactively (and indeed using the reactable package underneath). Like many other COINr functions it takes the `isel` and `aglev` arguments to select subsets of the indicator data. Moreover, it colours table cells, similar to conditional formatting in Excel.
 
 As an example, we can request to see all the pillar scores inside the Connectivity sub-index. The function sorts the units by the first column by default. This function is useful for generating quick tables inside HTML reports.
 

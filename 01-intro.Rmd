@@ -59,7 +59,7 @@ The following functions analyse indicator data.
 
 Function            Description                                 
 ------------------  ---------------------------------------------
-`cPCA()`            Principle component analysis on a specified data set and subset of indicators. Returns PCA weights.
+`getPCA()`            Principle component analysis on a specified data set and subset of indicators. Returns PCA weights.
 `effectiveWeight()` Calculates the effective weights of each element in the indicator hierarchy.
 `getStats()`        Get table of indicator statistics for any data set
 `weightOpt()`       Weight optimisation according to a pre-specified vector of "importances"

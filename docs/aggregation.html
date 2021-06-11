@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-06-10" />
+<meta name="date" content="2021-06-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -367,54 +367,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="aggregation-in-coinr" class="section level2">
 <h2><span class="header-section-number">10.3</span> Aggregation in COINr</h2>
 <p>Many will be amazed to learn that the function to aggregate in COINr is called <code>aggregate()</code>. First, let’s build the ASEM data set up to the point of normalisation, then aggregate it using the default approaches.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="aggregation.html#cb65-1"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb65-2"><a href="aggregation.html#cb65-2"></a></span>
-<span id="cb65-3"><a href="aggregation.html#cb65-3"></a><span class="co"># Build ASEM data up to the normalisation step</span></span>
-<span id="cb65-4"><a href="aggregation.html#cb65-4"></a><span class="co"># Assemble data and metadata into a COIN</span></span>
-<span id="cb65-5"><a href="aggregation.html#cb65-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> COINr<span class="op">::</span>ASEMIndData, <span class="dt">IndMeta =</span> COINr<span class="op">::</span>ASEMIndMeta, <span class="dt">AggMeta =</span> COINr<span class="op">::</span>ASEMAggMeta)</span>
-<span id="cb65-6"><a href="aggregation.html#cb65-6"></a><span class="co">## -----------------</span></span>
-<span id="cb65-7"><a href="aggregation.html#cb65-7"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb65-8"><a href="aggregation.html#cb65-8"></a><span class="co">## -----------------</span></span>
-<span id="cb65-9"><a href="aggregation.html#cb65-9"></a><span class="co">## -----------------</span></span>
-<span id="cb65-10"><a href="aggregation.html#cb65-10"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb65-11"><a href="aggregation.html#cb65-11"></a><span class="co">## -----------------</span></span>
-<span id="cb65-12"><a href="aggregation.html#cb65-12"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb65-13"><a href="aggregation.html#cb65-13"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb65-14"><a href="aggregation.html#cb65-14"></a><span class="co">## Number of reference years of data = 1</span></span>
-<span id="cb65-15"><a href="aggregation.html#cb65-15"></a><span class="co">## Years from 2018 to 2018</span></span>
-<span id="cb65-16"><a href="aggregation.html#cb65-16"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb65-17"><a href="aggregation.html#cb65-17"></a><span class="co">## -----------------</span></span>
-<span id="cb65-18"><a href="aggregation.html#cb65-18"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb65-19"><a href="aggregation.html#cb65-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb65-20"><a href="aggregation.html#cb65-20"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb65-21"><a href="aggregation.html#cb65-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb65-22"><a href="aggregation.html#cb65-22"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb65-23"><a href="aggregation.html#cb65-23"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb65-24"><a href="aggregation.html#cb65-24"></a><span class="co">## -----------------</span></span>
-<span id="cb65-25"><a href="aggregation.html#cb65-25"></a><span class="co"># Denominate as specified in metadata</span></span>
-<span id="cb65-26"><a href="aggregation.html#cb65-26"></a>ASEM &lt;-<span class="st"> </span><span class="kw">denominate</span>(ASEM)</span>
-<span id="cb65-27"><a href="aggregation.html#cb65-27"></a><span class="co"># Normalise using default method: min-max scaled between 0 and 100.</span></span>
-<span id="cb65-28"><a href="aggregation.html#cb65-28"></a>ASEM &lt;-<span class="st"> </span><span class="kw">normalise</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Denominated&quot;</span>)</span>
-<span id="cb65-29"><a href="aggregation.html#cb65-29"></a></span>
-<span id="cb65-30"><a href="aggregation.html#cb65-30"></a><span class="co"># Now aggregate using default method: arithmetic mean, using weights found in the COIN</span></span>
-<span id="cb65-31"><a href="aggregation.html#cb65-31"></a>ASEM &lt;-<span class="st"> </span><span class="kw">aggregate</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb65-32"><a href="aggregation.html#cb65-32"></a></span>
-<span id="cb65-33"><a href="aggregation.html#cb65-33"></a><span class="co"># show last few columns of aggregated data set</span></span>
-<span id="cb65-34"><a href="aggregation.html#cb65-34"></a>ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated[(<span class="kw">ncol</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated)<span class="op">-</span><span class="dv">5</span>)<span class="op">:</span><span class="st"> </span><span class="kw">ncol</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated)]</span>
-<span id="cb65-35"><a href="aggregation.html#cb65-35"></a><span class="co">## # A tibble: 51 x 6</span></span>
-<span id="cb65-36"><a href="aggregation.html#cb65-36"></a><span class="co">##    Environ Social SusEcFin  Conn  Sust Index</span></span>
-<span id="cb65-37"><a href="aggregation.html#cb65-37"></a><span class="co">##      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb65-38"><a href="aggregation.html#cb65-38"></a><span class="co">##  1    71.0   67.0     65.7  50.4  67.9  59.1</span></span>
-<span id="cb65-39"><a href="aggregation.html#cb65-39"></a><span class="co">##  2    55.9   86.3     53.5  54.8  65.3  60.0</span></span>
-<span id="cb65-40"><a href="aggregation.html#cb65-40"></a><span class="co">##  3    56.4   54.0     62.5  42.4  57.6  50.0</span></span>
-<span id="cb65-41"><a href="aggregation.html#cb65-41"></a><span class="co">##  4    76.0   54.8     55.5  45.9  62.1  54.0</span></span>
-<span id="cb65-42"><a href="aggregation.html#cb65-42"></a><span class="co">##  5    61.9   59.5     31.1  45.5  50.8  48.2</span></span>
-<span id="cb65-43"><a href="aggregation.html#cb65-43"></a><span class="co">##  6    53.7   61.1     72.0  48.9  62.3  55.6</span></span>
-<span id="cb65-44"><a href="aggregation.html#cb65-44"></a><span class="co">##  7    72.5   79.8     62.7  51.0  71.7  61.4</span></span>
-<span id="cb65-45"><a href="aggregation.html#cb65-45"></a><span class="co">##  8    35.7   68.3     70.1  49.5  58.0  53.8</span></span>
-<span id="cb65-46"><a href="aggregation.html#cb65-46"></a><span class="co">##  9    52.9   82.1     63.8  48.2  66.3  57.2</span></span>
-<span id="cb65-47"><a href="aggregation.html#cb65-47"></a><span class="co">## 10    66.5   60.8     54.2  47.0  60.5  53.7</span></span>
-<span id="cb65-48"><a href="aggregation.html#cb65-48"></a><span class="co">## # ... with 41 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="aggregation.html#cb71-1"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb71-2"><a href="aggregation.html#cb71-2"></a></span>
+<span id="cb71-3"><a href="aggregation.html#cb71-3"></a><span class="co"># Build ASEM data up to the normalisation step</span></span>
+<span id="cb71-4"><a href="aggregation.html#cb71-4"></a><span class="co"># Assemble data and metadata into a COIN</span></span>
+<span id="cb71-5"><a href="aggregation.html#cb71-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">assemble</span>(<span class="dt">IndData =</span> COINr<span class="op">::</span>ASEMIndData, <span class="dt">IndMeta =</span> COINr<span class="op">::</span>ASEMIndMeta, <span class="dt">AggMeta =</span> COINr<span class="op">::</span>ASEMAggMeta)</span>
+<span id="cb71-6"><a href="aggregation.html#cb71-6"></a><span class="co">## -----------------</span></span>
+<span id="cb71-7"><a href="aggregation.html#cb71-7"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb71-8"><a href="aggregation.html#cb71-8"></a><span class="co">## -----------------</span></span>
+<span id="cb71-9"><a href="aggregation.html#cb71-9"></a><span class="co">## -----------------</span></span>
+<span id="cb71-10"><a href="aggregation.html#cb71-10"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb71-11"><a href="aggregation.html#cb71-11"></a><span class="co">## -----------------</span></span>
+<span id="cb71-12"><a href="aggregation.html#cb71-12"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb71-13"><a href="aggregation.html#cb71-13"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb71-14"><a href="aggregation.html#cb71-14"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb71-15"><a href="aggregation.html#cb71-15"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb71-16"><a href="aggregation.html#cb71-16"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb71-17"><a href="aggregation.html#cb71-17"></a><span class="co">## -----------------</span></span>
+<span id="cb71-18"><a href="aggregation.html#cb71-18"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb71-19"><a href="aggregation.html#cb71-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb71-20"><a href="aggregation.html#cb71-20"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb71-21"><a href="aggregation.html#cb71-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb71-22"><a href="aggregation.html#cb71-22"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb71-23"><a href="aggregation.html#cb71-23"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb71-24"><a href="aggregation.html#cb71-24"></a><span class="co">## -----------------</span></span>
+<span id="cb71-25"><a href="aggregation.html#cb71-25"></a><span class="co"># Denominate as specified in metadata</span></span>
+<span id="cb71-26"><a href="aggregation.html#cb71-26"></a>ASEM &lt;-<span class="st"> </span><span class="kw">denominate</span>(ASEM)</span>
+<span id="cb71-27"><a href="aggregation.html#cb71-27"></a><span class="co"># Normalise using default method: min-max scaled between 0 and 100.</span></span>
+<span id="cb71-28"><a href="aggregation.html#cb71-28"></a>ASEM &lt;-<span class="st"> </span><span class="kw">normalise</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Denominated&quot;</span>)</span>
+<span id="cb71-29"><a href="aggregation.html#cb71-29"></a></span>
+<span id="cb71-30"><a href="aggregation.html#cb71-30"></a><span class="co"># Now aggregate using default method: arithmetic mean, using weights found in the COIN</span></span>
+<span id="cb71-31"><a href="aggregation.html#cb71-31"></a>ASEM &lt;-<span class="st"> </span><span class="kw">aggregate</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb71-32"><a href="aggregation.html#cb71-32"></a></span>
+<span id="cb71-33"><a href="aggregation.html#cb71-33"></a><span class="co"># show last few columns of aggregated data set</span></span>
+<span id="cb71-34"><a href="aggregation.html#cb71-34"></a>ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated[(<span class="kw">ncol</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated)<span class="op">-</span><span class="dv">5</span>)<span class="op">:</span><span class="st"> </span><span class="kw">ncol</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Aggregated)]</span>
+<span id="cb71-35"><a href="aggregation.html#cb71-35"></a><span class="co">## # A tibble: 51 x 6</span></span>
+<span id="cb71-36"><a href="aggregation.html#cb71-36"></a><span class="co">##    Environ Social SusEcFin  Conn  Sust Index</span></span>
+<span id="cb71-37"><a href="aggregation.html#cb71-37"></a><span class="co">##      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb71-38"><a href="aggregation.html#cb71-38"></a><span class="co">##  1    71.0   67.0     65.7  50.4  67.9  59.1</span></span>
+<span id="cb71-39"><a href="aggregation.html#cb71-39"></a><span class="co">##  2    55.9   86.3     53.5  54.8  65.3  60.0</span></span>
+<span id="cb71-40"><a href="aggregation.html#cb71-40"></a><span class="co">##  3    56.4   54.0     62.5  42.4  57.6  50.0</span></span>
+<span id="cb71-41"><a href="aggregation.html#cb71-41"></a><span class="co">##  4    76.0   54.8     55.5  45.9  62.1  54.0</span></span>
+<span id="cb71-42"><a href="aggregation.html#cb71-42"></a><span class="co">##  5    61.9   59.5     31.1  45.5  50.8  48.2</span></span>
+<span id="cb71-43"><a href="aggregation.html#cb71-43"></a><span class="co">##  6    53.7   61.1     72.0  48.9  62.3  55.6</span></span>
+<span id="cb71-44"><a href="aggregation.html#cb71-44"></a><span class="co">##  7    72.5   79.8     62.7  51.0  71.7  61.4</span></span>
+<span id="cb71-45"><a href="aggregation.html#cb71-45"></a><span class="co">##  8    35.7   68.3     70.1  49.5  58.0  53.8</span></span>
+<span id="cb71-46"><a href="aggregation.html#cb71-46"></a><span class="co">##  9    52.9   82.1     63.8  48.2  66.3  57.2</span></span>
+<span id="cb71-47"><a href="aggregation.html#cb71-47"></a><span class="co">## 10    66.5   60.8     54.2  47.0  60.5  53.7</span></span>
+<span id="cb71-48"><a href="aggregation.html#cb71-48"></a><span class="co">## # ... with 41 more rows</span></span></code></pre></div>
 <p>By default, the aggregation function performs the following steps:</p>
 <ul>
 <li>Uses the weights that were attached to <code>IndMeta</code> and <code>AggMeta</code> in <code>assemble()</code></li>
@@ -432,12 +432,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>agtype = custom</code> allows you to pass a custom aggregation function.</li>
 </ul>
 <p>For the last option here, if <code>agtype = custom</code> then you need to also specify the custom function via the <code>agfunc</code> argument. As an example:</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="aggregation.html#cb66-1"></a><span class="co"># define an aggregation function which is the weighted minimum</span></span>
-<span id="cb66-2"><a href="aggregation.html#cb66-2"></a>weightedMin &lt;-<span class="st"> </span><span class="cf">function</span>(x,w) <span class="kw">min</span>(x<span class="op">*</span>w, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb66-3"><a href="aggregation.html#cb66-3"></a></span>
-<span id="cb66-4"><a href="aggregation.html#cb66-4"></a><span class="co"># pass to aggregate() and aggregate</span></span>
-<span id="cb66-5"><a href="aggregation.html#cb66-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">aggregate</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="dt">agtype =</span> <span class="st">&quot;custom&quot;</span>,</span>
-<span id="cb66-6"><a href="aggregation.html#cb66-6"></a>                  <span class="dt">agfunc =</span> weightedMin, <span class="dt">out2 =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="aggregation.html#cb72-1"></a><span class="co"># define an aggregation function which is the weighted minimum</span></span>
+<span id="cb72-2"><a href="aggregation.html#cb72-2"></a>weightedMin &lt;-<span class="st"> </span><span class="cf">function</span>(x,w) <span class="kw">min</span>(x<span class="op">*</span>w, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb72-3"><a href="aggregation.html#cb72-3"></a></span>
+<span id="cb72-4"><a href="aggregation.html#cb72-4"></a><span class="co"># pass to aggregate() and aggregate</span></span>
+<span id="cb72-5"><a href="aggregation.html#cb72-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">aggregate</span>(ASEM, <span class="dt">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="dt">agtype =</span> <span class="st">&quot;custom&quot;</span>,</span>
+<span id="cb72-6"><a href="aggregation.html#cb72-6"></a>                  <span class="dt">agfunc =</span> weightedMin, <span class="dt">out2 =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
 <p>Any custom function should have the form <code>functionName &lt;- function(x,w)</code>, i.e. it accepts x and w as vectors of indicator values and weights respectively, and returns a scalar aggregated value. Ensure that NAs are handled (e.g. set na.rm = T) if your data has missing values, otherwise NAs will be passed through to higher levels.</p>
 <p>A number of sophisticated aggregation approaches and linked weighting methods are available in the <a href="https://cran.r-project.org/web/packages/Compind/index.html">compind package</a>. These can nicely complement the features in COINr and may be of interest to those looking for more technical approaches to aggregation, such as those based on benefit of the doubt methods.</p>
 <p>A further argument, <code>agtype_bylevel</code>, allows specification of different normalisation types at different aggregation levels. For example, <code>agtype_bylevel = c("arith_mean", "geom_mean", "median")</code> would use the arithmetic mean at the indicator level, the geometric mean at the pillar level, and the median at the sub-index level (for the ASEM data structure).</p>

@@ -202,12 +202,12 @@ As discussed earlier, weighting can also be performed statistically, by optimisi
 
 #### With PCA
 
-The `cPCA()` function is used as a quick way to perform PCA on COINs. This does two things: first, to output PCA results for any aggregation level; and second, to provide PCA weights corresponding to the "loadings" of the first principle component. As discussed above, this is the linear combination that results in the most explained variance.
+The `getPCA()` function is used as a quick way to perform PCA on COINs. This does two things: first, to output PCA results for any aggregation level; and second, to provide PCA weights corresponding to the "loadings" of the first principle component. As discussed above, this is the linear combination that results in the most explained variance.
 
-The other outputs of `cPCA()` are left to the [Multivariate analysis] section. Here, we will focus on weighting. To obtain PCA weights, simply run something like:
+The other outputs of `getPCA()` are left to the [Multivariate analysis] section. Here, we will focus on weighting. To obtain PCA weights, simply run something like:
 
 ```{r PCAweights}
-ASEM <- cPCA(ASEM, dset = "Aggregated", aglev = 2)
+ASEM <- getPCA(ASEM, dset = "Aggregated", aglev = 2)
 ```
 
 This calls the aggregated data set, and performs PCA on aggregation level 2, i.e. the pillars in the case of ASEM. The result is an updated COIN, with a new set of weights called `.Parameters$Weights$PCA_AggregatedL2`. This is automatically named according to the data set used and the aggregation level.
