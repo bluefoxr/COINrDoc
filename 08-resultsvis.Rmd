@@ -34,6 +34,13 @@ getResults(ASEM, tab_type = "Aggregates") %>%
 
 Here, we have used the reactable package to display the full table interactively. Notice that the aggregation levels are ordered from the highest level downwards, which is a more intuitive way to read the table. Other options for `tab_type` are "Full", which shows all columns in `.$Data$Aggregated` (but rearranged to make them easier to read), and "FullWithDenoms", which also attaches the denominators. These latter two are probably mostly useful for further data processing, or passing the results on to someone else.
 
+Often it may be more interesting to look at ranks rather than scores We can do this by setting `use = "ranks"`:
+
+```{r resultsAggR}
+getResults(ASEM, tab_type = "Aggregates", use = "ranks") %>%
+  reactable::reactable()
+```
+
 Additionally to the `getResults()` function, the `iplotTable()` function also plots tables, but interactively (and indeed using the reactable package underneath). Like many other COINr functions it takes the `isel` and `aglev` arguments to select subsets of the indicator data. Moreover, it colours table cells, similar to conditional formatting in Excel.
 
 As an example, we can request to see all the pillar scores inside the Connectivity sub-index. The function sorts the units by the first column by default. This function is useful for generating quick tables inside HTML reports.
