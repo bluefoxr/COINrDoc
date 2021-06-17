@@ -75,6 +75,14 @@ Tables are useful but can be a bit dry, so you can spice this up using the bar c
 iplotBar(ASEM, dset = "Aggregated", isel = "Index", usel = "GBR")
 ```
 
+You can also plot a stacked bar chart which includes the scores of the underlying indicators or aggregates. For example, we can plot the connectivity scores, with bars showing the underlying pillar scores:
+
+```{r ASEMindexbar_stacked}
+iplotBar(ASEM, dset = "Aggregated", isel = "Conn", aglev = 3, stack_children = TRUE)
+```
+
+This type of plot only works if the aggregated data set is used, because it needs to use aggregated data. Also note that since scores are stacked (added), it only really makes sense if the aggregation method is the arithmetic mean. Otherwise if the aggregation method is something else, the sum of the underlying scores will not be proportional to the aggregated score (e.g. geometric mean is not proportional to the sum).
+
 And here's a map:
 
 ```{r ASEMindexmap}

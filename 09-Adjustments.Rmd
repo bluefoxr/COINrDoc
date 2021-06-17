@@ -168,6 +168,26 @@ and of course this extends to any parameters of any of the "construction" functi
 
 ## Comparisons
 
-A logical follow up to making alternative indexes is to try to understand the differences between these indexes. This can of course be done manually. But to make this quicker, COINr includes a comparison app.
+A logical follow up to making alternative indexes is to try to understand the differences between these indexes. This can of course be done manually. But to make this quicker, COINr includes a few tools to quickly inspect the differences between different COINs.
 
-*NOTE: the comparison app and tools need some bug fixing, so for the moment they are out of action. Stay tuned.*
+In using these tools it should be fairly evident that comparisons are made between different versions of the same index. So the two indexes must have at least some units in common. The tools are intended for methodological variations of the type shown previously in this chapter - different aggregation, weighting, adding and removing indicators and so on. That said, since comparisons are made on units, it would also be possible to compare two totally different COINs, as long as they have units in common.
+
+To begin with, we can make a simple bilateral comparison between two COINs. Taking two of the index versions created previously:
+
+```{r}
+compTable(ASEM, ASEMAltNorm, dset = "Aggregated", isel = "Index") %>%
+  head(10) %>%
+  knitr::kable()
+```
+
+The `compTable()` function allows a rank comparison of a single indicator or aggregate, between two COINs. The COINs must both share the indicator code which is assigned to `isel`. By default the output table (data frame) is sorted by the highest absolute rank change downwards, but it can be sorted by the other columns using the `sort_by` argument:
+
+```{r}
+compTable(ASEM, ASEMAltNorm, dset = "Aggregated", isel = "Index", sort_by = "RankCOIN1") %>%
+  head(10) %>%
+  knitr::kable()
+```
+
+Why use ranks as a comparison and not scores? As explained elsewhere in this documentation, a different normalisation method or aggregation method can result in very different scores for the same unit. Since scores have no units, the scale is in many ways arbitrary, but ranks are a consistent way of comparing different versions.
+
+For comparisons between more than two COINs, the `compTableMulti()` function can be used.
