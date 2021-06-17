@@ -36,7 +36,7 @@ Here, we have used the reactable package to display the full table interactively
 
 Often it may be more interesting to look at ranks rather than scores We can do this by setting `use = "ranks"`:
 
-```{r resultsAggR}
+```{r resultsAgg2}
 getResults(ASEM, tab_type = "Aggregates", use = "ranks") %>%
   reactable::reactable()
 ```
@@ -50,6 +50,22 @@ iplotTable(ASEM, dset = "Aggregated", isel = "Conn", aglev = 2)
 ```
 
 Recall that since the output of this function is a reactable table, we can also edit it further by using reactable functions.
+
+If an individual unit is of interest, you can also call `getUnitSummary()`, which is a function which gives a summary of the scores for an individual unit:
+
+```{r}
+getUnitSummary(ASEM, usel = "GBR", aglevs = c(4, 3, 2)) %>% knitr::kable()
+```
+
+Finally, the strengths and weaknesses of an individual unit can be found by calling `getStrengthNWeak()`:
+
+```{r}
+SAW <- getStrengthNWeak(ASEM, usel = "GBR")
+SAW$Strengths  %>% knitr::kable()
+SAW$Weaknesses  %>% knitr::kable()
+```
+
+These are selected as the top-ranked and bottom-ranked indicators for each unit, respectively, where by default the top and bottom five are selected (but this can be changed using the `topN` and `bottomN` arguments).
 
 ## Plots
 
@@ -77,6 +93,19 @@ Radar charts, which look exciting to newbies, but have are often grumbled about 
 
 The `iplotRadar()` function is powered by Plotly, therefore it can be edited using Plotly commands. It is an interactive graphic, so you can add and remove units by clicking on the legend.
 
+A useful feature of this function is the possibility to easily add (group) means or medians. For example, we can add the a trace representing the overall median values for each indicator:
+
+```{r radarASEM_median}
+iplotRadar(ASEM, dset = "Aggregated", usel = c("CHN", "DEU"), isel = "Conn", aglev = 2, addstat = "median")
+```
+
+We can also add the mean or median of a grouping variable that is present in the selected data set. Grouping variables are those that start with "Group_". Here we can add the GDP group mean (both the selected countries are in the "XL" group).
+
+```{r radarASEM_groupmean}
+iplotRadar(ASEM, dset = "Aggregated", usel = c("CHN", "DEU"), isel = "Conn", aglev = 2, addstat = "groupmean",
+           statgroup = "Group_GDP", statgroup_name = "GDP")
+```
+
 ## Interactive exploration
 
 COINr also offers a Shiny app called `resultsDash()` for quickly and interactively exploring the results. It features the plots described above, but in an interactive app format. The point of this is to give a tool which can be used to explore the results during development, and to demonstrate the results of the index in validation sessions with experts and stakeholders. It is not meant to replace a dedicated interactive platform. It could however be a starting point for a Shiny-based web platform.
@@ -92,3 +121,49 @@ This will open a browser window or tab with the results dashboard app. The app a
 ```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "resultsDash screenshot"}
 knitr::include_graphics("images/resultsDash_screenshot.png")
 ```
+
+## Unit reports
+
+Many composite indicators produce reports for each unit, for example the "economy profiles" in the Global Innovation Index. Typically this is a summary of the scores and ranks of the unit, possibly some figures, and maybe strengths and weaknesses.
+
+COINr allows country reports to be generated automatically. This is done via a *parameterised R markdown document*, which includes several of the tables and figures shown in this section^[See [here](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html) for more information on how parameterised documents work.]. The COINr function `getUnitReport()` generates a report for any specified unit using an example scorecard which is found in the `/UnitReport` directory where COINr is installed on your computer. To easily find this, call:
+
+```{r}
+system.file("UnitReport", "unit_report_source.Rmd", package = "COINr")
+```
+
+where the directory will be different on your computer.
+
+Opening this document in R will give you an idea of how the parameterised document works. In short, the COIN object is passed into the R Markdown document, so that anything that is inside the COIN can be accessed and used for generating tables, figures and text. The example included is just that, an example. To see how it looks, we can run:
+
+```{r, eval=F}
+getUnitReport(ASEM, usel = "NZL", out_type = ".html")
+```
+
+Calling this should create an html document in your current working directory, which will look something like this:
+
+```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Unit profile screenshot 1/2"}
+knitr::include_graphics("images/getUnitProfile_screenshot1.png")
+```
+```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Unit profile screenshot 2/2"}
+knitr::include_graphics("images/getUnitProfile_screenshot2.png")
+```
+
+This is simply an example of the sort of thing that is possible, and the output can be either an html document, a Word document, or a pdf. It's important to note that if the output is pdf or a Word doc, this is a *static document* which cannot include interactive plots such as those from plotly, COINr's iplot functions and any other javascript or html widget figures. If you want to use interactive plots, but still be able to create static documents, you must install the webshot package. To do this, run:
+
+```{r, eval=F}
+install.packages("webshot")
+webshot::install_phantomjs()
+```
+
+This will effectively render the figures to html, then take a static snapshot of each figure and paste it into your static document. Of course, this loses the interactive element of these plots, but can still render nice plots depending on what you are doing. If you do not have webshot installed, and try to render interactive plots to pdf or docx, you will encounter an error.
+
+That aside, why use a parameterised document, rather than a normal R Markdown doc? Because by parameterising it, we can automatically create unit profiles for all units at once, or a subset, by looping over the unit codes. For example, using purrr:
+
+```{r, eval = F}
+purrr::map(c("AUS", "AUT", "CHN"), ~ getUnitReport(ASEM, usel = .x, out_type = ".html"))
+```
+
+This generates reports for the three countries specified, but of course you can do it for all units present if you want to.
+
+Most likely if you want to use this function you will want to create a customised template that fits your requirements. To do this, copy the existing template found in the COINr directory as described above. Then make your own modifications, and set the `rmd_template` argument to point to the new template. If the output is a Word doc, you can also customise the formatting of the document by additionally including a Word template. To do this, see the [R Markdown Guide](https://bookdown.org/yihui/rmarkdown/word-document.html). In fact, browsing this book is probably a good idea in general if you are planning to generate many unit reports or other markdown reports. You many also wish to create your own function for rendering rather than using `getUnitReport()`. The code for this function can be found on [Github](https://github.com/bluefoxr/COINr/blob/master/R/coin_resultstable.R) and this may help for inspiration.

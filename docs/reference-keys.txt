@@ -4,8 +4,10 @@ fig:unnamed-chunk-66
 fig:unnamed-chunk-67
 fig:unnamed-chunk-68-1
 fig:unnamed-chunk-68-2
-fig:unnamed-chunk-70
-fig:unnamed-chunk-71
+fig:unnamed-chunk-72
+fig:unnamed-chunk-75
+fig:unnamed-chunk-76
+fig:unnamed-chunk-79
 overview
 background
 installation
@@ -104,6 +106,7 @@ visualising-results
 tables
 plots
 interactive-exploration
+unit-reports
 adjustments-and-comparisons
 regeneration
 adjustments
