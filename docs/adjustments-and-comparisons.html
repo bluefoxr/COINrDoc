@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-06-17" />
+<meta name="date" content="2021-06-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -303,7 +303,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="16.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>16.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>17</b> Acknowledgements</a></li>
+<li class="chapter" data-level="17" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>17</b> FAQ</a></li>
+<li class="chapter" data-level="18" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>18</b> Appendix: Building a Composite Indicator Example</a></li>
+<li class="chapter" data-level="19" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>19</b> Appendix: Analysing a Composite Indicator Example</a></li>
+<li class="chapter" data-level="20" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>20</b> Acknowledgements</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -330,35 +333,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="regeneration" class="section level2">
 <h2><span class="header-section-number">13.1</span> Regeneration</h2>
 <p>One of the key advantages of working within the COINrverse is that (nearly) all the methodology that is applied when building a composite indicator (COIN) is stored automatically in a folder of the COIN called <code>.$Method</code>. To see what this looks like:</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="adjustments-and-comparisons.html#cb104-1"></a><span class="co"># load COINr if not loaded</span></span>
-<span id="cb104-2"><a href="adjustments-and-comparisons.html#cb104-2"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb104-3"><a href="adjustments-and-comparisons.html#cb104-3"></a></span>
-<span id="cb104-4"><a href="adjustments-and-comparisons.html#cb104-4"></a><span class="co"># build example COIN</span></span>
-<span id="cb104-5"><a href="adjustments-and-comparisons.html#cb104-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">build_ASEM</span>()</span>
-<span id="cb104-6"><a href="adjustments-and-comparisons.html#cb104-6"></a><span class="co">## -----------------</span></span>
-<span id="cb104-7"><a href="adjustments-and-comparisons.html#cb104-7"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb104-8"><a href="adjustments-and-comparisons.html#cb104-8"></a><span class="co">## -----------------</span></span>
-<span id="cb104-9"><a href="adjustments-and-comparisons.html#cb104-9"></a><span class="co">## -----------------</span></span>
-<span id="cb104-10"><a href="adjustments-and-comparisons.html#cb104-10"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb104-11"><a href="adjustments-and-comparisons.html#cb104-11"></a><span class="co">## -----------------</span></span>
-<span id="cb104-12"><a href="adjustments-and-comparisons.html#cb104-12"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb104-13"><a href="adjustments-and-comparisons.html#cb104-13"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb104-14"><a href="adjustments-and-comparisons.html#cb104-14"></a><span class="co">## Number of reference years of data = 1</span></span>
-<span id="cb104-15"><a href="adjustments-and-comparisons.html#cb104-15"></a><span class="co">## Years from 2018 to 2018</span></span>
-<span id="cb104-16"><a href="adjustments-and-comparisons.html#cb104-16"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb104-17"><a href="adjustments-and-comparisons.html#cb104-17"></a><span class="co">## -----------------</span></span>
-<span id="cb104-18"><a href="adjustments-and-comparisons.html#cb104-18"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb104-19"><a href="adjustments-and-comparisons.html#cb104-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb104-20"><a href="adjustments-and-comparisons.html#cb104-20"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb104-21"><a href="adjustments-and-comparisons.html#cb104-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb104-22"><a href="adjustments-and-comparisons.html#cb104-22"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb104-23"><a href="adjustments-and-comparisons.html#cb104-23"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb104-24"><a href="adjustments-and-comparisons.html#cb104-24"></a><span class="co">## -----------------</span></span>
-<span id="cb104-25"><a href="adjustments-and-comparisons.html#cb104-25"></a><span class="co">## Missing data points detected = 65</span></span>
-<span id="cb104-26"><a href="adjustments-and-comparisons.html#cb104-26"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span>
-<span id="cb104-27"><a href="adjustments-and-comparisons.html#cb104-27"></a></span>
-<span id="cb104-28"><a href="adjustments-and-comparisons.html#cb104-28"></a><span class="co"># look in ASEM$Method folder in R Studio...</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-79"></span>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="adjustments-and-comparisons.html#cb101-1"></a><span class="co"># load COINr if not loaded</span></span>
+<span id="cb101-2"><a href="adjustments-and-comparisons.html#cb101-2"></a><span class="kw">library</span>(COINr)</span>
+<span id="cb101-3"><a href="adjustments-and-comparisons.html#cb101-3"></a></span>
+<span id="cb101-4"><a href="adjustments-and-comparisons.html#cb101-4"></a><span class="co"># build example COIN</span></span>
+<span id="cb101-5"><a href="adjustments-and-comparisons.html#cb101-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">build_ASEM</span>()</span>
+<span id="cb101-6"><a href="adjustments-and-comparisons.html#cb101-6"></a><span class="co">## -----------------</span></span>
+<span id="cb101-7"><a href="adjustments-and-comparisons.html#cb101-7"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb101-8"><a href="adjustments-and-comparisons.html#cb101-8"></a><span class="co">## -----------------</span></span>
+<span id="cb101-9"><a href="adjustments-and-comparisons.html#cb101-9"></a><span class="co">## -----------------</span></span>
+<span id="cb101-10"><a href="adjustments-and-comparisons.html#cb101-10"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb101-11"><a href="adjustments-and-comparisons.html#cb101-11"></a><span class="co">## -----------------</span></span>
+<span id="cb101-12"><a href="adjustments-and-comparisons.html#cb101-12"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb101-13"><a href="adjustments-and-comparisons.html#cb101-13"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb101-14"><a href="adjustments-and-comparisons.html#cb101-14"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb101-15"><a href="adjustments-and-comparisons.html#cb101-15"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb101-16"><a href="adjustments-and-comparisons.html#cb101-16"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb101-17"><a href="adjustments-and-comparisons.html#cb101-17"></a><span class="co">## -----------------</span></span>
+<span id="cb101-18"><a href="adjustments-and-comparisons.html#cb101-18"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb101-19"><a href="adjustments-and-comparisons.html#cb101-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb101-20"><a href="adjustments-and-comparisons.html#cb101-20"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb101-21"><a href="adjustments-and-comparisons.html#cb101-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb101-22"><a href="adjustments-and-comparisons.html#cb101-22"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb101-23"><a href="adjustments-and-comparisons.html#cb101-23"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb101-24"><a href="adjustments-and-comparisons.html#cb101-24"></a><span class="co">## -----------------</span></span>
+<span id="cb101-25"><a href="adjustments-and-comparisons.html#cb101-25"></a><span class="co">## Missing data points detected = 65</span></span>
+<span id="cb101-26"><a href="adjustments-and-comparisons.html#cb101-26"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span>
+<span id="cb101-27"><a href="adjustments-and-comparisons.html#cb101-27"></a></span>
+<span id="cb101-28"><a href="adjustments-and-comparisons.html#cb101-28"></a><span class="co"># look in ASEM$Method folder in R Studio...</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-75"></span>
 <img src="images/method_folder.png" alt="Method folder in ASEM example" width="60%" />
 <p class="caption">
 Figure 13.1: Method folder in ASEM example
@@ -407,28 +410,28 @@ Figure 13.1: Method folder in ASEM example
 <p>These are the core functions that are used to build a composite indicator, from assembling from the original data, up to aggregation.</p>
 <p>One reason to do this is simply to have a record of what you did to arrive at the results. However, this is not the main reason (and in fact, it would be anyway good practice to make your own record by creating a script or markdown doc which records the steps). The real advantage is that results can be automatically regenerated with a handy function called <code>regen()</code>.</p>
 <p>To regenerate the results, simply run e.g.:</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="adjustments-and-comparisons.html#cb105-1"></a>ASEM2 &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM)</span>
-<span id="cb105-2"><a href="adjustments-and-comparisons.html#cb105-2"></a><span class="co">## -----------------</span></span>
-<span id="cb105-3"><a href="adjustments-and-comparisons.html#cb105-3"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb105-4"><a href="adjustments-and-comparisons.html#cb105-4"></a><span class="co">## -----------------</span></span>
-<span id="cb105-5"><a href="adjustments-and-comparisons.html#cb105-5"></a><span class="co">## -----------------</span></span>
-<span id="cb105-6"><a href="adjustments-and-comparisons.html#cb105-6"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb105-7"><a href="adjustments-and-comparisons.html#cb105-7"></a><span class="co">## -----------------</span></span>
-<span id="cb105-8"><a href="adjustments-and-comparisons.html#cb105-8"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb105-9"><a href="adjustments-and-comparisons.html#cb105-9"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb105-10"><a href="adjustments-and-comparisons.html#cb105-10"></a><span class="co">## Number of reference years of data = 1</span></span>
-<span id="cb105-11"><a href="adjustments-and-comparisons.html#cb105-11"></a><span class="co">## Years from 2018 to 2018</span></span>
-<span id="cb105-12"><a href="adjustments-and-comparisons.html#cb105-12"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb105-13"><a href="adjustments-and-comparisons.html#cb105-13"></a><span class="co">## -----------------</span></span>
-<span id="cb105-14"><a href="adjustments-and-comparisons.html#cb105-14"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb105-15"><a href="adjustments-and-comparisons.html#cb105-15"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb105-16"><a href="adjustments-and-comparisons.html#cb105-16"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb105-17"><a href="adjustments-and-comparisons.html#cb105-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb105-18"><a href="adjustments-and-comparisons.html#cb105-18"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb105-19"><a href="adjustments-and-comparisons.html#cb105-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb105-20"><a href="adjustments-and-comparisons.html#cb105-20"></a><span class="co">## -----------------</span></span>
-<span id="cb105-21"><a href="adjustments-and-comparisons.html#cb105-21"></a><span class="co">## Missing data points detected = 65</span></span>
-<span id="cb105-22"><a href="adjustments-and-comparisons.html#cb105-22"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="adjustments-and-comparisons.html#cb102-1"></a>ASEM2 &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM)</span>
+<span id="cb102-2"><a href="adjustments-and-comparisons.html#cb102-2"></a><span class="co">## -----------------</span></span>
+<span id="cb102-3"><a href="adjustments-and-comparisons.html#cb102-3"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb102-4"><a href="adjustments-and-comparisons.html#cb102-4"></a><span class="co">## -----------------</span></span>
+<span id="cb102-5"><a href="adjustments-and-comparisons.html#cb102-5"></a><span class="co">## -----------------</span></span>
+<span id="cb102-6"><a href="adjustments-and-comparisons.html#cb102-6"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb102-7"><a href="adjustments-and-comparisons.html#cb102-7"></a><span class="co">## -----------------</span></span>
+<span id="cb102-8"><a href="adjustments-and-comparisons.html#cb102-8"></a><span class="co">## Number of indicators = 49</span></span>
+<span id="cb102-9"><a href="adjustments-and-comparisons.html#cb102-9"></a><span class="co">## Number of units = 51</span></span>
+<span id="cb102-10"><a href="adjustments-and-comparisons.html#cb102-10"></a><span class="co">## Number of reference years of data = 1</span></span>
+<span id="cb102-11"><a href="adjustments-and-comparisons.html#cb102-11"></a><span class="co">## Years from 2018 to 2018</span></span>
+<span id="cb102-12"><a href="adjustments-and-comparisons.html#cb102-12"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb102-13"><a href="adjustments-and-comparisons.html#cb102-13"></a><span class="co">## -----------------</span></span>
+<span id="cb102-14"><a href="adjustments-and-comparisons.html#cb102-14"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb102-15"><a href="adjustments-and-comparisons.html#cb102-15"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb102-16"><a href="adjustments-and-comparisons.html#cb102-16"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb102-17"><a href="adjustments-and-comparisons.html#cb102-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb102-18"><a href="adjustments-and-comparisons.html#cb102-18"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb102-19"><a href="adjustments-and-comparisons.html#cb102-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb102-20"><a href="adjustments-and-comparisons.html#cb102-20"></a><span class="co">## -----------------</span></span>
+<span id="cb102-21"><a href="adjustments-and-comparisons.html#cb102-21"></a><span class="co">## Missing data points detected = 65</span></span>
+<span id="cb102-22"><a href="adjustments-and-comparisons.html#cb102-22"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span></code></pre></div>
 <p>The <code>regen()</code> function reruns all functions that are recorded in the <code>.$Method</code> folder <em>in the order they appear in the folder</em>. In this example, it runs, in order, <code>assemble()</code>, <code>denominate()</code>, <code>impute()</code>, <code>treat()</code>, <code>normalise()</code>and <code>aggregate()</code>. This replicates exactly the results. But what is the point of that? Well, it means that we can make changes to the index, generally by altering parameters in the <code>.$Method</code> folder, and then rerun everything very quickly with a single command. This will be demonstrated in the following section. After that, we will also see how to compare between alternative versions of the index.</p>
 <p>Before that, there is one extra feature of <code>regen()</code> which is worth mentioning. The <code>regen()</code> function only runs the seven construction functions as listed above. These functions are very flexible and should encompass most needs for constructing a composite indicator. But what happens if you want to build in an extra operation, or operations, that are outside of these seven functions?</p>
 <p>It is possible to also include “custom” chunks of code inside the COIN. Custom chunks should be written manually using the <code>quote()</code> function, to a special folder <code>.$Method$Custom</code>. These chunks can be any type of code, but the important thing is to also know <em>when</em> to run the code, i.e. at what point in the construction process.</p>
@@ -436,11 +439,11 @@ Figure 13.1: Method folder in ASEM example
 <p>The corresponding <strong>value</strong> in the list should be an operation which <em>must</em> be enclosed in the <code>quote()</code> function. Clearly, the list can feature multiple operations at different points in construction.</p>
 <p>This is slightly complicated, but can be clarified a bit with an example. Let’s imagine that after Winsorisation, we would like to “reset” one of the Winsorised points to its original value. This is currently not possible inside the <code>treat()</code> function so has to be done manually. But we would like this operation to be kept when we regenerate the index with variations in methodology (e.g. trying different aggregation functions, weights, etc.).</p>
 <p>We create a list with one operation: resetting the point after the treatment step.</p>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="adjustments-and-comparisons.html#cb106-1"></a><span class="co"># Create list. </span><span class="al">NOTE</span><span class="co"> the use of the quote() function!</span></span>
-<span id="cb106-2"><a href="adjustments-and-comparisons.html#cb106-2"></a>custlist =<span class="st"> </span><span class="kw">list</span>(<span class="dt">after_treat =</span> <span class="kw">quote</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>] &lt;-<span class="st"> </span>ASEM2<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>]))</span>
-<span id="cb106-3"><a href="adjustments-and-comparisons.html#cb106-3"></a></span>
-<span id="cb106-4"><a href="adjustments-and-comparisons.html#cb106-4"></a><span class="co"># Add the list to the $Method$Custom folder</span></span>
-<span id="cb106-5"><a href="adjustments-and-comparisons.html#cb106-5"></a>ASEM2<span class="op">$</span>Method<span class="op">$</span>Custom &lt;-<span class="st"> </span>custlist</span></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="adjustments-and-comparisons.html#cb103-1"></a><span class="co"># Create list. </span><span class="al">NOTE</span><span class="co"> the use of the quote() function!</span></span>
+<span id="cb103-2"><a href="adjustments-and-comparisons.html#cb103-2"></a>custlist =<span class="st"> </span><span class="kw">list</span>(<span class="dt">after_treat =</span> <span class="kw">quote</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>] &lt;-<span class="st"> </span>ASEM2<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>]))</span>
+<span id="cb103-3"><a href="adjustments-and-comparisons.html#cb103-3"></a></span>
+<span id="cb103-4"><a href="adjustments-and-comparisons.html#cb103-4"></a><span class="co"># Add the list to the $Method$Custom folder</span></span>
+<span id="cb103-5"><a href="adjustments-and-comparisons.html#cb103-5"></a>ASEM2<span class="op">$</span>Method<span class="op">$</span>Custom &lt;-<span class="st"> </span>custlist</span></code></pre></div>
 <p>Specifically, we have replaced the Winsorised value of Belgium, for the “Bord” indicator, with its imputed value (i.e. the value it had before it was treated).</p>
 <p>Now, when we regenerate the COIN using <code>regen()</code>, it will insert this extra line of code immediately after the treatment step.</p>
 <p>Using custom code may seem a bit confusing but it adds an extra layer of flexibility. It is however intended for small snippets of custom code, rather than large blocks of custom operations. If you are doing a lot of operations outside COINr, it may be better to do this in your own dedicated script or function, rather than trying to encode absolutely everything inside the COIN.</p>
@@ -462,71 +465,71 @@ Figure 13.1: Method folder in ASEM example
 <p>A first possibility would be to manually create a new data frame of indicator data and indicator metadata, i.e. the <code>IndData</code> and <code>IndMeta</code> inputs for <code>assemble()</code>. This is fine, but we would have to start the index again from scratch and rebuild it.</p>
 <p>A better idea is that when we first supply the set of indicators to <code>assemble()</code>, we include all indicators that we might possibly want to include in the index, including e.g. alternative indicators with alternative data sources. Then we build different versions of the index using subsets of these indicators. This allows us to use <code>regen()</code> and therefore to make fast copies of the index.</p>
 <p>To illustrate, consider again the ASEM example. We can rebuild the ASEM index using a subset of the indicators by using the <code>include</code> or <code>exclude</code> arguments of the <code>assemble()</code> function. Because these are stored in <code>.$Method</code>, we can easily regenerate the new results.</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="adjustments-and-comparisons.html#cb107-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb107-2"><a href="adjustments-and-comparisons.html#cb107-2"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span>ASEM</span>
-<span id="cb107-3"><a href="adjustments-and-comparisons.html#cb107-3"></a></span>
-<span id="cb107-4"><a href="adjustments-and-comparisons.html#cb107-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
-<span id="cb107-5"><a href="adjustments-and-comparisons.html#cb107-5"></a>ASEM_NoLPIShip<span class="op">$</span>Method<span class="op">$</span>assemble<span class="op">$</span>exclude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Ship&quot;</span>)</span>
-<span id="cb107-6"><a href="adjustments-and-comparisons.html#cb107-6"></a></span>
-<span id="cb107-7"><a href="adjustments-and-comparisons.html#cb107-7"></a><span class="co"># Regenerate results (suppress any messages)</span></span>
-<span id="cb107-8"><a href="adjustments-and-comparisons.html#cb107-8"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoLPIShip, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="adjustments-and-comparisons.html#cb104-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb104-2"><a href="adjustments-and-comparisons.html#cb104-2"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span>ASEM</span>
+<span id="cb104-3"><a href="adjustments-and-comparisons.html#cb104-3"></a></span>
+<span id="cb104-4"><a href="adjustments-and-comparisons.html#cb104-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
+<span id="cb104-5"><a href="adjustments-and-comparisons.html#cb104-5"></a>ASEM_NoLPIShip<span class="op">$</span>Method<span class="op">$</span>assemble<span class="op">$</span>exclude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Ship&quot;</span>)</span>
+<span id="cb104-6"><a href="adjustments-and-comparisons.html#cb104-6"></a></span>
+<span id="cb104-7"><a href="adjustments-and-comparisons.html#cb104-7"></a><span class="co"># Regenerate results (suppress any messages)</span></span>
+<span id="cb104-8"><a href="adjustments-and-comparisons.html#cb104-8"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoLPIShip, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>Note that, in the ASEM example, by default, <code>ASEM$Method$assemble</code> doesn’t exist because the <code>include</code> or <code>exclude</code> arguments of <code>assemble()</code> are empty, and these are the only arguments to <code>assemble()</code> that are recorded in <code>.$Method$assemble</code>.</p>
 <p>In summary, we have removed two indicators, then regenerated the results using exactly the same methodology as used before. Importantly, <code>include</code> and <code>exclude</code> operate <em>relative to the original data</em> input to <code>assemble()</code>, i.e. the data found in <code>.$Input$Original</code>. This means that if we now were to make a copy of the version excluding the two indicators above, and exclude another different indicator:</p>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="adjustments-and-comparisons.html#cb108-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb108-2"><a href="adjustments-and-comparisons.html#cb108-2"></a>ASEM_NoBord &lt;-<span class="st"> </span>ASEM_NoLPIShip</span>
-<span id="cb108-3"><a href="adjustments-and-comparisons.html#cb108-3"></a></span>
-<span id="cb108-4"><a href="adjustments-and-comparisons.html#cb108-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
-<span id="cb108-5"><a href="adjustments-and-comparisons.html#cb108-5"></a>ASEM_NoBord<span class="op">$</span>Method<span class="op">$</span>assemble<span class="op">$</span>exclude &lt;-<span class="st"> &quot;Bord&quot;</span></span>
-<span id="cb108-6"><a href="adjustments-and-comparisons.html#cb108-6"></a></span>
-<span id="cb108-7"><a href="adjustments-and-comparisons.html#cb108-7"></a><span class="co"># Regenerate results</span></span>
-<span id="cb108-8"><a href="adjustments-and-comparisons.html#cb108-8"></a>ASEM_NoBord &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoBord, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb108-9"><a href="adjustments-and-comparisons.html#cb108-9"></a></span>
-<span id="cb108-10"><a href="adjustments-and-comparisons.html#cb108-10"></a>ASEM_NoBord<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
-<span id="cb108-11"><a href="adjustments-and-comparisons.html#cb108-11"></a><span class="co">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;CostImpEx&quot;</span></span>
-<span id="cb108-12"><a href="adjustments-and-comparisons.html#cb108-12"></a><span class="co">##  [7] &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;    </span></span>
-<span id="cb108-13"><a href="adjustments-and-comparisons.html#cb108-13"></a><span class="co">## [13] &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot; </span></span>
-<span id="cb108-14"><a href="adjustments-and-comparisons.html#cb108-14"></a><span class="co">## [19] &quot;Lang&quot;      &quot;LPI&quot;       &quot;Flights&quot;   &quot;Ship&quot;      &quot;Elec&quot;      &quot;Gas&quot;      </span></span>
-<span id="cb108-15"><a href="adjustments-and-comparisons.html#cb108-15"></a><span class="co">## [25] &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Renew&quot;    </span></span>
-<span id="cb108-16"><a href="adjustments-and-comparisons.html#cb108-16"></a><span class="co">## [31] &quot;PrimEner&quot;  &quot;CO2&quot;       &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;    </span></span>
-<span id="cb108-17"><a href="adjustments-and-comparisons.html#cb108-17"></a><span class="co">## [37] &quot;TertGrad&quot;  &quot;FreePress&quot; &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;   </span></span>
-<span id="cb108-18"><a href="adjustments-and-comparisons.html#cb108-18"></a><span class="co">## [43] &quot;WomParl&quot;   &quot;PubDebt&quot;   &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="adjustments-and-comparisons.html#cb105-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb105-2"><a href="adjustments-and-comparisons.html#cb105-2"></a>ASEM_NoBord &lt;-<span class="st"> </span>ASEM_NoLPIShip</span>
+<span id="cb105-3"><a href="adjustments-and-comparisons.html#cb105-3"></a></span>
+<span id="cb105-4"><a href="adjustments-and-comparisons.html#cb105-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
+<span id="cb105-5"><a href="adjustments-and-comparisons.html#cb105-5"></a>ASEM_NoBord<span class="op">$</span>Method<span class="op">$</span>assemble<span class="op">$</span>exclude &lt;-<span class="st"> &quot;Bord&quot;</span></span>
+<span id="cb105-6"><a href="adjustments-and-comparisons.html#cb105-6"></a></span>
+<span id="cb105-7"><a href="adjustments-and-comparisons.html#cb105-7"></a><span class="co"># Regenerate results</span></span>
+<span id="cb105-8"><a href="adjustments-and-comparisons.html#cb105-8"></a>ASEM_NoBord &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoBord, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb105-9"><a href="adjustments-and-comparisons.html#cb105-9"></a></span>
+<span id="cb105-10"><a href="adjustments-and-comparisons.html#cb105-10"></a>ASEM_NoBord<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
+<span id="cb105-11"><a href="adjustments-and-comparisons.html#cb105-11"></a><span class="co">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;CostImpEx&quot;</span></span>
+<span id="cb105-12"><a href="adjustments-and-comparisons.html#cb105-12"></a><span class="co">##  [7] &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;    </span></span>
+<span id="cb105-13"><a href="adjustments-and-comparisons.html#cb105-13"></a><span class="co">## [13] &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot; </span></span>
+<span id="cb105-14"><a href="adjustments-and-comparisons.html#cb105-14"></a><span class="co">## [19] &quot;Lang&quot;      &quot;LPI&quot;       &quot;Flights&quot;   &quot;Ship&quot;      &quot;Elec&quot;      &quot;Gas&quot;      </span></span>
+<span id="cb105-15"><a href="adjustments-and-comparisons.html#cb105-15"></a><span class="co">## [25] &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Renew&quot;    </span></span>
+<span id="cb105-16"><a href="adjustments-and-comparisons.html#cb105-16"></a><span class="co">## [31] &quot;PrimEner&quot;  &quot;CO2&quot;       &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;    </span></span>
+<span id="cb105-17"><a href="adjustments-and-comparisons.html#cb105-17"></a><span class="co">## [37] &quot;TertGrad&quot;  &quot;FreePress&quot; &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;   </span></span>
+<span id="cb105-18"><a href="adjustments-and-comparisons.html#cb105-18"></a><span class="co">## [43] &quot;WomParl&quot;   &quot;PubDebt&quot;   &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
 <p>…we see that “LPI” and “Ship” are once again present.</p>
 <p>In fact, COINr has an even quicker way to add and remove indicators, which is a short cut function called <code>indChange()</code>. In one command you can add or remove indicators and regenerate the results. Unlike the method above, <code>indChange()</code> also adds and removes relative to the existing index, which may be more convenient in some circumstances. To demonstrate this, we can use the same example as above:</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="adjustments-and-comparisons.html#cb109-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb109-2"><a href="adjustments-and-comparisons.html#cb109-2"></a>ASEM_NoBord2 &lt;-<span class="st"> </span><span class="kw">indChange</span>(ASEM_NoLPIShip, <span class="dt">drop =</span> <span class="st">&quot;Bord&quot;</span>, <span class="dt">regen =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb109-3"><a href="adjustments-and-comparisons.html#cb109-3"></a><span class="co">## COIN has been regenerated using new specs.</span></span>
-<span id="cb109-4"><a href="adjustments-and-comparisons.html#cb109-4"></a></span>
-<span id="cb109-5"><a href="adjustments-and-comparisons.html#cb109-5"></a>ASEM_NoBord2<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
-<span id="cb109-6"><a href="adjustments-and-comparisons.html#cb109-6"></a><span class="co">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;CostImpEx&quot;</span></span>
-<span id="cb109-7"><a href="adjustments-and-comparisons.html#cb109-7"></a><span class="co">##  [7] &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;    </span></span>
-<span id="cb109-8"><a href="adjustments-and-comparisons.html#cb109-8"></a><span class="co">## [13] &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot; </span></span>
-<span id="cb109-9"><a href="adjustments-and-comparisons.html#cb109-9"></a><span class="co">## [19] &quot;Lang&quot;      &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;    </span></span>
-<span id="cb109-10"><a href="adjustments-and-comparisons.html#cb109-10"></a><span class="co">## [25] &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Renew&quot;     &quot;PrimEner&quot;  &quot;CO2&quot;      </span></span>
-<span id="cb109-11"><a href="adjustments-and-comparisons.html#cb109-11"></a><span class="co">## [31] &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
-<span id="cb109-12"><a href="adjustments-and-comparisons.html#cb109-12"></a><span class="co">## [37] &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;    &quot;WomParl&quot;   &quot;PubDebt&quot;  </span></span>
-<span id="cb109-13"><a href="adjustments-and-comparisons.html#cb109-13"></a><span class="co">## [43] &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="adjustments-and-comparisons.html#cb106-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb106-2"><a href="adjustments-and-comparisons.html#cb106-2"></a>ASEM_NoBord2 &lt;-<span class="st"> </span><span class="kw">indChange</span>(ASEM_NoLPIShip, <span class="dt">drop =</span> <span class="st">&quot;Bord&quot;</span>, <span class="dt">regen =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb106-3"><a href="adjustments-and-comparisons.html#cb106-3"></a><span class="co">## COIN has been regenerated using new specs.</span></span>
+<span id="cb106-4"><a href="adjustments-and-comparisons.html#cb106-4"></a></span>
+<span id="cb106-5"><a href="adjustments-and-comparisons.html#cb106-5"></a>ASEM_NoBord2<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
+<span id="cb106-6"><a href="adjustments-and-comparisons.html#cb106-6"></a><span class="co">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;CostImpEx&quot;</span></span>
+<span id="cb106-7"><a href="adjustments-and-comparisons.html#cb106-7"></a><span class="co">##  [7] &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;    </span></span>
+<span id="cb106-8"><a href="adjustments-and-comparisons.html#cb106-8"></a><span class="co">## [13] &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot; </span></span>
+<span id="cb106-9"><a href="adjustments-and-comparisons.html#cb106-9"></a><span class="co">## [19] &quot;Lang&quot;      &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;    </span></span>
+<span id="cb106-10"><a href="adjustments-and-comparisons.html#cb106-10"></a><span class="co">## [25] &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Renew&quot;     &quot;PrimEner&quot;  &quot;CO2&quot;      </span></span>
+<span id="cb106-11"><a href="adjustments-and-comparisons.html#cb106-11"></a><span class="co">## [31] &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
+<span id="cb106-12"><a href="adjustments-and-comparisons.html#cb106-12"></a><span class="co">## [37] &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;    &quot;WomParl&quot;   &quot;PubDebt&quot;  </span></span>
+<span id="cb106-13"><a href="adjustments-and-comparisons.html#cb106-13"></a><span class="co">## [43] &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
 <p>And here we see that now, “Bord” has been excluded <em>as well as</em> “LPI” and “Ship”.</p>
 </div>
 <div id="other-adjustments" class="section level3">
 <h3><span class="header-section-number">13.2.2</span> Other adjustments</h3>
 <p>We can make any methodological adjustments we want by editing any parameters in <code>.$Method</code> and then running <code>regen()</code>. For example, we can change the imputation method:</p>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="adjustments-and-comparisons.html#cb110-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb110-2"><a href="adjustments-and-comparisons.html#cb110-2"></a>ASEMAltImpute &lt;-<span class="st"> </span>ASEM</span>
-<span id="cb110-3"><a href="adjustments-and-comparisons.html#cb110-3"></a></span>
-<span id="cb110-4"><a href="adjustments-and-comparisons.html#cb110-4"></a><span class="co"># Edit .$Method</span></span>
-<span id="cb110-5"><a href="adjustments-and-comparisons.html#cb110-5"></a>ASEMAltImpute<span class="op">$</span>Method<span class="op">$</span>impute<span class="op">$</span>imtype &lt;-<span class="st"> &quot;indgroup_median&quot;</span></span>
-<span id="cb110-6"><a href="adjustments-and-comparisons.html#cb110-6"></a></span>
-<span id="cb110-7"><a href="adjustments-and-comparisons.html#cb110-7"></a><span class="co"># Regenerate</span></span>
-<span id="cb110-8"><a href="adjustments-and-comparisons.html#cb110-8"></a>ASEMAltImpute &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltImpute, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="adjustments-and-comparisons.html#cb107-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb107-2"><a href="adjustments-and-comparisons.html#cb107-2"></a>ASEMAltImpute &lt;-<span class="st"> </span>ASEM</span>
+<span id="cb107-3"><a href="adjustments-and-comparisons.html#cb107-3"></a></span>
+<span id="cb107-4"><a href="adjustments-and-comparisons.html#cb107-4"></a><span class="co"># Edit .$Method</span></span>
+<span id="cb107-5"><a href="adjustments-and-comparisons.html#cb107-5"></a>ASEMAltImpute<span class="op">$</span>Method<span class="op">$</span>impute<span class="op">$</span>imtype &lt;-<span class="st"> &quot;indgroup_median&quot;</span></span>
+<span id="cb107-6"><a href="adjustments-and-comparisons.html#cb107-6"></a></span>
+<span id="cb107-7"><a href="adjustments-and-comparisons.html#cb107-7"></a><span class="co"># Regenerate</span></span>
+<span id="cb107-8"><a href="adjustments-and-comparisons.html#cb107-8"></a>ASEMAltImpute &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltImpute, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>We could also change the normalisation method, e.g. to use Borda scores:</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="adjustments-and-comparisons.html#cb111-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb111-2"><a href="adjustments-and-comparisons.html#cb111-2"></a>ASEMAltNorm &lt;-<span class="st"> </span>ASEM</span>
-<span id="cb111-3"><a href="adjustments-and-comparisons.html#cb111-3"></a></span>
-<span id="cb111-4"><a href="adjustments-and-comparisons.html#cb111-4"></a><span class="co"># Edit .$Method</span></span>
-<span id="cb111-5"><a href="adjustments-and-comparisons.html#cb111-5"></a>ASEMAltNorm<span class="op">$</span>Method<span class="op">$</span>normalise<span class="op">$</span>ntype &lt;-<span class="st"> &quot;borda&quot;</span></span>
-<span id="cb111-6"><a href="adjustments-and-comparisons.html#cb111-6"></a></span>
-<span id="cb111-7"><a href="adjustments-and-comparisons.html#cb111-7"></a><span class="co"># Regenerate</span></span>
-<span id="cb111-8"><a href="adjustments-and-comparisons.html#cb111-8"></a>ASEMAltNorm &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltNorm, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="adjustments-and-comparisons.html#cb108-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb108-2"><a href="adjustments-and-comparisons.html#cb108-2"></a>ASEMAltNorm &lt;-<span class="st"> </span>ASEM</span>
+<span id="cb108-3"><a href="adjustments-and-comparisons.html#cb108-3"></a></span>
+<span id="cb108-4"><a href="adjustments-and-comparisons.html#cb108-4"></a><span class="co"># Edit .$Method</span></span>
+<span id="cb108-5"><a href="adjustments-and-comparisons.html#cb108-5"></a>ASEMAltNorm<span class="op">$</span>Method<span class="op">$</span>normalise<span class="op">$</span>ntype &lt;-<span class="st"> &quot;borda&quot;</span></span>
+<span id="cb108-6"><a href="adjustments-and-comparisons.html#cb108-6"></a></span>
+<span id="cb108-7"><a href="adjustments-and-comparisons.html#cb108-7"></a><span class="co"># Regenerate</span></span>
+<span id="cb108-8"><a href="adjustments-and-comparisons.html#cb108-8"></a>ASEMAltNorm &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltNorm, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <p>and of course this extends to any parameters of any of the “construction” functions. We can even alter the underlying data directly if we want, e.g. by altering values in <code>.$Input$Original$Data</code>. In short, anything inside the COIN can be edited and then the results regenerated. This allows a fast way to make different alternative indexes and explore the effects of different methodology very quickly.</p>
 </div>
 </div>
@@ -535,9 +538,9 @@ Figure 13.1: Method folder in ASEM example
 <p>A logical follow up to making alternative indexes is to try to understand the differences between these indexes. This can of course be done manually. But to make this quicker, COINr includes a few tools to quickly inspect the differences between different COINs.</p>
 <p>In using these tools it should be fairly evident that comparisons are made between different versions of the same index. So the two indexes must have at least some units in common. The tools are intended for methodological variations of the type shown previously in this chapter - different aggregation, weighting, adding and removing indicators and so on. That said, since comparisons are made on units, it would also be possible to compare two totally different COINs, as long as they have units in common.</p>
 <p>To begin with, we can make a simple bilateral comparison between two COINs. Taking two of the index versions created previously:</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="adjustments-and-comparisons.html#cb112-1"></a><span class="kw">compTable</span>(ASEM, ASEMAltNorm, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">isel =</span> <span class="st">&quot;Index&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb112-2"><a href="adjustments-and-comparisons.html#cb112-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb112-3"><a href="adjustments-and-comparisons.html#cb112-3"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="adjustments-and-comparisons.html#cb109-1"></a><span class="kw">compTable</span>(ASEM, ASEMAltNorm, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">isel =</span> <span class="st">&quot;Index&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb109-2"><a href="adjustments-and-comparisons.html#cb109-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></span>
+<span id="cb109-3"><a href="adjustments-and-comparisons.html#cb109-3"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -644,9 +647,9 @@ Figure 13.1: Method folder in ASEM example
 </tbody>
 </table>
 <p>The <code>compTable()</code> function allows a rank comparison of a single indicator or aggregate, between two COINs. The COINs must both share the indicator code which is assigned to <code>isel</code>. By default the output table (data frame) is sorted by the highest absolute rank change downwards, but it can be sorted by the other columns using the <code>sort_by</code> argument:</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="adjustments-and-comparisons.html#cb113-1"></a><span class="kw">compTable</span>(ASEM, ASEMAltNorm, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">isel =</span> <span class="st">&quot;Index&quot;</span>, <span class="dt">sort_by =</span> <span class="st">&quot;RankCOIN1&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb113-2"><a href="adjustments-and-comparisons.html#cb113-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb113-3"><a href="adjustments-and-comparisons.html#cb113-3"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="adjustments-and-comparisons.html#cb110-1"></a><span class="kw">compTable</span>(ASEM, ASEMAltNorm, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">isel =</span> <span class="st">&quot;Index&quot;</span>, <span class="dt">sort_by =</span> <span class="st">&quot;RankCOIN1&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb110-2"><a href="adjustments-and-comparisons.html#cb110-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></span>
+<span id="cb110-3"><a href="adjustments-and-comparisons.html#cb110-3"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">

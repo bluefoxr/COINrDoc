@@ -6,8 +6,6 @@ fig:unnamed-chunk-68-1
 fig:unnamed-chunk-68-2
 fig:unnamed-chunk-72
 fig:unnamed-chunk-75
-fig:unnamed-chunk-76
-fig:unnamed-chunk-79
 overview
 background
 installation
@@ -138,4 +136,7 @@ advanced-resources
 programming
 visualisation-1
 other
+faq
+appendix-building-a-composite-indicator-example
+appendix-analysing-a-composite-indicator-example
 acknowledgements

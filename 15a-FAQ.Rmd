@@ -1,0 +1,45 @@
+# FAQ
+
+> What is COINr?
+
+COINr is an R package for building and analysing composite indicators. It aims to make many (sometimes complex) operations in building and auditing composite indicators fast and easy to reproduce.
+
+> What is a composite indicator?
+
+A composite indicator is an aggregation of indicators which aims to measure a particular concept. Composite indicators are typically used to measure complex and multidimensional concepts which are difficult to define, and cannot be measured directly. Examples include innovation, human development, environmental performance, and so on. Composite indicators are closely related to scoreboards, which are also groups of indicators aiming to capture a concept. However, scoreboards do not aggregate indicator values. Composite indicators also usually use a hierarchical structure which breaks the concept down into elements, sometimes known as sub-pillars, pillars, sub-indexes, dimensions, and so on.
+
+If you want to know more about composite indicators, see the European Commission's [Competence Centre on Composite Indicators and Scoreboards](https://knowledge4policy.ec.europa.eu/composite-indicators/about_en) and in particular the Handbook which can be found [here](https://knowledge4policy.ec.europa.eu/composite-indicators/toolkit_en) with a few other useful things.
+
+> Do I need to be "good at R" to use COINr?
+
+COINr is designed to have a simple interface which mostly involves passing COINs from one function to another. This means that you can build a composite indicator in a few simple commands. You can also export easily to Excel and prepare graphs and tables there if you prefer. Of course, composite indicator construction often involves iterative steps and it is likely that some things will have to be done outside of COINr. So the answer is no, but it helps to have a basic level of competency in R. See [Appendix: R Resources] for some suggested ways to get more into R.
+
+> Thanks but is there an equivalent tool in Excel?
+
+Yes - the [COIN Tool](https://knowledge4policy.ec.europa.eu/composite-indicators/coin-tool_en) is an Excel tool which does similar things to COINr, although the options are more limited. It is however a very useful tool and if you prefer to do everything in Excel this should do the job.
+
+> What are the steps for building a composite indicator in COINr?
+
+See [Appendix: Building a Composite Indicator Example].
+
+> What are the steps for analysing a composite indicator in COINr?
+
+See [Appendix: Analysing a Composite Indicator Example].
+
+> I found a bug - what do?
+
+You can [open an issue](https://github.com/bluefoxr/COINr/issues) on the COINr repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).
+
+> I need help. Who can I ask?
+
+Please search this manual first and also the help documentation by typing e.g. `?normalise` (depending on the function you are interested in). If you need general assistance with composite indicators and indicators, [email me](mailto:william.becker@bluefoxdata.eu) and I may be able to help.
+
+> Composite indicators are full of subjective choices, so doesn't that make them pseudo-science?
+
+Composite indicators are indeed full of subjective choices, and this introduces uncertainties in their results (scores and rankings). For example, weights, aggregation methods, which indicators to include, are some of the many choices to make along the way. However, if you have worked in any modelling exercise, you will know that any model has similar problems -- which processes to include, which modelling approach to adopt, what values to assign to parameters, and so on.
+
+This means that, like any modelling exercise, composite indicators should be interpreted carefully. Which is to say that you should be aware that small differences in scores and ranks may not be significant. Uncertainty analysis can help with this.
+
+It's also worth pointing out that composite indicators usually aim to measure things that cannot really be measured any other way, like innovation or quality of life. And also that even if we build an index, it should always be presented alongside its underlying data.
+
+If you want to read in more detail on this, you could see my [blog post](https://www.bluefoxdata.eu/blog/2020-11-17-whycompositeindicators/) on the topic.

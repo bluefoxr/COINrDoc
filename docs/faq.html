@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 17 FAQ | Composite Indicator Development and Analysis in R with COINr</title>
+  <meta name="description" content="Composite indicators with COINr" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 17 FAQ | Composite Indicator Development and Analysis in R with COINr" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Composite indicators with COINr" />
+  <meta name="github-repo" content="bluefoxr/COINrDoc" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 17 FAQ | Composite Indicator Development and Analysis in R with COINr" />
+  
+  <meta name="twitter:description" content="Composite indicators with COINr" />
+  
+
+<meta name="author" content="William Becker" />
+
+
+<meta name="date" content="2021-06-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="appendix-r-resources.html"/>
+<link rel="next" href="appendix-building-a-composite-indicator-example.html"/>
+<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<script src="libs/core-js-2.5.3/shim.min.js"></script>
+<script src="libs/react-16.12.0/react.min.js"></script>
+<script src="libs/react-16.12.0/react-dom.min.js"></script>
+<script src="libs/reactwidget-1.0.0/react-tools.js"></script>
+<script src="libs/reactable-binding-0.2.3/reactable.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">COINr Documentation</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Overview</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#background"><i class="fa fa-check"></i><b>1.1</b> Background</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#whats-it-for"><i class="fa fa-check"></i><b>1.3</b> What’s it for?</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#demo"><i class="fa fa-check"></i><b>1.4</b> Demo</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#features-and-status"><i class="fa fa-check"></i><b>1.5</b> Features and status</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="foundations.html"><a href="foundations.html"><i class="fa fa-check"></i><b>2</b> Foundations</a><ul>
+<li class="chapter" data-level="2.1" data-path="foundations.html"><a href="foundations.html#how-to-use-coinr"><i class="fa fa-check"></i><b>2.1</b> How to use COINr</a></li>
+<li class="chapter" data-level="2.2" data-path="foundations.html"><a href="foundations.html#suggested-workflows"><i class="fa fa-check"></i><b>2.2</b> Suggested workflows</a></li>
+<li class="chapter" data-level="2.3" data-path="foundations.html"><a href="foundations.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="foundations.html"><a href="foundations.html#construction"><i class="fa fa-check"></i><b>2.3.1</b> Construction</a></li>
+<li class="chapter" data-level="2.3.2" data-path="foundations.html"><a href="foundations.html#visualisation"><i class="fa fa-check"></i><b>2.3.2</b> Visualisation</a></li>
+<li class="chapter" data-level="2.3.3" data-path="foundations.html"><a href="foundations.html#analysis"><i class="fa fa-check"></i><b>2.3.3</b> Analysis</a></li>
+<li class="chapter" data-level="2.3.4" data-path="foundations.html"><a href="foundations.html#interactive-apps"><i class="fa fa-check"></i><b>2.3.4</b> Interactive apps</a></li>
+<li class="chapter" data-level="2.3.5" data-path="foundations.html"><a href="foundations.html#importexport"><i class="fa fa-check"></i><b>2.3.5</b> Import/export</a></li>
+<li class="chapter" data-level="2.3.6" data-path="foundations.html"><a href="foundations.html#other-functions"><i class="fa fa-check"></i><b>2.3.6</b> Other functions</a></li>
+<li class="chapter" data-level="2.3.7" data-path="foundations.html"><a href="foundations.html#data"><i class="fa fa-check"></i><b>2.3.7</b> Data</a></li>
+<li class="chapter" data-level="2.3.8" data-path="foundations.html"><a href="foundations.html#finally"><i class="fa fa-check"></i><b>2.3.8</b> Finally</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="foundations.html"><a href="foundations.html#terminology"><i class="fa fa-check"></i><b>2.4</b> Terminology</a></li>
+<li class="chapter" data-level="2.5" data-path="foundations.html"><a href="foundations.html#levels"><i class="fa fa-check"></i><b>2.5</b> Levels</a></li>
+<li class="chapter" data-level="2.6" data-path="foundations.html"><a href="foundations.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.6</b> Tips for using COINr</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="foundations.html"><a href="foundations.html#missing-data"><i class="fa fa-check"></i><b>2.6.1</b> Missing data</a></li>
+<li class="chapter" data-level="2.6.2" data-path="foundations.html"><a href="foundations.html#ordering"><i class="fa fa-check"></i><b>2.6.2</b> Ordering</a></li>
+<li class="chapter" data-level="2.6.3" data-path="foundations.html"><a href="foundations.html#syntax"><i class="fa fa-check"></i><b>2.6.3</b> Syntax</a></li>
+<li class="chapter" data-level="2.6.4" data-path="foundations.html"><a href="foundations.html#plotting"><i class="fa fa-check"></i><b>2.6.4</b> Plotting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a><ul>
+<li class="chapter" data-level="3.1" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#introduction"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#the-three-inputs"><i class="fa fa-check"></i><b>3.2</b> The three inputs</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#indicator-data"><i class="fa fa-check"></i><b>3.2.1</b> Indicator data</a></li>
+<li class="chapter" data-level="3.2.2" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#indicator-metadata"><i class="fa fa-check"></i><b>3.2.2</b> Indicator metadata</a></li>
+<li class="chapter" data-level="3.2.3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#aggregation-metadata"><i class="fa fa-check"></i><b>3.2.3</b> Aggregation metadata</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#putting-everything-together"><i class="fa fa-check"></i><b>3.3</b> Putting everything together</a></li>
+<li class="chapter" data-level="3.4" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#moving-on"><i class="fa fa-check"></i><b>3.4</b> Moving on</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>4</b> Initial visualisation and analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#structure"><i class="fa fa-check"></i><b>4.1</b> Structure</a></li>
+<li class="chapter" data-level="4.2" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#distributions"><i class="fa fa-check"></i><b>4.2</b> Distributions</a></li>
+<li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
+<li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#correlations"><i class="fa fa-check"></i><b>5.1</b> Correlations</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#pca"><i class="fa fa-check"></i><b>5.2</b> PCA</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a><ul>
+<li class="chapter" data-level="6.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
+<li class="chapter" data-level="6.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>6.2</b> Data checks and screening</a></li>
+<li class="chapter" data-level="6.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>6.3</b> Imputation in COINr</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>6.3.1</b> By column</a></li>
+<li class="chapter" data-level="6.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>6.3.2</b> By row</a></li>
+<li class="chapter" data-level="6.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>6.3.3</b> By column and row</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a><ul>
+<li class="chapter" data-level="7.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>7.1</b> Concept</a></li>
+<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>7.2</b> Denominating in COINr</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="denomination.html"><a href="denomination.html#on-coins"><i class="fa fa-check"></i><b>7.2.1</b> On COINs</a></li>
+<li class="chapter" data-level="7.2.2" data-path="denomination.html"><a href="denomination.html#on-data-frames"><i class="fa fa-check"></i><b>7.2.2</b> On data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>7.3</b> When to denominate, and by what?</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>8</b> Data Treatment</a><ul>
+<li class="chapter" data-level="8.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>8.1</b> Why treat data?</a></li>
+<li class="chapter" data-level="8.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>8.2</b> How to treat data</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>8.2.1</b> Winsorisation</a></li>
+<li class="chapter" data-level="8.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>8.2.2</b> Transformation</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>8.3</b> Data treatment in COINr</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>8.3.1</b> Global treatment</a></li>
+<li class="chapter" data-level="8.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>8.3.2</b> Individual treatment</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>8.4</b> Interactive visualisation</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>9</b> Normalisation</a><ul>
+<li class="chapter" data-level="9.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>9.1</b> Approaches</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>9.1.1</b> First: adjust direction</a></li>
+<li class="chapter" data-level="9.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>9.1.2</b> Linear transformations</a></li>
+<li class="chapter" data-level="9.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>9.1.3</b> Nonlinear transformations</a></li>
+<li class="chapter" data-level="9.1.4" data-path="normalisation.html"><a href="normalisation.html#distances"><i class="fa fa-check"></i><b>9.1.4</b> Distances</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>9.2</b> Normalisation in COINr</a></li>
+<li class="chapter" data-level="9.3" data-path="normalisation.html"><a href="normalisation.html#individual-normalisation"><i class="fa fa-check"></i><b>9.3</b> Individual normalisation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>10</b> Aggregation</a><ul>
+<li class="chapter" data-level="10.1" data-path="aggregation.html"><a href="aggregation.html#weighting"><i class="fa fa-check"></i><b>10.1</b> Weighting</a></li>
+<li class="chapter" data-level="10.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>10.2</b> Approaches</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="aggregation.html"><a href="aggregation.html#means"><i class="fa fa-check"></i><b>10.2.1</b> Means</a></li>
+<li class="chapter" data-level="10.2.2" data-path="aggregation.html"><a href="aggregation.html#other-methods"><i class="fa fa-check"></i><b>10.2.2</b> Other methods</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>10.3</b> Aggregation in COINr</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>11</b> Weighting</a><ul>
+<li class="chapter" data-level="11.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="weighting-1.html"><a href="weighting-1.html#equal-weighting"><i class="fa fa-check"></i><b>11.1.1</b> Equal weighting</a></li>
+<li class="chapter" data-level="11.1.2" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>11.1.2</b> Budget allocation</a></li>
+<li class="chapter" data-level="11.1.3" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>11.1.3</b> Principle component analysis</a></li>
+<li class="chapter" data-level="11.1.4" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>11.1.4</b> Weight optimisation</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#weighting-tools-in-coinr"><i class="fa fa-check"></i><b>11.2</b> Weighting tools in COINr</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="weighting-1.html"><a href="weighting-1.html#manual-weighting"><i class="fa fa-check"></i><b>11.2.1</b> Manual weighting</a></li>
+<li class="chapter" data-level="11.2.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2.2</b> Interactive re-weighting with ReW8R</a></li>
+<li class="chapter" data-level="11.2.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.2.3</b> Automatic re-weighting</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#effective-weights"><i class="fa fa-check"></i><b>11.3</b> Effective weights</a></li>
+<li class="chapter" data-level="11.4" data-path="weighting-1.html"><a href="weighting-1.html#final-points"><i class="fa fa-check"></i><b>11.4</b> Final points</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="visualising-results.html"><a href="visualising-results.html"><i class="fa fa-check"></i><b>12</b> Visualising results</a><ul>
+<li class="chapter" data-level="12.1" data-path="visualising-results.html"><a href="visualising-results.html#tables"><i class="fa fa-check"></i><b>12.1</b> Tables</a></li>
+<li class="chapter" data-level="12.2" data-path="visualising-results.html"><a href="visualising-results.html#plots"><i class="fa fa-check"></i><b>12.2</b> Plots</a></li>
+<li class="chapter" data-level="12.3" data-path="visualising-results.html"><a href="visualising-results.html#interactive-exploration"><i class="fa fa-check"></i><b>12.3</b> Interactive exploration</a></li>
+<li class="chapter" data-level="12.4" data-path="visualising-results.html"><a href="visualising-results.html#unit-reports"><i class="fa fa-check"></i><b>12.4</b> Unit reports</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html"><i class="fa fa-check"></i><b>13</b> Adjustments and comparisons</a><ul>
+<li class="chapter" data-level="13.1" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#regeneration"><i class="fa fa-check"></i><b>13.1</b> Regeneration</a></li>
+<li class="chapter" data-level="13.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#adjustments"><i class="fa fa-check"></i><b>13.2</b> Adjustments</a><ul>
+<li class="chapter" data-level="13.2.1" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#addingremoving-indicators"><i class="fa fa-check"></i><b>13.2.1</b> Adding/removing indicators</a></li>
+<li class="chapter" data-level="13.2.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#other-adjustments"><i class="fa fa-check"></i><b>13.2.2</b> Other adjustments</a></li>
+</ul></li>
+<li class="chapter" data-level="13.3" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#comparisons"><i class="fa fa-check"></i><b>13.3</b> Comparisons</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a><ul>
+<li class="chapter" data-level="14.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#about"><i class="fa fa-check"></i><b>14.1</b> About</a></li>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#five-steps"><i class="fa fa-check"></i><b>14.2</b> Five steps</a><ul>
+<li class="chapter" data-level="14.2.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#specifying-the-model"><i class="fa fa-check"></i><b>14.2.1</b> Specifying the model</a></li>
+<li class="chapter" data-level="14.2.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#which-assumptions-to-vary"><i class="fa fa-check"></i><b>14.2.2</b> Which assumptions to vary</a></li>
+<li class="chapter" data-level="14.2.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#alternative-values"><i class="fa fa-check"></i><b>14.2.3</b> Alternative values</a></li>
+<li class="chapter" data-level="14.2.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#selecting-the-output"><i class="fa fa-check"></i><b>14.2.4</b> Selecting the output</a></li>
+<li class="chapter" data-level="14.2.5" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sa-methodology"><i class="fa fa-check"></i><b>14.2.5</b> SA methodology</a></li>
+</ul></li>
+<li class="chapter" data-level="14.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-in-coinr"><i class="fa fa-check"></i><b>14.3</b> Sensitivity in COINr</a><ul>
+<li class="chapter" data-level="14.3.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#general-specifications"><i class="fa fa-check"></i><b>14.3.1</b> General specifications</a></li>
+<li class="chapter" data-level="14.3.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#varying-weights"><i class="fa fa-check"></i><b>14.3.2</b> Varying weights</a></li>
+<li class="chapter" data-level="14.3.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-an-uncertainty-analysis"><i class="fa fa-check"></i><b>14.3.3</b> Running an uncertainty analysis</a></li>
+<li class="chapter" data-level="14.3.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-a-sensitivity-analysis"><i class="fa fa-check"></i><b>14.3.4</b> Running a sensitivity analysis</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a><ul>
+<li class="chapter" data-level="15.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>15.1</b> R Interfaces</a><ul>
+<li class="chapter" data-level="15.1.1" data-path="helper-functions.html"><a href="helper-functions.html#data-import"><i class="fa fa-check"></i><b>15.1.1</b> Data import</a></li>
+<li class="chapter" data-level="15.1.2" data-path="helper-functions.html"><a href="helper-functions.html#export-to-excel"><i class="fa fa-check"></i><b>15.1.2</b> Export to Excel</a></li>
+</ul></li>
+<li class="chapter" data-level="15.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>15.2</b> Selecting data sets and indicators</a></li>
+<li class="chapter" data-level="15.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>15.3</b> Rounding data frames</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>16</b> Appendix: R Resources</a><ul>
+<li class="chapter" data-level="16.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>16.1</b> Introduction to R</a></li>
+<li class="chapter" data-level="16.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>16.2</b> Advanced resources</a><ul>
+<li class="chapter" data-level="16.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>16.2.1</b> Programming</a></li>
+<li class="chapter" data-level="16.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation-1"><i class="fa fa-check"></i><b>16.2.2</b> Visualisation</a></li>
+<li class="chapter" data-level="16.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>16.2.3</b> Other</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>17</b> FAQ</a></li>
+<li class="chapter" data-level="18" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>18</b> Appendix: Building a Composite Indicator Example</a></li>
+<li class="chapter" data-level="19" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>19</b> Appendix: Analysing a Composite Indicator Example</a></li>
+<li class="chapter" data-level="20" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>20</b> Acknowledgements</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Composite Indicator Development and Analysis in R with COINr</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="faq" class="section level1">
+<h1><span class="header-section-number">Chapter 17</span> FAQ</h1>
+<blockquote>
+<p>What is COINr?</p>
+</blockquote>
+<p>COINr is an R package for building and analysing composite indicators. It aims to make many (sometimes complex) operations in building and auditing composite indicators fast and easy to reproduce.</p>
+<blockquote>
+<p>What is a composite indicator?</p>
+</blockquote>
+<p>A composite indicator is an aggregation of indicators which aims to measure a particular concept. Composite indicators are typically used to measure complex and multidimensional concepts which are difficult to define, and cannot be measured directly. Examples include innovation, human development, environmental performance, and so on. Composite indicators are closely related to scoreboards, which are also groups of indicators aiming to capture a concept. However, scoreboards do not aggregate indicator values. Composite indicators also usually use a hierarchical structure which breaks the concept down into elements, sometimes known as sub-pillars, pillars, sub-indexes, dimensions, and so on.</p>
+<p>If you want to know more about composite indicators, see the European Commission’s <a href="https://knowledge4policy.ec.europa.eu/composite-indicators/about_en">Competence Centre on Composite Indicators and Scoreboards</a> and in particular the Handbook which can be found <a href="https://knowledge4policy.ec.europa.eu/composite-indicators/toolkit_en">here</a> with a few other useful things.</p>
+<blockquote>
+<p>Do I need to be “good at R” to use COINr?</p>
+</blockquote>
+<p>COINr is designed to have a simple interface which mostly involves passing COINs from one function to another. This means that you can build a composite indicator in a few simple commands. You can also export easily to Excel and prepare graphs and tables there if you prefer. Of course, composite indicator construction often involves iterative steps and it is likely that some things will have to be done outside of COINr. So the answer is no, but it helps to have a basic level of competency in R. See <a href="appendix-r-resources.html#appendix-r-resources">Appendix: R Resources</a> for some suggested ways to get more into R.</p>
+<blockquote>
+<p>Thanks but is there an equivalent tool in Excel?</p>
+</blockquote>
+<p>Yes - the <a href="https://knowledge4policy.ec.europa.eu/composite-indicators/coin-tool_en">COIN Tool</a> is an Excel tool which does similar things to COINr, although the options are more limited. It is however a very useful tool and if you prefer to do everything in Excel this should do the job.</p>
+<blockquote>
+<p>What are the steps for building a composite indicator in COINr?</p>
+</blockquote>
+<p>See <a href="appendix-building-a-composite-indicator-example.html#appendix-building-a-composite-indicator-example">Appendix: Building a Composite Indicator Example</a>.</p>
+<blockquote>
+<p>What are the steps for analysing a composite indicator in COINr?</p>
+</blockquote>
+<p>See <a href="appendix-analysing-a-composite-indicator-example.html#appendix-analysing-a-composite-indicator-example">Appendix: Analysing a Composite Indicator Example</a>.</p>
+<blockquote>
+<p>I found a bug - what do?</p>
+</blockquote>
+<p>You can <a href="https://github.com/bluefoxr/COINr/issues">open an issue</a> on the COINr repo. Otherwise, you can also just <a href="mailto:william.becker@bluefoxdata.eu">email me</a>.</p>
+<blockquote>
+<p>I need help. Who can I ask?</p>
+</blockquote>
+<p>Please search this manual first and also the help documentation by typing e.g. <code>?normalise</code> (depending on the function you are interested in). If you need general assistance with composite indicators and indicators, <a href="mailto:william.becker@bluefoxdata.eu">email me</a> and I may be able to help.</p>
+<blockquote>
+<p>Composite indicators are full of subjective choices, so doesn’t that make them pseudo-science?</p>
+</blockquote>
+<p>Composite indicators are indeed full of subjective choices, and this introduces uncertainties in their results (scores and rankings). For example, weights, aggregation methods, which indicators to include, are some of the many choices to make along the way. However, if you have worked in any modelling exercise, you will know that any model has similar problems – which processes to include, which modelling approach to adopt, what values to assign to parameters, and so on.</p>
+<p>This means that, like any modelling exercise, composite indicators should be interpreted carefully. Which is to say that you should be aware that small differences in scores and ranks may not be significant. Uncertainty analysis can help with this.</p>
+<p>It’s also worth pointing out that composite indicators usually aim to measure things that cannot really be measured any other way, like innovation or quality of life. And also that even if we build an index, it should always be presented alongside its underlying data.</p>
+<p>If you want to read in more detail on this, you could see my <a href="https://www.bluefoxdata.eu/blog/2020-11-17-whycompositeindicators/">blog post</a> on the topic.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="appendix-r-resources.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="appendix-building-a-composite-indicator-example.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/15a-FAQ.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["COINr-documentation.pdf", "COINr-documentation.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

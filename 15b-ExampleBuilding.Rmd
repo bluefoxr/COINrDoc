@@ -1,0 +1,5 @@
+# Appendix: Building a Composite Indicator Example
+
+Here we go through the main steps to building a composite indicator in COINr. This is effectively a condensed version of some earlier chapters in this book.
+
+*To be added soon*
