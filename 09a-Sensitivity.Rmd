@@ -74,6 +74,41 @@ Finally, we have to specify what kind of analysis to perform, and how many model
 
 Sensitivity analysis usually requires more model runs (replications of the composite indicator). Still, composite indicators are fairly cheap to evaluate, depending on the number of indicators and the complexity of the construction. Regardless of whether you run an uncertainty or sensitivity analysis, more model runs is always better because it increases the accuracy of the estimations of the distributions over ranks. If you are prepared to wait some minutes or possibly hour(s), normally this is enough to perform a fairly solid sensitivity analysis.
 
+## Variance-based sensitivity analysis
+
+COINr is almost certainly the only package in any language which allows a full variance-based (global) sensitivity analysis on a composite indicator. However, this means that variance-based sensitivity analysis needs to be briefly explained.
+
+Variance-based sensitivity analysis is largely considered as the "gold standard" in testing the effects of uncertainties in modelling and more generally in systems. Briefly, the central idea is that the uncertainty in a single output $y$ of a model can be encapsulated as its variance $V(y)$ - the greater the variance is, the more uncertain the output.
+
+In a [seminal paper](https://doi.org/10.1016/S0378-4754(00)00270-6), Russian mathematician Ilya Sobol' showed that this output variance can be decomposed into chunks which are attributable to each uncertain input and interactions between inputs. Letting $x_i$ denote the $i$th assumption to be varied, and $k$ the number of uncertain assumptions:
+
+$$ V(y)=\sum_i V_i+\sum_i\sum_{j>i}V_{i,j}+...+V_{1,2,...,k}, $$
+
+where
+
+$$ V_i= V[E(y|x_i)], \\
+
+V_{i,j}=V[E(y|x_i,x_j)] - V[E(y|x_i)]-V[E(y|x_j)] $$
+
+and so on for higher terms. Here, $V(\cdot)$ denotes the variance operator, $E(\cdot)$ the expected value, and these terms are used directly as *sensitivity indices*, e.g. the \emph{first order sensitivity index} $S_{i}=V_i/V(y)$ measures the contribution of the input $x_i$ to $V(y)$, without including interactions with other inputs. Since they are standardised by $V(y)$, each sensitivity index measures the *fraction of the variance* caused by each input (or interactions between inputs), and therefore the *fraction of the uncertainty*.
+
+In the same paper, Sobol' also showed how these sensitivity indices can be estimated using a Monte Carlo design. This Monte Carlo design (running the composite indicator many times with a particular combination of input values) is implemented in COINr. This follows the methodology described in [this paper](https://doi.org/10.1111/j.1467-985X.2005.00350.x), although due to the difficulty of implementing it, it has not been used very extensively in practice.
+
+In any case, the exact details of variance-based sensitivity analysis are better described elsewhere. Here, the important points are how to interpret the sensitivity indices. COINr produces two indices for each uncertain assumption. The first one is the *first order sensitivity index*, which is the fraction of the output variance caused by each uncertain input  assumption alone and is defined as:
+
+$$ S_i = \frac{V[E(y|x_i)]}{V(y)} $$
+
+Importantly, this is *averaged over variations in other input assumptions*. In other words, it is not the same as simply varying that assumption alone and seeing what happens (this result is dependent on the values of the other assumptions).
+
+The second measure is the *total order sensitivity index*, sometimes called the *total effect index*, and is:
+
+$$ S_{Ti} = 1 - \frac {V[E\left(y \mid \textbf{x}_{-i} \right)]}{V(y)} = \frac {E[V\left(y \mid
+	\textbf{x}_{-i} \right)]}{V(y)}  $$
+
+where $ \textbf{x}_{-i} $ is the set of all uncertain inputs except the $i$th. The quantity $ S_{Ti}$ measures the fraction of the output variance caused by $x_i$ *and any interactions with other assumptions*.
+
+Depending on your background, this may or may not seem a little confusing. Either way, see the examples in the rest of this chapter, which show that once calculated, the sensitivity indices are fairly intuitive.
+
 ## Sensitivity in COINr
 
 To run a sensitivity analysis in COINr, the function of interest is `sensitivity()`. We must follow the steps outlined above, so first, you should have a nominal composite indicator constructed up to and including the aggregation step. Here, we use our old friend the ASEM index.

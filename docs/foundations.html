@@ -168,9 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3.9" data-path="foundations.html"><a href="foundations.html#finally"><i class="fa fa-check"></i><b>2.3.9</b> Finally</a></li>
 </ul></li>
 <li class="chapter" data-level="2.4" data-path="foundations.html"><a href="foundations.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.4</b> Tips for using COINr</a><ul>
-<li class="chapter" data-level="2.4.1" data-path="foundations.html"><a href="foundations.html#missing-data"><i class="fa fa-check"></i><b>2.4.1</b> Missing data</a></li>
-<li class="chapter" data-level="2.4.2" data-path="foundations.html"><a href="foundations.html#ordering"><i class="fa fa-check"></i><b>2.4.2</b> Ordering</a></li>
-<li class="chapter" data-level="2.4.3" data-path="foundations.html"><a href="foundations.html#plotting"><i class="fa fa-check"></i><b>2.4.3</b> Plotting</a></li>
+<li class="chapter" data-level="2.4.1" data-path="foundations.html"><a href="foundations.html#use-scripts-and-r-markdown"><i class="fa fa-check"></i><b>2.4.1</b> Use scripts and R Markdown</a></li>
+<li class="chapter" data-level="2.4.2" data-path="foundations.html"><a href="foundations.html#missing-data"><i class="fa fa-check"></i><b>2.4.2</b> Missing data</a></li>
+<li class="chapter" data-level="2.4.3" data-path="foundations.html"><a href="foundations.html#ordering"><i class="fa fa-check"></i><b>2.4.3</b> Ordering</a></li>
+<li class="chapter" data-level="2.4.4" data-path="foundations.html"><a href="foundations.html#plotting"><i class="fa fa-check"></i><b>2.4.4</b> Plotting</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a><ul>
@@ -278,11 +279,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.2.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#selecting-the-output"><i class="fa fa-check"></i><b>14.2.4</b> Selecting the output</a></li>
 <li class="chapter" data-level="14.2.5" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sa-methodology"><i class="fa fa-check"></i><b>14.2.5</b> SA methodology</a></li>
 </ul></li>
-<li class="chapter" data-level="14.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-in-coinr"><i class="fa fa-check"></i><b>14.3</b> Sensitivity in COINr</a><ul>
-<li class="chapter" data-level="14.3.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#general-specifications"><i class="fa fa-check"></i><b>14.3.1</b> General specifications</a></li>
-<li class="chapter" data-level="14.3.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#varying-weights"><i class="fa fa-check"></i><b>14.3.2</b> Varying weights</a></li>
-<li class="chapter" data-level="14.3.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-an-uncertainty-analysis"><i class="fa fa-check"></i><b>14.3.3</b> Running an uncertainty analysis</a></li>
-<li class="chapter" data-level="14.3.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-a-sensitivity-analysis"><i class="fa fa-check"></i><b>14.3.4</b> Running a sensitivity analysis</a></li>
+<li class="chapter" data-level="14.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#variance-based-sensitivity-analysis"><i class="fa fa-check"></i><b>14.3</b> Variance-based sensitivity analysis</a></li>
+<li class="chapter" data-level="14.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-in-coinr"><i class="fa fa-check"></i><b>14.4</b> Sensitivity in COINr</a><ul>
+<li class="chapter" data-level="14.4.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#general-specifications"><i class="fa fa-check"></i><b>14.4.1</b> General specifications</a></li>
+<li class="chapter" data-level="14.4.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#varying-weights"><i class="fa fa-check"></i><b>14.4.2</b> Varying weights</a></li>
+<li class="chapter" data-level="14.4.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-an-uncertainty-analysis"><i class="fa fa-check"></i><b>14.4.3</b> Running an uncertainty analysis</a></li>
+<li class="chapter" data-level="14.4.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-a-sensitivity-analysis"><i class="fa fa-check"></i><b>14.4.4</b> Running a sensitivity analysis</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a><ul>
@@ -717,20 +719,26 @@ Figure 2.2: Example of composite indicator structure.
 </div>
 <div id="tips-for-using-coinr" class="section level2">
 <h2><span class="header-section-number">2.4</span> Tips for using COINr</h2>
+<div id="use-scripts-and-r-markdown" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> Use scripts and R Markdown</h3>
+<p>Like any good data science, anything you do in COINr should be reproducible. This means that ideally, you should be able to go from importing the data into R up to visualising the results. This can be either done by a script or a set of scripts, or perhaps better using an R markdown document or documents which combines text with code. If you haven’t used R Markdown before, you probably should be using it. It is very similar to the idea of Jupyter notebooks in Python. Find out more about R Markdown in the free and excellent online book <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a>. You might also notice that this manual is written in R Markdown, and more specifically using the <a href="https://bookdown.org/yihui/bookdown/">bookdown package</a>.</p>
+<p>Ideally, the whole process of building and analysing the composite indicator should be documented with an R Markdown file or files, or scripts. Apart from reproducibility, this makes it very easy to make retrospective changes and update the whole file. I have personally found that it may help to have several markdown notebooks - one for exploring the data and selecting indicators, another for data treatment, and another for construction, and so on. At the end of each notebook, the COIN(s) containing all data and analysis are saved to a folder and loaded back in in the next notebook. This avoids having one very long notebook. Of course, this is just one way of doing things and is just a suggestion.</p>
+</div>
 <div id="missing-data" class="section level3">
-<h3><span class="header-section-number">2.4.1</span> Missing data</h3>
+<h3><span class="header-section-number">2.4.2</span> Missing data</h3>
 <p>It’s very important to understand the difference between missing data and zeros. A zero means that you know that the value of the indicator is zero, whereas missing data (in R this is denoted as <code>NA</code>) means you don’t know what the value is at all.</p>
 <p>When aggregating indicators, this difference becomes particularly important. If a data point is missing, it is often excluded from the aggregation, which effectively means reassigning it with the mean (or similar) value of the indicators in the same group. If you impute the data, missing values could be assigned with mean or median indicator values, for example. Clearly, these values will be very different from zeros.</p>
 <p>This point is made here, because data may sometimes come with missing values denoted as zeros, or with zeros denoted as missing values. Ensure that these are checked carefully before proceeding with construction.</p>
 </div>
 <div id="ordering" class="section level3">
-<h3><span class="header-section-number">2.4.2</span> Ordering</h3>
+<h3><span class="header-section-number">2.4.3</span> Ordering</h3>
 <p>Currently, COINr is somewhat dependent on the order of the units. Although you can input your data in any order you like (as long as you follow the rules in [Data Input]), in some cases the order does matter. For example, if you want to denominate your data by a separate data frame of indicators (not in the COIN), you will have to make sure that the units (rows) correspond to the same order of rows as your indicator data.</p>
+<p><em>NOTE This is in the process of being phased out very soon</em></p>
 <p>In future updates this dependence on order should be removed, because it is a possible source of errors. For now though, just keep ordering in mind.</p>
 <p>It’s worth mentioning that the row order never changes in the <code>.$Data</code> folder. However, if you screen units using a minimum data requirement (e.g. using <code>datacheck()</code>), then the number of units can change. This should also be kept in mind.</p>
 </div>
 <div id="plotting" class="section level3">
-<h3><span class="header-section-number">2.4.3</span> Plotting</h3>
+<h3><span class="header-section-number">2.4.4</span> Plotting</h3>
 <p>COINr includes a number of plotting functions which return various types of plots. These are all either based on the ggplot2 or plotly packages. Think of COINr plots as “starting points” rather than finished plots. While I have tried to make the plots useful and even visually appealing, much more could be done to improve them and to fit particular uses and contexts.</p>
 <p>Luckily, because of the way that plotly and ggplot2 work, plots generated by COINr can easily be modified by assigning them to an object and then modifying the object. Generally this would look like this:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="foundations.html#cb7-1"></a><span class="co"># generate a plot, but assign to variable &quot;plt&quot;</span></span>

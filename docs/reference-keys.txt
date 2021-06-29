@@ -29,6 +29,7 @@ other-functions
 data
 finally
 tips-for-using-coinr
+use-scripts-and-r-markdown
 missing-data
 ordering
 plotting
@@ -120,6 +121,7 @@ which-assumptions-to-vary
 alternative-values
 selecting-the-output
 sa-methodology
+variance-based-sensitivity-analysis
 sensitivity-in-coinr
 general-specifications
 varying-weights
