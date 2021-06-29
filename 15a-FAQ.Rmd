@@ -26,6 +26,12 @@ See [Appendix: Building a Composite Indicator Example].
 
 See [Appendix: Analysing a Composite Indicator Example].
 
+> Can I construct a composite indicator over multiple years?
+
+At the moment, COINr does not have a dedicated support for panel data, i.e. data that has different values for different years. This can also be complicated because from one year to another, indicators may change, there may be a different set of units, methodology may change, and so on. A suggested workaround, for the moment, is to build a separate COIN for each year of data. This allows methodological variations if needed, and the results can be compared using COINr's `compTable()` and `compTableMulti()` functions. You would probably also need to extract results using your own code as well.
+
+Eventually, time permitting, I would build this into a package. This would probably be done in the same way suggested here, i.e. having multiple COINs for each year, but would be slightly automated. The COINs would also be stored in a single list or possibly a data frame, following something along the lines of the [Many Models](https://r4ds.had.co.nz/many-models.html) chapter in the R For Data Science book.
+
 > I found a bug - what do?
 
 You can [open an issue](https://github.com/bluefoxr/COINr/issues) on the COINr repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).

@@ -34,7 +34,7 @@ And you can also plot groups of indicators by calling aggregate names (notice th
 plotIndDist(ASEM, type = "Violindot", icodes = "Physical")
 ```
 
-The `plotIndDist()` function has several arguments. In the first place, any indicator or aggregation (pillar, dimension, index etc) can be plotted by using the `dset` argument. If you have only just assembled the COIN Object, you will only have the "Raw" dataset, but any other dataset can be accessed, e.g. treated data set, aggregated data set, and so on. You can also target different levels using the `aglev` argument - for more details see the chapter on [Helper functions].
+The `plotIndDist()` function has several arguments. In the first place, any indicator or aggregation (pillar, dimension, index etc) can be plotted by using the `dset` argument. If you have only just assembled the COIN, you will only have the "Raw" dataset, but any other dataset can be accessed, e.g. treated data set, aggregated data set, and so on. You can also target different levels using the `aglev` argument - for more details see the chapter on [Helper functions].
 
 Stand-alone data frames are also supported by `plotIndDist()` (this can also be achieved directly by `ggplot` without too much effort):
 
@@ -64,7 +64,7 @@ If you are purely interested in exploring the data, rather than presenting it to
 While the previous functions concerned plotting the statistical distributions of each indicator, functions are also available for plotting the indicator values in order or on a map.
 
 ```{r}
-iplotBar(ASEM, dset = "Raw", isel = "Embs", usel = "SGP")
+iplotBar(ASEM, dset = "Raw", isel = "Embs", usel = "SGP", aglev = 1)
 ```
 
 Here, a single indicator is plotted in order as a bar chart. There is an optional argument to highlight one or more units, using the `usel` argument.

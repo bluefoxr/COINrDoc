@@ -72,7 +72,7 @@ These are selected as the top-ranked and bottom-ranked indicators for each unit,
 Tables are useful but can be a bit dry, so you can spice this up using the bar chart and map options already mentioned in [Initial visualisation and analysis].
 
 ```{r ASEMindexbar}
-iplotBar(ASEM, dset = "Aggregated", isel = "Index", usel = "GBR")
+iplotBar(ASEM, dset = "Aggregated", isel = "Index", usel = "GBR", aglev = 4)
 ```
 
 And here's a map:
@@ -134,7 +134,7 @@ system.file("UnitReport", "unit_report_source.Rmd", package = "COINr")
 
 where the directory will different on your computer.
 
-Opening this document in R will give you an idea of how the parameterised document works. In short, the COIN object is passed into the R Markdown document, so that anything that is inside the COIN can be accessed and used for generating tables, figures and text. The example included is just that, an example. To see how it looks, we can run:
+Opening this document in R will give you an idea of how the parameterised document works. In short, the COIN is passed into the R Markdown document, so that anything that is inside the COIN can be accessed and used for generating tables, figures and text. The example included is just that, an example. To see how it looks, we can run:
 
 ```{r, eval=F}
 getUnitReport(COIN)

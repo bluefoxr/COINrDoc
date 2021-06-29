@@ -4,7 +4,7 @@
 
 ### Data import
 
-COINr has a couple of useful functions to help import and export data and metadata. You might have heard of the [COIN Tool](https://composite-indicators.jrc.ec.europa.eu/?q=coin-tool) which is an Excel-based tool for building and analysing composite indicators, similar in fact to COINr^[Full disclosure, I was also involved in the development of the COIN Tool]. With the `coinToolIn()` function you can import data directly from the COIN Tool to cross check or extend your analysis in COINr.
+COINr has a couple of useful functions to help import and export data and metadata. You might have heard of the [COIN Tool](https://knowledge4policy.ec.europa.eu/composite-indicators/coin-tool_en) which is an Excel-based tool for building and analysing composite indicators, similar in fact to COINr^[Full disclosure, I was also involved in the development of the COIN Tool]. With the `coinToolIn()` function you can import data directly from the COIN Tool to cross check or extend your analysis in COINr.
 
 To demonstrate, we can take the example version of the COIN Tool, which you can download [here](https://composite-indicators.jrc.ec.europa.eu/sites/default/files/COIN_Tool_v1_LITE_exampledata.xlsm). Then it's as simple as running:
 
@@ -43,7 +43,7 @@ Trigger warning for R purists! Sometimes it's easier to look at your data in Exc
 
 Actually Excel is kind of underrated by many people who are used to programming in R or Python, Matlab or even Stata. It has a lot of clever tools that not many people know about. But more importantly, Excel is a *lingua franca* between all kinds of professions - you can pass an Excel spreadsheet to almost anyone and they will be able to take a look at it and use the data. Try doing that with an R or Python script.
 
-It just boils down to using the right tool for the right job. Anyway, with that aside, let's look at COINr's `coin_2excel()` function. You put in your COIN, and it will write a spreadsheet.
+It just boils down to using the right tool for the right job. Anyway, with that aside, let's look at COINr's `coin2Excel()` function. You put in your COIN, and it will write a spreadsheet.
 
 ```{r, eval=F}
 # Build ASEM index
@@ -51,7 +51,7 @@ ASEM <- build_ASEM()
 # Get some statistics
 ASEM <- getStats(ASEM, dset = "Raw")
 # write to Excel
-coin_2excel(ASEM, fname = "ASEMresults.xlsx")
+coin2Excel(ASEM, fname = "ASEMresults.xlsx")
 ```
 
 The spreadsheet will contain a number of tabs, including:

@@ -1,24 +1,54 @@
 # Foundations
 
-This chapter aims to explain some important principles about how COINr works, as well as giving an overview of the package and suggested workflows. If you want to immediately get to COINr functions without any further ado, skip this chapter for now. However if you want to understand COINr better, this might be worth reading.
+This chapter aims to explain some important principles about how COINr works, and explain some terminology. It also gives a map of the functions available in the package. If you want to get straight to using COINr, you could skip this chapter for now and look at some examples in the appendices or directly at the chapters relating to specific functions and operations (the next chapter onwards).
 
-## How to use COINr
 
-There are two main ways to use COINr. The first is to use the functions as standalone tools for your own specific use. For example, `coin_normalise.R` will take a data frame as an input, and normalise the columns according to the options specified in its input, outputting another data frame.
+## Terminology
 
-The second way is to work inside what I'll call the 'COINrverse' (with tongue firmly in cheek). What this means is that all operations are performed on a single object, the "COIN object", which stores all data, all analysis, parameters, and methodological choices made along the way.
+Let's clearly define a few terms first to avoid confusion later on.
 
-The COINrverse approach enables the full feature set of COINr, because some functions only work on COIN objects - for example, exporting all results to Excel in one command, or running an uncertainty/sensitivity analysis. Indeed, COINr is built mainly for COINrverse use, but functions have been written with the flexibility to also accommodate independent use where possible.
++ An *indicator* is a variable which has an observed value for each unit. Indicators might be things like life expectancy, CO2 emissions, number of tertiary graduates, and so on.
 
-More details on how the COINrverse works can be found in XXX.
++ A *unit* is one of the entities that you are comparing using indicators. Often, units are countries, but they could also be regions, universities, individuals or even competing policy options (the latter is the realm of multicriteria decision analysis).
 
-## Suggested workflows
+Together, indicators and units form the main input data frame for COINr (units as rows, and indicators as columns):
 
-E.g. quick construction
+```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Indicators and units"}
+knitr::include_graphics("images/inds_n_units.png")
+```
 
-Analysis, audit
+*Composite indicators* are created by aggregating multiple indicators into a single value. This may often be repeated more than once, following a hierarchical structure, such as the following figure:
 
-Comparisons
+```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Example of composite indicator structure."}
+knitr::include_graphics("images/CIhierarchy.jpg")
+```
+
+In this example, four pairs of indicators are each aggregated into a "sub-pillar", and sub-pillars are aggregated into two "pillars". Finally, the pillars are aggregated into a single index. Typically, the sub-pillars and pillars represent specific sub-concepts of the central concept. For example, in the [Global Innovation Index](https://www.globalinnovationindex.org/Home), which aims to measure innovation at the national level, pillars include things like "Institutions", "Human Capital", and "Infrastructure", each of which are populated with indicators which measure those specific concepts. The idea is that a complex multidimensional concept is broken down into sub-concepts which are easier to capture with a set of indicators. Additionally, the scores of pillars and sub-pillars can be interesting in their own right.
+
+Whether each of these groups is called a "pillar", "sub-index", "dimension", or something else, depends on the index. For this reason, in COINr a more general terminology is adopted.
+
+When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an *aggregation group*. For example, the aggregation group of SP 1 in the diagram above consists of "ind.01" and "ind.02". The aggregation group of Pillar 1 consists of SP 1 and SP 2. And so on. The resulting value from aggregating an aggregation group is called an *aggregate* or *aggregate value*.
+
+COINr also frequently refers to *aggregation levels* or equivalently just *levels*. This refers to the vertical position in the hierarchy shown above. In this example, therefore, 
+
+* Level 1 = Indicators
+* Level 2 = Pillars
+* Level 3 = Sub-indexes
+* Level 4 = Index
+
+This means that the fictional index above has four levels in total. COINr can handle any number of levels and aggregation groups. The structure of the index is defined when the COIN is constructed - see the following chapter for details.
+
+
+## COINr syntax
+
+Many COINr functions follow a common syntax which is related to some of the terminology described above.
+
+* `dset` always refers to the name of the data set that is found in `.$Data`. For example, `dset = "Normalised"` will return `.$Data$Normalised`. The only exception is `dset = "Denominators"`, which returns `.$Input$Denominators`. The argument `dset` is used in many COINr functions because they have to know which data set to operate on.
+* `icodes` is a character vector of indicator or aggregate codes
+* `aglev` is the aggregation level, or levels, to take the indicator data from. To understand how this works, see [Selecting data sets and indicators].
+* `out2` controls the output of many functions - if set to "COIN" it will append the results back to the COIN that was input to the function, otherwise if "df" or "list" it will return the results as a data frame or list depending on the function.
+
+In particular, the combination of `icodes` and `aglev` is useful because it allows to call sets of indicators inside aggregation groups very quickly. See [Selecting data sets and indicators] for more details.
 
 ## A map of COINr
 
@@ -39,19 +69,38 @@ Function            Description
 `aggregate()`       Aggregate indicators into hierarchical levels, up to index
 `regen()`           Regenerates COIN results using specifications stored in `.$Method`
 
-### Visualisation
+### Visualisation and presenting
 
-These functions are for visualising data.
+These functions are for visualising and presenting data and results
 
 Function            Description                                 
 ------------------  ---------------------------------------------
-`iplotBar()`        Interactive bar chart for any indicator
+`iplotBar()`        Interactive bar chart for any indicator, includes stacked bar charts
+`iplotCorr()`       Interactive correlation heatmap
 `iplotIndDist()`    Interactive indicator distribution plots for a single indicator
 `iplotIndDist2()`   Interactive indicator distribution plots for two indicators simultaneously
 `iplotMap()`        Interactive choropleth map for any indicator (only works for countries)
-`plotCorr()`        Interactive correlation heatmap between any levels of the index
+`iplotRadar()`      Interactive radar chart for specified unit(s) and specified indicators
+`iplotTable()`      Interactive results table with conditional formatting
+`plotCorr()`        Correlation heatmap between any levels/groups of the index
 `plotframework()`   Interactive sunburst plot visualising the indicator framework
 `plotIndDist()`     Static plot of distributions for indicators and groups of indicators
+`plotSA()`          Plot sensitivity analysis results (sensitivity indices)
+`plotSARanks()`     Plot confidence intervals on ranks, following an uncertainty/sensitivity analysis
+`colourTable()`     Conditionally-formatted interactive HTML table, given a data frame
+`getResults()`      Gets quick results summary table
+`getStrengthNWeak()`Gets strengths and weaknesses (N top ranked indicators) of a selected unit
+`getUnitReport()`   Generates a unit report following a template, and outputs either HTML, Word or pdf format
+`getUnitSummary()`  Summarises scores and ranks of a selected unit, at specified aggregation levels 
+
+### Adjustment and comparison
+
+Function            Description                                 
+------------------  ---------------------------------------------
+`compTable()`       Comparison table of selected indicator/aggregate between two COINs
+`compTableMulti()`  Comparison table of selected indicator/aggregate between multiple COINs
+`indChange()`       Short cut to add or remove indicators
+
 
 ### Analysis
 
@@ -59,9 +108,12 @@ The following functions analyse indicator data.
 
 Function            Description                                 
 ------------------  ---------------------------------------------
-`getPCA()`            Principle component analysis on a specified data set and subset of indicators. Returns PCA weights.
+`getCorr()`         Get correlation matrices between various groups and levels
+`getCronbach()`     Get Cronbach's alpha for specified group/level
+`getPCA()`          Principle component analysis on a specified data set and subset of indicators. Also returns PCA weights.
 `effectiveWeight()` Calculates the effective weights of each element in the indicator hierarchy.
 `getStats()`        Get table of indicator statistics for any data set
+`sensitivity()`     Perform a Monte Carlo uncertainty analysis and/or a global sensitivity analysis on a COIN
 `weightOpt()`       Weight optimisation according to a pre-specified vector of "importances"
 
 
@@ -73,6 +125,7 @@ Function            Description
 ------------------  ---------------------------------------------
 `indDash()`         Indicator visualisation (distribution) dashboard for one or two indicators
 `rew8r()`           Interactively re-weight indicators and check updated results and correlations
+`resultsDash()`     Interactive dashboard for visualising and exploring results
 
 ### Import/export
 
@@ -81,7 +134,7 @@ Functions to import and export data and results to and from COINr and R.
 Function            Description                                 
 ------------------  ---------------------------------------------
 `COINToolIn()`      Import indicator data and metadata from COIN Tool
-`coin_2Excel()`     Write data, analysis and results from a COIN to Excel
+`coin2Excel()`     Write data, analysis and results from a COIN to Excel
 
 ### Other functions
 
@@ -100,6 +153,7 @@ Function            Description
 `names2Codes()`     Given a character vector of long names (probably with spaces), generates short codes.
 `outrankMatrix()`   Outranking matrix based on a data frame of indicator data and corresponding weights
 `roundDF()`         Round down a data frame (i.e. for presentation)
+`rankDF()`          Convert a data frame of scores to ranks (non-numerical columns are ignored)
 
 
 ### Data
@@ -116,31 +170,6 @@ Function            Description
 ### Finally
 
 There are also a number functions which are mainly for internal use, and are not listed here.
-
-## Terminology
-
-Let's clearly define a few terms first to avoid confusion later on.
-
-+ An *indicator* is a variable which has an observed value for each unit. Indicators might be things like life expectancy, CO2 emissions, number of tertiary graduates, and so on.
-
-+ A *unit* is one of the entities that you are comparing using indicators. Often, units are countries, but they could also be regions, universities, individuals or even competing policy options (the latter is the realm of multicriteria decision analysis).
-
-Together, indicators and units form the main input data frame for COINr (units as rows, and indicators as columns).
-
-## Levels
-
-COINr frequently refers to "aggregation levels" or equivalently just "levels". Composite indicators are built in a hierarchical structure, such that indicators are aggregated to e.g. sub-pillars, sub-pillars are then aggregated to pillars, and so on up the final index. COINr can handle any number of these "aggregation levels".
-
-Some functions also take the aggregation level as one of their arguments. The convention used by COINr is that the first level (Level 1) is the indicator level, i.e. the columns of data input in `IndData`. Level 2 is aggregated scores resulting from aggregating indicators, Level 3 is the aggregated scores resulting from aggregating the scores in Level 2, and so on.
-
-In the ASEM example, therefore, the levels are defined as follows:
-
-* Level 1 = Indicators
-* Level 2 = Pillars
-* Level 3 = Sub-indexes
-* Level 4 = Index
-
-This means that the ASEM Index has four levels.
 
 ## Tips for using COINr
 
@@ -159,13 +188,6 @@ Currently, COINr is somewhat dependent on the order of the units. Although you c
 In future updates this dependence on order should be removed, because it is a possible source of errors. For now though, just keep ordering in mind.
 
 It's worth mentioning that the row order never changes in the `.$Data` folder. However, if you screen units using a minimum data requirement (e.g. using `datacheck()`), then the number of units can change. This should also be kept in mind.
-
-### Syntax
-
-Where possible, COINr functions use a common syntax to keep things simple. For example:
-
-* `dset` always refers to the name of the data set that is found in `.$Data`. For example, `dset = "Normalised"` will return `.$Data$Normalised`. The only exception is `dset = "Denominators"`, which returns `.$Input$Denominators`. The argument `dset` is used in many COINr functions because they have to know which data set to operate on.
-* More to be added here.
 
 ### Plotting
 

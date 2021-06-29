@@ -16,13 +16,13 @@ description: "Composite indicators with COINr"
 knitr::opts_chunk$set(fig.width = 8, collapse = TRUE, warning = FALSE)
 ```
 
-# Overview
+# Introduction
 
 ## Background
 
 This documentation describes in detail the COINr package, which is an open source R package for developing and analysing composite indicators, developed by the European Commission's [Joint Research Centre](https://knowledge4policy.ec.europa.eu/composite-indicators/about_en). In fact, this is slightly more than technical documentation, and also gives some tips on composite indicator development along the way.
 
-A composite indicator is an aggregation of indicators which aims to measure a particular concept. Composite indicators are typically used to measure complex and multidimensional concepts which are difficult to define, and cannot be measured directly. Examples include innovation, human development, environmental performance, and so on. Composite indicators are closely related to scoreboards, which are also groups of indicators aiming to capture a concept. However, scoreboards do not aggregate indicator values. Composite indicators also usually use a hierarchical structure which breaks the concept down into elements, sometimes known as sub-pillars, pillars, sub-indexes, dimensions, and so on.
+A *composite indicator* is an aggregation of indicators which aims to measure a particular concept. Composite indicators are typically used to measure complex and multidimensional concepts which are difficult to define, and cannot be measured directly. Examples include innovation, human development, environmental performance, and so on. Composite indicators are closely related to scoreboards, which are also groups of indicators aiming to capture a concept. However, scoreboards do not aggregate indicator values. Composite indicators also usually use a hierarchical structure which breaks the concept down into elements, sometimes known as sub-pillars, pillars, sub-indexes, dimensions, and so on.
 
 COINr is currently still under development, therefore the package itself, and this documentation, are a work in progress but are being continually updated. You can find the latest version of COINr at its [GitHub repo](https://github.com/bluefoxr/COINr), and also the source code for this documentation [here](https://github.com/bluefoxr/COINrDoc).
 
@@ -36,21 +36,71 @@ devtools::install_github("bluefoxr/COINr")
 
 This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also skip this step.
 
-At the time of writing (April 2021), the functionalities of the package are perhaps 75% complete. Roughly speaking, the features that are described in detail in this documentation are more or less complete and have survived an initial round of testing and checks. Any functions that are not described in detail here should be treated with more caution and it is likely that bugs would be encountered here and there. The entire package will need to beta tested before a more official “release”.
+At the time of writing (June 2021), the functionalities of the package are perhaps 90% complete. Roughly speaking, the features that are described in detail in this documentation are more or less complete and have survived an initial round of testing and checks. Any functions that are not described in detail here should be treated with more caution and it is likely that bugs would be encountered here and there. The entire package will need to beta tested before a more official “release”.
 
 In case you do spot a bug, or have a suggestion, the best way is to [open an issue](https://github.com/bluefoxr/COINr/issues) on the repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).
 
-## What's it for?
+## What does it do?
 
-COINr is the first fully-flexible development and analysis environment for composite indicators and scoreboards. The main features are:
+COINr is the first fully-flexible development and analysis environment for composite indicators and scoreboards. It is more than simply a collection of useful functions - it wraps up all data, methodology and analysis of a composite indicator into a single object called a "COIN". COINr functions are adapted to work with very few commands on COINs, but many will also work on data frames as well. This leads to a fast and neat environment for building and analysing composite indicators.
+
+Using COINs, i.e. the *COINrverse approach*, enables the full feature set of COINr, because some functions only work on COINs - for example, exporting all results to Excel in one command, or running an uncertainty/sensitivity analysis. Indeed, COINr is built mainly for COINrverse use, but functions have been written with the flexibility to also accommodate independent use where possible.
+
+The main features can be summarised as features for *building*, features for *analysis* and features for *visualisation and presentation*.
+
+**Building features**:
 
 * Flexible and fast development of composite indicators with no limits on aggregation levels, numbers of indicators, highly flexible set of methodological choices.
+* Denomination by other indicators (including built in world denominators data set)
+* Screening units by data requirements
+* Imputation of missing data, by a variety of methods
+* Data treatment using Winsorisation and nonlinear transformations
+* Normalisation by more than ten methods, either for all indicators or for each individually
+* Weighting using either manual weighting, PCA weights or correlation optimised weights. COINr also includes a reweighting app which explores the effects of weights on correlations.
+* Aggregation of indicators using a variety of methods which can be different for each aggregation level.
 
-* In-depth statistical analysis of indicators and results, including multivariate analysis, statistical reweighting, uncertainty and sensitivity analysis, etc.
+**Analysis features:**
 
-* Interactive data exploration and visualisation via Shiny apps which can be hosted online. HTML widgets for incorporation in interactive markdown documents.
+* Detailed indicator statistics, and data availability within aggregation groups
+* Multivariate analysis, including quick functions for PCA, and a detailed correlation analysis and visualisation
+* Easy "what if" analysis - very quickly checking the effects of adding and removing indicators, changing weights, methodological variations
+* Full global uncertainty and sensitivity analysis which can check the impacts of uncertainties in weighting and many methodological choices
+
+**Visualisation and presentation:**
+
+* Statistical plots of indicators - histograms, violin plots, dot plots, scatter plots and more, including interactive html plots and an app for exploring indicator data
+* Bar charts, stacked bar charts, maps, tables and radar charts for presenting indicator data and making comparisons between units
+* Static and interactive correlation plots for visualising correlations between indicators and between aggregation levels
+* An interactive app for visualising and presenting initial results
+* Automatic generation of unit reports (e.g. country reports) using customisable R markdown templates
+
+COINr also allows fast import from the [COIN Tool](https://knowledge4policy.ec.europa.eu/composite-indicators/coin-tool_en) and fast export to Excel.
 
 In short, COINr aims to allow composite indicators to be developed and prototyped very quickly and in a structured fashion, with the results immediately available and able to be explored interactively. Although it is built in R, it is a high-level package that aims to make command simple and intuitive, with the hard work performed behind the scenes, therefore it is also accessible to less experienced R users.
+
+## How to use this manual
+
+COINr has many features, and it is unlikely you will want to read this manual from cover to cover. Roughly speaking, the chapters of this manual represent the major functions and groups of functions present in COINr. If you are looking for guidance on a specific function, simply look for the relevant chapter, or search for the function using the search box. You can also use `?function_name` in R for help on each function.
+
+If you are building a composite indicator, the following chapters should be useful in particular:
+
+* [COINs: the currency of COINr]
+* [Normalisation]
+* [Aggregation]
+* [Appendix: Building a Composite Indicator Example]
+
+Then you may wish to see chapters on [Foundations], [Initial visualisation and analysis], [Denomination], [Missing data and Imputation], [Data Treatment] and [Weighting] depending on what you want to do.
+
+If you are analysing a composite indicator (and this may also be part of the construction process), some relevant chapters are:
+
+* [Initial visualisation and analysis]
+* [Multivariate analysis]
+* [Adjustments and comparisons]
+* [Sensitivity analysis]
+* [Appendix: Analysing a Composite Indicator Example]
+
+It is however worth browsing through the contents to pick out any further relevant chapters and sections that might be of interest.
+
 
 ## Demo
 
@@ -65,7 +115,7 @@ ASEM <- assemble(IndData = ASEMIndData,
                  AggMeta = ASEMAggMeta)
 ```
 
-Here, we have loaded the COINr package, and assembled a so-called “COIN”, which is a structured object used universally within COINr. It contains a complete record of all data sets, parameters, methodological choices, analysis and results generated during the construction and analysis process. A COIN is initially assembled by supplying a table of indicator data, a table of indicator metadata, and a table of aggregation metadata. More details can be found in the chapter on [COINs: the currency of COINr].
+Here, we have loaded the COINr package, and assembled a so-called “COIN”, which is a structured object used universally within COINr. It contains a complete record of all data sets, parameters, methodological choices, analysis and results generated during the construction and analysis process. A COIN is initially assembled by supplying a table of indicator data, a table of indicator metadata (which also specifies the structure of the index), and a table of aggregation metadata. More details can be found in the chapter on [COINs: the currency of COINr].
 
 Currently, the COIN (composite indicator) only contains the input data set and other metadata. To actually get the aggregated results (i.e. and index), we have to denominate, normalise and aggregate it. These operations are performed by dedicated functions in COINr.
 
@@ -120,28 +170,3 @@ knitr::include_graphics("images/demo_resultsdash.png")
 ```
 
 Clearly, this is not meant to replace a dedicated composite indicator visualisation site, but is a fast first step.
-
-## Features and status
-
-COINr has, or will have, many more features. Among those that are already implemented and in various stages of testing:
-
-* Unlimited indicators, units, aggregation levels
-* Denomination of indicators
-* Indicator visualisation via static plots and dashboards
-* Indicator statistics and missing data analysis
-* Imputation of missing data via various methods
-* Outlier analysis and treatment
-* Normalisation via various methods
-* Aggregation of indicators via various methods
-* Multivariate analysis (PCA) and correlation analysis
-* Interactive re-weighting
-* Export to Excel
-* Import from the [COIN Tool](https://composite-indicators.jrc.ec.europa.eu/?q=coin-tool)
-
-And those that will be included soon, among others:
-
-* Automatic re-weighting
-* Grouping units by e.g. income groups, size groups
-* Support for panel data, i.e. indexes for multiple years
-* What-if experiments, comparing alternative versions of the index
-* Sensitivity analysis, robustness to methodological assumptions, weights, etc.
