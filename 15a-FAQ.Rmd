@@ -32,6 +32,10 @@ At the moment, COINr does not have a dedicated support for panel data, i.e. data
 
 Eventually, time permitting, I would build this into a package. This would probably be done in the same way suggested here, i.e. having multiple COINs for each year, but would be slightly automated. The COINs would also be stored in a single list or possibly a data frame, following something along the lines of the [Many Models](https://r4ds.had.co.nz/many-models.html) chapter in the R For Data Science book.
 
+> Do I *have* to aggregate indicators? Can I just make a scoreboard or only aggregate up to a certain level?
+
+No of course, you don't have to aggregate at all, and in some cases it might not even be a good idea. However, you can always see what happens when you aggregate. You can also aggregate up to an index, but choose to only present pillar or dimension scores. This might make sense, for instance, when pillars represent very different things and are poorly correlated or divergent between one another. Another thing to keep in mind is that an aggregated score and a scoreboard are not mutually exclusive - you can easily present the two together.
+
 > I found a bug - what do?
 
 You can [open an issue](https://github.com/bluefoxr/COINr/issues) on the COINr repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).

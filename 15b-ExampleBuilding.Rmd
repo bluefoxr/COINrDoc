@@ -2,4 +2,188 @@
 
 Here we go through the main steps to building a composite indicator in COINr. This is effectively a condensed version of some earlier chapters in this book.
 
-*To be added soon*
+## Before COINr (BC)
+
+Before even getting to COINr you will have to take a number of steps. The steps can be summarised by e.g. the European Commission's [Ten Step Guide](https://knowledge4policy.ec.europa.eu/publication/your-10-step-pocket-guide-composite-indicators-scoreboards_en). In short, before getting to COINr you should have:
+
+1. Tried to summarise all elements of the concept you are trying to capture, including by e.g.
+    - A literature review
+    - Talking to experts and stakeholders if possible
+    - Reviewing any other indicator frameworks on the topic
+2. Constructed a "conceptual framework" using the information in 1. For a composite indicator, this should be a hierarchical structure.
+3. Gathered indicator data (these need not be the final set of indicators)
+
+Depending on how thorough you are, and how accessible your data is, this process can take a surprisingly long time. On these topics, there is a lot of good training material available through the European Commission's Competence Centre for Composite Indicators and Scoreboards [here](https://knowledge4policy.ec.europa.eu/composite-indicators/2019-jrc-week-composite-indicators-scoreboards_en).
+
+## Load data and assemble
+
+Having got a set of preliminary indicator data, the next step is to load data into R in some way. Remember that to build a composite indicator with COINr you need to first build a COIN. To build a COIN you need three data frames, as explained in detail in [COINs: the currency of COINr]:
+
+* Indicator data
+* Indicator metadata
+* Aggregation metadata
+
+Where these data frames come from is up to you. You might want to load data into R and then assemble them using your own script. Alternatively, you may wish to assemble these in Excel, for example, then read the sheets of the spreadsheet into R.
+
+Let's assume now that you have got these three data frames in the correct formats. Now you simply put them into `assemble()` to build your COIN. Here I will use the built-in data frames in COINr:
+
+```{r, collapse=T}
+library(COINr)
+
+ASEM <- assemble(IndData = ASEMIndData,
+                 IndMeta = ASEMIndMeta,
+                 AggMeta = ASEMAggMeta)
+```
+
+## Check the data
+
+At this point, it's worth checking the COIN to make sure that everything is as you would expect. One thing is to check the framework:
+
+```{r}
+plotframework(ASEM)
+```
+
+You can also explore the indicator data using COINr's `indDash()` app:
+
+```{r, eval=F}
+# not run here because requires an active R session
+indDash(ASEM)
+```
+
+I would also recommend to check the statistics of each indicator using `getStats()`. Look for any indicators that are highly skewed, have few unique values, have low data availability, or strong correlations with other indicators or with denominators.
+
+```{r, collapse=T}
+# load reactable for viewing table (in R you can do this instead with R Studio)
+library(reactable)
+
+# get stats
+ASEM <- getStats(ASEM, dset = "Raw")
+
+# view stats table
+ASEM$Analysis$Raw$StatTable %>%
+  roundDF() %>%
+  reactable()
+```
+
+At this point you may decide to check individual indicators, and some may be added or excluded.
+
+## Denomination
+
+If you want to divide indicators by e.g. GDP or population to be able to compare small countries with larger ones, you can use `denominate()`. The specifications are either made initially in `IndMeta`, or as arguments to `denominate()`. In the case of the ASEM data set, these are included in `IndMeta` so the command is very simple (run `View(ASEMIndMeta)` to see). We will afterwards check the new stats to see what has changed.
+
+```{r}
+# create denominated data set
+ASEM <- denominate(ASEM, dset = "Raw")
+
+# get stats of denominated data
+ASEM <- getStats(ASEM, dset = "Denominated")
+
+# view stats table
+ASEM$Analysis$Raw$StatTable %>%
+  roundDF() %>%
+  reactable()
+```
+
+According to the new table, there are now no high correlations with denominators, which indicates some kind of success.
+
+## Imputation
+
+If you have missing data (and if you don't, you are fortunate), you can choose to impute the data. If you *don't* impute missing data, you can still build a composite indicator though.
+
+We can use one of COINr's options for imputing data. Like other commands, we operate on the COIN and the output is an updated COIN. Actually at this point I will make two alternatives - one which imputes missing data using a group median, and another which performs no imputation.
+
+```{r}
+# Make a copy
+ASEM_noImpute <- ASEM
+
+# impute one
+ASEM <- impute(ASEM, dset = "Denominated", imtype = "indgroup_mean", groupvar = "Group_GDP")
+```
+
+## Data treatment
+
+Next we may wish to treat the data for outliers. Here we apply a standard approach which Winsorises each indicator up to a specified limit of points, in order to bring skew and kurtosis below specified thresholds. If Winsorisation fails, it applies a log transformation or similar.
+
+```{r}
+ASEM <- treat(ASEM, dset = "Imputed", winmax = 5)
+ASEM_noImpute <- treat(ASEM_noImpute, dset = "Denominated", winmax = 5)
+```
+
+Following treatment, it is a good idea to check which indicators were treated and how:
+
+```{r}
+library(dplyr)
+
+ASEM$Analysis$Treated$TreatSummary %>%
+  filter(Treatment != "None")
+```
+
+It is also a good idea to visualise and compare the treated data against the untreated data. The best way to do this interactively is to call `indDash()` again, which allows comparison of treated and untreated indicators side by side. We can also do this manually (or for presentation) for specific indicators:
+
+```{r}
+iplotIndDist2(ASEM, dsets = c("Imputed", "Treated"), icodes = "Services", ptype = "Scatter")
+```
+
+This shows the Winsorisation of four points for the "Services" indicator. This could also be plotted in different ways using box plots or violin plots.
+
+## Normalisation
+
+The next step would be to normalise the data. In the ASEM index we will use a simple min-max normalisation in the $[0, 100]$ interval.
+
+```{r}
+ASEM <- normalise(ASEM, dset = "Treated", ntype = "minmax", npara = list(minmax = c(0,100)))
+ASEM_noImpute <- normalise(ASEM_noImpute, dset = "Treated", ntype = "minmax", npara = list(minmax = c(0,100)))
+```
+
+Again, we could visualise and check stats here but to keep things shorter we'll skip that for now.
+
+## Aggregation
+
+The last construction step (apart from iterative changes) is to aggregate. Again we use a simple arithmetic mean. The structure of the index is stored in the `IndMeta` data frame inside the COIN, so we only need to specify which data set to aggregate, and which method to use.
+
+```{r}
+ASEM <- aggregate(ASEM, agtype = "arith_mean", dset = "Normalised")
+ASEM_noImpute <- aggregate(ASEM_noImpute, agtype = "arith_mean", dset = "Normalised")
+```
+
+## Visualisation
+
+We can now visualise our results. A good way at the index level is a stacked bar chart.
+
+```{r}
+iplotBar(ASEM, dset = "Aggregated", isel = "Index", aglev = 4, stack_children = T)
+```
+
+This can look a bit strange because in fact the ASEM index was only aggregated up to the sustainability and connectivity sub-indexes. We can also plot that:
+
+```{r}
+iplotIndDist2(ASEM, dsets = "Aggregated", icodes = "Index")
+```
+
+We may also plot the results on a map. Here we'll only plot connectivity:
+
+```{r}
+iplotMap(ASEM, dset = "Aggregated", isel = "Conn")
+```
+
+For a bit more detail we can also generate a table.
+
+```{r}
+getResults(ASEM, tab_type = "Summary") %>%
+  knitr::kable()
+```
+
+
+## Comparison
+
+Since we built two slightly different indexes, it makes sense also to check the difference. How do the ranks change if we do or do not impute?
+
+```{r}
+compTable(ASEM, ASEM_noImpute, dset = "Aggregated", isel = "Index")
+```
+
+This shows that the maximum rank change is 6 places, at the index level.
+
+## Summary
+
+This is a fast example of COINr functions for building a composite indicator. Normally this would be an iterative process, but it showcases how simple commands can be used to do fairly complex operations in many cases. There is a lot more to all of the functions used here, and you should check the respective chapters of this book to better tune them to your needs.

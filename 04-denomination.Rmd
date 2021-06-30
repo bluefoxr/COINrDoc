@@ -31,7 +31,7 @@ Anyway, looking at the plot above, it is clear that that countries with a higher
 # divide trade by GDP
 tradeperGDP <- ASEM$Data$Raw$Goods/ASEM$Input$Denominators$Den_GDP
 # bar chart: add unit names first
-iplotBar(data.frame(UnitCode=ASEM$Parameters$UnitCodes, TradePerGDP = tradeperGDP))
+iplotBar(data.frame(UnitCode = ASEM$Data$Raw$UnitCode, TradePerGDP = tradeperGDP))
 ```
 
 Now the picture is completely different - small countries like Slovakia, Czech Republic and Singapore have the highest values.
@@ -46,6 +46,8 @@ This distinction is well known in physics, for example. Mass is related to the s
 * An example of an intensive variable is population density. This is no longer dependent on the physical size of the country.
 
 The summary here is that an **extensive** variable becomes an **intensive** variable when we divide it by a **denominator**.
+
+An important point to make here is about ordering. In the example above, we have simply divided two data frames by one another. To get the right result, we need to make sure that the units (rows) match properly in both data frames, as well as the columns. The example above is correct because the denominator data and indicator data originally came from the same data frame (`ASEMIndData`). However normally it would be better to use R's `match()` or `merge()` functions, or else similar tidyverse equivalents, to ensure no errors arise. In COINr, this ordering problem is automatically taken care of.
 
 ## Denominating in COINr
 
@@ -97,7 +99,7 @@ denomby_meta[ASEM$Input$IndMeta$IndCode == "Flights"] <- "Den_GDP"
 ASEM <- denominate(ASEM, dset = "Raw", specby = "user", denomby = denomby_meta)
 ```
 
-Here we have changed the denominator of one of the indicators, "Flights", to GDP. This is done by creating a character vector `denomby_meta` (copied from the original denominator specification) which has an entry for each indicator, specifying which denominator to use, if any. We then changed the entry corresponding to "Flights". This overwrites any previous denomination. If you want to keep and compare alternative specifications, see the chapter on (*chap to add*).
+Here we have changed the denominator of one of the indicators, "Flights", to GDP. This is done by creating a character vector `denomby_meta` (copied from the original denominator specification) which has an entry for each indicator, specifying which denominator to use, if any. We then changed the entry corresponding to "Flights". This overwrites any previous denomination. If you want to keep and compare alternative specifications, see the chapter on [Adjustments and comparisons].
 
 Let's compare the raw Flights data with the Flights per GDP data:
 
@@ -114,10 +116,10 @@ If you are just working with data frames, you need to supply the three ingredien
 
 ```{r}
 # a small data frame of indicator data
-IndData <- ASEMIndData[c("Goods", "Services", "FDI")]
+IndData <- ASEMIndData[c("UnitCode", "Goods", "Services", "FDI")]
 IndData
 # two selected denominators
-Denoms <- ASEMIndData[c("Den_Pop", "Den_GDP")]
+Denoms <- ASEMIndData[c("UnitCode", "Den_Pop", "Den_GDP")]
 
 # denominate the data
 IndDataDenom <- denominate(IndData, denomby = c("Den_GDP", NA, "Den_Pop"), denominators = Denoms)

@@ -86,9 +86,7 @@ $$ V(y)=\sum_i V_i+\sum_i\sum_{j>i}V_{i,j}+...+V_{1,2,...,k}, $$
 
 where
 
-$$ V_i= V[E(y|x_i)], \\
-
-V_{i,j}=V[E(y|x_i,x_j)] - V[E(y|x_i)]-V[E(y|x_j)] $$
+$$ V_i= V[E(y|x_i)], \\ V_{i,j}=V[E(y|x_i,x_j)] - V[E(y|x_i)]-V[E(y|x_j)] $$
 
 and so on for higher terms. Here, $V(\cdot)$ denotes the variance operator, $E(\cdot)$ the expected value, and these terms are used directly as *sensitivity indices*, e.g. the \emph{first order sensitivity index} $S_{i}=V_i/V(y)$ measures the contribution of the input $x_i$ to $V(y)$, without including interactions with other inputs. Since they are standardised by $V(y)$, each sensitivity index measures the *fraction of the variance* caused by each input (or interactions between inputs), and therefore the *fraction of the uncertainty*.
 
@@ -105,7 +103,7 @@ The second measure is the *total order sensitivity index*, sometimes called the 
 $$ S_{Ti} = 1 - \frac {V[E\left(y \mid \textbf{x}_{-i} \right)]}{V(y)} = \frac {E[V\left(y \mid
 	\textbf{x}_{-i} \right)]}{V(y)}  $$
 
-where $ \textbf{x}_{-i} $ is the set of all uncertain inputs except the $i$th. The quantity $ S_{Ti}$ measures the fraction of the output variance caused by $x_i$ *and any interactions with other assumptions*.
+where $\textbf{x}_{-i}$ is the set of all uncertain inputs except the $i$th. The quantity $S_{Ti}$ measures the fraction of the output variance caused by $x_i$ *and any interactions with other assumptions*.
 
 Depending on your background, this may or may not seem a little confusing. Either way, see the examples in the rest of this chapter, which show that once calculated, the sensitivity indices are fairly intuitive.
 

@@ -187,16 +187,6 @@ When aggregating indicators, this difference becomes particularly important. If 
 
 This point is made here, because data may sometimes come with missing values denoted as zeros, or with zeros denoted as missing values. Ensure that these are checked carefully before proceeding with construction.
 
-### Ordering
-
-Currently, COINr is somewhat dependent on the order of the units. Although you can input your data in any order you like (as long as you follow the rules in [Data Input]), in some cases the order does matter. For example, if you want to denominate your data by a separate data frame of indicators (not in the COIN), you will have to make sure that the units (rows) correspond to the same order of rows as your indicator data.
-
-*NOTE This is in the process of being phased out very soon*
-
-In future updates this dependence on order should be removed, because it is a possible source of errors. For now though, just keep ordering in mind.
-
-It's worth mentioning that the row order never changes in the `.$Data` folder. However, if you screen units using a minimum data requirement (e.g. using `datacheck()`), then the number of units can change. This should also be kept in mind.
-
 ### Plotting
 
 COINr includes a number of plotting functions which return various types of plots. These are all either based on the ggplot2 or plotly packages. Think of COINr plots as "starting points" rather than finished plots. While I have tried to make the plots useful and even visually appealing, much more could be done to improve them and to fit particular uses and contexts.
