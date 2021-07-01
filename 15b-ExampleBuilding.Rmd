@@ -184,6 +184,19 @@ compTable(ASEM, ASEM_noImpute, dset = "Aggregated", isel = "Index")
 
 This shows that the maximum rank change is 6 places, at the index level.
 
+## Export
+
+Most likely not everyone you present the results to will want to see it in R. COINr has a simple but quick way to export the entire contents of the COIN to Excel (effectively, it exports all data frames that are present). We will first generate a results table of the main results, attach it to the COIN, then export to Excel. Note that the results are anyway present in `ASEM$Data$Aggregated`, but the `getResults()` function provides tables that are better to present (the highest levels of aggregation are the first columns, rather than the last, and it is sorted by index score).
+
+```{r, eval=F}
+# Write full results table to COIN
+COINr::getResults(ASEM, tab_type = "FullWithDenoms", out2 = "COIN")
+
+# Export entire COIN to Excel
+COINr::coin2Excel(ASEM, "ASEM_results.xlsx")
+```
+
+
 ## Summary
 
 This is a fast example of COINr functions for building a composite indicator. Normally this would be an iterative process, but it showcases how simple commands can be used to do fairly complex operations in many cases. There is a lot more to all of the functions used here, and you should check the respective chapters of this book to better tune them to your needs.

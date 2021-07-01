@@ -2,10 +2,12 @@
 
 The construction of this package was funded by the European Commission's Joint Research Centre, in particular by the [Competence Centre for Composite Indicators and Scoreboards](https://composite-indicators.jrc.ec.europa.eu/). It was also developed with and inspired by colleagues from the same group.
 
+Some significant parts of the package were built in tandem with, and tested for the World Intellectual Property Organisation's [Global Innovation Index](https://www.globalinnovationindex.org/Home) - this, and interactions with GII staff, greatly helped to improve the internal working of the package and develop its features. Similarly, [UNIDO](https://www.unido.org/)'s Quality Infrastructure for Sustainable Development Index was used to further test and refine the package. The [Water-Energy-Food Nexus Index](https://wefnexusindex.org/) was also used as a test case for sensitivity analysis.
+
 COINr, like all R packages, has been built off of the back of many other packages. Some that COINr uses in particular are:
 
 * Plotly, for beautiful javascript plots
 * ggplot2, for beautiful static plots
 * reactable, for nice interactive tables
 * shiny, for apps
-* Various elements of the tidyverse, particularly dplyr
+* Various elements of the tidyverse, in particularly dplyr and purrr

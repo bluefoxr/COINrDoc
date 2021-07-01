@@ -1,5 +1,75 @@
 # Appendix: Analysing a Composite Indicator Example
 
-Here some possible steps for analysing a composite indicator are given.
+Here some possible steps for analysing a composite indicator are given. The format for doing this might depend on what you are trying to accomplish. If you want to analyse your own composite indicator as you are building it, this should be integrated with the previous [Appendix: Building a Composite Indicator Example]. If you are analysing an existing composite indicator built by someone else, you may wish to do this in a separate R Markdown document, for example.
 
-*To be added soon*
+## Loading data
+
+If the analysis is part of constructing a composite indicator in COINr, you should have a COIN assembled following the steps in the previous chapter. However, if you are analysing an existing composite indicator, there may be a slight difference. It is possible, for example, that you may be provided with indicator data, which may already be normalised and aggregated.
+
+COINr's `assemble()` function allows you to assemble a COIN with pre-aggregated data. This is done by setting `preagg = TRUE`. If this is enabled, COINr will create a COIN with a data set called "PreAggregated". To do this, you need a pre-aggregated data set which includes (possibly normalised) columns for all indicators *and* for all aggregates.
+
+To demonstrate, we can use a pre-aggregated data set created by COINr.
+
+```{r, message=FALSE}
+library(COINr)
+
+# build ASEM index
+ASEM <- build_ASEM()
+
+# extract aggregated data set (as a data frame)
+Aggregated_Data <- ASEM$Data$Aggregated
+
+# assemble new COIN only including pre-aggregated data
+ASEM_preagg <- assemble(IndData = Aggregated_Data,
+                        IndMeta = ASEMIndMeta,
+                        AggMeta = ASEMAggMeta,
+                        preagg = TRUE)
+```
+
+COINr will check that the column names in the indicator data correspond to the codes supplied in the `IndMeta` and `AggMeta`. This means that these two latter data frames still need to be supplied. However, from this point the COIN functions as any other, although consider that it cannot be regenerated (the methodology to arrive at the pre-aggregated data is unknown), and the only data set present is the "PreAggregated" data.
+
+## Check calculations
+
+If you are using pre-aggregated data, you may wish to check the calculations to make sure that they are correct. If you additionally have raw data, and you know the methodology used to build the index, you can recreate this by rebuilding the index in COINr. If you only have normalised and aggregated data, you can still at least check the aggregation stage as follows. Assuming that the indicator columns in your pre-aggregated data are normalised, we can first manually create a normalised data set:
+
+```{r}
+library(dplyr)
+
+ASEM_preagg$Data$Normalised <- ASEM_preagg$Data$PreAggregated %>%
+  select(!ASEM$Input$AggMeta$Code)
+```
+
+Here we have just copied the pre-aggregated data, but removed any aggregation columns.
+
+Next, we can aggregate these columns using COINr.
+
+```{r}
+ASEM_preagg <- aggregate(ASEM_preagg, dset = "Normalised", agtype = "arith_mean")
+
+# check data set names
+names(ASEM_preagg$Data)
+```
+
+Finally, we can check to see whether these data frames are the same. There are many possible ways of doing this, but a simple way is to use dplyr's `all_equal()` function.
+
+```{r}
+all_equal(ASEM_preagg$Data$PreAggregated,
+          ASEM_preagg$Data$Aggregated)
+```
+
+As expected, here the results are the same. If the results are *not* the same, `all_equal()` will give some information about the differences. If you reconstruct the index from raw data, and you find differences, a few points are worth considering:
+
+1. The difference could be due to an error in the pre-aggregated data, or even a bug in COINr. If you suspect the latter please open an issue on the repo.
+2. If you have used data treatment or imputation, differences can easily arise. One reason is that some things are possible to calculate in different ways. COINr uses certain choices, but other choices are also valid. Examples of this include:
+    - Skew and kurtosis (underlying data treatment) - see e.g. `?e1071::skewness`
+    - Correlation and treatment of missing values - see `?cor`
+    - Ranks and how to handle ties - see `?rank`
+3. Errors can also arise from how you entered the data. Worth re-checking all that as well.
+
+Double-checking calculations is tedious but in the process you often learn a lot.
+
+## Indicator statistics
+
+
+
+*To be completed*

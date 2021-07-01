@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-06-30" />
+<meta name="date" content="2021-07-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="coins-the-currency-of-coinr.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.3/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
@@ -66,18 +66,18 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -97,7 +97,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -146,17 +146,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">COINr Documentation</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#background"><i class="fa fa-check"></i><b>1.1</b> Background</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#what-does-it-do"><i class="fa fa-check"></i><b>1.3</b> What does it do?</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#how-to-use-this-manual"><i class="fa fa-check"></i><b>1.4</b> How to use this manual</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#demo"><i class="fa fa-check"></i><b>1.5</b> Demo</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="foundations.html"><a href="foundations.html"><i class="fa fa-check"></i><b>2</b> Foundations</a><ul>
+<li class="chapter" data-level="2" data-path="foundations.html"><a href="foundations.html"><i class="fa fa-check"></i><b>2</b> Foundations</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="foundations.html"><a href="foundations.html#terminology"><i class="fa fa-check"></i><b>2.1</b> Terminology</a></li>
 <li class="chapter" data-level="2.2" data-path="foundations.html"><a href="foundations.html#coinr-syntax"><i class="fa fa-check"></i><b>2.2</b> COINr syntax</a></li>
-<li class="chapter" data-level="2.3" data-path="foundations.html"><a href="foundations.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a><ul>
+<li class="chapter" data-level="2.3" data-path="foundations.html"><a href="foundations.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="foundations.html"><a href="foundations.html#construction"><i class="fa fa-check"></i><b>2.3.1</b> Construction</a></li>
 <li class="chapter" data-level="2.3.2" data-path="foundations.html"><a href="foundations.html#visualisation-and-presenting"><i class="fa fa-check"></i><b>2.3.2</b> Visualisation and presenting</a></li>
 <li class="chapter" data-level="2.3.3" data-path="foundations.html"><a href="foundations.html#adjustment-and-comparison"><i class="fa fa-check"></i><b>2.3.3</b> Adjustment and comparison</a></li>
@@ -167,15 +170,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3.8" data-path="foundations.html"><a href="foundations.html#data"><i class="fa fa-check"></i><b>2.3.8</b> Data</a></li>
 <li class="chapter" data-level="2.3.9" data-path="foundations.html"><a href="foundations.html#finally"><i class="fa fa-check"></i><b>2.3.9</b> Finally</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="foundations.html"><a href="foundations.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.4</b> Tips for using COINr</a><ul>
+<li class="chapter" data-level="2.4" data-path="foundations.html"><a href="foundations.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.4</b> Tips for using COINr</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="foundations.html"><a href="foundations.html#use-scripts-and-r-markdown"><i class="fa fa-check"></i><b>2.4.1</b> Use scripts and R Markdown</a></li>
 <li class="chapter" data-level="2.4.2" data-path="foundations.html"><a href="foundations.html#missing-data"><i class="fa fa-check"></i><b>2.4.2</b> Missing data</a></li>
 <li class="chapter" data-level="2.4.3" data-path="foundations.html"><a href="foundations.html#plotting"><i class="fa fa-check"></i><b>2.4.3</b> Plotting</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a><ul>
+<li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#inside-a-coin"><i class="fa fa-check"></i><b>3.1</b> Inside a COIN</a></li>
-<li class="chapter" data-level="3.2" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#the-three-inputs"><i class="fa fa-check"></i><b>3.2</b> The three inputs</a><ul>
+<li class="chapter" data-level="3.2" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#the-three-inputs"><i class="fa fa-check"></i><b>3.2</b> The three inputs</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#indicator-data"><i class="fa fa-check"></i><b>3.2.1</b> Indicator data</a></li>
 <li class="chapter" data-level="3.2.2" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#indicator-metadata"><i class="fa fa-check"></i><b>3.2.2</b> Indicator metadata</a></li>
 <li class="chapter" data-level="3.2.3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#aggregation-metadata"><i class="fa fa-check"></i><b>3.2.3</b> Aggregation metadata</a></li>
@@ -183,44 +189,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#putting-everything-together"><i class="fa fa-check"></i><b>3.3</b> Putting everything together</a></li>
 <li class="chapter" data-level="3.4" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#moving-on"><i class="fa fa-check"></i><b>3.4</b> Moving on</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>4</b> Initial visualisation and analysis</a><ul>
+<li class="chapter" data-level="4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>4</b> Initial visualisation and analysis</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#structure"><i class="fa fa-check"></i><b>4.1</b> Structure</a></li>
 <li class="chapter" data-level="4.2" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#distributions"><i class="fa fa-check"></i><b>4.2</b> Distributions</a></li>
 <li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
 <li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a></li>
-<li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a><ul>
+<li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
 <li class="chapter" data-level="6.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>6.2</b> Data checks and screening</a></li>
-<li class="chapter" data-level="6.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>6.3</b> Imputation in COINr</a><ul>
+<li class="chapter" data-level="6.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>6.3</b> Imputation in COINr</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>6.3.1</b> By column</a></li>
 <li class="chapter" data-level="6.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>6.3.2</b> By row</a></li>
 <li class="chapter" data-level="6.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>6.3.3</b> By column and row</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a><ul>
+<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>7.1</b> Concept</a></li>
-<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>7.2</b> Denominating in COINr</a><ul>
+<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>7.2</b> Denominating in COINr</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="denomination.html"><a href="denomination.html#on-coins"><i class="fa fa-check"></i><b>7.2.1</b> On COINs</a></li>
 <li class="chapter" data-level="7.2.2" data-path="denomination.html"><a href="denomination.html#on-data-frames"><i class="fa fa-check"></i><b>7.2.2</b> On data frames</a></li>
 </ul></li>
 <li class="chapter" data-level="7.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>7.3</b> When to denominate, and by what?</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>8</b> Data Treatment</a><ul>
+<li class="chapter" data-level="8" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>8</b> Data Treatment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>8.1</b> Why treat data?</a></li>
-<li class="chapter" data-level="8.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>8.2</b> How to treat data</a><ul>
+<li class="chapter" data-level="8.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>8.2</b> How to treat data</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>8.2.1</b> Winsorisation</a></li>
 <li class="chapter" data-level="8.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>8.2.2</b> Transformation</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>8.3</b> Data treatment in COINr</a><ul>
+<li class="chapter" data-level="8.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>8.3</b> Data treatment in COINr</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>8.3.1</b> Global treatment</a></li>
 <li class="chapter" data-level="8.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>8.3.2</b> Individual treatment</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>8.4</b> Interactive visualisation</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>9</b> Normalisation</a><ul>
-<li class="chapter" data-level="9.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>9.1</b> Approaches</a><ul>
+<li class="chapter" data-level="9" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>9</b> Normalisation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>9.1</b> Approaches</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>9.1.1</b> First: adjust direction</a></li>
 <li class="chapter" data-level="9.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>9.1.2</b> Linear transformations</a></li>
 <li class="chapter" data-level="9.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>9.1.3</b> Nonlinear transformations</a></li>
@@ -229,22 +245,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>9.2</b> Normalisation in COINr</a></li>
 <li class="chapter" data-level="9.3" data-path="normalisation.html"><a href="normalisation.html#individual-normalisation"><i class="fa fa-check"></i><b>9.3</b> Individual normalisation</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>10</b> Aggregation</a><ul>
+<li class="chapter" data-level="10" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>10</b> Aggregation</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="aggregation.html"><a href="aggregation.html#weighting"><i class="fa fa-check"></i><b>10.1</b> Weighting</a></li>
-<li class="chapter" data-level="10.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>10.2</b> Approaches</a><ul>
+<li class="chapter" data-level="10.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>10.2</b> Approaches</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="aggregation.html"><a href="aggregation.html#means"><i class="fa fa-check"></i><b>10.2.1</b> Means</a></li>
 <li class="chapter" data-level="10.2.2" data-path="aggregation.html"><a href="aggregation.html#other-methods"><i class="fa fa-check"></i><b>10.2.2</b> Other methods</a></li>
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>10.3</b> Aggregation in COINr</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>11</b> Weighting</a><ul>
-<li class="chapter" data-level="11.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a><ul>
+<li class="chapter" data-level="11" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>11</b> Weighting</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="weighting-1.html"><a href="weighting-1.html#equal-weighting"><i class="fa fa-check"></i><b>11.1.1</b> Equal weighting</a></li>
 <li class="chapter" data-level="11.1.2" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>11.1.2</b> Budget allocation</a></li>
 <li class="chapter" data-level="11.1.3" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>11.1.3</b> Principle component analysis</a></li>
 <li class="chapter" data-level="11.1.4" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>11.1.4</b> Weight optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#weighting-tools-in-coinr"><i class="fa fa-check"></i><b>11.2</b> Weighting tools in COINr</a><ul>
+<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#weighting-tools-in-coinr"><i class="fa fa-check"></i><b>11.2</b> Weighting tools in COINr</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="weighting-1.html"><a href="weighting-1.html#manual-weighting"><i class="fa fa-check"></i><b>11.2.1</b> Manual weighting</a></li>
 <li class="chapter" data-level="11.2.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2.2</b> Interactive re-weighting with ReW8R</a></li>
 <li class="chapter" data-level="11.2.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.2.3</b> Automatic re-weighting</a></li>
@@ -252,23 +273,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#effective-weights"><i class="fa fa-check"></i><b>11.3</b> Effective weights</a></li>
 <li class="chapter" data-level="11.4" data-path="weighting-1.html"><a href="weighting-1.html#final-points"><i class="fa fa-check"></i><b>11.4</b> Final points</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="visualising-results.html"><a href="visualising-results.html"><i class="fa fa-check"></i><b>12</b> Visualising results</a><ul>
+<li class="chapter" data-level="12" data-path="visualising-results.html"><a href="visualising-results.html"><i class="fa fa-check"></i><b>12</b> Visualising results</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="visualising-results.html"><a href="visualising-results.html#tables"><i class="fa fa-check"></i><b>12.1</b> Tables</a></li>
 <li class="chapter" data-level="12.2" data-path="visualising-results.html"><a href="visualising-results.html#plots"><i class="fa fa-check"></i><b>12.2</b> Plots</a></li>
 <li class="chapter" data-level="12.3" data-path="visualising-results.html"><a href="visualising-results.html#interactive-exploration"><i class="fa fa-check"></i><b>12.3</b> Interactive exploration</a></li>
 <li class="chapter" data-level="12.4" data-path="visualising-results.html"><a href="visualising-results.html#unit-reports"><i class="fa fa-check"></i><b>12.4</b> Unit reports</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html"><i class="fa fa-check"></i><b>13</b> Adjustments and comparisons</a><ul>
+<li class="chapter" data-level="13" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html"><i class="fa fa-check"></i><b>13</b> Adjustments and comparisons</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#regeneration"><i class="fa fa-check"></i><b>13.1</b> Regeneration</a></li>
-<li class="chapter" data-level="13.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#adjustments"><i class="fa fa-check"></i><b>13.2</b> Adjustments</a><ul>
+<li class="chapter" data-level="13.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#adjustments"><i class="fa fa-check"></i><b>13.2</b> Adjustments</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#addingremoving-indicators"><i class="fa fa-check"></i><b>13.2.1</b> Adding/removing indicators</a></li>
 <li class="chapter" data-level="13.2.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#other-adjustments"><i class="fa fa-check"></i><b>13.2.2</b> Other adjustments</a></li>
 </ul></li>
 <li class="chapter" data-level="13.3" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#comparisons"><i class="fa fa-check"></i><b>13.3</b> Comparisons</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a><ul>
+<li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#about"><i class="fa fa-check"></i><b>14.1</b> About</a></li>
-<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#five-steps"><i class="fa fa-check"></i><b>14.2</b> Five steps</a><ul>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#five-steps"><i class="fa fa-check"></i><b>14.2</b> Five steps</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#specifying-the-model"><i class="fa fa-check"></i><b>14.2.1</b> Specifying the model</a></li>
 <li class="chapter" data-level="14.2.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#which-assumptions-to-vary"><i class="fa fa-check"></i><b>14.2.2</b> Which assumptions to vary</a></li>
 <li class="chapter" data-level="14.2.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#alternative-values"><i class="fa fa-check"></i><b>14.2.3</b> Alternative values</a></li>
@@ -276,31 +302,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.2.5" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sa-methodology"><i class="fa fa-check"></i><b>14.2.5</b> SA methodology</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#variance-based-sensitivity-analysis"><i class="fa fa-check"></i><b>14.3</b> Variance-based sensitivity analysis</a></li>
-<li class="chapter" data-level="14.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-in-coinr"><i class="fa fa-check"></i><b>14.4</b> Sensitivity in COINr</a><ul>
+<li class="chapter" data-level="14.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-in-coinr"><i class="fa fa-check"></i><b>14.4</b> Sensitivity in COINr</a>
+<ul>
 <li class="chapter" data-level="14.4.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#general-specifications"><i class="fa fa-check"></i><b>14.4.1</b> General specifications</a></li>
 <li class="chapter" data-level="14.4.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#varying-weights"><i class="fa fa-check"></i><b>14.4.2</b> Varying weights</a></li>
 <li class="chapter" data-level="14.4.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-an-uncertainty-analysis"><i class="fa fa-check"></i><b>14.4.3</b> Running an uncertainty analysis</a></li>
 <li class="chapter" data-level="14.4.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-a-sensitivity-analysis"><i class="fa fa-check"></i><b>14.4.4</b> Running a sensitivity analysis</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a><ul>
-<li class="chapter" data-level="15.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>15.1</b> R Interfaces</a><ul>
+<li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>15.1</b> R Interfaces</a>
+<ul>
 <li class="chapter" data-level="15.1.1" data-path="helper-functions.html"><a href="helper-functions.html#data-import"><i class="fa fa-check"></i><b>15.1.1</b> Data import</a></li>
 <li class="chapter" data-level="15.1.2" data-path="helper-functions.html"><a href="helper-functions.html#export-to-excel"><i class="fa fa-check"></i><b>15.1.2</b> Export to Excel</a></li>
 </ul></li>
 <li class="chapter" data-level="15.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>15.2</b> Selecting data sets and indicators</a></li>
 <li class="chapter" data-level="15.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>15.3</b> Rounding data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>16</b> Appendix: R Resources</a><ul>
+<li class="chapter" data-level="16" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>16</b> Appendix: R Resources</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>16.1</b> Introduction to R</a></li>
-<li class="chapter" data-level="16.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>16.2</b> Advanced resources</a><ul>
+<li class="chapter" data-level="16.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>16.2</b> Advanced resources</a>
+<ul>
 <li class="chapter" data-level="16.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>16.2.1</b> Programming</a></li>
 <li class="chapter" data-level="16.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>16.2.2</b> Visualisation</a></li>
 <li class="chapter" data-level="16.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>16.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>17</b> FAQ</a></li>
-<li class="chapter" data-level="18" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>18</b> Appendix: Building a Composite Indicator Example</a><ul>
+<li class="chapter" data-level="18" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>18</b> Appendix: Building a Composite Indicator Example</a>
+<ul>
 <li class="chapter" data-level="18.1" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#before-coinr-bc"><i class="fa fa-check"></i><b>18.1</b> Before COINr (BC)</a></li>
 <li class="chapter" data-level="18.2" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#load-data-and-assemble"><i class="fa fa-check"></i><b>18.2</b> Load data and assemble</a></li>
 <li class="chapter" data-level="18.3" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#check-the-data"><i class="fa fa-check"></i><b>18.3</b> Check the data</a></li>
@@ -311,9 +343,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.8" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#aggregation-1"><i class="fa fa-check"></i><b>18.8</b> Aggregation</a></li>
 <li class="chapter" data-level="18.9" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#visualisation-1"><i class="fa fa-check"></i><b>18.9</b> Visualisation</a></li>
 <li class="chapter" data-level="18.10" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#comparison"><i class="fa fa-check"></i><b>18.10</b> Comparison</a></li>
-<li class="chapter" data-level="18.11" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#summary"><i class="fa fa-check"></i><b>18.11</b> Summary</a></li>
+<li class="chapter" data-level="18.11" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#export"><i class="fa fa-check"></i><b>18.11</b> Export</a></li>
+<li class="chapter" data-level="18.12" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#summary"><i class="fa fa-check"></i><b>18.12</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>19</b> Appendix: Analysing a Composite Indicator Example</a></li>
+<li class="chapter" data-level="19" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>19</b> Appendix: Analysing a Composite Indicator Example</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#loading-data"><i class="fa fa-check"></i><b>19.1</b> Loading data</a></li>
+<li class="chapter" data-level="19.2" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#check-calculations"><i class="fa fa-check"></i><b>19.2</b> Check calculations</a></li>
+<li class="chapter" data-level="19.3" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#indicator-statistics"><i class="fa fa-check"></i><b>19.3</b> Indicator statistics</a></li>
+</ul></li>
 <li class="chapter" data-level="20" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>20</b> Acknowledgements</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -335,10 +373,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="foundations" class="section level1">
+<div id="foundations" class="section level1" number="2">
 <h1><span class="header-section-number">Chapter 2</span> Foundations</h1>
 <p>This chapter aims to explain some important principles about how COINr works, and explain some terminology. It also gives a map of the functions available in the package. If you want to get straight to using COINr, you could skip this chapter for now and look at some examples in the appendices or directly at the chapters relating to specific functions and operations (the next chapter onwards).</p>
-<div id="terminology" class="section level2">
+<div id="terminology" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Terminology</h2>
 <p>Let’s clearly define a few terms first to avoid confusion later on.</p>
 <ul>
@@ -359,9 +397,9 @@ Figure 2.1: Indicators and units
 Figure 2.2: Example of composite indicator structure.
 </p>
 </div>
-<p>In this example, four pairs of indicators are each aggregated into a “sub-pillar”, and sub-pillars are aggregated into two “pillars”. Finally, the pillars are aggregated into a single index. Typically, the sub-pillars and pillars represent specific sub-concepts of the central concept. For example, in the <a href="https://www.globalinnovationindex.org/Home">Global Innovation Index</a>, which aims to measure innovation at the national level, pillars include things like “Institutions”, “Human Capital”, and “Infrastructure”, each of which are populated with indicators which measure those specific concepts. The idea is that a complex multidimensional concept is broken down into sub-concepts which are easier to capture with a set of indicators. Additionally, the scores of pillars and sub-pillars can be interesting in their own right.</p>
-<p>Whether each of these groups is called a “pillar”, “sub-index”, “dimension”, or something else, depends on the index. For this reason, in COINr a more general terminology is adopted.</p>
-<p>When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an <em>aggregation group</em>. For example, the aggregation group of SP 1 in the diagram above consists of “ind.01” and “ind.02”. The aggregation group of Pillar 1 consists of SP 1 and SP 2. And so on. The resulting value from aggregating an aggregation group is called an <em>aggregate</em> or <em>aggregate value</em>.</p>
+<p>In this example, four pairs of indicators are each aggregated into a “sub-pillar,” and sub-pillars are aggregated into two “pillars.” Finally, the pillars are aggregated into a single index. Typically, the sub-pillars and pillars represent specific sub-concepts of the central concept. For example, in the <a href="https://www.globalinnovationindex.org/Home">Global Innovation Index</a>, which aims to measure innovation at the national level, pillars include things like “Institutions,” “Human Capital,” and “Infrastructure,” each of which are populated with indicators which measure those specific concepts. The idea is that a complex multidimensional concept is broken down into sub-concepts which are easier to capture with a set of indicators. Additionally, the scores of pillars and sub-pillars can be interesting in their own right.</p>
+<p>Whether each of these groups is called a “pillar,” “sub-index,” “dimension,” or something else, depends on the index. For this reason, in COINr a more general terminology is adopted.</p>
+<p>When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an <em>aggregation group</em>. For example, the aggregation group of SP 1 in the diagram above consists of “ind.01” and “ind.02.” The aggregation group of Pillar 1 consists of SP 1 and SP 2. And so on. The resulting value from aggregating an aggregation group is called an <em>aggregate</em> or <em>aggregate value</em>.</p>
 <p>COINr also frequently refers to <em>aggregation levels</em> or equivalently just <em>levels</em>. This refers to the vertical position in the hierarchy shown above. In this example, therefore,</p>
 <ul>
 <li>Level 1 = Indicators</li>
@@ -371,7 +409,7 @@ Figure 2.2: Example of composite indicator structure.
 </ul>
 <p>This means that the fictional index above has four levels in total. COINr can handle any number of levels and aggregation groups. The structure of the index is defined when the COIN is constructed - see the following chapter for details.</p>
 </div>
-<div id="coinr-syntax" class="section level2">
+<div id="coinr-syntax" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> COINr syntax</h2>
 <p>Many COINr functions follow a common syntax which is related to some of the terminology described above.</p>
 <ul>
@@ -382,10 +420,10 @@ Figure 2.2: Example of composite indicator structure.
 </ul>
 <p>In particular, the combination of <code>icodes</code> and <code>aglev</code> is useful because it allows to call sets of indicators inside aggregation groups very quickly. See <a href="helper-functions.html#selecting-data-sets-and-indicators">Selecting data sets and indicators</a> for more details.</p>
 </div>
-<div id="a-map-of-coinr" class="section level2">
+<div id="a-map-of-coinr" class="section level2" number="2.3">
 <h2><span class="header-section-number">2.3</span> A map of COINr</h2>
 <p>COINr consists of many functions that do a number of different types of operations. Here is a summary.</p>
-<div id="construction" class="section level3">
+<div id="construction" class="section level3" number="2.3.1">
 <h3><span class="header-section-number">2.3.1</span> Construction</h3>
 <p>The following functions are the main functions for building a composite indicator in COINr.</p>
 <table>
@@ -431,7 +469,7 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="visualisation-and-presenting" class="section level3">
+<div id="visualisation-and-presenting" class="section level3" number="2.3.2">
 <h3><span class="header-section-number">2.3.2</span> Visualisation and presenting</h3>
 <p>These functions are for visualising and presenting data and results</p>
 <table>
@@ -513,7 +551,7 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="adjustment-and-comparison" class="section level3">
+<div id="adjustment-and-comparison" class="section level3" number="2.3.3">
 <h3><span class="header-section-number">2.3.3</span> Adjustment and comparison</h3>
 <table>
 <thead>
@@ -538,7 +576,7 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="analysis" class="section level3">
+<div id="analysis" class="section level3" number="2.3.4">
 <h3><span class="header-section-number">2.3.4</span> Analysis</h3>
 <p>The following functions analyse indicator data.</p>
 <table>
@@ -580,7 +618,7 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="interactive-apps" class="section level3">
+<div id="interactive-apps" class="section level3" number="2.3.5">
 <h3><span class="header-section-number">2.3.5</span> Interactive apps</h3>
 <p>These are interactive apps, built using Shiny, which allow fast interactive exploration and adjustments.</p>
 <table>
@@ -606,7 +644,7 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="importexport" class="section level3">
+<div id="importexport" class="section level3" number="2.3.6">
 <h3><span class="header-section-number">2.3.6</span> Import/export</h3>
 <p>Functions to import and export data and results to and from COINr and R.</p>
 <table>
@@ -628,7 +666,7 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="other-functions" class="section level3">
+<div id="other-functions" class="section level3" number="2.3.7">
 <h3><span class="header-section-number">2.3.7</span> Other functions</h3>
 <p>These are other functions that may be of interest, but do not neatly fit in the previous categories. Many of them are called from the other functions listed above, but may still be useful on their own.</p>
 <table>
@@ -690,7 +728,7 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="data" class="section level3">
+<div id="data" class="section level3" number="2.3.8">
 <h3><span class="header-section-number">2.3.8</span> Data</h3>
 <p>COINr comes with some example data embedded into the package.</p>
 <table>
@@ -720,36 +758,36 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="finally" class="section level3">
+<div id="finally" class="section level3" number="2.3.9">
 <h3><span class="header-section-number">2.3.9</span> Finally</h3>
 <p>There are also a number functions which are mainly for internal use, and are not listed here.</p>
 </div>
 </div>
-<div id="tips-for-using-coinr" class="section level2">
+<div id="tips-for-using-coinr" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Tips for using COINr</h2>
-<div id="use-scripts-and-r-markdown" class="section level3">
+<div id="use-scripts-and-r-markdown" class="section level3" number="2.4.1">
 <h3><span class="header-section-number">2.4.1</span> Use scripts and R Markdown</h3>
 <p>Like any good data science, anything you do in COINr should be reproducible. This means that ideally, you should be able to go from importing the data into R up to visualising the results. This can be either done by a script or a set of scripts, or perhaps better using an R markdown document or documents which combines text with code. If you haven’t used R Markdown before, you probably should be using it. It is very similar to the idea of Jupyter notebooks in Python. Find out more about R Markdown in the free and excellent online book <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a>. You might also notice that this manual is written in R Markdown, and more specifically using the <a href="https://bookdown.org/yihui/bookdown/">bookdown package</a>.</p>
 <p>Ideally, the whole process of building and analysing the composite indicator should be documented with an R Markdown file or files, or scripts. Apart from reproducibility, this makes it very easy to make retrospective changes and update the whole file. I have personally found that it may help to have several markdown notebooks - one for exploring the data and selecting indicators, another for data treatment, and another for construction, and so on. At the end of each notebook, the COIN(s) containing all data and analysis are saved to a folder and loaded back in in the next notebook. This avoids having one very long notebook. Of course, this is just one way of doing things and is just a suggestion.</p>
 </div>
-<div id="missing-data" class="section level3">
+<div id="missing-data" class="section level3" number="2.4.2">
 <h3><span class="header-section-number">2.4.2</span> Missing data</h3>
 <p>It’s very important to understand the difference between missing data and zeros. A zero means that you know that the value of the indicator is zero, whereas missing data (in R this is denoted as <code>NA</code>) means you don’t know what the value is at all.</p>
 <p>When aggregating indicators, this difference becomes particularly important. If a data point is missing, it is often excluded from the aggregation, which effectively means reassigning it with the mean (or similar) value of the indicators in the same group. If you impute the data, missing values could be assigned with mean or median indicator values, for example. Clearly, these values will be very different from zeros.</p>
 <p>This point is made here, because data may sometimes come with missing values denoted as zeros, or with zeros denoted as missing values. Ensure that these are checked carefully before proceeding with construction.</p>
 </div>
-<div id="plotting" class="section level3">
+<div id="plotting" class="section level3" number="2.4.3">
 <h3><span class="header-section-number">2.4.3</span> Plotting</h3>
 <p>COINr includes a number of plotting functions which return various types of plots. These are all either based on the ggplot2 or plotly packages. Think of COINr plots as “starting points” rather than finished plots. While I have tried to make the plots useful and even visually appealing, much more could be done to improve them and to fit particular uses and contexts.</p>
 <p>Luckily, because of the way that plotly and ggplot2 work, plots generated by COINr can easily be modified by assigning them to an object and then modifying the object. Generally this would look like this:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="foundations.html#cb7-1"></a><span class="co"># generate a plot, but assign to variable &quot;plt&quot;</span></span>
-<span id="cb7-2"><a href="foundations.html#cb7-2"></a>plt &lt;-<span class="st"> </span><span class="kw">COINr_plot_function</span>(COIN, plot_options)</span>
-<span id="cb7-3"><a href="foundations.html#cb7-3"></a></span>
-<span id="cb7-4"><a href="foundations.html#cb7-4"></a><span class="co"># alter plt</span></span>
-<span id="cb7-5"><a href="foundations.html#cb7-5"></a>plt &lt;-<span class="st"> </span>plt <span class="op">+</span><span class="st"> </span><span class="kw">alter_plot_function</span>(options)</span>
-<span id="cb7-6"><a href="foundations.html#cb7-6"></a></span>
-<span id="cb7-7"><a href="foundations.html#cb7-7"></a><span class="co"># view the plot</span></span>
-<span id="cb7-8"><a href="foundations.html#cb7-8"></a>plt</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="foundations.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a plot, but assign to variable &quot;plt&quot;</span></span>
+<span id="cb7-2"><a href="foundations.html#cb7-2" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> <span class="fu">COINr_plot_function</span>(COIN, plot_options)</span>
+<span id="cb7-3"><a href="foundations.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="foundations.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># alter plt</span></span>
+<span id="cb7-5"><a href="foundations.html#cb7-5" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> plt <span class="sc">+</span> <span class="fu">alter_plot_function</span>(options)</span>
+<span id="cb7-6"><a href="foundations.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="foundations.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view the plot</span></span>
+<span id="cb7-8"><a href="foundations.html#cb7-8" aria-hidden="true" tabindex="-1"></a>plt</span></code></pre></div>
 <p>The <code>alter_plot_function</code> could be any of the very many layout and geometry functions from ggplot2, for example. This means you can change colours, axis labels, point styles, titles and many other things.</p>
 <p>In summary, with COINr you may choose to either:</p>
 <ul>

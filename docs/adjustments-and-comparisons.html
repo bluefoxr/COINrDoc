@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-06-30" />
+<meta name="date" content="2021-07-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,6 +33,7 @@
   
 <link rel="prev" href="visualising-results.html"/>
 <link rel="next" href="sensitivity-analysis.html"/>
+<script src="libs/header-attrs-2.6/header-attrs.js"></script>
 <script src="libs/jquery-3.5.1/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -50,7 +51,6 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
 <script src="libs/plotly-binding-4.9.3/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
@@ -66,18 +66,18 @@
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -97,7 +97,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -146,17 +146,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">COINr Documentation</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#background"><i class="fa fa-check"></i><b>1.1</b> Background</a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#what-does-it-do"><i class="fa fa-check"></i><b>1.3</b> What does it do?</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#how-to-use-this-manual"><i class="fa fa-check"></i><b>1.4</b> How to use this manual</a></li>
 <li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#demo"><i class="fa fa-check"></i><b>1.5</b> Demo</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="foundations.html"><a href="foundations.html"><i class="fa fa-check"></i><b>2</b> Foundations</a><ul>
+<li class="chapter" data-level="2" data-path="foundations.html"><a href="foundations.html"><i class="fa fa-check"></i><b>2</b> Foundations</a>
+<ul>
 <li class="chapter" data-level="2.1" data-path="foundations.html"><a href="foundations.html#terminology"><i class="fa fa-check"></i><b>2.1</b> Terminology</a></li>
 <li class="chapter" data-level="2.2" data-path="foundations.html"><a href="foundations.html#coinr-syntax"><i class="fa fa-check"></i><b>2.2</b> COINr syntax</a></li>
-<li class="chapter" data-level="2.3" data-path="foundations.html"><a href="foundations.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a><ul>
+<li class="chapter" data-level="2.3" data-path="foundations.html"><a href="foundations.html#a-map-of-coinr"><i class="fa fa-check"></i><b>2.3</b> A map of COINr</a>
+<ul>
 <li class="chapter" data-level="2.3.1" data-path="foundations.html"><a href="foundations.html#construction"><i class="fa fa-check"></i><b>2.3.1</b> Construction</a></li>
 <li class="chapter" data-level="2.3.2" data-path="foundations.html"><a href="foundations.html#visualisation-and-presenting"><i class="fa fa-check"></i><b>2.3.2</b> Visualisation and presenting</a></li>
 <li class="chapter" data-level="2.3.3" data-path="foundations.html"><a href="foundations.html#adjustment-and-comparison"><i class="fa fa-check"></i><b>2.3.3</b> Adjustment and comparison</a></li>
@@ -167,15 +170,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3.8" data-path="foundations.html"><a href="foundations.html#data"><i class="fa fa-check"></i><b>2.3.8</b> Data</a></li>
 <li class="chapter" data-level="2.3.9" data-path="foundations.html"><a href="foundations.html#finally"><i class="fa fa-check"></i><b>2.3.9</b> Finally</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="foundations.html"><a href="foundations.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.4</b> Tips for using COINr</a><ul>
+<li class="chapter" data-level="2.4" data-path="foundations.html"><a href="foundations.html#tips-for-using-coinr"><i class="fa fa-check"></i><b>2.4</b> Tips for using COINr</a>
+<ul>
 <li class="chapter" data-level="2.4.1" data-path="foundations.html"><a href="foundations.html#use-scripts-and-r-markdown"><i class="fa fa-check"></i><b>2.4.1</b> Use scripts and R Markdown</a></li>
 <li class="chapter" data-level="2.4.2" data-path="foundations.html"><a href="foundations.html#missing-data"><i class="fa fa-check"></i><b>2.4.2</b> Missing data</a></li>
 <li class="chapter" data-level="2.4.3" data-path="foundations.html"><a href="foundations.html#plotting"><i class="fa fa-check"></i><b>2.4.3</b> Plotting</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a><ul>
+<li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a>
+<ul>
 <li class="chapter" data-level="3.1" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#inside-a-coin"><i class="fa fa-check"></i><b>3.1</b> Inside a COIN</a></li>
-<li class="chapter" data-level="3.2" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#the-three-inputs"><i class="fa fa-check"></i><b>3.2</b> The three inputs</a><ul>
+<li class="chapter" data-level="3.2" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#the-three-inputs"><i class="fa fa-check"></i><b>3.2</b> The three inputs</a>
+<ul>
 <li class="chapter" data-level="3.2.1" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#indicator-data"><i class="fa fa-check"></i><b>3.2.1</b> Indicator data</a></li>
 <li class="chapter" data-level="3.2.2" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#indicator-metadata"><i class="fa fa-check"></i><b>3.2.2</b> Indicator metadata</a></li>
 <li class="chapter" data-level="3.2.3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#aggregation-metadata"><i class="fa fa-check"></i><b>3.2.3</b> Aggregation metadata</a></li>
@@ -183,44 +189,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#putting-everything-together"><i class="fa fa-check"></i><b>3.3</b> Putting everything together</a></li>
 <li class="chapter" data-level="3.4" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html#moving-on"><i class="fa fa-check"></i><b>3.4</b> Moving on</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>4</b> Initial visualisation and analysis</a><ul>
+<li class="chapter" data-level="4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html"><i class="fa fa-check"></i><b>4</b> Initial visualisation and analysis</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#structure"><i class="fa fa-check"></i><b>4.1</b> Structure</a></li>
 <li class="chapter" data-level="4.2" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#distributions"><i class="fa fa-check"></i><b>4.2</b> Distributions</a></li>
 <li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
 <li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a></li>
-<li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a><ul>
+<li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
 <li class="chapter" data-level="6.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#data-checks-and-screening"><i class="fa fa-check"></i><b>6.2</b> Data checks and screening</a></li>
-<li class="chapter" data-level="6.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>6.3</b> Imputation in COINr</a><ul>
+<li class="chapter" data-level="6.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#imputation-in-coinr"><i class="fa fa-check"></i><b>6.3</b> Imputation in COINr</a>
+<ul>
 <li class="chapter" data-level="6.3.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column"><i class="fa fa-check"></i><b>6.3.1</b> By column</a></li>
 <li class="chapter" data-level="6.3.2" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-row"><i class="fa fa-check"></i><b>6.3.2</b> By row</a></li>
 <li class="chapter" data-level="6.3.3" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#by-column-and-row"><i class="fa fa-check"></i><b>6.3.3</b> By column and row</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a><ul>
+<li class="chapter" data-level="7" data-path="denomination.html"><a href="denomination.html"><i class="fa fa-check"></i><b>7</b> Denomination</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="denomination.html"><a href="denomination.html#concept-1"><i class="fa fa-check"></i><b>7.1</b> Concept</a></li>
-<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>7.2</b> Denominating in COINr</a><ul>
+<li class="chapter" data-level="7.2" data-path="denomination.html"><a href="denomination.html#denominating-in-coinr"><i class="fa fa-check"></i><b>7.2</b> Denominating in COINr</a>
+<ul>
 <li class="chapter" data-level="7.2.1" data-path="denomination.html"><a href="denomination.html#on-coins"><i class="fa fa-check"></i><b>7.2.1</b> On COINs</a></li>
 <li class="chapter" data-level="7.2.2" data-path="denomination.html"><a href="denomination.html#on-data-frames"><i class="fa fa-check"></i><b>7.2.2</b> On data frames</a></li>
 </ul></li>
 <li class="chapter" data-level="7.3" data-path="denomination.html"><a href="denomination.html#when-to-denominate-and-by-what"><i class="fa fa-check"></i><b>7.3</b> When to denominate, and by what?</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>8</b> Data Treatment</a><ul>
+<li class="chapter" data-level="8" data-path="data-treatment.html"><a href="data-treatment.html"><i class="fa fa-check"></i><b>8</b> Data Treatment</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="data-treatment.html"><a href="data-treatment.html#why-treat-data"><i class="fa fa-check"></i><b>8.1</b> Why treat data?</a></li>
-<li class="chapter" data-level="8.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>8.2</b> How to treat data</a><ul>
+<li class="chapter" data-level="8.2" data-path="data-treatment.html"><a href="data-treatment.html#how-to-treat-data"><i class="fa fa-check"></i><b>8.2</b> How to treat data</a>
+<ul>
 <li class="chapter" data-level="8.2.1" data-path="data-treatment.html"><a href="data-treatment.html#winsorisation"><i class="fa fa-check"></i><b>8.2.1</b> Winsorisation</a></li>
 <li class="chapter" data-level="8.2.2" data-path="data-treatment.html"><a href="data-treatment.html#transformation"><i class="fa fa-check"></i><b>8.2.2</b> Transformation</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>8.3</b> Data treatment in COINr</a><ul>
+<li class="chapter" data-level="8.3" data-path="data-treatment.html"><a href="data-treatment.html#data-treatment-in-coinr"><i class="fa fa-check"></i><b>8.3</b> Data treatment in COINr</a>
+<ul>
 <li class="chapter" data-level="8.3.1" data-path="data-treatment.html"><a href="data-treatment.html#global-treatment"><i class="fa fa-check"></i><b>8.3.1</b> Global treatment</a></li>
 <li class="chapter" data-level="8.3.2" data-path="data-treatment.html"><a href="data-treatment.html#individual-treatment"><i class="fa fa-check"></i><b>8.3.2</b> Individual treatment</a></li>
 </ul></li>
 <li class="chapter" data-level="8.4" data-path="data-treatment.html"><a href="data-treatment.html#interactive-visualisation"><i class="fa fa-check"></i><b>8.4</b> Interactive visualisation</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>9</b> Normalisation</a><ul>
-<li class="chapter" data-level="9.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>9.1</b> Approaches</a><ul>
+<li class="chapter" data-level="9" data-path="normalisation.html"><a href="normalisation.html"><i class="fa fa-check"></i><b>9</b> Normalisation</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="normalisation.html"><a href="normalisation.html#approaches"><i class="fa fa-check"></i><b>9.1</b> Approaches</a>
+<ul>
 <li class="chapter" data-level="9.1.1" data-path="normalisation.html"><a href="normalisation.html#first-adjust-direction"><i class="fa fa-check"></i><b>9.1.1</b> First: adjust direction</a></li>
 <li class="chapter" data-level="9.1.2" data-path="normalisation.html"><a href="normalisation.html#linear-transformations"><i class="fa fa-check"></i><b>9.1.2</b> Linear transformations</a></li>
 <li class="chapter" data-level="9.1.3" data-path="normalisation.html"><a href="normalisation.html#nonlinear-transformations"><i class="fa fa-check"></i><b>9.1.3</b> Nonlinear transformations</a></li>
@@ -229,22 +245,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2" data-path="normalisation.html"><a href="normalisation.html#normalisation-in-coinr"><i class="fa fa-check"></i><b>9.2</b> Normalisation in COINr</a></li>
 <li class="chapter" data-level="9.3" data-path="normalisation.html"><a href="normalisation.html#individual-normalisation"><i class="fa fa-check"></i><b>9.3</b> Individual normalisation</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>10</b> Aggregation</a><ul>
+<li class="chapter" data-level="10" data-path="aggregation.html"><a href="aggregation.html"><i class="fa fa-check"></i><b>10</b> Aggregation</a>
+<ul>
 <li class="chapter" data-level="10.1" data-path="aggregation.html"><a href="aggregation.html#weighting"><i class="fa fa-check"></i><b>10.1</b> Weighting</a></li>
-<li class="chapter" data-level="10.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>10.2</b> Approaches</a><ul>
+<li class="chapter" data-level="10.2" data-path="aggregation.html"><a href="aggregation.html#approaches-1"><i class="fa fa-check"></i><b>10.2</b> Approaches</a>
+<ul>
 <li class="chapter" data-level="10.2.1" data-path="aggregation.html"><a href="aggregation.html#means"><i class="fa fa-check"></i><b>10.2.1</b> Means</a></li>
 <li class="chapter" data-level="10.2.2" data-path="aggregation.html"><a href="aggregation.html#other-methods"><i class="fa fa-check"></i><b>10.2.2</b> Other methods</a></li>
 </ul></li>
 <li class="chapter" data-level="10.3" data-path="aggregation.html"><a href="aggregation.html#aggregation-in-coinr"><i class="fa fa-check"></i><b>10.3</b> Aggregation in COINr</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>11</b> Weighting</a><ul>
-<li class="chapter" data-level="11.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a><ul>
+<li class="chapter" data-level="11" data-path="weighting-1.html"><a href="weighting-1.html"><i class="fa fa-check"></i><b>11</b> Weighting</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="weighting-1.html"><a href="weighting-1.html#approaches-to-weighting"><i class="fa fa-check"></i><b>11.1</b> Approaches to weighting</a>
+<ul>
 <li class="chapter" data-level="11.1.1" data-path="weighting-1.html"><a href="weighting-1.html#equal-weighting"><i class="fa fa-check"></i><b>11.1.1</b> Equal weighting</a></li>
 <li class="chapter" data-level="11.1.2" data-path="weighting-1.html"><a href="weighting-1.html#budget-allocation"><i class="fa fa-check"></i><b>11.1.2</b> Budget allocation</a></li>
 <li class="chapter" data-level="11.1.3" data-path="weighting-1.html"><a href="weighting-1.html#principle-component-analysis"><i class="fa fa-check"></i><b>11.1.3</b> Principle component analysis</a></li>
 <li class="chapter" data-level="11.1.4" data-path="weighting-1.html"><a href="weighting-1.html#weight-optimisation"><i class="fa fa-check"></i><b>11.1.4</b> Weight optimisation</a></li>
 </ul></li>
-<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#weighting-tools-in-coinr"><i class="fa fa-check"></i><b>11.2</b> Weighting tools in COINr</a><ul>
+<li class="chapter" data-level="11.2" data-path="weighting-1.html"><a href="weighting-1.html#weighting-tools-in-coinr"><i class="fa fa-check"></i><b>11.2</b> Weighting tools in COINr</a>
+<ul>
 <li class="chapter" data-level="11.2.1" data-path="weighting-1.html"><a href="weighting-1.html#manual-weighting"><i class="fa fa-check"></i><b>11.2.1</b> Manual weighting</a></li>
 <li class="chapter" data-level="11.2.2" data-path="weighting-1.html"><a href="weighting-1.html#interactive-re-weighting-with-rew8r"><i class="fa fa-check"></i><b>11.2.2</b> Interactive re-weighting with ReW8R</a></li>
 <li class="chapter" data-level="11.2.3" data-path="weighting-1.html"><a href="weighting-1.html#automatic-re-weighting"><i class="fa fa-check"></i><b>11.2.3</b> Automatic re-weighting</a></li>
@@ -252,23 +273,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3" data-path="weighting-1.html"><a href="weighting-1.html#effective-weights"><i class="fa fa-check"></i><b>11.3</b> Effective weights</a></li>
 <li class="chapter" data-level="11.4" data-path="weighting-1.html"><a href="weighting-1.html#final-points"><i class="fa fa-check"></i><b>11.4</b> Final points</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="visualising-results.html"><a href="visualising-results.html"><i class="fa fa-check"></i><b>12</b> Visualising results</a><ul>
+<li class="chapter" data-level="12" data-path="visualising-results.html"><a href="visualising-results.html"><i class="fa fa-check"></i><b>12</b> Visualising results</a>
+<ul>
 <li class="chapter" data-level="12.1" data-path="visualising-results.html"><a href="visualising-results.html#tables"><i class="fa fa-check"></i><b>12.1</b> Tables</a></li>
 <li class="chapter" data-level="12.2" data-path="visualising-results.html"><a href="visualising-results.html#plots"><i class="fa fa-check"></i><b>12.2</b> Plots</a></li>
 <li class="chapter" data-level="12.3" data-path="visualising-results.html"><a href="visualising-results.html#interactive-exploration"><i class="fa fa-check"></i><b>12.3</b> Interactive exploration</a></li>
 <li class="chapter" data-level="12.4" data-path="visualising-results.html"><a href="visualising-results.html#unit-reports"><i class="fa fa-check"></i><b>12.4</b> Unit reports</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html"><i class="fa fa-check"></i><b>13</b> Adjustments and comparisons</a><ul>
+<li class="chapter" data-level="13" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html"><i class="fa fa-check"></i><b>13</b> Adjustments and comparisons</a>
+<ul>
 <li class="chapter" data-level="13.1" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#regeneration"><i class="fa fa-check"></i><b>13.1</b> Regeneration</a></li>
-<li class="chapter" data-level="13.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#adjustments"><i class="fa fa-check"></i><b>13.2</b> Adjustments</a><ul>
+<li class="chapter" data-level="13.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#adjustments"><i class="fa fa-check"></i><b>13.2</b> Adjustments</a>
+<ul>
 <li class="chapter" data-level="13.2.1" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#addingremoving-indicators"><i class="fa fa-check"></i><b>13.2.1</b> Adding/removing indicators</a></li>
 <li class="chapter" data-level="13.2.2" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#other-adjustments"><i class="fa fa-check"></i><b>13.2.2</b> Other adjustments</a></li>
 </ul></li>
 <li class="chapter" data-level="13.3" data-path="adjustments-and-comparisons.html"><a href="adjustments-and-comparisons.html#comparisons"><i class="fa fa-check"></i><b>13.3</b> Comparisons</a></li>
 </ul></li>
-<li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a><ul>
+<li class="chapter" data-level="14" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html"><i class="fa fa-check"></i><b>14</b> Sensitivity analysis</a>
+<ul>
 <li class="chapter" data-level="14.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#about"><i class="fa fa-check"></i><b>14.1</b> About</a></li>
-<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#five-steps"><i class="fa fa-check"></i><b>14.2</b> Five steps</a><ul>
+<li class="chapter" data-level="14.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#five-steps"><i class="fa fa-check"></i><b>14.2</b> Five steps</a>
+<ul>
 <li class="chapter" data-level="14.2.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#specifying-the-model"><i class="fa fa-check"></i><b>14.2.1</b> Specifying the model</a></li>
 <li class="chapter" data-level="14.2.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#which-assumptions-to-vary"><i class="fa fa-check"></i><b>14.2.2</b> Which assumptions to vary</a></li>
 <li class="chapter" data-level="14.2.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#alternative-values"><i class="fa fa-check"></i><b>14.2.3</b> Alternative values</a></li>
@@ -276,31 +302,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.2.5" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sa-methodology"><i class="fa fa-check"></i><b>14.2.5</b> SA methodology</a></li>
 </ul></li>
 <li class="chapter" data-level="14.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#variance-based-sensitivity-analysis"><i class="fa fa-check"></i><b>14.3</b> Variance-based sensitivity analysis</a></li>
-<li class="chapter" data-level="14.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-in-coinr"><i class="fa fa-check"></i><b>14.4</b> Sensitivity in COINr</a><ul>
+<li class="chapter" data-level="14.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#sensitivity-in-coinr"><i class="fa fa-check"></i><b>14.4</b> Sensitivity in COINr</a>
+<ul>
 <li class="chapter" data-level="14.4.1" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#general-specifications"><i class="fa fa-check"></i><b>14.4.1</b> General specifications</a></li>
 <li class="chapter" data-level="14.4.2" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#varying-weights"><i class="fa fa-check"></i><b>14.4.2</b> Varying weights</a></li>
 <li class="chapter" data-level="14.4.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-an-uncertainty-analysis"><i class="fa fa-check"></i><b>14.4.3</b> Running an uncertainty analysis</a></li>
 <li class="chapter" data-level="14.4.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-a-sensitivity-analysis"><i class="fa fa-check"></i><b>14.4.4</b> Running a sensitivity analysis</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a><ul>
-<li class="chapter" data-level="15.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>15.1</b> R Interfaces</a><ul>
+<li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="helper-functions.html"><a href="helper-functions.html#r-interfaces"><i class="fa fa-check"></i><b>15.1</b> R Interfaces</a>
+<ul>
 <li class="chapter" data-level="15.1.1" data-path="helper-functions.html"><a href="helper-functions.html#data-import"><i class="fa fa-check"></i><b>15.1.1</b> Data import</a></li>
 <li class="chapter" data-level="15.1.2" data-path="helper-functions.html"><a href="helper-functions.html#export-to-excel"><i class="fa fa-check"></i><b>15.1.2</b> Export to Excel</a></li>
 </ul></li>
 <li class="chapter" data-level="15.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>15.2</b> Selecting data sets and indicators</a></li>
 <li class="chapter" data-level="15.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>15.3</b> Rounding data frames</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>16</b> Appendix: R Resources</a><ul>
+<li class="chapter" data-level="16" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>16</b> Appendix: R Resources</a>
+<ul>
 <li class="chapter" data-level="16.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#introduction-to-r"><i class="fa fa-check"></i><b>16.1</b> Introduction to R</a></li>
-<li class="chapter" data-level="16.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>16.2</b> Advanced resources</a><ul>
+<li class="chapter" data-level="16.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#advanced-resources"><i class="fa fa-check"></i><b>16.2</b> Advanced resources</a>
+<ul>
 <li class="chapter" data-level="16.2.1" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#programming"><i class="fa fa-check"></i><b>16.2.1</b> Programming</a></li>
 <li class="chapter" data-level="16.2.2" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#visualisation"><i class="fa fa-check"></i><b>16.2.2</b> Visualisation</a></li>
 <li class="chapter" data-level="16.2.3" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html#other"><i class="fa fa-check"></i><b>16.2.3</b> Other</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="17" data-path="faq.html"><a href="faq.html"><i class="fa fa-check"></i><b>17</b> FAQ</a></li>
-<li class="chapter" data-level="18" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>18</b> Appendix: Building a Composite Indicator Example</a><ul>
+<li class="chapter" data-level="18" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>18</b> Appendix: Building a Composite Indicator Example</a>
+<ul>
 <li class="chapter" data-level="18.1" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#before-coinr-bc"><i class="fa fa-check"></i><b>18.1</b> Before COINr (BC)</a></li>
 <li class="chapter" data-level="18.2" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#load-data-and-assemble"><i class="fa fa-check"></i><b>18.2</b> Load data and assemble</a></li>
 <li class="chapter" data-level="18.3" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#check-the-data"><i class="fa fa-check"></i><b>18.3</b> Check the data</a></li>
@@ -311,9 +343,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="18.8" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#aggregation-1"><i class="fa fa-check"></i><b>18.8</b> Aggregation</a></li>
 <li class="chapter" data-level="18.9" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#visualisation-1"><i class="fa fa-check"></i><b>18.9</b> Visualisation</a></li>
 <li class="chapter" data-level="18.10" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#comparison"><i class="fa fa-check"></i><b>18.10</b> Comparison</a></li>
-<li class="chapter" data-level="18.11" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#summary"><i class="fa fa-check"></i><b>18.11</b> Summary</a></li>
+<li class="chapter" data-level="18.11" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#export"><i class="fa fa-check"></i><b>18.11</b> Export</a></li>
+<li class="chapter" data-level="18.12" data-path="appendix-building-a-composite-indicator-example.html"><a href="appendix-building-a-composite-indicator-example.html#summary"><i class="fa fa-check"></i><b>18.12</b> Summary</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>19</b> Appendix: Analysing a Composite Indicator Example</a></li>
+<li class="chapter" data-level="19" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html"><i class="fa fa-check"></i><b>19</b> Appendix: Analysing a Composite Indicator Example</a>
+<ul>
+<li class="chapter" data-level="19.1" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#loading-data"><i class="fa fa-check"></i><b>19.1</b> Loading data</a></li>
+<li class="chapter" data-level="19.2" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#check-calculations"><i class="fa fa-check"></i><b>19.2</b> Check calculations</a></li>
+<li class="chapter" data-level="19.3" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#indicator-statistics"><i class="fa fa-check"></i><b>19.3</b> Indicator statistics</a></li>
+</ul></li>
 <li class="chapter" data-level="20" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>20</b> Acknowledgements</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -335,38 +373,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="adjustments-and-comparisons" class="section level1">
+<div id="adjustments-and-comparisons" class="section level1" number="13">
 <h1><span class="header-section-number">Chapter 13</span> Adjustments and comparisons</h1>
 <p>It’s fairly common to make adjustments to the index, perhaps in terms of alternative data sets, indicators, methodological decisions, and so on. COINr allows you to (a) make fast adjustments, and (b) to compare alternative versions of the index relatively easily.</p>
-<div id="regeneration" class="section level2">
+<div id="regeneration" class="section level2" number="13.1">
 <h2><span class="header-section-number">13.1</span> Regeneration</h2>
 <p>One of the key advantages of working within the COINrverse is that (nearly) all the methodology that is applied when building a composite indicator (COIN) is stored automatically in a folder of the COIN called <code>.$Method</code>. To see what this looks like:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="adjustments-and-comparisons.html#cb77-1"></a><span class="co"># load COINr if not loaded</span></span>
-<span id="cb77-2"><a href="adjustments-and-comparisons.html#cb77-2"></a><span class="kw">library</span>(COINr)</span>
-<span id="cb77-3"><a href="adjustments-and-comparisons.html#cb77-3"></a></span>
-<span id="cb77-4"><a href="adjustments-and-comparisons.html#cb77-4"></a><span class="co"># build example COIN</span></span>
-<span id="cb77-5"><a href="adjustments-and-comparisons.html#cb77-5"></a>ASEM &lt;-<span class="st"> </span><span class="kw">build_ASEM</span>()</span>
-<span id="cb77-6"><a href="adjustments-and-comparisons.html#cb77-6"></a><span class="co">## -----------------</span></span>
-<span id="cb77-7"><a href="adjustments-and-comparisons.html#cb77-7"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb77-8"><a href="adjustments-and-comparisons.html#cb77-8"></a><span class="co">## -----------------</span></span>
-<span id="cb77-9"><a href="adjustments-and-comparisons.html#cb77-9"></a><span class="co">## -----------------</span></span>
-<span id="cb77-10"><a href="adjustments-and-comparisons.html#cb77-10"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb77-11"><a href="adjustments-and-comparisons.html#cb77-11"></a><span class="co">## -----------------</span></span>
-<span id="cb77-12"><a href="adjustments-and-comparisons.html#cb77-12"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb77-13"><a href="adjustments-and-comparisons.html#cb77-13"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb77-14"><a href="adjustments-and-comparisons.html#cb77-14"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb77-15"><a href="adjustments-and-comparisons.html#cb77-15"></a><span class="co">## -----------------</span></span>
-<span id="cb77-16"><a href="adjustments-and-comparisons.html#cb77-16"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb77-17"><a href="adjustments-and-comparisons.html#cb77-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb77-18"><a href="adjustments-and-comparisons.html#cb77-18"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb77-19"><a href="adjustments-and-comparisons.html#cb77-19"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb77-20"><a href="adjustments-and-comparisons.html#cb77-20"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb77-21"><a href="adjustments-and-comparisons.html#cb77-21"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb77-22"><a href="adjustments-and-comparisons.html#cb77-22"></a><span class="co">## -----------------</span></span>
-<span id="cb77-23"><a href="adjustments-and-comparisons.html#cb77-23"></a><span class="co">## Missing data points detected = 65</span></span>
-<span id="cb77-24"><a href="adjustments-and-comparisons.html#cb77-24"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span>
-<span id="cb77-25"><a href="adjustments-and-comparisons.html#cb77-25"></a></span>
-<span id="cb77-26"><a href="adjustments-and-comparisons.html#cb77-26"></a><span class="co"># look in ASEM$Method folder in R Studio...</span></span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="adjustments-and-comparisons.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load COINr if not loaded</span></span>
+<span id="cb77-2"><a href="adjustments-and-comparisons.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb77-3"><a href="adjustments-and-comparisons.html#cb77-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-4"><a href="adjustments-and-comparisons.html#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="co"># build example COIN</span></span>
+<span id="cb77-5"><a href="adjustments-and-comparisons.html#cb77-5" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">build_ASEM</span>()</span>
+<span id="cb77-6"><a href="adjustments-and-comparisons.html#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb77-7"><a href="adjustments-and-comparisons.html#cb77-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb77-8"><a href="adjustments-and-comparisons.html#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb77-9"><a href="adjustments-and-comparisons.html#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb77-10"><a href="adjustments-and-comparisons.html#cb77-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb77-11"><a href="adjustments-and-comparisons.html#cb77-11" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb77-12"><a href="adjustments-and-comparisons.html#cb77-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of indicators = 49</span></span>
+<span id="cb77-13"><a href="adjustments-and-comparisons.html#cb77-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of units = 51</span></span>
+<span id="cb77-14"><a href="adjustments-and-comparisons.html#cb77-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb77-15"><a href="adjustments-and-comparisons.html#cb77-15" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb77-16"><a href="adjustments-and-comparisons.html#cb77-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb77-17"><a href="adjustments-and-comparisons.html#cb77-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb77-18"><a href="adjustments-and-comparisons.html#cb77-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb77-19"><a href="adjustments-and-comparisons.html#cb77-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb77-20"><a href="adjustments-and-comparisons.html#cb77-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb77-21"><a href="adjustments-and-comparisons.html#cb77-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb77-22"><a href="adjustments-and-comparisons.html#cb77-22" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb77-23"><a href="adjustments-and-comparisons.html#cb77-23" aria-hidden="true" tabindex="-1"></a><span class="do">## Missing data points detected = 65</span></span>
+<span id="cb77-24"><a href="adjustments-and-comparisons.html#cb77-24" aria-hidden="true" tabindex="-1"></a><span class="do">## Missing data points imputed = 65, using method = indgroup_mean</span></span>
+<span id="cb77-25"><a href="adjustments-and-comparisons.html#cb77-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-26"><a href="adjustments-and-comparisons.html#cb77-26" aria-hidden="true" tabindex="-1"></a><span class="co"># look in ASEM$Method folder in R Studio...</span></span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-54"></span>
 <img src="images/method_folder.png" alt="Method folder in ASEM example" width="60%" />
 <p class="caption">
@@ -416,26 +454,26 @@ Figure 13.1: Method folder in ASEM example
 <p>These are the core functions that are used to build a composite indicator, from assembling from the original data, up to aggregation.</p>
 <p>One reason to do this is simply to have a record of what you did to arrive at the results. However, this is not the main reason (and in fact, it would be anyway good practice to make your own record by creating a script or markdown doc which records the steps). The real advantage is that results can be automatically regenerated with a handy function called <code>regen()</code>.</p>
 <p>To regenerate the results, simply run e.g.:</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="adjustments-and-comparisons.html#cb78-1"></a>ASEM2 &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM)</span>
-<span id="cb78-2"><a href="adjustments-and-comparisons.html#cb78-2"></a><span class="co">## -----------------</span></span>
-<span id="cb78-3"><a href="adjustments-and-comparisons.html#cb78-3"></a><span class="co">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb78-4"><a href="adjustments-and-comparisons.html#cb78-4"></a><span class="co">## -----------------</span></span>
-<span id="cb78-5"><a href="adjustments-and-comparisons.html#cb78-5"></a><span class="co">## -----------------</span></span>
-<span id="cb78-6"><a href="adjustments-and-comparisons.html#cb78-6"></a><span class="co">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb78-7"><a href="adjustments-and-comparisons.html#cb78-7"></a><span class="co">## -----------------</span></span>
-<span id="cb78-8"><a href="adjustments-and-comparisons.html#cb78-8"></a><span class="co">## Number of indicators = 49</span></span>
-<span id="cb78-9"><a href="adjustments-and-comparisons.html#cb78-9"></a><span class="co">## Number of units = 51</span></span>
-<span id="cb78-10"><a href="adjustments-and-comparisons.html#cb78-10"></a><span class="co">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb78-11"><a href="adjustments-and-comparisons.html#cb78-11"></a><span class="co">## -----------------</span></span>
-<span id="cb78-12"><a href="adjustments-and-comparisons.html#cb78-12"></a><span class="co">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb78-13"><a href="adjustments-and-comparisons.html#cb78-13"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb78-14"><a href="adjustments-and-comparisons.html#cb78-14"></a><span class="co">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb78-15"><a href="adjustments-and-comparisons.html#cb78-15"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb78-16"><a href="adjustments-and-comparisons.html#cb78-16"></a><span class="co">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb78-17"><a href="adjustments-and-comparisons.html#cb78-17"></a><span class="co">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb78-18"><a href="adjustments-and-comparisons.html#cb78-18"></a><span class="co">## -----------------</span></span>
-<span id="cb78-19"><a href="adjustments-and-comparisons.html#cb78-19"></a><span class="co">## Missing data points detected = 65</span></span>
-<span id="cb78-20"><a href="adjustments-and-comparisons.html#cb78-20"></a><span class="co">## Missing data points imputed = 65, using method = indgroup_mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="adjustments-and-comparisons.html#cb78-1" aria-hidden="true" tabindex="-1"></a>ASEM2 <span class="ot">&lt;-</span> <span class="fu">regen</span>(ASEM)</span>
+<span id="cb78-2"><a href="adjustments-and-comparisons.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb78-3"><a href="adjustments-and-comparisons.html#cb78-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb78-4"><a href="adjustments-and-comparisons.html#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb78-5"><a href="adjustments-and-comparisons.html#cb78-5" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb78-6"><a href="adjustments-and-comparisons.html#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb78-7"><a href="adjustments-and-comparisons.html#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb78-8"><a href="adjustments-and-comparisons.html#cb78-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of indicators = 49</span></span>
+<span id="cb78-9"><a href="adjustments-and-comparisons.html#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of units = 51</span></span>
+<span id="cb78-10"><a href="adjustments-and-comparisons.html#cb78-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb78-11"><a href="adjustments-and-comparisons.html#cb78-11" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb78-12"><a href="adjustments-and-comparisons.html#cb78-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb78-13"><a href="adjustments-and-comparisons.html#cb78-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb78-14"><a href="adjustments-and-comparisons.html#cb78-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb78-15"><a href="adjustments-and-comparisons.html#cb78-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb78-16"><a href="adjustments-and-comparisons.html#cb78-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb78-17"><a href="adjustments-and-comparisons.html#cb78-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb78-18"><a href="adjustments-and-comparisons.html#cb78-18" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb78-19"><a href="adjustments-and-comparisons.html#cb78-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Missing data points detected = 65</span></span>
+<span id="cb78-20"><a href="adjustments-and-comparisons.html#cb78-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Missing data points imputed = 65, using method = indgroup_mean</span></span></code></pre></div>
 <p>The <code>regen()</code> function reruns all functions that are recorded in the <code>.$Method</code> folder <em>in the order they appear in the folder</em>. In this example, it runs, in order, <code>assemble()</code>, <code>denominate()</code>, <code>impute()</code>, <code>treat()</code>, <code>normalise()</code>and <code>aggregate()</code>. This replicates exactly the results. But what is the point of that? Well, it means that we can make changes to the index, generally by altering parameters in the <code>.$Method</code> folder, and then rerun everything very quickly with a single command. This will be demonstrated in the following section. After that, we will also see how to compare between alternative versions of the index.</p>
 <p>Before that, there is one extra feature of <code>regen()</code> which is worth mentioning. The <code>regen()</code> function only runs the seven construction functions as listed above. These functions are very flexible and should encompass most needs for constructing a composite indicator. But what happens if you want to build in an extra operation, or operations, that are outside of these seven functions?</p>
 <p>It is possible to also include “custom” chunks of code inside the COIN. Custom chunks should be written manually using the <code>quote()</code> function, to a special folder <code>.$Method$Custom</code>. These chunks can be any type of code, but the important thing is to also know <em>when</em> to run the code, i.e. at what point in the construction process.</p>
@@ -443,16 +481,16 @@ Figure 13.1: Method folder in ASEM example
 <p>The corresponding <strong>value</strong> in the list should be an operation which <em>must</em> be enclosed in the <code>quote()</code> function. Clearly, the list can feature multiple operations at different points in construction.</p>
 <p>This is slightly complicated, but can be clarified a bit with an example. Let’s imagine that after Winsorisation, we would like to “reset” one of the Winsorised points to its original value. This is currently not possible inside the <code>treat()</code> function so has to be done manually. But we would like this operation to be kept when we regenerate the index with variations in methodology (e.g. trying different aggregation functions, weights, etc.).</p>
 <p>We create a list with one operation: resetting the point after the treatment step.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="adjustments-and-comparisons.html#cb79-1"></a><span class="co"># Create list. </span><span class="al">NOTE</span><span class="co"> the use of the quote() function!</span></span>
-<span id="cb79-2"><a href="adjustments-and-comparisons.html#cb79-2"></a>custlist =<span class="st"> </span><span class="kw">list</span>(<span class="dt">after_treat =</span> <span class="kw">quote</span>(ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Treated<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>] &lt;-<span class="st"> </span>ASEM2<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>Bord[ASEM<span class="op">$</span>Data<span class="op">$</span>Imputed<span class="op">$</span>UnitCode<span class="op">==</span><span class="st">&quot;BEL&quot;</span>]))</span>
-<span id="cb79-3"><a href="adjustments-and-comparisons.html#cb79-3"></a></span>
-<span id="cb79-4"><a href="adjustments-and-comparisons.html#cb79-4"></a><span class="co"># Add the list to the $Method$Custom folder</span></span>
-<span id="cb79-5"><a href="adjustments-and-comparisons.html#cb79-5"></a>ASEM2<span class="op">$</span>Method<span class="op">$</span>Custom &lt;-<span class="st"> </span>custlist</span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="adjustments-and-comparisons.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list. </span><span class="al">NOTE</span><span class="co"> the use of the quote() function!</span></span>
+<span id="cb79-2"><a href="adjustments-and-comparisons.html#cb79-2" aria-hidden="true" tabindex="-1"></a>custlist <span class="ot">=</span> <span class="fu">list</span>(<span class="at">after_treat =</span> <span class="fu">quote</span>(ASEM<span class="sc">$</span>Data<span class="sc">$</span>Treated<span class="sc">$</span>Bord[ASEM<span class="sc">$</span>Data<span class="sc">$</span>Treated<span class="sc">$</span>UnitCode<span class="sc">==</span><span class="st">&quot;BEL&quot;</span>] <span class="ot">&lt;-</span> ASEM2<span class="sc">$</span>Data<span class="sc">$</span>Imputed<span class="sc">$</span>Bord[ASEM<span class="sc">$</span>Data<span class="sc">$</span>Imputed<span class="sc">$</span>UnitCode<span class="sc">==</span><span class="st">&quot;BEL&quot;</span>]))</span>
+<span id="cb79-3"><a href="adjustments-and-comparisons.html#cb79-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-4"><a href="adjustments-and-comparisons.html#cb79-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the list to the $Method$Custom folder</span></span>
+<span id="cb79-5"><a href="adjustments-and-comparisons.html#cb79-5" aria-hidden="true" tabindex="-1"></a>ASEM2<span class="sc">$</span>Method<span class="sc">$</span>Custom <span class="ot">&lt;-</span> custlist</span></code></pre></div>
 <p>Specifically, we have replaced the Winsorised value of Belgium, for the “Bord” indicator, with its imputed value (i.e. the value it had before it was treated).</p>
 <p>Now, when we regenerate the COIN using <code>regen()</code>, it will insert this extra line of code immediately after the treatment step.</p>
 <p>Using custom code may seem a bit confusing but it adds an extra layer of flexibility. It is however intended for small snippets of custom code, rather than large blocks of custom operations. If you are doing a lot of operations outside COINr, it may be better to do this in your own dedicated script or function, rather than trying to encode absolutely everything inside the COIN.</p>
 </div>
-<div id="adjustments" class="section level2">
+<div id="adjustments" class="section level2" number="13.2">
 <h2><span class="header-section-number">13.2</span> Adjustments</h2>
 <p>Let us now explore how the COIN can be adjusted and regenerated. This will (hopefully) clarify why regenerating is a useful thing.</p>
 <p>The general steps for adjustments are:</p>
@@ -463,88 +501,88 @@ Figure 13.1: Method folder in ASEM example
 <li>Compare alternatives</li>
 </ol>
 <p>Copying the object is straightforward, and regeneration has been dealt with in the previous section. Comparison is also addressed in the following section. Here we will focus on adjustments and changing methodology.</p>
-<div id="addingremoving-indicators" class="section level3">
+<div id="addingremoving-indicators" class="section level3" number="13.2.1">
 <h3><span class="header-section-number">13.2.1</span> Adding/removing indicators</h3>
 <p>First of all, let’s consider an alternative index where we decide to add or remove one or more indicators. There are different ways that we could consider doing this.</p>
 <p>A first possibility would be to manually create a new data frame of indicator data and indicator metadata, i.e. the <code>IndData</code> and <code>IndMeta</code> inputs for <code>assemble()</code>. This is fine, but we would have to start the index again from scratch and rebuild it.</p>
 <p>A better idea is that when we first supply the set of indicators to <code>assemble()</code>, we include all indicators that we might possibly want to include in the index, including e.g. alternative indicators with alternative data sources. Then we build different versions of the index using subsets of these indicators. This allows us to use <code>regen()</code> and therefore to make fast copies of the index.</p>
 <p>To illustrate, consider again the ASEM example. We can rebuild the ASEM index using a subset of the indicators by using the <code>include</code> or <code>exclude</code> arguments of the <code>assemble()</code> function. Because these are stored in <code>.$Method</code>, we can easily regenerate the new results.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="adjustments-and-comparisons.html#cb80-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb80-2"><a href="adjustments-and-comparisons.html#cb80-2"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span>ASEM</span>
-<span id="cb80-3"><a href="adjustments-and-comparisons.html#cb80-3"></a></span>
-<span id="cb80-4"><a href="adjustments-and-comparisons.html#cb80-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
-<span id="cb80-5"><a href="adjustments-and-comparisons.html#cb80-5"></a>ASEM_NoLPIShip<span class="op">$</span>Method<span class="op">$</span>assemble<span class="op">$</span>exclude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Ship&quot;</span>)</span>
-<span id="cb80-6"><a href="adjustments-and-comparisons.html#cb80-6"></a></span>
-<span id="cb80-7"><a href="adjustments-and-comparisons.html#cb80-7"></a><span class="co"># Regenerate results (suppress any messages)</span></span>
-<span id="cb80-8"><a href="adjustments-and-comparisons.html#cb80-8"></a>ASEM_NoLPIShip &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoLPIShip, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="adjustments-and-comparisons.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb80-2"><a href="adjustments-and-comparisons.html#cb80-2" aria-hidden="true" tabindex="-1"></a>ASEM_NoLPIShip <span class="ot">&lt;-</span> ASEM</span>
+<span id="cb80-3"><a href="adjustments-and-comparisons.html#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-4"><a href="adjustments-and-comparisons.html#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit method: exclude two indicators</span></span>
+<span id="cb80-5"><a href="adjustments-and-comparisons.html#cb80-5" aria-hidden="true" tabindex="-1"></a>ASEM_NoLPIShip<span class="sc">$</span>Method<span class="sc">$</span>assemble<span class="sc">$</span>exclude <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;LPI&quot;</span>, <span class="st">&quot;Ship&quot;</span>)</span>
+<span id="cb80-6"><a href="adjustments-and-comparisons.html#cb80-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-7"><a href="adjustments-and-comparisons.html#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Regenerate results (suppress any messages)</span></span>
+<span id="cb80-8"><a href="adjustments-and-comparisons.html#cb80-8" aria-hidden="true" tabindex="-1"></a>ASEM_NoLPIShip <span class="ot">&lt;-</span> <span class="fu">regen</span>(ASEM_NoLPIShip, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Note that, in the ASEM example, by default, <code>ASEM$Method$assemble</code> doesn’t exist because the <code>include</code> or <code>exclude</code> arguments of <code>assemble()</code> are empty, and these are the only arguments to <code>assemble()</code> that are recorded in <code>.$Method$assemble</code>.</p>
 <p>In summary, we have removed two indicators, then regenerated the results using exactly the same methodology as used before. Importantly, <code>include</code> and <code>exclude</code> operate <em>relative to the original data</em> input to <code>assemble()</code>, i.e. the data found in <code>.$Input$Original</code>. This means that if we now were to make a copy of the version excluding the two indicators above, and exclude another different indicator:</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="adjustments-and-comparisons.html#cb81-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb81-2"><a href="adjustments-and-comparisons.html#cb81-2"></a>ASEM_NoBord &lt;-<span class="st"> </span>ASEM_NoLPIShip</span>
-<span id="cb81-3"><a href="adjustments-and-comparisons.html#cb81-3"></a></span>
-<span id="cb81-4"><a href="adjustments-and-comparisons.html#cb81-4"></a><span class="co"># Edit method: exclude two indicators</span></span>
-<span id="cb81-5"><a href="adjustments-and-comparisons.html#cb81-5"></a>ASEM_NoBord<span class="op">$</span>Method<span class="op">$</span>assemble<span class="op">$</span>exclude &lt;-<span class="st"> &quot;Bord&quot;</span></span>
-<span id="cb81-6"><a href="adjustments-and-comparisons.html#cb81-6"></a></span>
-<span id="cb81-7"><a href="adjustments-and-comparisons.html#cb81-7"></a><span class="co"># Regenerate results</span></span>
-<span id="cb81-8"><a href="adjustments-and-comparisons.html#cb81-8"></a>ASEM_NoBord &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEM_NoBord, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb81-9"><a href="adjustments-and-comparisons.html#cb81-9"></a></span>
-<span id="cb81-10"><a href="adjustments-and-comparisons.html#cb81-10"></a>ASEM_NoBord<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
-<span id="cb81-11"><a href="adjustments-and-comparisons.html#cb81-11"></a><span class="co">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;CostImpEx&quot;</span></span>
-<span id="cb81-12"><a href="adjustments-and-comparisons.html#cb81-12"></a><span class="co">##  [7] &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;    </span></span>
-<span id="cb81-13"><a href="adjustments-and-comparisons.html#cb81-13"></a><span class="co">## [13] &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot; </span></span>
-<span id="cb81-14"><a href="adjustments-and-comparisons.html#cb81-14"></a><span class="co">## [19] &quot;Lang&quot;      &quot;LPI&quot;       &quot;Flights&quot;   &quot;Ship&quot;      &quot;Elec&quot;      &quot;Gas&quot;      </span></span>
-<span id="cb81-15"><a href="adjustments-and-comparisons.html#cb81-15"></a><span class="co">## [25] &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Renew&quot;    </span></span>
-<span id="cb81-16"><a href="adjustments-and-comparisons.html#cb81-16"></a><span class="co">## [31] &quot;PrimEner&quot;  &quot;CO2&quot;       &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;    </span></span>
-<span id="cb81-17"><a href="adjustments-and-comparisons.html#cb81-17"></a><span class="co">## [37] &quot;TertGrad&quot;  &quot;FreePress&quot; &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;   </span></span>
-<span id="cb81-18"><a href="adjustments-and-comparisons.html#cb81-18"></a><span class="co">## [43] &quot;WomParl&quot;   &quot;PubDebt&quot;   &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="adjustments-and-comparisons.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb81-2"><a href="adjustments-and-comparisons.html#cb81-2" aria-hidden="true" tabindex="-1"></a>ASEM_NoBord <span class="ot">&lt;-</span> ASEM_NoLPIShip</span>
+<span id="cb81-3"><a href="adjustments-and-comparisons.html#cb81-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-4"><a href="adjustments-and-comparisons.html#cb81-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit method: exclude two indicators</span></span>
+<span id="cb81-5"><a href="adjustments-and-comparisons.html#cb81-5" aria-hidden="true" tabindex="-1"></a>ASEM_NoBord<span class="sc">$</span>Method<span class="sc">$</span>assemble<span class="sc">$</span>exclude <span class="ot">&lt;-</span> <span class="st">&quot;Bord&quot;</span></span>
+<span id="cb81-6"><a href="adjustments-and-comparisons.html#cb81-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-7"><a href="adjustments-and-comparisons.html#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Regenerate results</span></span>
+<span id="cb81-8"><a href="adjustments-and-comparisons.html#cb81-8" aria-hidden="true" tabindex="-1"></a>ASEM_NoBord <span class="ot">&lt;-</span> <span class="fu">regen</span>(ASEM_NoBord, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb81-9"><a href="adjustments-and-comparisons.html#cb81-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-10"><a href="adjustments-and-comparisons.html#cb81-10" aria-hidden="true" tabindex="-1"></a>ASEM_NoBord<span class="sc">$</span>Parameters<span class="sc">$</span>IndCodes</span>
+<span id="cb81-11"><a href="adjustments-and-comparisons.html#cb81-11" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;CostImpEx&quot;</span></span>
+<span id="cb81-12"><a href="adjustments-and-comparisons.html#cb81-12" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;    </span></span>
+<span id="cb81-13"><a href="adjustments-and-comparisons.html#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot; </span></span>
+<span id="cb81-14"><a href="adjustments-and-comparisons.html#cb81-14" aria-hidden="true" tabindex="-1"></a><span class="do">## [19] &quot;Lang&quot;      &quot;LPI&quot;       &quot;Flights&quot;   &quot;Ship&quot;      &quot;Elec&quot;      &quot;Gas&quot;      </span></span>
+<span id="cb81-15"><a href="adjustments-and-comparisons.html#cb81-15" aria-hidden="true" tabindex="-1"></a><span class="do">## [25] &quot;ConSpeed&quot;  &quot;Cov4G&quot;     &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Renew&quot;    </span></span>
+<span id="cb81-16"><a href="adjustments-and-comparisons.html#cb81-16" aria-hidden="true" tabindex="-1"></a><span class="do">## [31] &quot;PrimEner&quot;  &quot;CO2&quot;       &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;    </span></span>
+<span id="cb81-17"><a href="adjustments-and-comparisons.html#cb81-17" aria-hidden="true" tabindex="-1"></a><span class="do">## [37] &quot;TertGrad&quot;  &quot;FreePress&quot; &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;   </span></span>
+<span id="cb81-18"><a href="adjustments-and-comparisons.html#cb81-18" aria-hidden="true" tabindex="-1"></a><span class="do">## [43] &quot;WomParl&quot;   &quot;PubDebt&quot;   &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
 <p>…we see that “LPI” and “Ship” are once again present.</p>
 <p>In fact, COINr has an even quicker way to add and remove indicators, which is a short cut function called <code>indChange()</code>. In one command you can add or remove indicators and regenerate the results. Unlike the method above, <code>indChange()</code> also adds and removes relative to the existing index, which may be more convenient in some circumstances. To demonstrate this, we can use the same example as above:</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="adjustments-and-comparisons.html#cb82-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb82-2"><a href="adjustments-and-comparisons.html#cb82-2"></a>ASEM_NoBord2 &lt;-<span class="st"> </span><span class="kw">indChange</span>(ASEM_NoLPIShip, <span class="dt">drop =</span> <span class="st">&quot;Bord&quot;</span>, <span class="dt">regen =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb82-3"><a href="adjustments-and-comparisons.html#cb82-3"></a><span class="co">## COIN has been regenerated using new specs.</span></span>
-<span id="cb82-4"><a href="adjustments-and-comparisons.html#cb82-4"></a></span>
-<span id="cb82-5"><a href="adjustments-and-comparisons.html#cb82-5"></a>ASEM_NoBord2<span class="op">$</span>Parameters<span class="op">$</span>IndCodes</span>
-<span id="cb82-6"><a href="adjustments-and-comparisons.html#cb82-6"></a><span class="co">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;CostImpEx&quot;</span></span>
-<span id="cb82-7"><a href="adjustments-and-comparisons.html#cb82-7"></a><span class="co">##  [7] &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;    </span></span>
-<span id="cb82-8"><a href="adjustments-and-comparisons.html#cb82-8"></a><span class="co">## [13] &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot; </span></span>
-<span id="cb82-9"><a href="adjustments-and-comparisons.html#cb82-9"></a><span class="co">## [19] &quot;Lang&quot;      &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;    </span></span>
-<span id="cb82-10"><a href="adjustments-and-comparisons.html#cb82-10"></a><span class="co">## [25] &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Renew&quot;     &quot;PrimEner&quot;  &quot;CO2&quot;      </span></span>
-<span id="cb82-11"><a href="adjustments-and-comparisons.html#cb82-11"></a><span class="co">## [31] &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
-<span id="cb82-12"><a href="adjustments-and-comparisons.html#cb82-12"></a><span class="co">## [37] &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;    &quot;WomParl&quot;   &quot;PubDebt&quot;  </span></span>
-<span id="cb82-13"><a href="adjustments-and-comparisons.html#cb82-13"></a><span class="co">## [43] &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
-<p>And here we see that now, “Bord” has been excluded <em>as well as</em> “LPI” and “Ship”.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="adjustments-and-comparisons.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb82-2"><a href="adjustments-and-comparisons.html#cb82-2" aria-hidden="true" tabindex="-1"></a>ASEM_NoBord2 <span class="ot">&lt;-</span> <span class="fu">indChange</span>(ASEM_NoLPIShip, <span class="at">drop =</span> <span class="st">&quot;Bord&quot;</span>, <span class="at">regen =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb82-3"><a href="adjustments-and-comparisons.html#cb82-3" aria-hidden="true" tabindex="-1"></a><span class="do">## COIN has been regenerated using new specs.</span></span>
+<span id="cb82-4"><a href="adjustments-and-comparisons.html#cb82-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-5"><a href="adjustments-and-comparisons.html#cb82-5" aria-hidden="true" tabindex="-1"></a>ASEM_NoBord2<span class="sc">$</span>Parameters<span class="sc">$</span>IndCodes</span>
+<span id="cb82-6"><a href="adjustments-and-comparisons.html#cb82-6" aria-hidden="true" tabindex="-1"></a><span class="do">##  [1] &quot;Goods&quot;     &quot;Services&quot;  &quot;FDI&quot;       &quot;PRemit&quot;    &quot;ForPort&quot;   &quot;CostImpEx&quot;</span></span>
+<span id="cb82-7"><a href="adjustments-and-comparisons.html#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="do">##  [7] &quot;Tariff&quot;    &quot;TBTs&quot;      &quot;TIRcon&quot;    &quot;RTAs&quot;      &quot;Visa&quot;      &quot;StMob&quot;    </span></span>
+<span id="cb82-8"><a href="adjustments-and-comparisons.html#cb82-8" aria-hidden="true" tabindex="-1"></a><span class="do">## [13] &quot;Research&quot;  &quot;Pat&quot;       &quot;CultServ&quot;  &quot;CultGood&quot;  &quot;Tourist&quot;   &quot;MigStock&quot; </span></span>
+<span id="cb82-9"><a href="adjustments-and-comparisons.html#cb82-9" aria-hidden="true" tabindex="-1"></a><span class="do">## [19] &quot;Lang&quot;      &quot;Flights&quot;   &quot;Elec&quot;      &quot;Gas&quot;       &quot;ConSpeed&quot;  &quot;Cov4G&quot;    </span></span>
+<span id="cb82-10"><a href="adjustments-and-comparisons.html#cb82-10" aria-hidden="true" tabindex="-1"></a><span class="do">## [25] &quot;Embs&quot;      &quot;IGOs&quot;      &quot;UNVote&quot;    &quot;Renew&quot;     &quot;PrimEner&quot;  &quot;CO2&quot;      </span></span>
+<span id="cb82-11"><a href="adjustments-and-comparisons.html#cb82-11" aria-hidden="true" tabindex="-1"></a><span class="do">## [31] &quot;MatCon&quot;    &quot;Forest&quot;    &quot;Poverty&quot;   &quot;Palma&quot;     &quot;TertGrad&quot;  &quot;FreePress&quot;</span></span>
+<span id="cb82-12"><a href="adjustments-and-comparisons.html#cb82-12" aria-hidden="true" tabindex="-1"></a><span class="do">## [37] &quot;TolMin&quot;    &quot;NGOs&quot;      &quot;CPI&quot;       &quot;FemLab&quot;    &quot;WomParl&quot;   &quot;PubDebt&quot;  </span></span>
+<span id="cb82-13"><a href="adjustments-and-comparisons.html#cb82-13" aria-hidden="true" tabindex="-1"></a><span class="do">## [43] &quot;PrivDebt&quot;  &quot;GDPGrow&quot;   &quot;RDExp&quot;     &quot;NEET&quot;</span></span></code></pre></div>
+<p>And here we see that now, “Bord” has been excluded <em>as well as</em> “LPI” and “Ship.”</p>
 </div>
-<div id="other-adjustments" class="section level3">
+<div id="other-adjustments" class="section level3" number="13.2.2">
 <h3><span class="header-section-number">13.2.2</span> Other adjustments</h3>
 <p>We can make any methodological adjustments we want by editing any parameters in <code>.$Method</code> and then running <code>regen()</code>. For example, we can change the imputation method:</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="adjustments-and-comparisons.html#cb83-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb83-2"><a href="adjustments-and-comparisons.html#cb83-2"></a>ASEMAltImpute &lt;-<span class="st"> </span>ASEM</span>
-<span id="cb83-3"><a href="adjustments-and-comparisons.html#cb83-3"></a></span>
-<span id="cb83-4"><a href="adjustments-and-comparisons.html#cb83-4"></a><span class="co"># Edit .$Method</span></span>
-<span id="cb83-5"><a href="adjustments-and-comparisons.html#cb83-5"></a>ASEMAltImpute<span class="op">$</span>Method<span class="op">$</span>impute<span class="op">$</span>imtype &lt;-<span class="st"> &quot;indgroup_median&quot;</span></span>
-<span id="cb83-6"><a href="adjustments-and-comparisons.html#cb83-6"></a></span>
-<span id="cb83-7"><a href="adjustments-and-comparisons.html#cb83-7"></a><span class="co"># Regenerate</span></span>
-<span id="cb83-8"><a href="adjustments-and-comparisons.html#cb83-8"></a>ASEMAltImpute &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltImpute, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="adjustments-and-comparisons.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb83-2"><a href="adjustments-and-comparisons.html#cb83-2" aria-hidden="true" tabindex="-1"></a>ASEMAltImpute <span class="ot">&lt;-</span> ASEM</span>
+<span id="cb83-3"><a href="adjustments-and-comparisons.html#cb83-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-4"><a href="adjustments-and-comparisons.html#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit .$Method</span></span>
+<span id="cb83-5"><a href="adjustments-and-comparisons.html#cb83-5" aria-hidden="true" tabindex="-1"></a>ASEMAltImpute<span class="sc">$</span>Method<span class="sc">$</span>impute<span class="sc">$</span>imtype <span class="ot">&lt;-</span> <span class="st">&quot;indgroup_median&quot;</span></span>
+<span id="cb83-6"><a href="adjustments-and-comparisons.html#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-7"><a href="adjustments-and-comparisons.html#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Regenerate</span></span>
+<span id="cb83-8"><a href="adjustments-and-comparisons.html#cb83-8" aria-hidden="true" tabindex="-1"></a>ASEMAltImpute <span class="ot">&lt;-</span> <span class="fu">regen</span>(ASEMAltImpute, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>We could also change the normalisation method, e.g. to use Borda scores:</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="adjustments-and-comparisons.html#cb84-1"></a><span class="co"># Make a copy</span></span>
-<span id="cb84-2"><a href="adjustments-and-comparisons.html#cb84-2"></a>ASEMAltNorm &lt;-<span class="st"> </span>ASEM</span>
-<span id="cb84-3"><a href="adjustments-and-comparisons.html#cb84-3"></a></span>
-<span id="cb84-4"><a href="adjustments-and-comparisons.html#cb84-4"></a><span class="co"># Edit .$Method</span></span>
-<span id="cb84-5"><a href="adjustments-and-comparisons.html#cb84-5"></a>ASEMAltNorm<span class="op">$</span>Method<span class="op">$</span>normalise<span class="op">$</span>ntype &lt;-<span class="st"> &quot;borda&quot;</span></span>
-<span id="cb84-6"><a href="adjustments-and-comparisons.html#cb84-6"></a></span>
-<span id="cb84-7"><a href="adjustments-and-comparisons.html#cb84-7"></a><span class="co"># Regenerate</span></span>
-<span id="cb84-8"><a href="adjustments-and-comparisons.html#cb84-8"></a>ASEMAltNorm &lt;-<span class="st"> </span><span class="kw">regen</span>(ASEMAltNorm, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="adjustments-and-comparisons.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a copy</span></span>
+<span id="cb84-2"><a href="adjustments-and-comparisons.html#cb84-2" aria-hidden="true" tabindex="-1"></a>ASEMAltNorm <span class="ot">&lt;-</span> ASEM</span>
+<span id="cb84-3"><a href="adjustments-and-comparisons.html#cb84-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-4"><a href="adjustments-and-comparisons.html#cb84-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit .$Method</span></span>
+<span id="cb84-5"><a href="adjustments-and-comparisons.html#cb84-5" aria-hidden="true" tabindex="-1"></a>ASEMAltNorm<span class="sc">$</span>Method<span class="sc">$</span>normalise<span class="sc">$</span>ntype <span class="ot">&lt;-</span> <span class="st">&quot;borda&quot;</span></span>
+<span id="cb84-6"><a href="adjustments-and-comparisons.html#cb84-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-7"><a href="adjustments-and-comparisons.html#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Regenerate</span></span>
+<span id="cb84-8"><a href="adjustments-and-comparisons.html#cb84-8" aria-hidden="true" tabindex="-1"></a>ASEMAltNorm <span class="ot">&lt;-</span> <span class="fu">regen</span>(ASEMAltNorm, <span class="at">quietly =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>and of course this extends to any parameters of any of the “construction” functions. We can even alter the underlying data directly if we want, e.g. by altering values in <code>.$Input$Original$Data</code>. In short, anything inside the COIN can be edited and then the results regenerated. This allows a fast way to make different alternative indexes and explore the effects of different methodology very quickly.</p>
 </div>
 </div>
-<div id="comparisons" class="section level2">
+<div id="comparisons" class="section level2" number="13.3">
 <h2><span class="header-section-number">13.3</span> Comparisons</h2>
 <p>A logical follow up to making alternative indexes is to try to understand the differences between these indexes. This can of course be done manually. But to make this quicker, COINr includes a few tools to quickly inspect the differences between different COINs.</p>
 <p>In using these tools it should be fairly evident that comparisons are made between different versions of the same index. So the two indexes must have at least some units in common. The tools are intended for methodological variations of the type shown previously in this chapter - different aggregation, weighting, adding and removing indicators and so on. That said, since comparisons are made on units, it would also be possible to compare two totally different COINs, as long as they have units in common.</p>
 <p>To begin with, we can make a simple bilateral comparison between two COINs. Taking two of the index versions created previously:</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="adjustments-and-comparisons.html#cb85-1"></a><span class="kw">compTable</span>(ASEM, ASEMAltNorm, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">isel =</span> <span class="st">&quot;Index&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb85-2"><a href="adjustments-and-comparisons.html#cb85-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb85-3"><a href="adjustments-and-comparisons.html#cb85-3"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="adjustments-and-comparisons.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compTable</span>(ASEM, ASEMAltNorm, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">isel =</span> <span class="st">&quot;Index&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb85-2"><a href="adjustments-and-comparisons.html#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb85-3"><a href="adjustments-and-comparisons.html#cb85-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -651,9 +689,9 @@ Figure 13.1: Method folder in ASEM example
 </tbody>
 </table>
 <p>The <code>compTable()</code> function allows a rank comparison of a single indicator or aggregate, between two COINs. The COINs must both share the indicator code which is assigned to <code>isel</code>. By default the output table (data frame) is sorted by the highest absolute rank change downwards, but it can be sorted by the other columns using the <code>sort_by</code> argument:</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="adjustments-and-comparisons.html#cb86-1"></a><span class="kw">compTable</span>(ASEM, ASEMAltNorm, <span class="dt">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="dt">isel =</span> <span class="st">&quot;Index&quot;</span>, <span class="dt">sort_by =</span> <span class="st">&quot;RankCOIN1&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb86-2"><a href="adjustments-and-comparisons.html#cb86-2"></a><span class="st">  </span><span class="kw">head</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span></span>
-<span id="cb86-3"><a href="adjustments-and-comparisons.html#cb86-3"></a><span class="st">  </span>knitr<span class="op">::</span><span class="kw">kable</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="adjustments-and-comparisons.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compTable</span>(ASEM, ASEMAltNorm, <span class="at">dset =</span> <span class="st">&quot;Aggregated&quot;</span>, <span class="at">isel =</span> <span class="st">&quot;Index&quot;</span>, <span class="at">sort_by =</span> <span class="st">&quot;RankCOIN1&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb86-2"><a href="adjustments-and-comparisons.html#cb86-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb86-3"><a href="adjustments-and-comparisons.html#cb86-3" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">

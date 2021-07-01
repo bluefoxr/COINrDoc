@@ -148,6 +148,10 @@ normalisation-1
 aggregation-1
 visualisation-1
 comparison
+export
 summary
 appendix-analysing-a-composite-indicator-example
+loading-data
+check-calculations
+indicator-statistics
 acknowledgements
