@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-07-01" />
+<meta name="date" content="2021-07-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,7 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
 <li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#correlations"><i class="fa fa-check"></i><b>5.1</b> Correlations</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#pca"><i class="fa fa-check"></i><b>5.2</b> PCA</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
@@ -381,39 +385,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>If the analysis is part of constructing a composite indicator in COINr, you should have a COIN assembled following the steps in the previous chapter. However, if you are analysing an existing composite indicator, there may be a slight difference. It is possible, for example, that you may be provided with indicator data, which may already be normalised and aggregated.</p>
 <p>COINr’s <code>assemble()</code> function allows you to assemble a COIN with pre-aggregated data. This is done by setting <code>preagg = TRUE</code>. If this is enabled, COINr will create a COIN with a data set called “PreAggregated.” To do this, you need a pre-aggregated data set which includes (possibly normalised) columns for all indicators <em>and</em> for all aggregates.</p>
 <p>To demonstrate, we can use a pre-aggregated data set created by COINr.</p>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb132-2"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb132-3"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="co"># build ASEM index</span></span>
-<span id="cb132-4"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-4" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">build_ASEM</span>()</span>
-<span id="cb132-5"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb132-6"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-6" aria-hidden="true" tabindex="-1"></a><span class="co"># extract aggregated data set (as a data frame)</span></span>
-<span id="cb132-7"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-7" aria-hidden="true" tabindex="-1"></a>Aggregated_Data <span class="ot">&lt;-</span> ASEM<span class="sc">$</span>Data<span class="sc">$</span>Aggregated</span>
-<span id="cb132-8"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb132-9"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-9" aria-hidden="true" tabindex="-1"></a><span class="co"># assemble new COIN only including pre-aggregated data</span></span>
-<span id="cb132-10"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-10" aria-hidden="true" tabindex="-1"></a>ASEM_preagg <span class="ot">&lt;-</span> <span class="fu">assemble</span>(<span class="at">IndData =</span> Aggregated_Data,</span>
-<span id="cb132-11"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">IndMeta =</span> ASEMIndMeta,</span>
-<span id="cb132-12"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">AggMeta =</span> ASEMAggMeta,</span>
-<span id="cb132-13"><a href="appendix-analysing-a-composite-indicator-example.html#cb132-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">preagg =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb156-2"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-3"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-3" aria-hidden="true" tabindex="-1"></a><span class="co"># build ASEM index</span></span>
+<span id="cb156-4"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-4" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">build_ASEM</span>()</span>
+<span id="cb156-5"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-6"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-6" aria-hidden="true" tabindex="-1"></a><span class="co"># extract aggregated data set (as a data frame)</span></span>
+<span id="cb156-7"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-7" aria-hidden="true" tabindex="-1"></a>Aggregated_Data <span class="ot">&lt;-</span> ASEM<span class="sc">$</span>Data<span class="sc">$</span>Aggregated</span>
+<span id="cb156-8"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-9"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-9" aria-hidden="true" tabindex="-1"></a><span class="co"># assemble new COIN only including pre-aggregated data</span></span>
+<span id="cb156-10"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-10" aria-hidden="true" tabindex="-1"></a>ASEM_preagg <span class="ot">&lt;-</span> <span class="fu">assemble</span>(<span class="at">IndData =</span> Aggregated_Data,</span>
+<span id="cb156-11"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">IndMeta =</span> ASEMIndMeta,</span>
+<span id="cb156-12"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-12" aria-hidden="true" tabindex="-1"></a>                        <span class="at">AggMeta =</span> ASEMAggMeta,</span>
+<span id="cb156-13"><a href="appendix-analysing-a-composite-indicator-example.html#cb156-13" aria-hidden="true" tabindex="-1"></a>                        <span class="at">preagg =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>COINr will check that the column names in the indicator data correspond to the codes supplied in the <code>IndMeta</code> and <code>AggMeta</code>. This means that these two latter data frames still need to be supplied. However, from this point the COIN functions as any other, although consider that it cannot be regenerated (the methodology to arrive at the pre-aggregated data is unknown), and the only data set present is the “PreAggregated” data.</p>
 </div>
 <div id="check-calculations" class="section level2" number="19.2">
 <h2><span class="header-section-number">19.2</span> Check calculations</h2>
 <p>If you are using pre-aggregated data, you may wish to check the calculations to make sure that they are correct. If you additionally have raw data, and you know the methodology used to build the index, you can recreate this by rebuilding the index in COINr. If you only have normalised and aggregated data, you can still at least check the aggregation stage as follows. Assuming that the indicator columns in your pre-aggregated data are normalised, we can first manually create a normalised data set:</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="appendix-analysing-a-composite-indicator-example.html#cb133-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb133-2"><a href="appendix-analysing-a-composite-indicator-example.html#cb133-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb133-3"><a href="appendix-analysing-a-composite-indicator-example.html#cb133-3" aria-hidden="true" tabindex="-1"></a>ASEM_preagg<span class="sc">$</span>Data<span class="sc">$</span>Normalised <span class="ot">&lt;-</span> ASEM_preagg<span class="sc">$</span>Data<span class="sc">$</span>PreAggregated <span class="sc">%&gt;%</span></span>
-<span id="cb133-4"><a href="appendix-analysing-a-composite-indicator-example.html#cb133-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>ASEM<span class="sc">$</span>Input<span class="sc">$</span>AggMeta<span class="sc">$</span>Code)</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="appendix-analysing-a-composite-indicator-example.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb157-2"><a href="appendix-analysing-a-composite-indicator-example.html#cb157-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb157-3"><a href="appendix-analysing-a-composite-indicator-example.html#cb157-3" aria-hidden="true" tabindex="-1"></a>ASEM_preagg<span class="sc">$</span>Data<span class="sc">$</span>Normalised <span class="ot">&lt;-</span> ASEM_preagg<span class="sc">$</span>Data<span class="sc">$</span>PreAggregated <span class="sc">%&gt;%</span></span>
+<span id="cb157-4"><a href="appendix-analysing-a-composite-indicator-example.html#cb157-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">!</span>ASEM<span class="sc">$</span>Input<span class="sc">$</span>AggMeta<span class="sc">$</span>Code)</span></code></pre></div>
 <p>Here we have just copied the pre-aggregated data, but removed any aggregation columns.</p>
 <p>Next, we can aggregate these columns using COINr.</p>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="appendix-analysing-a-composite-indicator-example.html#cb134-1" aria-hidden="true" tabindex="-1"></a>ASEM_preagg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(ASEM_preagg, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">agtype =</span> <span class="st">&quot;arith_mean&quot;</span>)</span>
-<span id="cb134-2"><a href="appendix-analysing-a-composite-indicator-example.html#cb134-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb134-3"><a href="appendix-analysing-a-composite-indicator-example.html#cb134-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check data set names</span></span>
-<span id="cb134-4"><a href="appendix-analysing-a-composite-indicator-example.html#cb134-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ASEM_preagg<span class="sc">$</span>Data)</span>
-<span id="cb134-5"><a href="appendix-analysing-a-composite-indicator-example.html#cb134-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;PreAggregated&quot; &quot;Normalised&quot;    &quot;Aggregated&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="appendix-analysing-a-composite-indicator-example.html#cb158-1" aria-hidden="true" tabindex="-1"></a>ASEM_preagg <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(ASEM_preagg, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">agtype =</span> <span class="st">&quot;arith_mean&quot;</span>)</span>
+<span id="cb158-2"><a href="appendix-analysing-a-composite-indicator-example.html#cb158-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb158-3"><a href="appendix-analysing-a-composite-indicator-example.html#cb158-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check data set names</span></span>
+<span id="cb158-4"><a href="appendix-analysing-a-composite-indicator-example.html#cb158-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ASEM_preagg<span class="sc">$</span>Data)</span>
+<span id="cb158-5"><a href="appendix-analysing-a-composite-indicator-example.html#cb158-5" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] &quot;PreAggregated&quot; &quot;Normalised&quot;    &quot;Aggregated&quot;</span></span></code></pre></div>
 <p>Finally, we can check to see whether these data frames are the same. There are many possible ways of doing this, but a simple way is to use dplyr’s <code>all_equal()</code> function.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="appendix-analysing-a-composite-indicator-example.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_equal</span>(ASEM_preagg<span class="sc">$</span>Data<span class="sc">$</span>PreAggregated,</span>
-<span id="cb135-2"><a href="appendix-analysing-a-composite-indicator-example.html#cb135-2" aria-hidden="true" tabindex="-1"></a>          ASEM_preagg<span class="sc">$</span>Data<span class="sc">$</span>Aggregated)</span>
-<span id="cb135-3"><a href="appendix-analysing-a-composite-indicator-example.html#cb135-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="appendix-analysing-a-composite-indicator-example.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all_equal</span>(ASEM_preagg<span class="sc">$</span>Data<span class="sc">$</span>PreAggregated,</span>
+<span id="cb159-2"><a href="appendix-analysing-a-composite-indicator-example.html#cb159-2" aria-hidden="true" tabindex="-1"></a>          ASEM_preagg<span class="sc">$</span>Data<span class="sc">$</span>Aggregated)</span>
+<span id="cb159-3"><a href="appendix-analysing-a-composite-indicator-example.html#cb159-3" aria-hidden="true" tabindex="-1"></a><span class="do">## [1] TRUE</span></span></code></pre></div>
 <p>As expected, here the results are the same. If the results are <em>not</em> the same, <code>all_equal()</code> will give some information about the differences. If you reconstruct the index from raw data, and you find differences, a few points are worth considering:</p>
 <ol style="list-style-type: decimal">
 <li>The difference could be due to an error in the pre-aggregated data, or even a bug in COINr. If you suspect the latter please open an issue on the repo.</li>

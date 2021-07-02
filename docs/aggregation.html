@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-07-01" />
+<meta name="date" content="2021-07-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -196,7 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.3" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#ranks-and-maps"><i class="fa fa-check"></i><b>4.3</b> Ranks and Maps</a></li>
 <li class="chapter" data-level="4.4" data-path="initial-visualisation-and-analysis.html"><a href="initial-visualisation-and-analysis.html#statistics-and-analysis"><i class="fa fa-check"></i><b>4.4</b> Statistics and analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a></li>
+<li class="chapter" data-level="5" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html"><i class="fa fa-check"></i><b>5</b> Multivariate analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#correlations"><i class="fa fa-check"></i><b>5.1</b> Correlations</a></li>
+<li class="chapter" data-level="5.2" data-path="multivariate-analysis.html"><a href="multivariate-analysis.html#pca"><i class="fa fa-check"></i><b>5.2</b> PCA</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html"><i class="fa fa-check"></i><b>6</b> Missing data and Imputation</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="missing-data-and-imputation.html"><a href="missing-data-and-imputation.html#concept"><i class="fa fa-check"></i><b>6.1</b> Concept</a></li>
@@ -417,52 +421,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="aggregation-in-coinr" class="section level2" number="10.3">
 <h2><span class="header-section-number">10.3</span> Aggregation in COINr</h2>
 <p>Many will be amazed to learn that the function to aggregate in COINr is called <code>aggregate()</code>. First, let’s build the ASEM data set up to the point of normalisation, then aggregate it using the default approaches.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="aggregation.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb51-2"><a href="aggregation.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="aggregation.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build ASEM data up to the normalisation step</span></span>
-<span id="cb51-4"><a href="aggregation.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assemble data and metadata into a COIN</span></span>
-<span id="cb51-5"><a href="aggregation.html#cb51-5" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">assemble</span>(<span class="at">IndData =</span> COINr<span class="sc">::</span>ASEMIndData, <span class="at">IndMeta =</span> COINr<span class="sc">::</span>ASEMIndMeta, <span class="at">AggMeta =</span> COINr<span class="sc">::</span>ASEMAggMeta)</span>
-<span id="cb51-6"><a href="aggregation.html#cb51-6" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb51-7"><a href="aggregation.html#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb51-8"><a href="aggregation.html#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb51-9"><a href="aggregation.html#cb51-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb51-10"><a href="aggregation.html#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb51-11"><a href="aggregation.html#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb51-12"><a href="aggregation.html#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of indicators = 49</span></span>
-<span id="cb51-13"><a href="aggregation.html#cb51-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of units = 51</span></span>
-<span id="cb51-14"><a href="aggregation.html#cb51-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb51-15"><a href="aggregation.html#cb51-15" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb51-16"><a href="aggregation.html#cb51-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb51-17"><a href="aggregation.html#cb51-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb51-18"><a href="aggregation.html#cb51-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb51-19"><a href="aggregation.html#cb51-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb51-20"><a href="aggregation.html#cb51-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb51-21"><a href="aggregation.html#cb51-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb51-22"><a href="aggregation.html#cb51-22" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb51-23"><a href="aggregation.html#cb51-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Denominate as specified in metadata</span></span>
-<span id="cb51-24"><a href="aggregation.html#cb51-24" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">denominate</span>(ASEM)</span>
-<span id="cb51-25"><a href="aggregation.html#cb51-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalise using default method: min-max scaled between 0 and 100.</span></span>
-<span id="cb51-26"><a href="aggregation.html#cb51-26" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">normalise</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Denominated&quot;</span>)</span>
-<span id="cb51-27"><a href="aggregation.html#cb51-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-28"><a href="aggregation.html#cb51-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Now aggregate using default method: arithmetic mean, using weights found in the COIN</span></span>
-<span id="cb51-29"><a href="aggregation.html#cb51-29" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
-<span id="cb51-30"><a href="aggregation.html#cb51-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-31"><a href="aggregation.html#cb51-31" aria-hidden="true" tabindex="-1"></a><span class="co"># show last few columns of aggregated data set</span></span>
-<span id="cb51-32"><a href="aggregation.html#cb51-32" aria-hidden="true" tabindex="-1"></a>ASEM<span class="sc">$</span>Data<span class="sc">$</span>Aggregated[(<span class="fu">ncol</span>(ASEM<span class="sc">$</span>Data<span class="sc">$</span>Aggregated)<span class="sc">-</span><span class="dv">5</span>)<span class="sc">:</span> <span class="fu">ncol</span>(ASEM<span class="sc">$</span>Data<span class="sc">$</span>Aggregated)]</span>
-<span id="cb51-33"><a href="aggregation.html#cb51-33" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 51 x 6</span></span>
-<span id="cb51-34"><a href="aggregation.html#cb51-34" aria-hidden="true" tabindex="-1"></a><span class="do">##    Environ Social SusEcFin  Conn  Sust Index</span></span>
-<span id="cb51-35"><a href="aggregation.html#cb51-35" aria-hidden="true" tabindex="-1"></a><span class="do">##      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
-<span id="cb51-36"><a href="aggregation.html#cb51-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  1    71.0   67.0     65.7  50.4  67.9  59.1</span></span>
-<span id="cb51-37"><a href="aggregation.html#cb51-37" aria-hidden="true" tabindex="-1"></a><span class="do">##  2    55.9   86.3     53.5  54.8  65.3  60.0</span></span>
-<span id="cb51-38"><a href="aggregation.html#cb51-38" aria-hidden="true" tabindex="-1"></a><span class="do">##  3    56.4   54.0     62.5  42.4  57.6  50.0</span></span>
-<span id="cb51-39"><a href="aggregation.html#cb51-39" aria-hidden="true" tabindex="-1"></a><span class="do">##  4    76.0   54.8     55.5  45.9  62.1  54.0</span></span>
-<span id="cb51-40"><a href="aggregation.html#cb51-40" aria-hidden="true" tabindex="-1"></a><span class="do">##  5    61.9   59.5     31.1  45.5  50.8  48.2</span></span>
-<span id="cb51-41"><a href="aggregation.html#cb51-41" aria-hidden="true" tabindex="-1"></a><span class="do">##  6    53.7   61.1     72.0  48.9  62.3  55.6</span></span>
-<span id="cb51-42"><a href="aggregation.html#cb51-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  7    72.5   79.8     62.7  51.0  71.7  61.4</span></span>
-<span id="cb51-43"><a href="aggregation.html#cb51-43" aria-hidden="true" tabindex="-1"></a><span class="do">##  8    35.7   68.3     70.1  49.5  58.0  53.8</span></span>
-<span id="cb51-44"><a href="aggregation.html#cb51-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  9    52.9   82.1     63.8  48.2  66.3  57.2</span></span>
-<span id="cb51-45"><a href="aggregation.html#cb51-45" aria-hidden="true" tabindex="-1"></a><span class="do">## 10    66.5   60.8     54.2  47.0  60.5  53.7</span></span>
-<span id="cb51-46"><a href="aggregation.html#cb51-46" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 41 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="aggregation.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb75-2"><a href="aggregation.html#cb75-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-3"><a href="aggregation.html#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build ASEM data up to the normalisation step</span></span>
+<span id="cb75-4"><a href="aggregation.html#cb75-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assemble data and metadata into a COIN</span></span>
+<span id="cb75-5"><a href="aggregation.html#cb75-5" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">assemble</span>(<span class="at">IndData =</span> COINr<span class="sc">::</span>ASEMIndData, <span class="at">IndMeta =</span> COINr<span class="sc">::</span>ASEMIndMeta, <span class="at">AggMeta =</span> COINr<span class="sc">::</span>ASEMAggMeta)</span>
+<span id="cb75-6"><a href="aggregation.html#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb75-7"><a href="aggregation.html#cb75-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb75-8"><a href="aggregation.html#cb75-8" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb75-9"><a href="aggregation.html#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb75-10"><a href="aggregation.html#cb75-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb75-11"><a href="aggregation.html#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb75-12"><a href="aggregation.html#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of indicators = 49</span></span>
+<span id="cb75-13"><a href="aggregation.html#cb75-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of units = 51</span></span>
+<span id="cb75-14"><a href="aggregation.html#cb75-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb75-15"><a href="aggregation.html#cb75-15" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb75-16"><a href="aggregation.html#cb75-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb75-17"><a href="aggregation.html#cb75-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb75-18"><a href="aggregation.html#cb75-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb75-19"><a href="aggregation.html#cb75-19" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb75-20"><a href="aggregation.html#cb75-20" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb75-21"><a href="aggregation.html#cb75-21" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb75-22"><a href="aggregation.html#cb75-22" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb75-23"><a href="aggregation.html#cb75-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Denominate as specified in metadata</span></span>
+<span id="cb75-24"><a href="aggregation.html#cb75-24" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">denominate</span>(ASEM)</span>
+<span id="cb75-25"><a href="aggregation.html#cb75-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalise using default method: min-max scaled between 0 and 100.</span></span>
+<span id="cb75-26"><a href="aggregation.html#cb75-26" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">normalise</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Denominated&quot;</span>)</span>
+<span id="cb75-27"><a href="aggregation.html#cb75-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-28"><a href="aggregation.html#cb75-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Now aggregate using default method: arithmetic mean, using weights found in the COIN</span></span>
+<span id="cb75-29"><a href="aggregation.html#cb75-29" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>)</span>
+<span id="cb75-30"><a href="aggregation.html#cb75-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-31"><a href="aggregation.html#cb75-31" aria-hidden="true" tabindex="-1"></a><span class="co"># show last few columns of aggregated data set</span></span>
+<span id="cb75-32"><a href="aggregation.html#cb75-32" aria-hidden="true" tabindex="-1"></a>ASEM<span class="sc">$</span>Data<span class="sc">$</span>Aggregated[(<span class="fu">ncol</span>(ASEM<span class="sc">$</span>Data<span class="sc">$</span>Aggregated)<span class="sc">-</span><span class="dv">5</span>)<span class="sc">:</span> <span class="fu">ncol</span>(ASEM<span class="sc">$</span>Data<span class="sc">$</span>Aggregated)]</span>
+<span id="cb75-33"><a href="aggregation.html#cb75-33" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 51 x 6</span></span>
+<span id="cb75-34"><a href="aggregation.html#cb75-34" aria-hidden="true" tabindex="-1"></a><span class="do">##    Environ Social SusEcFin  Conn  Sust Index</span></span>
+<span id="cb75-35"><a href="aggregation.html#cb75-35" aria-hidden="true" tabindex="-1"></a><span class="do">##      &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb75-36"><a href="aggregation.html#cb75-36" aria-hidden="true" tabindex="-1"></a><span class="do">##  1    71.0   67.0     65.7  50.4  67.9  59.1</span></span>
+<span id="cb75-37"><a href="aggregation.html#cb75-37" aria-hidden="true" tabindex="-1"></a><span class="do">##  2    55.9   86.3     53.5  54.8  65.3  60.0</span></span>
+<span id="cb75-38"><a href="aggregation.html#cb75-38" aria-hidden="true" tabindex="-1"></a><span class="do">##  3    56.4   54.0     62.5  42.4  57.6  50.0</span></span>
+<span id="cb75-39"><a href="aggregation.html#cb75-39" aria-hidden="true" tabindex="-1"></a><span class="do">##  4    76.0   54.8     55.5  45.9  62.1  54.0</span></span>
+<span id="cb75-40"><a href="aggregation.html#cb75-40" aria-hidden="true" tabindex="-1"></a><span class="do">##  5    61.9   59.5     31.1  45.5  50.8  48.2</span></span>
+<span id="cb75-41"><a href="aggregation.html#cb75-41" aria-hidden="true" tabindex="-1"></a><span class="do">##  6    53.7   61.1     72.0  48.9  62.3  55.6</span></span>
+<span id="cb75-42"><a href="aggregation.html#cb75-42" aria-hidden="true" tabindex="-1"></a><span class="do">##  7    72.5   79.8     62.7  51.0  71.7  61.4</span></span>
+<span id="cb75-43"><a href="aggregation.html#cb75-43" aria-hidden="true" tabindex="-1"></a><span class="do">##  8    35.7   68.3     70.1  49.5  58.0  53.8</span></span>
+<span id="cb75-44"><a href="aggregation.html#cb75-44" aria-hidden="true" tabindex="-1"></a><span class="do">##  9    52.9   82.1     63.8  48.2  66.3  57.2</span></span>
+<span id="cb75-45"><a href="aggregation.html#cb75-45" aria-hidden="true" tabindex="-1"></a><span class="do">## 10    66.5   60.8     54.2  47.0  60.5  53.7</span></span>
+<span id="cb75-46"><a href="aggregation.html#cb75-46" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 41 more rows</span></span></code></pre></div>
 <p>By default, the aggregation function performs the following steps:</p>
 <ul>
 <li>Uses the weights that were attached to <code>IndMeta</code> and <code>AggMeta</code> in <code>assemble()</code></li>
@@ -480,12 +484,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>agtype = custom</code> allows you to pass a custom aggregation function.</li>
 </ul>
 <p>For the last option here, if <code>agtype = custom</code> then you need to also specify the custom function via the <code>agfunc</code> argument. As an example:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="aggregation.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define an aggregation function which is the weighted minimum</span></span>
-<span id="cb52-2"><a href="aggregation.html#cb52-2" aria-hidden="true" tabindex="-1"></a>weightedMin <span class="ot">&lt;-</span> <span class="cf">function</span>(x,w) <span class="fu">min</span>(x<span class="sc">*</span>w, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb52-3"><a href="aggregation.html#cb52-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-4"><a href="aggregation.html#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pass to aggregate() and aggregate</span></span>
-<span id="cb52-5"><a href="aggregation.html#cb52-5" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">agtype =</span> <span class="st">&quot;custom&quot;</span>,</span>
-<span id="cb52-6"><a href="aggregation.html#cb52-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">agfunc =</span> weightedMin, <span class="at">out2 =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="aggregation.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define an aggregation function which is the weighted minimum</span></span>
+<span id="cb76-2"><a href="aggregation.html#cb76-2" aria-hidden="true" tabindex="-1"></a>weightedMin <span class="ot">&lt;-</span> <span class="cf">function</span>(x,w) <span class="fu">min</span>(x<span class="sc">*</span>w, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb76-3"><a href="aggregation.html#cb76-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-4"><a href="aggregation.html#cb76-4" aria-hidden="true" tabindex="-1"></a><span class="co"># pass to aggregate() and aggregate</span></span>
+<span id="cb76-5"><a href="aggregation.html#cb76-5" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>, <span class="at">agtype =</span> <span class="st">&quot;custom&quot;</span>,</span>
+<span id="cb76-6"><a href="aggregation.html#cb76-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">agfunc =</span> weightedMin, <span class="at">out2 =</span> <span class="st">&quot;df&quot;</span>)</span></code></pre></div>
 <p>Any custom function should have the form <code>functionName &lt;- function(x,w)</code>, i.e. it accepts x and w as vectors of indicator values and weights respectively, and returns a scalar aggregated value. Ensure that NAs are handled (e.g. set na.rm = T) if your data has missing values, otherwise NAs will be passed through to higher levels.</p>
 <p>A number of sophisticated aggregation approaches and linked weighting methods are available in the <a href="https://cran.r-project.org/web/packages/Compind/index.html">compind package</a>. These can nicely complement the features in COINr and may be of interest to those looking for more technical approaches to aggregation, such as those based on benefit of the doubt methods.</p>
 <p>A further argument, <code>agtype_bylevel</code>, allows specification of different normalisation types at different aggregation levels. For example, <code>agtype_bylevel = c("arith_mean", "geom_mean", "median")</code> would use the arithmetic mean at the indicator level, the geometric mean at the pillar level, and the median at the sub-index level (for the ASEM data structure).</p>
