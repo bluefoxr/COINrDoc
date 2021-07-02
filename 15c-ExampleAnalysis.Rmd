@@ -70,6 +70,69 @@ Double-checking calculations is tedious but in the process you often learn a lot
 
 ## Indicator statistics
 
+One next step is to check the indicator statistics. If you have the raw data, it is probably advisable to do this both on the raw data, and the normalised/aggregated data. Here, we will just do this on the aggregated data (but this works on any data set, e.g. also the "PreAggregated" and "Normalised" data sets created above):
+
+```{r}
+ASEM <- getStats(ASEM, dset = "Aggregated")
+
+# view stats table
+# this is rounded first (to make it easier to view), then sent to reactable to make an interactive table
+# you can also view this in R Studio or use any other table viewer to look at it.
+ASEM$Analysis$Aggregated$StatTable %>%
+  roundDF() %>%
+  reactable::reactable()
+```
+
+Particular things of interest here will be whether indicators or aggregates are highly skewed, the percentage of missing data for each indicator, the percentage of unique values and zeroes, the presence of correlations with denominators, and negative correlations. Recall that `getStats()` allows you to change thresholds for flagging outliers and high/low correlations.
+
+Another output of `getStats()` is correlation matrices, which are also found in `ASEM$Analysis$Aggregated`. A good reason to include these here is that as part of the COIN, we can export all analysis to Excel, if needed (see the end of this chapter). However, for viewing correlations directly, COINr has dedicated functions - see the next section.
+
+Before arriving at correlations, let's also check data availability in more detail. The function of interest here is  `checkData() `.
+
+```{r}
+ASEM <- checkData(ASEM, dset = "Raw")
+
+# view missing data by group
+ASEM$Analysis$Raw$MissDatByGroup %>%
+  roundDF %>%
+  reactable::reactable()
+```
+
+This adds analysis tables to the `ASEM$Analysis` folder (analysis always appears under the respective "dset" name). We have applied the analysis to the raw data set because in later steps, the data is imputed. Here, the missing data is given by each aggregation group. This helps to flag, for instance, cases where there is very low data availability for a unit in a given aggregation group. We can check the minimum:
+
+```{r}
+# get minimum, exclude first column (not numerical)
+min(ASEM$Analysis$Raw$MissDatByGroup[-1])
+```
+
+This shows that in the worst case, there is more than 50% data availability for each unit in each aggregation group.
+
+## Multivariate analysis
+
+This section will overlap to some extent with the [Multivariate analysis] chapter. In any case we will summarise a few options here at the risk of repetition.
+
+Perhaps the most useful way to view correlations for an aggregated index is to look at correlations of each indicator or aggregate with its parents. This is done quickly in COINr with the `plotCorr()` function.
+
+```{r}
+plotCorr(ASEM, dset = "Aggregated", showvals = T, withparent = "family", flagcolours = TRUE)
+```
+
+This shows at a glance where some problems may lie. In particular we learn that the TBT indicator is negatively correlated with all its parent groups. We can also see that the "Forest" indicator is insignificantly correlated with its parents. This table is generated here for indicators, but can also generated for other levels by setting the `aglevs` argument.
+
+```{r}
+plotCorr(ASEM, dset = "Aggregated", showvals = T, withparent = "family", flagcolours = TRUE, aglevs = 2)
+```
+
+Recall also that this function can return data frames for your own processing or presentation, rather than figures, by changing the `out2` argument.
+
+You may also want to view correlations between indicators or within specific groups. The `plotCorr()` function is flexible in this respect.
+
+```{r}
+# plot correlations within a specific pillar (Physical)
+plotCorr(ASEM, dset = "Raw", icodes = "Physical", aglevs = 1, cortype = "spearman", pval = 0)
+```
+
+Next, let's
 
 
 *To be completed*

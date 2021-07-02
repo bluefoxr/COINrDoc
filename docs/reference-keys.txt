@@ -156,4 +156,5 @@ appendix-analysing-a-composite-indicator-example
 loading-data
 check-calculations
 indicator-statistics
+multivariate-analysis-1
 acknowledgements
