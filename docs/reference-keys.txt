@@ -9,6 +9,8 @@ fig:unnamed-chunk-71-1
 fig:unnamed-chunk-71-2
 fig:unnamed-chunk-75
 fig:unnamed-chunk-78
+fig:unnamed-chunk-79
+fig:unnamed-chunk-82
 introduction
 background
 installation
@@ -157,4 +159,7 @@ loading-data
 check-calculations
 indicator-statistics
 multivariate-analysis-1
+weights
+what-ifs
+summing-up
 acknowledgements

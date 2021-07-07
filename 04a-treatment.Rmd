@@ -126,7 +126,7 @@ The data treatment function in COINr is called `treat()`. To perform a default d
 # build ASEM data set, up to denomination
 ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta,
                  AggMeta = COINr::ASEMAggMeta)
-ASEM <- denominate(ASEM)
+ASEM <- denominate(ASEM, dset = "Raw")
 
 # treat at defaults
 ASEM <- treat(ASEM, dset = "Denominated", winmax = 5)

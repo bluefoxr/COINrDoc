@@ -126,19 +126,45 @@ knitr::include_graphics("images/resultsDash_screenshot.png")
 
 Many composite indicators produce reports for each unit, for example the "economy profiles" in the Global Innovation Index. Typically this is a summary of the scores and ranks of the unit, possibly some figures, and maybe strengths and weaknesses.
 
-COINr allows country reports to be generated automatically. This is done via a *parameterised R markdown document*, which includes several of the tables and figures shown in this section^[See [here](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html) for more information on how parameterised documents work.]. The COINr function `getUnitReport()` generates a report for any specified unit using an example scorecard which is found in the `/inst` directory where COINr is installed on your computer. To easily find this, call:
+COINr allows country reports to be generated automatically. This is done via a *parameterised R markdown document*, which includes several of the tables and figures shown in this section^[See [here](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html) for more information on how parameterised documents work.]. The COINr function `getUnitReport()` generates a report for any specified unit using an example scorecard which is found in the `/UnitReport` directory where COINr is installed on your computer. To easily find this, call:
 
 ```{r}
 system.file("UnitReport", "unit_report_source.Rmd", package = "COINr")
 ```
 
-where the directory will different on your computer.
+where the directory will be different on your computer.
 
-Opening this document in R will give you an idea of how the parameterised document works. In short, the COIN is passed into the R Markdown document, so that anything that is inside the COIN can be accessed and used for generating tables, figures and text. The example included is just that, an example. To see how it looks, we can run:
+Opening this document in R will give you an idea of how the parameterised document works. In short, the COIN object is passed into the R Markdown document, so that anything that is inside the COIN can be accessed and used for generating tables, figures and text. The example included is just that, an example. To see how it looks, we can run:
 
 ```{r, eval=F}
-getUnitReport(COIN)
+getUnitReport(ASEM, usel = "NZL", out_type = ".html")
 ```
 
+Calling this should create an html document in your current working directory, which will look something like this:
 
-Using R Markdown it is possible to generate a unit report using parameterised documents, which means you can easily generate a large number of similar reports for different units
+```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Unit profile screenshot 1/2"}
+knitr::include_graphics("images/getUnitProfile_screenshot1.png")
+```
+```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "Unit profile screenshot 2/2"}
+knitr::include_graphics("images/getUnitProfile_screenshot2.png")
+```
+
+This is simply an example of the sort of thing that is possible, and the output can be either an html document, a Word document, or a pdf. It's important to note that if the output is pdf or a Word doc, this is a *static document* which cannot include interactive plots such as those from plotly, COINr's iplot functions and any other javascript or html widget figures. If you want to use interactive plots, but still be able to create static documents, you must install the webshot package. To do this, run:
+
+```{r, eval=F}
+install.packages("webshot")
+webshot::install_phantomjs()
+```
+
+This will effectively render the figures to html, then take a static snapshot of each figure and paste it into your static document. Of course, this loses the interactive element of these plots, but can still render nice plots depending on what you are doing. If you do not have webshot installed, and try to render interactive plots to pdf or docx, you will encounter an error.
+
+That aside, why use a parameterised document, rather than a normal R Markdown doc? Because by parameterising it, we can automatically create unit profiles for all units at once, or a subset, by inserting the relevant unit codes:
+
+```{r, eval = F}
+getUnitReport(ASEM, usel = c("AUS", "AUT", "CHN"), out_type = ".html"))
+```
+
+This generates reports for the three countries specified, but of course you can do it for all units present if you want to.
+
+Most likely if you want to use this function you will want to create a customised template that fits your requirements. To do this, copy the existing template found in the COINr directory as described above. Then make your own modifications, and set the `rmd_template` argument to point to the new template. If the output is a Word doc, you can also customise the formatting of the document by additionally including a Word template. To do this, see the [R Markdown Guide](https://bookdown.org/yihui/rmarkdown/word-document.html). In fact, browsing this book is probably a good idea in general if you are planning to generate many unit reports or other markdown reports. You many also wish to create your own function for rendering rather than using `getUnitReport()`. The code for this function can be found on [Github](https://github.com/bluefoxr/COINr/blob/master/R/coin_resultstable.R) and this may help for inspiration.
+

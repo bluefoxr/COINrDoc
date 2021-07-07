@@ -124,7 +124,7 @@ Remember that *weights are relative*, and are re-scaled to sum to 1 during aggre
 ASEM$Parameters$Weights$NewWeights <- NewWeights
 
 # Aggregate again to get new results
-ASEM <- aggregate(ASEM, agweights = "NewWeights")
+ASEM <- aggregate(ASEM, dset = "Normalised", agweights = "NewWeights")
 ```
 
 Now the `ASEM` COIN contains the updated results using the new weights. 

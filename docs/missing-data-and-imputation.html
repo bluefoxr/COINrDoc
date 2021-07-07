@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-07-02" />
+<meta name="date" content="2021-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -356,6 +356,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="19.2" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#check-calculations"><i class="fa fa-check"></i><b>19.2</b> Check calculations</a></li>
 <li class="chapter" data-level="19.3" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#indicator-statistics"><i class="fa fa-check"></i><b>19.3</b> Indicator statistics</a></li>
 <li class="chapter" data-level="19.4" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#multivariate-analysis-1"><i class="fa fa-check"></i><b>19.4</b> Multivariate analysis</a></li>
+<li class="chapter" data-level="19.5" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#weights"><i class="fa fa-check"></i><b>19.5</b> Weights</a></li>
+<li class="chapter" data-level="19.6" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#what-ifs"><i class="fa fa-check"></i><b>19.6</b> What-ifs</a></li>
+<li class="chapter" data-level="19.7" data-path="appendix-analysing-a-composite-indicator-example.html"><a href="appendix-analysing-a-composite-indicator-example.html#summing-up"><i class="fa fa-check"></i><b>19.7</b> Summing up</a></li>
 </ul></li>
 <li class="chapter" data-level="20" data-path="acknowledgements.html"><a href="acknowledgements.html"><i class="fa fa-check"></i><b>20</b> Acknowledgements</a></li>
 <li class="divider"></li>
@@ -558,7 +561,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Finally, we can use a regression-based <em>expectation maximisation</em> algorithm, imported via the <code>AMELIA</code> package. This estimates missing values using the values of the other indicators <em>and</em> the other units. This effectively involves regressing each indicator on other indicators, and predicting missing values.</p>
 <p>A catch of this approach is that if the number of units is small compared to the number of indicators, there will not be enough observations to estimate the parameters of the model. This is definitely the case if you have more indicators than observations. To use the EM algorithm in this case, imputation is performed on aggregation groups. So, to use the EM approach in <code>COINr</code>, you have to specify the aggregation level to group indicators by.</p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="missing-data-and-imputation.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># impute using EM, grouping indicators inside their pillars (level 2)</span></span>
-<span id="cb53-2"><a href="missing-data-and-imputation.html#cb53-2" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">impute</span>(ASEM, <span class="at">imtype =</span> <span class="st">&quot;EM&quot;</span>, <span class="at">EMaglev =</span> <span class="dv">2</span>)</span>
+<span id="cb53-2"><a href="missing-data-and-imputation.html#cb53-2" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">impute</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>, <span class="at">imtype =</span> <span class="st">&quot;EM&quot;</span>, <span class="at">EMaglev =</span> <span class="dv">2</span>)</span>
 <span id="cb53-3"><a href="missing-data-and-imputation.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Missing data points detected = 63</span></span>
 <span id="cb53-4"><a href="missing-data-and-imputation.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Missing data points imputed = 63, using method = EM</span></span></code></pre></div>
 <p>This works, because the ASEM data set has 51 units and no more thann eight indicators per pillar. However, if we were to use <code>EMaglev = 3</code>, i.e. try imputing indicators grouped into the two sub-indexes, it does not work.</p>

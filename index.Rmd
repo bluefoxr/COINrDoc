@@ -28,7 +28,7 @@ COINr is currently still under development, therefore the package itself, and th
 
 ## Installation
 
-Although COINr is under development, a pre-beta version can be installed via Github. First, install the `devtools` package if you don't already have it, then run:
+COINr is not yet on CRAN but can be installed via Github. First, install the `devtools` package if you don't already have it, then run:
 
 ```{r InstallCOINr, eval=FALSE}
 devtools::install_github("bluefoxr/COINr")
@@ -123,7 +123,7 @@ Currently, the COIN (composite indicator) only contains the input data set and o
 ```{r demo_construct, collapse=T}
 
 # denominate data using specifications in ASEMIndMeta
-ASEM <- denominate(ASEM)
+ASEM <- denominate(ASEM, dset = "Raw")
 # normalise data
 ASEM <- normalise(ASEM, dset = "Denominated")
 # Aggregate normalised data

@@ -74,7 +74,7 @@ library(COINr)
 # Assemble data and metadata into a COIN
 ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta, AggMeta = COINr::ASEMAggMeta)
 # Denominate as specified in metadata
-ASEM <- denominate(ASEM)
+ASEM <- denominate(ASEM, dset = "Raw")
 # Normalise using default method: min-max scaled between 0 and 100.
 ASEM <- normalise(ASEM, dset = "Denominated")
 

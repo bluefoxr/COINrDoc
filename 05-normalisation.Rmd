@@ -89,7 +89,7 @@ As an input, it takes a COIN or data frame, as usual. It outputs a new dataset t
 library(COINr)
 # Build ASEM index up to denomination
 ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta, AggMeta = COINr::ASEMAggMeta)
-ASEM <- denominate(ASEM)
+ASEM <- denominate(ASEM, dset = "Raw")
 
 # Default normalisation (min max scaled between 0 and 100) on denominated data set
 ASEM <- normalise(ASEM, dset = "Denominated")

@@ -142,7 +142,7 @@ A catch of this approach is that if the number of units is small compared to the
 
 ```{r, collapse=T}
 # impute using EM, grouping indicators inside their pillars (level 2)
-ASEM <- impute(ASEM, imtype = "EM", EMaglev = 2)
+ASEM <- impute(ASEM, dset = "Raw", imtype = "EM", EMaglev = 2)
 ```
 
 This works, because the ASEM data set has 51 units and no more thann eight indicators per pillar. However, if we were to use `EMaglev = 3`, i.e. try imputing indicators grouped into the two sub-indexes, it does not work.

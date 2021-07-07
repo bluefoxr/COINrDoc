@@ -83,7 +83,7 @@ ASEM$Input$IndMeta
 COINr's `denominate()` function knows where to look for each of these ingredients, so we can simply call:
 
 ```{r}
-ASEM <- denominate(ASEM)
+ASEM <- denominate(ASEM, dset = "Raw")
 ```
 
 which will return a new data set `.Data$Denominated`. To return the dataset directly, rather than outputting an updated COIN, you can also set `out2 = "df"` (this is a common argument to many functions which can be useful if you want to examine the result directly).

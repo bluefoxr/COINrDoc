@@ -72,6 +72,8 @@ Now, when we regenerate the COIN using `regen()`, it will insert this extra line
 
 Using custom code may seem a bit confusing but it adds an extra layer of flexibility. It is however intended for small snippets of custom code, rather than large blocks of custom operations. If you are doing a lot of operations outside COINr, it may be better to do this in your own dedicated script or function, rather than trying to encode absolutely everything inside the COIN.
 
+Before moving on, it's worth reiterating that regenerating a COIN runs the construction functions in the order they appear in the Method folder. That means that if you build an index with no imputation, for example, and then later decide to make a copy which now includes imputation, you would have to insert the `.Method$imputation` entry in the place where it should occur. An easy way to do this is using R's `append()` function. 
+
 ## Adjustments
 
 Let us now explore how the COIN can be adjusted and regenerated. This will (hopefully) clarify why regenerating is a useful thing.
