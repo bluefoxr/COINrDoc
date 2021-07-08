@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-07-07" />
+<meta name="date" content="2021-07-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -647,7 +647,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb118-103"><a href="sensitivity-analysis.html#cb118-103" aria-hidden="true" tabindex="-1"></a><span class="do">## Iteration 98 of 100 ... 98% complete</span></span>
 <span id="cb118-104"><a href="sensitivity-analysis.html#cb118-104" aria-hidden="true" tabindex="-1"></a><span class="do">## Iteration 99 of 100 ... 99% complete</span></span>
 <span id="cb118-105"><a href="sensitivity-analysis.html#cb118-105" aria-hidden="true" tabindex="-1"></a><span class="do">## Iteration 100 of 100 ... 100% complete</span></span>
-<span id="cb118-106"><a href="sensitivity-analysis.html#cb118-106" aria-hidden="true" tabindex="-1"></a><span class="do">## Time elapsed = 14.31s, average 0.14s/rep.</span></span></code></pre></div>
+<span id="cb118-106"><a href="sensitivity-analysis.html#cb118-106" aria-hidden="true" tabindex="-1"></a><span class="do">## Time elapsed = 15.22s, average 0.15s/rep.</span></span></code></pre></div>
 <p>Running a sensitivity/uncertainty analysis can be time consuming and depends on the complexity of the model and the number of runs specified. This particular analysis took less than a minute for me, but could take more or less time depending on the speed of your computer.</p>
 <p>The output of the analysis is a list with several entries:</p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="sensitivity-analysis.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co"># see summary of analysis</span></span>
@@ -667,68 +667,68 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This plot orders the units by their nominal ranks, and plots the median rank across all the replications of the uncertainty analysis, as well as the 5th and 95th percentile rank values. The ranks are the focus of an uncertainty analysis because scores can change drastically depending on the method. Ranks are the only comparable metric across different composite indicator methodologies<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>.</p>
 <p>Let us now look at the elements in <code>SAresults</code>. The data frames <code>SAresults$Scores</code> and <code>SAresults$Ranks</code> give the scores and ranks respectively for each replication of the composite indicator. The <code>SAresults$Parameters</code> data frame gives the uncertain parameter values used for each iteration:</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="sensitivity-analysis.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(SAresults<span class="sc">$</span>Parameters)</span>
-<span id="cb121-2"><a href="sensitivity-analysis.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="do">##          imtype    ntype</span></span>
-<span id="cb121-3"><a href="sensitivity-analysis.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1          none   minmax</span></span>
-<span id="cb121-4"><a href="sensitivity-analysis.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 indgroup_mean     rank</span></span>
-<span id="cb121-5"><a href="sensitivity-analysis.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3          none dist2max</span></span>
-<span id="cb121-6"><a href="sensitivity-analysis.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4      ind_mean dist2max</span></span>
-<span id="cb121-7"><a href="sensitivity-analysis.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5          none dist2max</span></span>
-<span id="cb121-8"><a href="sensitivity-analysis.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6          none   minmax</span></span></code></pre></div>
+<span id="cb121-2"><a href="sensitivity-analysis.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="do">##          imtype  ntype</span></span>
+<span id="cb121-3"><a href="sensitivity-analysis.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      ind_mean   rank</span></span>
+<span id="cb121-4"><a href="sensitivity-analysis.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2          none   rank</span></span>
+<span id="cb121-5"><a href="sensitivity-analysis.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3      ind_mean   rank</span></span>
+<span id="cb121-6"><a href="sensitivity-analysis.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 indgroup_mean minmax</span></span>
+<span id="cb121-7"><a href="sensitivity-analysis.html#cb121-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 indgroup_mean   rank</span></span>
+<span id="cb121-8"><a href="sensitivity-analysis.html#cb121-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      ind_mean   rank</span></span></code></pre></div>
 <p>Here, each column is a parameter that was varied in the analysis. Note that this does not include the weights used for each iteration since these are themselves data frames.</p>
 <p>The <code>SAresults$RankStats</code> table gives a summary of the main statistics of the ranks of each unit, including mean, median, and percentiles:</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="sensitivity-analysis.html#cb122-1" aria-hidden="true" tabindex="-1"></a>SAresults<span class="sc">$</span>RankStats</span>
 <span id="cb122-2"><a href="sensitivity-analysis.html#cb122-2" aria-hidden="true" tabindex="-1"></a><span class="do">##    UnitCode Nominal  Mean Median    Q5   Q95</span></span>
-<span id="cb122-3"><a href="sensitivity-analysis.html#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       AUT       7  6.91    7.0  5.00  8.00</span></span>
-<span id="cb122-4"><a href="sensitivity-analysis.html#cb122-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       BEL       5  5.70    5.0  4.00  9.00</span></span>
-<span id="cb122-5"><a href="sensitivity-analysis.html#cb122-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       BGR      30 29.49   29.0 28.00 31.00</span></span>
-<span id="cb122-6"><a href="sensitivity-analysis.html#cb122-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4       HRV      18 20.53   20.0 17.00 25.05</span></span>
-<span id="cb122-7"><a href="sensitivity-analysis.html#cb122-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5       CYP      29 29.97   30.0 28.00 33.05</span></span>
-<span id="cb122-8"><a href="sensitivity-analysis.html#cb122-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6       CZE      17 17.03   17.0 15.00 20.00</span></span>
-<span id="cb122-9"><a href="sensitivity-analysis.html#cb122-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 7       DNK       3  2.49    2.0  2.00  4.05</span></span>
-<span id="cb122-10"><a href="sensitivity-analysis.html#cb122-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 8       EST      22 19.69   18.0 12.95 26.05</span></span>
-<span id="cb122-11"><a href="sensitivity-analysis.html#cb122-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 9       FIN      13 13.36   14.0 11.00 15.00</span></span>
-<span id="cb122-12"><a href="sensitivity-analysis.html#cb122-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 10      FRA      21 20.85   20.5 18.00 24.00</span></span>
-<span id="cb122-13"><a href="sensitivity-analysis.html#cb122-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 11      DEU       9  8.84    8.0  7.00 13.00</span></span>
-<span id="cb122-14"><a href="sensitivity-analysis.html#cb122-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 12      GRC      32 32.12   32.0 31.00 34.00</span></span>
-<span id="cb122-15"><a href="sensitivity-analysis.html#cb122-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 13      HUN      20 21.10   21.0 19.00 24.00</span></span>
-<span id="cb122-16"><a href="sensitivity-analysis.html#cb122-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 14      IRL      12 12.22   12.0 10.00 16.00</span></span>
-<span id="cb122-17"><a href="sensitivity-analysis.html#cb122-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 15      ITA      28 27.97   28.0 26.95 29.05</span></span>
-<span id="cb122-18"><a href="sensitivity-analysis.html#cb122-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 16      LVA      23 21.91   22.0 20.00 24.00</span></span>
-<span id="cb122-19"><a href="sensitivity-analysis.html#cb122-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 17      LTU      16 14.56   15.0 10.00 18.00</span></span>
-<span id="cb122-20"><a href="sensitivity-analysis.html#cb122-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 18      LUX       8  9.11   10.0  6.00 12.00</span></span>
-<span id="cb122-21"><a href="sensitivity-analysis.html#cb122-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 19      MLT      10 13.58   12.0  9.00 19.00</span></span>
-<span id="cb122-22"><a href="sensitivity-analysis.html#cb122-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 20      NLD       2  3.18    3.0  2.00  4.00</span></span>
-<span id="cb122-23"><a href="sensitivity-analysis.html#cb122-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 21      NOR       4  3.59    3.0  2.00  5.00</span></span>
-<span id="cb122-24"><a href="sensitivity-analysis.html#cb122-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 22      POL      26 25.92   26.0 24.00 28.00</span></span>
-<span id="cb122-25"><a href="sensitivity-analysis.html#cb122-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 23      PRT      27 23.15   26.0 15.00 27.00</span></span>
-<span id="cb122-26"><a href="sensitivity-analysis.html#cb122-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 24      ROU      25 23.32   24.0 17.95 27.00</span></span>
-<span id="cb122-27"><a href="sensitivity-analysis.html#cb122-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 25      SVK      24 23.66   24.0 21.00 26.00</span></span>
-<span id="cb122-28"><a href="sensitivity-analysis.html#cb122-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 26      SVN      11  9.70    9.0  8.00 12.00</span></span>
-<span id="cb122-29"><a href="sensitivity-analysis.html#cb122-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 27      ESP      19 22.62   23.0 18.00 27.00</span></span>
-<span id="cb122-30"><a href="sensitivity-analysis.html#cb122-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 28      SWE       6  5.92    6.0  5.00  7.00</span></span>
+<span id="cb122-3"><a href="sensitivity-analysis.html#cb122-3" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       AUT       7  6.97    7.0  5.00  8.00</span></span>
+<span id="cb122-4"><a href="sensitivity-analysis.html#cb122-4" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       BEL       5  5.49    5.0  3.00  9.00</span></span>
+<span id="cb122-5"><a href="sensitivity-analysis.html#cb122-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       BGR      30 29.54   30.0 29.00 30.05</span></span>
+<span id="cb122-6"><a href="sensitivity-analysis.html#cb122-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 4       HRV      18 20.53   20.0 17.95 25.00</span></span>
+<span id="cb122-7"><a href="sensitivity-analysis.html#cb122-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 5       CYP      29 29.93   30.0 28.00 32.05</span></span>
+<span id="cb122-8"><a href="sensitivity-analysis.html#cb122-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 6       CZE      17 17.07   17.0 16.00 19.00</span></span>
+<span id="cb122-9"><a href="sensitivity-analysis.html#cb122-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 7       DNK       3  2.63    2.0  2.00  4.00</span></span>
+<span id="cb122-10"><a href="sensitivity-analysis.html#cb122-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 8       EST      22 19.15   18.0 12.95 26.00</span></span>
+<span id="cb122-11"><a href="sensitivity-analysis.html#cb122-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 9       FIN      13 13.40   14.0 11.00 15.05</span></span>
+<span id="cb122-12"><a href="sensitivity-analysis.html#cb122-12" aria-hidden="true" tabindex="-1"></a><span class="do">## 10      FRA      21 21.07   21.0 18.00 24.00</span></span>
+<span id="cb122-13"><a href="sensitivity-analysis.html#cb122-13" aria-hidden="true" tabindex="-1"></a><span class="do">## 11      DEU       9  9.22    9.0  7.00 13.00</span></span>
+<span id="cb122-14"><a href="sensitivity-analysis.html#cb122-14" aria-hidden="true" tabindex="-1"></a><span class="do">## 12      GRC      32 32.08   32.0 31.00 34.00</span></span>
+<span id="cb122-15"><a href="sensitivity-analysis.html#cb122-15" aria-hidden="true" tabindex="-1"></a><span class="do">## 13      HUN      20 20.92   21.0 19.00 24.00</span></span>
+<span id="cb122-16"><a href="sensitivity-analysis.html#cb122-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 14      IRL      12 12.28   12.0 10.00 16.00</span></span>
+<span id="cb122-17"><a href="sensitivity-analysis.html#cb122-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 15      ITA      28 28.02   28.0 26.00 29.00</span></span>
+<span id="cb122-18"><a href="sensitivity-analysis.html#cb122-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 16      LVA      23 21.91   22.0 20.00 25.00</span></span>
+<span id="cb122-19"><a href="sensitivity-analysis.html#cb122-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 17      LTU      16 14.73   16.0 10.95 17.00</span></span>
+<span id="cb122-20"><a href="sensitivity-analysis.html#cb122-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 18      LUX       8  8.65    8.0  6.00 12.00</span></span>
+<span id="cb122-21"><a href="sensitivity-analysis.html#cb122-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 19      MLT      10 13.28   12.0  9.00 19.00</span></span>
+<span id="cb122-22"><a href="sensitivity-analysis.html#cb122-22" aria-hidden="true" tabindex="-1"></a><span class="do">## 20      NLD       2  2.98    3.0  2.00  4.00</span></span>
+<span id="cb122-23"><a href="sensitivity-analysis.html#cb122-23" aria-hidden="true" tabindex="-1"></a><span class="do">## 21      NOR       4  3.66    4.0  2.00  5.00</span></span>
+<span id="cb122-24"><a href="sensitivity-analysis.html#cb122-24" aria-hidden="true" tabindex="-1"></a><span class="do">## 22      POL      26 26.07   26.0 24.95 28.00</span></span>
+<span id="cb122-25"><a href="sensitivity-analysis.html#cb122-25" aria-hidden="true" tabindex="-1"></a><span class="do">## 23      PRT      27 23.47   27.0 15.95 27.00</span></span>
+<span id="cb122-26"><a href="sensitivity-analysis.html#cb122-26" aria-hidden="true" tabindex="-1"></a><span class="do">## 24      ROU      25 24.00   25.0 18.95 27.00</span></span>
+<span id="cb122-27"><a href="sensitivity-analysis.html#cb122-27" aria-hidden="true" tabindex="-1"></a><span class="do">## 25      SVK      24 23.70   24.0 22.00 25.05</span></span>
+<span id="cb122-28"><a href="sensitivity-analysis.html#cb122-28" aria-hidden="true" tabindex="-1"></a><span class="do">## 26      SVN      11  9.79   10.0  7.95 12.00</span></span>
+<span id="cb122-29"><a href="sensitivity-analysis.html#cb122-29" aria-hidden="true" tabindex="-1"></a><span class="do">## 27      ESP      19 22.49   22.0 18.00 27.00</span></span>
+<span id="cb122-30"><a href="sensitivity-analysis.html#cb122-30" aria-hidden="true" tabindex="-1"></a><span class="do">## 28      SWE       6  5.98    6.0  5.00  7.00</span></span>
 <span id="cb122-31"><a href="sensitivity-analysis.html#cb122-31" aria-hidden="true" tabindex="-1"></a><span class="do">## 29      CHE       1  1.00    1.0  1.00  1.00</span></span>
-<span id="cb122-32"><a href="sensitivity-analysis.html#cb122-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 30      GBR      15 13.97   14.5 11.00 17.00</span></span>
-<span id="cb122-33"><a href="sensitivity-analysis.html#cb122-33" aria-hidden="true" tabindex="-1"></a><span class="do">## 31      AUS      35 36.05   35.0 34.00 39.05</span></span>
-<span id="cb122-34"><a href="sensitivity-analysis.html#cb122-34" aria-hidden="true" tabindex="-1"></a><span class="do">## 32      BGD      46 44.68   45.0 39.95 49.00</span></span>
-<span id="cb122-35"><a href="sensitivity-analysis.html#cb122-35" aria-hidden="true" tabindex="-1"></a><span class="do">## 33      BRN      40 39.62   39.0 34.95 46.00</span></span>
-<span id="cb122-36"><a href="sensitivity-analysis.html#cb122-36" aria-hidden="true" tabindex="-1"></a><span class="do">## 34      KHM      37 36.28   36.0 34.00 39.00</span></span>
-<span id="cb122-37"><a href="sensitivity-analysis.html#cb122-37" aria-hidden="true" tabindex="-1"></a><span class="do">## 35      CHN      49 49.63   50.0 48.00 51.00</span></span>
-<span id="cb122-38"><a href="sensitivity-analysis.html#cb122-38" aria-hidden="true" tabindex="-1"></a><span class="do">## 36      IND      45 45.31   46.0 42.00 48.00</span></span>
-<span id="cb122-39"><a href="sensitivity-analysis.html#cb122-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 37      IDN      43 45.25   45.0 41.00 49.00</span></span>
-<span id="cb122-40"><a href="sensitivity-analysis.html#cb122-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 38      JPN      34 33.46   34.0 31.00 35.00</span></span>
-<span id="cb122-41"><a href="sensitivity-analysis.html#cb122-41" aria-hidden="true" tabindex="-1"></a><span class="do">## 39      KAZ      47 45.75   46.0 41.95 49.00</span></span>
-<span id="cb122-42"><a href="sensitivity-analysis.html#cb122-42" aria-hidden="true" tabindex="-1"></a><span class="do">## 40      KOR      31 31.16   31.0 29.00 34.00</span></span>
-<span id="cb122-43"><a href="sensitivity-analysis.html#cb122-43" aria-hidden="true" tabindex="-1"></a><span class="do">## 41      LAO      48 41.86   41.0 35.00 49.00</span></span>
-<span id="cb122-44"><a href="sensitivity-analysis.html#cb122-44" aria-hidden="true" tabindex="-1"></a><span class="do">## 42      MYS      39 41.03   40.0 36.95 47.00</span></span>
-<span id="cb122-45"><a href="sensitivity-analysis.html#cb122-45" aria-hidden="true" tabindex="-1"></a><span class="do">## 43      MNG      44 45.56   46.0 40.00 49.00</span></span>
-<span id="cb122-46"><a href="sensitivity-analysis.html#cb122-46" aria-hidden="true" tabindex="-1"></a><span class="do">## 44      MMR      41 40.91   41.0 36.00 46.05</span></span>
-<span id="cb122-47"><a href="sensitivity-analysis.html#cb122-47" aria-hidden="true" tabindex="-1"></a><span class="do">## 45      NZL      33 33.04   33.0 31.00 35.05</span></span>
-<span id="cb122-48"><a href="sensitivity-analysis.html#cb122-48" aria-hidden="true" tabindex="-1"></a><span class="do">## 46      PAK      50 48.04   48.0 43.95 50.00</span></span>
-<span id="cb122-49"><a href="sensitivity-analysis.html#cb122-49" aria-hidden="true" tabindex="-1"></a><span class="do">## 47      PHL      38 40.79   41.0 37.00 45.00</span></span>
-<span id="cb122-50"><a href="sensitivity-analysis.html#cb122-50" aria-hidden="true" tabindex="-1"></a><span class="do">## 48      RUS      51 50.60   51.0 50.00 51.00</span></span>
-<span id="cb122-51"><a href="sensitivity-analysis.html#cb122-51" aria-hidden="true" tabindex="-1"></a><span class="do">## 49      SGP      14 14.42   14.0  9.00 21.00</span></span>
-<span id="cb122-52"><a href="sensitivity-analysis.html#cb122-52" aria-hidden="true" tabindex="-1"></a><span class="do">## 50      THA      42 41.73   42.0 39.00 45.00</span></span>
-<span id="cb122-53"><a href="sensitivity-analysis.html#cb122-53" aria-hidden="true" tabindex="-1"></a><span class="do">## 51      VNM      36 37.37   37.0 36.00 39.00</span></span></code></pre></div>
+<span id="cb122-32"><a href="sensitivity-analysis.html#cb122-32" aria-hidden="true" tabindex="-1"></a><span class="do">## 30      GBR      15 14.12   15.0 11.00 16.00</span></span>
+<span id="cb122-33"><a href="sensitivity-analysis.html#cb122-33" aria-hidden="true" tabindex="-1"></a><span class="do">## 31      AUS      35 35.86   35.0 34.00 39.05</span></span>
+<span id="cb122-34"><a href="sensitivity-analysis.html#cb122-34" aria-hidden="true" tabindex="-1"></a><span class="do">## 32      BGD      46 45.06   45.0 39.95 49.00</span></span>
+<span id="cb122-35"><a href="sensitivity-analysis.html#cb122-35" aria-hidden="true" tabindex="-1"></a><span class="do">## 33      BRN      40 39.01   38.0 35.00 45.05</span></span>
+<span id="cb122-36"><a href="sensitivity-analysis.html#cb122-36" aria-hidden="true" tabindex="-1"></a><span class="do">## 34      KHM      37 36.61   37.0 34.00 39.00</span></span>
+<span id="cb122-37"><a href="sensitivity-analysis.html#cb122-37" aria-hidden="true" tabindex="-1"></a><span class="do">## 35      CHN      49 49.38   50.0 46.95 51.00</span></span>
+<span id="cb122-38"><a href="sensitivity-analysis.html#cb122-38" aria-hidden="true" tabindex="-1"></a><span class="do">## 36      IND      45 45.52   46.0 42.00 48.00</span></span>
+<span id="cb122-39"><a href="sensitivity-analysis.html#cb122-39" aria-hidden="true" tabindex="-1"></a><span class="do">## 37      IDN      43 45.57   45.0 42.00 49.00</span></span>
+<span id="cb122-40"><a href="sensitivity-analysis.html#cb122-40" aria-hidden="true" tabindex="-1"></a><span class="do">## 38      JPN      34 33.55   34.0 30.95 35.00</span></span>
+<span id="cb122-41"><a href="sensitivity-analysis.html#cb122-41" aria-hidden="true" tabindex="-1"></a><span class="do">## 39      KAZ      47 45.50   45.0 42.00 49.00</span></span>
+<span id="cb122-42"><a href="sensitivity-analysis.html#cb122-42" aria-hidden="true" tabindex="-1"></a><span class="do">## 40      KOR      31 31.06   31.0 29.00 33.00</span></span>
+<span id="cb122-43"><a href="sensitivity-analysis.html#cb122-43" aria-hidden="true" tabindex="-1"></a><span class="do">## 41      LAO      48 42.60   41.0 35.00 49.00</span></span>
+<span id="cb122-44"><a href="sensitivity-analysis.html#cb122-44" aria-hidden="true" tabindex="-1"></a><span class="do">## 42      MYS      39 40.09   39.5 36.00 46.00</span></span>
+<span id="cb122-45"><a href="sensitivity-analysis.html#cb122-45" aria-hidden="true" tabindex="-1"></a><span class="do">## 43      MNG      44 45.22   46.0 40.00 49.00</span></span>
+<span id="cb122-46"><a href="sensitivity-analysis.html#cb122-46" aria-hidden="true" tabindex="-1"></a><span class="do">## 44      MMR      41 41.24   41.0 37.00 46.05</span></span>
+<span id="cb122-47"><a href="sensitivity-analysis.html#cb122-47" aria-hidden="true" tabindex="-1"></a><span class="do">## 45      NZL      33 32.96   33.0 31.00 35.05</span></span>
+<span id="cb122-48"><a href="sensitivity-analysis.html#cb122-48" aria-hidden="true" tabindex="-1"></a><span class="do">## 46      PAK      50 48.28   49.0 45.00 50.00</span></span>
+<span id="cb122-49"><a href="sensitivity-analysis.html#cb122-49" aria-hidden="true" tabindex="-1"></a><span class="do">## 47      PHL      38 40.92   41.0 38.00 44.00</span></span>
+<span id="cb122-50"><a href="sensitivity-analysis.html#cb122-50" aria-hidden="true" tabindex="-1"></a><span class="do">## 48      RUS      51 50.66   51.0 50.00 51.00</span></span>
+<span id="cb122-51"><a href="sensitivity-analysis.html#cb122-51" aria-hidden="true" tabindex="-1"></a><span class="do">## 49      SGP      14 13.66   13.0  9.95 19.00</span></span>
+<span id="cb122-52"><a href="sensitivity-analysis.html#cb122-52" aria-hidden="true" tabindex="-1"></a><span class="do">## 50      THA      42 41.83   42.0 39.00 45.00</span></span>
+<span id="cb122-53"><a href="sensitivity-analysis.html#cb122-53" aria-hidden="true" tabindex="-1"></a><span class="do">## 51      VNM      36 37.29   37.0 36.00 39.00</span></span></code></pre></div>
 <p>It also includes the nominal ranks for comparison. Finally, <code>SAresults$Nominal</code> gives a summary of nominal ranks and scores.</p>
 <p>If this information is not enough, the <code>store_results</code> argument to <code>sensitivity()</code> gives options of what information to store for each iteration. For example, <code>store_results = "results+method"</code> returns the information described so far, plus the full .$Method list of each replication (i.e. the full specifications used to build the composite indicator). Setting <code>store_results = "results+COIN"</code> stores all results and the complete COIN of each replication. Of course, this latter option in particular will take up more memory.</p>
 </div>

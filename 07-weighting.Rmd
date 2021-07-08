@@ -131,8 +131,6 @@ Now the `ASEM` COIN contains the updated results using the new weights.
 
 ### Interactive re-weighting with ReW8R
 
-*NOTE: at this moment, rew8r is temporarily out of action until I get it updated to the new weight format.*
-
 Re-weighting manually, as we have just seen, is quite simple. However, depending on your objectives, weighting can be an iterative process along the lines of:
 
 1. Try a set of weights
