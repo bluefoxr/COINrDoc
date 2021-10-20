@@ -38,7 +38,7 @@ Let's explore the options available in COINr
 
 ## Data checks and screening
 
-A first step is to check in detail how much data missing. The function `checkData()` does this, and also has the option to screen units based on data availability.
+A first step is to check in detail how much data are missing. The function `checkData()` does this, and also has the option to screen units based on data availability.
 
 ```{r, collapse=T}
 # Assemble ASEM data first
@@ -49,38 +49,38 @@ ASEM <- checkData(ASEM, dset = "Raw")
 head(ASEM$Analysis$Raw$MissDatSummary)
 ```
 
-*Note: to include updated checkData() function with screening for zeros.*
-
 The `MissDataSummary` table shows the unit code, number of missing observations, and overall percentage data availability. Finally, the `LowDataAll` column can be used as a flag for units with data availability lower than a set amount `ind_thresh` which is one of the input arguments to `checkData()`. ASEM indicators were already chosen to fulfill minimum data requirements, for which reason the data availability is all above the default of 2/3.
 
-We will set the minimum data threshold a bit higher, and in doing so also demonstrate another feature of `checkData()`, which is to automatically screen units based on data availability. Setting `unit_screen = TRUE` will generate a new data set `.$Data$Screened` which only includes units with data availability above the set threshold. This data set can then be passed on to subsequent operations.
+We will set the minimum data threshold a bit higher, and in doing so also demonstrate another feature of `checkData()`, which is to automatically screen units based on data availability. Setting `unit_screen = "byNA"` will generate a new data set `.$Data$Screened` which only includes units with data availability above the set threshold. This data set can then be passed on to subsequent operations.
 
 ```{r}
 # Missing data check on the raw data set
-ASEM <- checkData(ASEM, dset = "Raw", ind_thresh = 0.85, unit_screen = TRUE)
+ASEM <- checkData(ASEM, dset = "Raw", ind_thresh = 0.85, unit_screen = "byNA")
 ASEM$Analysis$Raw$RemovedUnits
 ```
 
-This generates a new data set `.$Data$Screened` with the removed units recorded in `.$Analysis$Raw$RemovedUnits`, which in this case are Brunei, Laos and Myanmar. As a final option to mention, you can manually include or exclude units. So for example, a unit that doesn't have sufficient data coverage could be manually included anyway, and another unit could be excluded.
+This generates a new data set `.$Data$Screened` with the removed units recorded in `.$Analysis$Raw$RemovedUnits`, which in this case are Brunei, Laos and Myanmar. It is also possible to screen units based on the number of zero values (`unit_screen = "byzeros"`) or both (`unit_screen = "byNAandzeros"`). Screening by zeros can be useful to exclude units which have zero values for all or most indicators, and can skew distributions.
+
+As a final option to mention, you can manually include or exclude units. So for example, a unit that doesn't have sufficient data coverage could be manually included anyway, and another unit could be excluded.
 
 ```{r}
 # Countries to include and exclude
 df <- data.frame(UnitCode = c("AUT","BRN"), Status = c("Exclude", "Include"))
 
 # Missing data check on the raw data set
-ASEM <- checkData(ASEM, dset = "Raw", ind_thresh = 0.85, unit_screen = TRUE, Force = df)
+ASEM <- checkData(ASEM, dset = "Raw", ind_thresh = 0.85, unit_screen = "byNA", Force = df)
 ASEM$Analysis$Raw$RemovedUnits
 ```
 
 Now AUT has been excluded, even though it had sufficient data coverage, and BRN has been manually included, even though it didn't. The intention is to give some flexibility to make exceptions for hard rules.
 
-The other output of interest from `checkData()` is missing data by group:
+The other output of interest from `checkData()` is missing data by groups:
 
 ```{r}
 head(ASEM$Analysis$Raw$MissDatByGroup[30:40,])
 ```
 
-This gives the percentage indicator data availability inside each aggregation group.
+This gives the percentage indicator data availability inside each aggregation group. It's worth mentioning here that on aggregation, it is possible to set a data availability threshold for aggregation groups, below which an aggregate score returns `NA`. This is explained more in the chapter on [Aggregation].
 
 ## Imputation in COINr
 
@@ -145,8 +145,10 @@ A catch of this approach is that if the number of units is small compared to the
 ASEM <- impute(ASEM, dset = "Raw", imtype = "EM", EMaglev = 2)
 ```
 
-This works, because the ASEM data set has 51 units and no more thann eight indicators per pillar. However, if we were to use `EMaglev = 3`, i.e. try imputing indicators grouped into the two sub-indexes, it does not work.
+This works, because the ASEM data set has 51 units and no more than eight indicators per pillar. However, if we were to use `EMaglev = 3`, i.e. try imputing indicators grouped into the two sub-indexes, it does not work.
 
 Finding the right aggregation level to impute at might involve a bit of trial and error, but the advantage of imputing by groups of indicators is that aggregation groups are usually composed of indicators that are similar in some respect. This makes it more likely that they are good predictors of the other indicators in their group.
 
 The `AMELIA` package offers many more options for imputation that are not available through the `impute()` function, such as bootstrapping, time-series imputation and more. As with plotting packages `COINr` aims to provide an easy and quick interface to standard imputation in `AMELIA`, but if you want to have full control you should use the `AMELIA` package directly. Other good imputation options are the [`MICE`](https://cran.r-project.org/web/packages/mice/index.html) package (Multivariate Imputation via Chained Equations) and the [`missForest` ](https://cran.rstudio.com/web/packages/missForest/index.html) package (using random forests).
+
+Finally, if you are interested in imputing data over time, i.e. using the most recent data point available with panel data, go back to the [Putting everything together] section, which explains how `assemble()` can be used to extract a single time point from panel data and impute using the latest year. This is deliberately done at the assembly stage because once constructed, a COIN represents only a single year of data.

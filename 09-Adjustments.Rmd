@@ -52,7 +52,7 @@ It is possible to also include "custom" chunks of code inside the COIN. Custom c
 
 More specifically, custom code chunks are written as a named list. The **name** of the item in the list specifies *when* to perform the operation. For example, "after_treat" means to perform this immediately after the treatment step. Other options are e.g. "after_normalise" or "after_impute" -- in general it should be "after_" followed by a name of one of the names of the construction functions.
 
-The corresponding **value** in the list should be an operation which *must* be enclosed in the `quote()` function. Clearly, the list can feature multiple operations at different points in construction.
+The corresponding **value** in the list should be an operation which *must* be enclosed in the `quote()` function. Clearly, the list can feature multiple operations at different points in construction. The COIN is referred to by the generic name `COIN`, rather than the name you have assigned to your COIN.
 
 This is slightly complicated, but can be clarified a bit with an example. Let's imagine that after Winsorisation, we would like to "reset" one of the Winsorised points to its original value. This is currently not possible inside the `treat()` function so has to be done manually. But we would like this operation to be kept when we regenerate the index with variations in methodology (e.g. trying different aggregation functions, weights, etc.).
 
@@ -60,15 +60,15 @@ We create a list with one operation: resetting the point after the treatment ste
 
 ```{r}
 # Create list. NOTE the use of the quote() function!
-custlist = list(after_treat = quote(ASEM$Data$Treated$Bord[ASEM$Data$Treated$UnitCode=="BEL"] <- ASEM2$Data$Imputed$Bord[ASEM$Data$Imputed$UnitCode=="BEL"]))
+custlist = list(after_treat = quote(COIN$Data$Treated$Bord[COIN$Data$Treated$UnitCode=="BEL"] <- COIN$Data$Imputed$Bord[COIN$Data$Imputed$UnitCode=="BEL"]))
 
 # Add the list to the $Method$Custom folder
-ASEM2$Method$Custom <- custlist
+ASEM$Method$Custom <- custlist
 ```
 
 Specifically, we have replaced the Winsorised value of Belgium, for the "Bord" indicator, with its imputed value (i.e. the value it had before it was treated).
 
-Now, when we regenerate the COIN using `regen()`, it will insert this extra line of code immediately after the treatment step.
+Now, when we regenerate the COIN using `regen()`, it will insert this extra line of code immediately after the treatment step. Clearly, anything we refer to in this custom code must be available at that step in the construction. For example, we can't refer to the aggregated data set if the data has not yet been aggregated.
 
 Using custom code may seem a bit confusing but it adds an extra layer of flexibility. It is however intended for small snippets of custom code, rather than large blocks of custom operations. If you are doing a lot of operations outside COINr, it may be better to do this in your own dedicated script or function, rather than trying to encode absolutely everything inside the COIN.
 

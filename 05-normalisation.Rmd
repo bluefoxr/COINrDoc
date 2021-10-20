@@ -66,6 +66,12 @@ where $x_u$ is the value of unit $u$ in the indicator. This is useful for benchm
 $$ \tilde{x} = \text{min} \left[1, \  1 - \frac{\text{targ}(x) - x}{\text{max}(x) - \text{min}(x)} \right]$$
 where $\text{targ}(x)$ is the target for the indicator. In this case, any value that exceeds the target is set to 1, i.e. exceeding the target is counted the same as exactly meeting it. There is also an issue of what to use to scale the distance: here the range of the indicator is used, but one could also use $\text{targ}(x) - \text{min}(x)$ or perhaps some other range.
 
+A similar approach, sometimes called the "goalposts" or "distance to frontier" method, normalises the indicator by specified upper and lower bounds. This may be used, for example, when there are clear boundaries to the indicator (e.g. [Likert scores](https://en.wikipedia.org/wiki/Likert_scale)), or when the you wish to keep the boundaries fixed across possibly different years of data. The goalposts method looks lihe this:
+
+$$ \tilde{x} = \text{max} \left(0, \ \text{min} \left[1, \  \frac{x - x_L}{x_U - x_L} \right] \right)$$
+
+where $x_U$ and $x_L$ are the upper and lower bounds, respectively, for the indicator. Any values that are below the lower bound are assigned a score of zero, and any above the upper bound are assigned a score of one. This approach is used by the [European Skills Index](https://www.cedefop.europa.eu/en/events-and-projects/projects/european-skills-index-esi), for example.
+
 ## Normalisation in COINr
 
 The normalisation function in COINr is imaginatively named `normalise()`. It has the following main features:
@@ -106,6 +112,7 @@ You can select the normalisation type of the `normalise()` function using the `n
 * `ntype = "minmax"` yields a min-max transformation that scales each indicator onto an interval specified by `npara`, e.g. if `npara$minmax = c(0,10)` the indicators will scale to [0, 10].
 * `ntype = "zscore"` scales the indicator to have a mean and standard deviation specified by `npara`, e.g. if `npara$zscore = c(0,1)` the indicator will have mean zero and standard deviation 1.
 * `ntype = "scaled"` is a general linear transformation defined by `npara$scaled = c(a,b)` which subtracts `a` and divides by `b`.
+* `ntype = "goalposts"` is a capped linear transformation (see the "goalposts" method mentioned previously). Here `npara$goalposts = c(l, u, a)`, where `l` is the lower bound, `u` is the upper bound, and `a` is a scaling parameter.
 * `ntype = "rank"` replaces indicator scores with their corresponding ranks, such that the highest scores have the largest rank values. Ties take average rank values. Here `npara` is not used.
 * `ntype = "borda"` is similar to `ntype = "rank"` but uses Borda scores, which are simply rank values minus one. `npara` is not used.
 * `ntype = "prank"` gives percentile ranks. `npara` is not used.

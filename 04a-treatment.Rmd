@@ -5,9 +5,9 @@ Data treatment is the process of altering indicators to improve their statistica
 Data treatment is a delicate subject, because it essentially involves changing the values of certain observations, or transforming an entire distribution. This entails balancing two opposing considerations:
 
 * On the one hand, treatment should be used as sparingly as possible, because you are altering one or more known data points.
-* On the other hand, *this is only done for the purposes of aggregation,* (i.e. creating a composite score), and since composite indicators are normally presented with the index scores and original data accessible underneath, the underlying data would normally be presented in its original form.
+* On the other hand, *this is only done for the purposes of aggregation* (i.e. creating a composite score), and since composite indicators are normally presented with the index scores and original data accessible underneath, the underlying data would normally be presented in its original form.
 
-Therefore, be careful, but also realise that data treatment is not unethical, it's simply an assumption in a statistical process. Like any other step or assumption though, any data treatment should be carefully recorded.
+Therefore, be careful, but also realise that data treatment is not unnerviving or unethical, it's simply another assumption in a statistical process. Like any other step or assumption though, any data treatment should be carefully recorded and its implications understood.
 
 ## Why treat data?
 
@@ -22,7 +22,6 @@ To illustrate why this can be a problem, consider the following artificial examp
 
 ```{r outlier histogram, warning=F, message=F, collapse=T}
 library(plotly)
-library(magrittr)
 # normally-distributed data
 outlierdata <- rnorm(100)
 # two outliers
@@ -133,7 +132,6 @@ ASEM <- treat(ASEM, dset = "Denominated", winmax = 5)
 
 # Check which indicators were treated, and how
 library(dplyr, quietly = T, verbose = F)
-library(magrittr)
 ASEM$Analysis$Treated$TreatSummary %>% filter(Treatment != "None")
 ```
 The results of `treat()` are a new data set `.Data$Treated` with the treated data in it, and a details of the data treatment in `$Analysis$Treated`, including `TreatSummary` (shown above), which gives a summary of the data treatment specified and actually applied for each indicator. In this case, all indicators were successfully brought within the specified skew and kurtosis limits by Winsorisation, within the specified Winsorisation limit `winmax` of five points.

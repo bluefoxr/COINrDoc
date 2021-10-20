@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 17 FAQ | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
-  
+  <meta property="og:url" content="https://bluefoxr.github.io/COINrDoc/" />
   
   <meta property="og:description" content="Composite indicators with COINr" />
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-07-08" />
+<meta name="date" content="2021-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -175,6 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="foundations.html"><a href="foundations.html#use-scripts-and-r-markdown"><i class="fa fa-check"></i><b>2.4.1</b> Use scripts and R Markdown</a></li>
 <li class="chapter" data-level="2.4.2" data-path="foundations.html"><a href="foundations.html#missing-data"><i class="fa fa-check"></i><b>2.4.2</b> Missing data</a></li>
 <li class="chapter" data-level="2.4.3" data-path="foundations.html"><a href="foundations.html#plotting"><i class="fa fa-check"></i><b>2.4.3</b> Plotting</a></li>
+<li class="chapter" data-level="2.4.4" data-path="foundations.html"><a href="foundations.html#panel-data-and-multiple-coins"><i class="fa fa-check"></i><b>2.4.4</b> Panel data and multiple COINs</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a>
@@ -456,10 +457,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
-"linkedin": false,
+"linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
@@ -482,9 +483,12 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["COINr-documentation.pdf", "COINr-documentation.epub"],
+"download": null,
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
+},
+"toolbar": {
+"position": "fixed"
 }
 });
 });

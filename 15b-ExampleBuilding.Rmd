@@ -55,6 +55,7 @@ I would also recommend to check the statistics of each indicator using `getStats
 ```{r, collapse=T}
 # load reactable for viewing table (in R you can do this instead with R Studio)
 library(reactable)
+library(magrittr)
 
 # get stats
 ASEM <- getStats(ASEM, dset = "Raw")
@@ -190,10 +191,10 @@ Most likely not everyone you present the results to will want to see it in R. CO
 
 ```{r, eval=F}
 # Write full results table to COIN
-COINr::getResults(ASEM, tab_type = "FullWithDenoms", out2 = "COIN")
+getResults(ASEM, tab_type = "FullWithDenoms", out2 = "COIN")
 
 # Export entire COIN to Excel
-COINr::coin2Excel(ASEM, "ASEM_results.xlsx")
+coin2Excel(ASEM, "ASEM_results.xlsx")
 ```
 
 

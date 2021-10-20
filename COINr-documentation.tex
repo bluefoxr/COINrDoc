@@ -124,7 +124,7 @@
 
 \title{Composite Indicator Development and Analysis in R with COINr}
 \author{William Becker}
-\date{2021-07-01}
+\date{2021-07-09}
 
 \begin{document}
 \maketitle
@@ -148,7 +148,7 @@ COINr is currently still under development, therefore the package itself, and th
 \hypertarget{installation}{%
 \section{Installation}\label{installation}}
 
-Although COINr is under development, a pre-beta version can be installed via Github. First, install the \texttt{devtools} package if you don't already have it, then run:
+COINr is not yet on CRAN but can be installed via Github. First, install the \texttt{devtools} package if you don't already have it, then run:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -255,7 +255,7 @@ If you are analysing a composite indicator (and this may also be part of the con
 \item
   \protect\hyperlink{initial-visualisation-and-analysis}{Initial visualisation and analysis}
 \item
-  \protect\hyperlink{multivariate-analysis}{Multivariate analysis}
+  \protect\hyperlink{multivariate-analysis-1}{Multivariate analysis}
 \item
   \protect\hyperlink{adjustments-and-comparisons}{Adjustments and comparisons}
 \item
@@ -312,7 +312,7 @@ Currently, the COIN (composite indicator) only contains the input data set and o
 \begin{Highlighting}[]
 
 \CommentTok{\# denominate data using specifications in ASEMIndMeta}
-\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM)}
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{)}
 \CommentTok{\# normalise data}
 \NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{normalise}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Denominated"}\NormalTok{)}
 \CommentTok{\# Aggregate normalised data}
@@ -1167,19 +1167,383 @@ Each of these aspects will be explained in more detail in later chapters (\textb
 
 Correlations, and other relationships between indicators, can help to understand the structure of the data and to see whether indicators are redundant or are mistakenly encoded.
 
-\begin{itemize}
+\hypertarget{correlations}{%
+\section{Correlations}\label{correlations}}
+
+Correlations are a measure of \emph{statistical dependence} between one variable and another. Often, what is meant by ``correlation'', is the \href{https://en.wikipedia.org/wiki/Pearson_correlation_coefficient}{Pearson correlation coefficient}, which is a measure of \emph{linear} dependence between two variables.
+
+It's worth spending a moment to consider what this the implication of the ``linear'' part actually means. Consider the following example:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# numbers in [{-}1, 1]}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.1}\NormalTok{)}
+\CommentTok{\# x2 is a function of x1}
+\NormalTok{x2 }\OtherTok{\textless{}{-}}\NormalTok{ x1}\SpecialCharTok{\^{}}\DecValTok{2}
+\CommentTok{\# plot}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{qplot}\NormalTok{(x1, x2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+Now, clearly there is a very strong relationship between x1 and x2. In fact, x2 is completely dependent on x2 (there are no other variables or noise that control its values). So what happens if we check the correlation?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cor}\NormalTok{(x1, x2, }\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{)}
+\DocumentationTok{\#\# [1] 1.216307e{-}16}
+\end{Highlighting}
+\end{Shaded}
+
+We end up with a correlation of zero. This is because although there is a very strong \emph{nonlinear} relationship between \(x_1\) and \(x_2\), the \emph{linear} relationship is zero. This is made even clearer when we fit a linear regression:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{qplot}\NormalTok{(x1, x2) }\SpecialCharTok{+}
+    \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\NormalTok{lm,   }\CommentTok{\# Add linear regression line}
+                \AttributeTok{se=}\ConstantTok{FALSE}\NormalTok{)    }\CommentTok{\# Don\textquotesingle{}t add shaded confidence region}
+\DocumentationTok{\#\# \textasciigrave{}geom\_smooth()\textasciigrave{} using formula \textquotesingle{}y \textasciitilde{} x\textquotesingle{}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+Obviously, this is a very contrived example, and it is very unlikely you will see a relationship like this in real indicator data. However the point is that sometimes, linear measures of dependence don't tell the whole story.
+
+That said, relationships between indicators can often turn out to be fairly linear. Exceptions arise when indicators are highly skewed, for example. In these cases, a good alternative is to turn to \emph{rank correlation} measures. Two well-known such measures are the \href{https://en.wikipedia.org/wiki/Spearman\%27s_rank_correlation_coefficient}{Spearman rank correlation} and the \href{https://en.wikipedia.org/wiki/Kendall_rank_correlation_coefficient}{Kendall rank correlation}. Rank correlations can handle nonlinearity as long as the relationship is monotonic. You could also argue that since the focus of composite indicators is often on ranks, rank correlation also makes sense on a conceptual level.
+
+COINr offers a few ways to check correlations that are more convenient than \texttt{stats::cor()}. The first is to call the \texttt{getStats()} function that was already mentioned in \protect\hyperlink{initial-visualisation-and-analysis}{Initial visualisation and analysis}. This can be pointed at any data set and indicator subset and will give correlation between all indicators present. For example, taking the raw data of our example data set:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(COINr)}
+\FunctionTok{library}\NormalTok{(magrittr)}
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{build\_ASEM}\NormalTok{()}
+\NormalTok{statlist }\OtherTok{\textless{}{-}} \FunctionTok{getStats}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{, }\AttributeTok{out2 =} \StringTok{"list"}\NormalTok{)}
+\CommentTok{\# see a bit of correlation matrix}
+\NormalTok{statlist}\SpecialCharTok{$}\NormalTok{Correlations[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+\DocumentationTok{\#\#    IndCode     Goods  Services       FDI    PRemit}
+\DocumentationTok{\#\# 1    Goods        NA 0.8886729 0.8236043 0.8580885}
+\DocumentationTok{\#\# 2 Services 0.8886729        NA 0.8567035 0.8322828}
+\DocumentationTok{\#\# 3      FDI 0.8236043 0.8567035        NA 0.8009064}
+\DocumentationTok{\#\# 4   PRemit 0.8580885 0.8322828 0.8009064        NA}
+\DocumentationTok{\#\# 5  ForPort 0.4750653 0.6955028 0.4366541 0.4837038}
+\CommentTok{\# see a bit of correlations with denominators}
+\NormalTok{statlist}\SpecialCharTok{$}\NormalTok{DenomCorrelations[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{5}\NormalTok{]}
+\DocumentationTok{\#\#   Denominator     Goods  Services       FDI    PRemit}
+\DocumentationTok{\#\# 1    Den\_Area 0.2473558 0.2071061 0.3668625 0.2429470}
+\DocumentationTok{\#\# 2  Den\_Energy 0.6276219 0.5916882 0.7405170 0.5312195}
+\DocumentationTok{\#\# 3     Den\_GDP 0.8026770 0.7708846 0.8482453 0.7111943}
+\DocumentationTok{\#\# 4     Den\_Pop 0.4158811 0.4577006 0.6529376 0.4379999}
+\end{Highlighting}
+\end{Shaded}
+
+The type of correlation can be changed by the \texttt{cortype} argument, which can be set to ``pearson'' or ``kendall''.
+
+The \texttt{getStats()} function also summarises some of this information in its output in the \texttt{.\$StatTable} dataframe:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{statlist}\SpecialCharTok{$}\NormalTok{StatTable[ }\FunctionTok{c}\NormalTok{(}\StringTok{"Indicator"}\NormalTok{, }\StringTok{"Collinearity"}\NormalTok{, }\StringTok{"Neg.Correls"}\NormalTok{, }\StringTok{"Denom.correlation"}\NormalTok{)] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{head}\NormalTok{(}\DecValTok{10}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 10 x 4}
+\DocumentationTok{\#\#    Indicator Collinearity Neg.Correls Denom.correlation}
+\DocumentationTok{\#\#    \textless{}chr\textgreater{}     \textless{}chr\textgreater{}              \textless{}dbl\textgreater{} \textless{}chr\textgreater{}            }
+\DocumentationTok{\#\#  1 Goods     Collinear              1 High             }
+\DocumentationTok{\#\#  2 Services  OK                     1 High             }
+\DocumentationTok{\#\#  3 FDI       OK                     1 High             }
+\DocumentationTok{\#\#  4 PRemit    OK                     0 High             }
+\DocumentationTok{\#\#  5 ForPort   OK                     6 OK               }
+\DocumentationTok{\#\#  6 CostImpEx OK                    16 OK               }
+\DocumentationTok{\#\#  7 Tariff    OK                    15 OK               }
+\DocumentationTok{\#\#  8 TBTs      OK                     7 OK               }
+\DocumentationTok{\#\#  9 TIRcon    OK                     5 OK               }
+\DocumentationTok{\#\# 10 RTAs      OK                     9 OK}
+\end{Highlighting}
+\end{Shaded}
+
+This flags any indicators that have collinearity with any other indicators, or are significantly negatively correlated, or have correlations with denominators. These flags are activated based on thresholds that are inputs to the \texttt{getStats()} function (\texttt{t\_colin} and \texttt{t\_denom}).
+
+Correlations can also be plotted using the \texttt{plotCorr()} function. This is a flexible plotting function, powered by ggplot2, which is adapted to the composite indicator context. It has a number of options because there are many ways to plot correlations in a composite indicator, including within an aggregation level, between levels, selecting certain groups, focusing on parents, and so on.
+
+To see this, here are a few examples. First, let's plot correlations between raw indicators.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{, }\AttributeTok{aglevs =} \DecValTok{1}\NormalTok{, }\AttributeTok{showvals =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-26-1.pdf}
+
+Here, we have plotted raw indicators against indicators. A few things to note:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
 \tightlist
 \item
-  Correlations
+  By default, if a level is plotted against itself, it only plots correlations within the groups of the next aggregation level above. Use the \texttt{grouplev} argument to control the grouping or disable.
 \item
-  PCA
-\item
-  Cronbach
-\end{itemize}
+  Insignificant correlations (at 5\% level) are excluded by default. Use the \texttt{pval} argument to change the significance threshold or to disable.
+\end{enumerate}
 
-To finish.
+We can repeat the same plot with some variations. First, grouping by sub-index:
 
-COINr uses pairwise correlation.
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{, }\AttributeTok{aglevs =} \DecValTok{1}\NormalTok{, }\AttributeTok{showvals =}\NormalTok{ F, }\AttributeTok{grouplev =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-27-1.pdf}
+
+Second, we can plot the whole correlation matrix, and also include insignificant correlations:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{, }\AttributeTok{aglevs =} \DecValTok{1}\NormalTok{, }\AttributeTok{showvals =}\NormalTok{ F, }\AttributeTok{grouplev =} \DecValTok{0}\NormalTok{, }\AttributeTok{pval =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+It may often be more interesting to plot correlations between aggregation levels. Since there is a bit more space, we will also enable the values of the correlations using \texttt{showvals\ =\ TRUE}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{aglevs =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{showvals =}\NormalTok{ T)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+Note that again, by default the correlations are grouped with the parent level above. This is disabled by setting \texttt{withparent\ =\ "none"}. To see correlations with multiple parents at once, we can set \texttt{withparent\ =\ "family"}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{aglevs =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{showvals =}\NormalTok{ T, }\AttributeTok{withparent =} \StringTok{"family"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-30-1.pdf}
+
+It is also possible to switch to a discrete colour map to highlight negative, weak and collinear values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{aglevs =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{showvals =}\NormalTok{ T, }\AttributeTok{withparent =} \StringTok{"family"}\NormalTok{,}
+         \AttributeTok{flagcolours =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-31-1.pdf}
+
+The thresholds for these colours can be controlled by the \texttt{flagthresh} argument. This type of plot helps to see at a glance where there might be a problematic indicator. In the example here, we see that TBTs are negatively correlated with all levels of the index.
+
+Finally, it might be useful to simply have this information as a table rather than a plot. Setting \texttt{out2} to ``dflong'' or ``dfwide'' outputs a data frame in long or wide format, instead of a figure. This can be helpful for presenting the information in a report or doing custom formatting.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{aglevs =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{), }\AttributeTok{showvals =}\NormalTok{ T, }\AttributeTok{withparent =} \StringTok{"family"}\NormalTok{,}
+         \AttributeTok{flagcolours =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{out2 =} \StringTok{"dfwide"}\NormalTok{)}
+\DocumentationTok{\#\# \# A tibble: 8 x 3}
+\DocumentationTok{\#\#   Indicator  Agg2  Agg3}
+\DocumentationTok{\#\#   \textless{}chr\textgreater{}     \textless{}dbl\textgreater{} \textless{}dbl\textgreater{}}
+\DocumentationTok{\#\# 1 ConEcFin   0.53  0.42}
+\DocumentationTok{\#\# 2 Instit     0.86  0.81}
+\DocumentationTok{\#\# 3 P2P        0.86  0.78}
+\DocumentationTok{\#\# 4 Physical   0.87  0.83}
+\DocumentationTok{\#\# 5 Political  0.64  0.68}
+\DocumentationTok{\#\# 6 Environ    0.48 NA   }
+\DocumentationTok{\#\# 7 Social     0.74  0.9 }
+\DocumentationTok{\#\# 8 SusEcFin  NA    NA}
+\end{Highlighting}
+\end{Shaded}
+
+Arguably it's not so intuitive for a function called \texttt{plotCorr()} to output tables, but that's how it is for now.
+
+If you like your correlation heatmaps interactive, COINr has another function called \texttt{iplotCorr()}. It functions in a similar way \texttt{plotCorr()}, but is designed in particular as a component of the \texttt{rew8r()} app and can be used in HTML documents. For a basic correlation map:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{iplotCorr}\NormalTok{(ASEM, }\AttributeTok{aglevs =} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-33-1.pdf}
+
+Unlike \texttt{plotCorr()}, indicators are grouped by rectangles around the groups. This might be better for small plots but can be a bit confusing when there are many elements plotted at the same time. The \texttt{iplotCorr()} function can also show a continuous colour scale, and values can be removed.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{iplotCorr}\NormalTok{(ASEM, }\AttributeTok{aglevs =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{showvals =}\NormalTok{ F, }\AttributeTok{flagcolours =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+Like \texttt{plotCorr()}, threshold values can be controlled for the discrete colour map. The function is powered by \emph{plotly}, which means it can be further altered by using Plotly commands.
+
+An additional tool that can be used in checking correlations is \href{https://en.wikipedia.org/wiki/Cronbach\%27s_alpha}{Cronbach's alpha} - this is a measure of internal consistency or ``reliability'' of the data, based on the strength of correlations between indicators. COINr has a simple in-built function for calculating this, which can be directed at any data set and subset of indicators as with other functions. To see the consistency of the entire raw data set:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{getCronbach}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.2186314}
+\end{Highlighting}
+\end{Shaded}
+
+Often, it may be more relevant to look at consistency within aggregation groups. For example, the indicators within the ``Physical'' pillar of the ASEM data set:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{getCronbach}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"Physical"}\NormalTok{, }\AttributeTok{aglev =} \DecValTok{1}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.6198804}
+\end{Highlighting}
+\end{Shaded}
+
+This shows that the consistency is much stronger within a sub-group. This can also apply to the aggregated data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{getCronbach}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"Conn"}\NormalTok{, }\AttributeTok{aglev =} \DecValTok{2}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.7827171}
+\end{Highlighting}
+\end{Shaded}
+
+This shows that the consistency of the sub-pillars within the Connectivity sub-index is quite high.
+
+\hypertarget{pca}{%
+\section{PCA}\label{pca}}
+
+Another facet of multivariate analysis is principle component analysis (PCA). PCA is used in at least two main ways in composite indicators, first to understand the structure of the data and check for latent variables (the subject of this section); and second as a weighting approach (see the chapter on \protect\hyperlink{weighting-2}{Weighting}).
+
+PCA often seems to occupy an unusual niche where it's relatively well known, but not always so well-understood. I'm not going to attempt a full explanation of PCA here, because there are many nice explanations available in books and online. However, here is a very rough guide.
+
+The first thing to know is that PCA is based on correlations between indicators, i.e.~\emph{linear} relationships (see caveats of this above). PCA tries to find the linear combination of your indicators that explains the most variance. It's a bit easier to understand this visually. Let's consider two variables which are strongly correlated:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\CommentTok{\# random numbers}
+\NormalTok{x1 }\OtherTok{\textless{}{-}} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\CommentTok{\# x2 is 0.5*x1 + gaussian noise}
+\NormalTok{x2 }\OtherTok{\textless{}{-}} \FloatTok{0.5}\SpecialCharTok{*}\NormalTok{x1 }\SpecialCharTok{+} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{0}\NormalTok{, }\FloatTok{0.2}\NormalTok{)}
+\CommentTok{\#plot}
+\FunctionTok{qplot}\NormalTok{(x1, x2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-38-1.pdf}
+
+At the moment, each point/observation lives in a two dimensional space, i.e.~it is defined by both its \(x_1\) and \(x_2\) values. But in a way, this is inefficient because actually the data more or less lives on a straight line.
+
+What PCA does is to rotate the axes (or rotate the data, depending on which way you look at it), so that the first axis aligns itself with the ``shape'' or ``spread'' of the data, and the remaining axes are orthoginal to that. We can demonstrate this using R's built in PCA function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# perform PCA}
+\NormalTok{PCAres }\OtherTok{\textless{}{-}}\NormalTok{ stats}\SpecialCharTok{::}\FunctionTok{prcomp}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(x1, x2), }\AttributeTok{scale =}\NormalTok{ F, }\AttributeTok{center =}\NormalTok{ F)}
+\CommentTok{\# get rotated data}
+\NormalTok{xr }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(PCAres}\SpecialCharTok{$}\NormalTok{x)}
+\CommentTok{\# plot on principle components (set y axis to similar scale to orig data)}
+\FunctionTok{ggplot}\NormalTok{(xr, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \SpecialCharTok{{-}}\NormalTok{PC1, }\AttributeTok{y =}\NormalTok{ PC2)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{ylim}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{(}\FunctionTok{max}\NormalTok{(x2) }\SpecialCharTok{{-}} \FunctionTok{min}\NormalTok{(x2))}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, (}\FunctionTok{max}\NormalTok{(x2) }\SpecialCharTok{{-}} \FunctionTok{min}\NormalTok{(x2))}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-39-1.pdf}
+
+If you look carefully, you can see that the data corresponds to the previous plot, but just rotated slightly, so that the direction of greatest spread (i.e.~greatest variance) is aligned with the first principle component. Here, I have set the y axis to a similar scale to the previous plot to make it easier to see.
+
+There are many reasons for doing PCA, but they often correspond to two main categories: exploratory analysis and dimension reduction. In the context of composite indicators, both of these goals are relevant.
+
+In terms of exploratory analysis, PCA provides somewhat similar information to correlation analysis and Cronbach's alpha. For any given set of indicators, or aggregates, we can check to see how much variance is explained by the first (few) principle component(s). If the data can be explained by a few PCs, then it suggests that there is a strong latent variable, i.e.~the data is shaped something like the figure above, such that if we rotate it, we can find an axis (linear combination) which explains the data pretty well. This is quite similar to the idea of ``consistency'' in Cronbach's alpha.
+
+R has built in functions for PCA (as shown above), and there is no need to reinvent the wheel here. But COINr has a function \texttt{getPCA()} which makes it easier to interact with COINs, and follows the familiar COINr syntax. It serves both to give general PCA information, and to provide PCA weights for aggregation.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PCAres }\OtherTok{\textless{}{-}} \FunctionTok{getPCA}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{aglev =} \DecValTok{2}\NormalTok{, }\AttributeTok{out2 =} \StringTok{"list"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{getPCA()} function allows you to obtain PCA weights for any aggregation level and group(s) of indicators, but we should keep a in mind a few things. First, that PCA weights are created \emph{inside groups}. So, calling \texttt{getPCA()} with \texttt{icodes\ =\ NULL} performs a separate PCA for each aggregation group inside the specified level. In the example above, where \texttt{aglev\ =\ 2}, there are two aggregation groups - the pillars belonging to the Connectivity sub-index, and the pillars belonging to the Sustainability sub-index. This means that two PCAs were performed - one for the first group, and one for the second. In other words, \texttt{getPCA()} follows the structure of the index.
+
+This is more evident when we examine the output:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(PCAres, }\AttributeTok{max.level =} \DecValTok{2}\NormalTok{)}
+\DocumentationTok{\#\# List of 2}
+\DocumentationTok{\#\#  $ Weights   :\textquotesingle{}data.frame\textquotesingle{}:  60 obs. of  3 variables:}
+\DocumentationTok{\#\#   ..$ AgLevel: num [1:60] 1 1 1 1 1 1 1 1 1 1 ...}
+\DocumentationTok{\#\#   ..$ Code   : chr [1:60] "Goods" "Services" "FDI" "PRemit" ...}
+\DocumentationTok{\#\#   ..$ Weight : num [1:60] 1 1 1 1 1 1 1 1 1 1 ...}
+\DocumentationTok{\#\#  $ PCAresults:List of 2}
+\DocumentationTok{\#\#   ..$ Conn:List of 3}
+\DocumentationTok{\#\#   ..$ Sust:List of 3}
+\end{Highlighting}
+\end{Shaded}
+
+The output is \texttt{.\$Weights}, which is a full data frame of weights with the corresponding PCA weights substituted in; and \texttt{.\$PCAresults} which has one entry for each aggregation group in the level specified. So here, since we targeted \texttt{aglev\ =\ 2}, it has done a PCA for each of the two groups - Connectivity and Sustainability.
+
+R has built in tools for inspecting PCA. For example, we can see a summary of the results. Each of the entries in the \texttt{.\$PCAresults} folder is a PCA object generated by \texttt{stats::prcomp()}, which can be fed into functions like \texttt{summary()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(PCAres}\SpecialCharTok{$}\NormalTok{PCAresults}\SpecialCharTok{$}\NormalTok{Conn}\SpecialCharTok{$}\NormalTok{PCAres)}
+\DocumentationTok{\#\# Importance of components:}
+\DocumentationTok{\#\#                           PC1    PC2     PC3     PC4     PC5}
+\DocumentationTok{\#\# Standard deviation     1.7156 1.1598 0.58897 0.46337 0.38718}
+\DocumentationTok{\#\# Proportion of Variance 0.5887 0.2690 0.06938 0.04294 0.02998}
+\DocumentationTok{\#\# Cumulative Proportion  0.5887 0.8577 0.92708 0.97002 1.00000}
+\end{Highlighting}
+\end{Shaded}
+
+This tells us that using the five pillars inside the Connectivity sub-index, we can explain 59\% of the variance with the first principle component. This could be interpreted as a ``latent variable''. In terms of composite indicators, we generally prefer to be able to explain a significant proportion of the variance with the first principle component. This is also useful information because if we now apply the weights stored in \texttt{.\$Weights}, this would result in explaining 59\% of the variance of the underlying indicators. In other words, we are passing on a decent amount of information to the sub-index.
+
+Another way to look at PCA results is using a biplot. Again there is no need to build anything in COINr for this. You can always use base R or in this case the \textbf{ggbiplot} package (needs to be installed from Github):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# install ggbiplot if you don\textquotesingle{}t have it}
+\CommentTok{\# library(devtools)}
+\CommentTok{\# install\_github("vqv/ggbiplot")}
+\FunctionTok{library}\NormalTok{(ggbiplot)}
+\DocumentationTok{\#\# Loading required package: plyr}
+\DocumentationTok{\#\# Loading required package: scales}
+\DocumentationTok{\#\# Loading required package: grid}
+\FunctionTok{ggbiplot}\NormalTok{(PCAres}\SpecialCharTok{$}\NormalTok{PCAresults}\SpecialCharTok{$}\NormalTok{Conn}\SpecialCharTok{$}\NormalTok{PCAres)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+We can make this more interesting by pulling in some information from the COIN, such as the names of units, and grouping them using one of the grouping variables we have present with the data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# install ggbiplot if you don\textquotesingle{}t have it}
+\CommentTok{\# library(devtools)}
+\CommentTok{\# install\_github("vqv/ggbiplot")}
+\FunctionTok{library}\NormalTok{(ggbiplot)}
+\FunctionTok{ggbiplot}\NormalTok{(PCAres}\SpecialCharTok{$}\NormalTok{PCAresults}\SpecialCharTok{$}\NormalTok{Conn}\SpecialCharTok{$}\NormalTok{PCAres,}
+         \AttributeTok{labels =}\NormalTok{ ASEM}\SpecialCharTok{$}\NormalTok{Data}\SpecialCharTok{$}\NormalTok{Aggregated}\SpecialCharTok{$}\NormalTok{UnitCode,}
+         \AttributeTok{groups =}\NormalTok{ ASEM}\SpecialCharTok{$}\NormalTok{Data}\SpecialCharTok{$}\NormalTok{Aggregated}\SpecialCharTok{$}\NormalTok{Group\_EurAsia)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-44-1.pdf}
+
+Now this looks quite interesting: we see that the distinction between Asian and European countries is quite strong. We can also see the clustering of countries - many European countries are clustered in the upper right, except some small countries like Luxembourg, Malta and Singapore which form their own group.
+
+We will not go any further to these results. But we will wrap it up by reminding that PCA is used in two ways here. First is \emph{exploratory analysis}, which aims to understand the structure of the data and can help to pick out groups. Second is \emph{dimensionality reduction} - this might be a bit less obvious, but composite indicators are really an exercise in dimensionality reduction. We begin with a large number of variables and try to condense them down into one. PCA can help to find the weights that satisfy certain properties, such as maximising variance explained.
+
+Last but not least, consider some caveats. PCA rests on assumptions of linearity and joint-normality, which are rarely true in real indicator data. Like correlations, however, that doesn't mean that the results are meaningless, and modest departures from linearity should still allow relevant conclusions to be drawn.
 
 \hypertarget{missing-data-and-imputation}{%
 \chapter{Missing data and Imputation}\label{missing-data-and-imputation}}
@@ -1454,7 +1818,7 @@ A catch of this approach is that if the number of units is small compared to the
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# impute using EM, grouping indicators inside their pillars (level 2)}
-\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{impute}\NormalTok{(ASEM, }\AttributeTok{imtype =} \StringTok{"EM"}\NormalTok{, }\AttributeTok{EMaglev =} \DecValTok{2}\NormalTok{)}
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{impute}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{, }\AttributeTok{imtype =} \StringTok{"EM"}\NormalTok{, }\AttributeTok{EMaglev =} \DecValTok{2}\NormalTok{)}
 \DocumentationTok{\#\# Missing data points detected = 63}
 \DocumentationTok{\#\# Missing data points imputed = 63, using method = EM}
 \end{Highlighting}
@@ -1492,7 +1856,7 @@ To take an example, let's examine some indicators in the ASEM data set, and intr
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-30-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-54-1.pdf}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -1515,7 +1879,7 @@ Anyway, looking at the plot above, it is clear that that countries with a higher
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-31-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-55-1.pdf}
 
 Now the picture is completely different - small countries like Slovakia, Czech Republic and Singapore have the highest values.
 
@@ -1651,7 +2015,7 @@ COINr's \texttt{denominate()} function knows where to look for each of these ing
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM)}
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1681,7 +2045,7 @@ Let's compare the raw Flights data with the Flights per GDP data:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-36-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-60-1.pdf}
 
 Clearly, the denominated and raw indicators are very different from one another, reflecting the completely different meaning.
 
@@ -1961,7 +2325,7 @@ The data treatment function in COINr is called \texttt{treat()}. To perform a de
 \CommentTok{\# build ASEM data set, up to denomination}
 \NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{assemble}\NormalTok{(}\AttributeTok{IndData =}\NormalTok{ COINr}\SpecialCharTok{::}\NormalTok{ASEMIndData, }\AttributeTok{IndMeta =}\NormalTok{ COINr}\SpecialCharTok{::}\NormalTok{ASEMIndMeta,}
                  \AttributeTok{AggMeta =}\NormalTok{ COINr}\SpecialCharTok{::}\NormalTok{ASEMAggMeta)}
-\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM)}
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{)}
 
 \CommentTok{\# treat at defaults}
 \NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{treat}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Denominated"}\NormalTok{, }\AttributeTok{winmax =} \DecValTok{5}\NormalTok{)}
@@ -2123,7 +2487,7 @@ To run the indicator visualisation app, simply run \texttt{indDash(ASEM)}. This 
 
 }
 
-\caption{indDash screenshot}\label{fig:unnamed-chunk-40}
+\caption{indDash screenshot}\label{fig:unnamed-chunk-64}
 \end{figure}
 
 The \texttt{indDash()} app is purely illustrative - it does not return anything back to R, but simply displays the distributions of the existing indicators.
@@ -2254,7 +2618,7 @@ As an input, it takes a COIN or data frame, as usual. It outputs a new dataset t
 \FunctionTok{library}\NormalTok{(COINr)}
 \CommentTok{\# Build ASEM index up to denomination}
 \NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{assemble}\NormalTok{(}\AttributeTok{IndData =}\NormalTok{ COINr}\SpecialCharTok{::}\NormalTok{ASEMIndData, }\AttributeTok{IndMeta =}\NormalTok{ COINr}\SpecialCharTok{::}\NormalTok{ASEMIndMeta, }\AttributeTok{AggMeta =}\NormalTok{ COINr}\SpecialCharTok{::}\NormalTok{ASEMAggMeta)}
-\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM)}
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{)}
 
 \CommentTok{\# Default normalisation (min max scaled between 0 and 100) on denominated data set}
 \NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{normalise}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Denominated"}\NormalTok{)}
@@ -2349,7 +2713,7 @@ We can visualise the new ranges of the data.
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-42-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-66-1.pdf}
 
 This example is meant to be illustrative of the functionality of \texttt{normalise()}, rather than being a sensible normalisation strategy, because the indicators are now on very different ranges, from the default minmax range of {[}0, 1{]} (``Goods'' in this case), to the unchanged scale of ``Renew'' and the Borda rank scale of ``Flights''. Notice also the scaling of ``Ship'', which has values above zero because the reference country, Singapore, is does not have the maximum value of the indicator.
 
@@ -2454,7 +2818,7 @@ Many will be amazed to learn that the function to aggregate in COINr is called \
 \DocumentationTok{\#\# Cross{-}check between metadata and framework = OK.}
 \DocumentationTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
 \CommentTok{\# Denominate as specified in metadata}
-\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM)}
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{denominate}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{)}
 \CommentTok{\# Normalise using default method: min{-}max scaled between 0 and 100.}
 \NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{normalise}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Denominated"}\NormalTok{)}
 
@@ -2640,7 +3004,7 @@ One way of looking at indicator data is as data points in a multidimensional spa
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-44-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-68-1.pdf}
 
 Each point on this beautiful base-R plot represents a unit (here we only have one).
 
@@ -2722,7 +3086,7 @@ Remember that \emph{weights are relative}, and are re-scaled to sum to 1 during 
 \NormalTok{ASEM}\SpecialCharTok{$}\NormalTok{Parameters}\SpecialCharTok{$}\NormalTok{Weights}\SpecialCharTok{$}\NormalTok{NewWeights }\OtherTok{\textless{}{-}}\NormalTok{ NewWeights}
 
 \CommentTok{\# Aggregate again to get new results}
-\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(ASEM, }\AttributeTok{agweights =} \StringTok{"NewWeights"}\NormalTok{)}
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Normalised"}\NormalTok{, }\AttributeTok{agweights =} \StringTok{"NewWeights"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2730,8 +3094,6 @@ Now the \texttt{ASEM} COIN contains the updated results using the new weights.
 
 \hypertarget{interactive-re-weighting-with-rew8r}{%
 \subsection{Interactive re-weighting with ReW8R}\label{interactive-re-weighting-with-rew8r}}
-
-\emph{NOTE: at this moment, rew8r is temporarily out of action until I get it updated to the new weight format.}
 
 Re-weighting manually, as we have just seen, is quite simple. However, depending on your objectives, weighting can be an iterative process along the lines of:
 
@@ -2768,13 +3130,13 @@ At this point, a window/tab should open in your browser with the \texttt{rew8r()
 
 }
 
-\caption{rew8r() screenshot}\label{fig:unnamed-chunk-45}
+\caption{rew8r() screenshot}\label{fig:unnamed-chunk-69}
 \end{figure}
 
 This may look a little over-complicated to begin with, but let's go through it step by step.
 
-\hypertarget{correlations}{%
-\subsubsection{Correlations}\label{correlations}}
+\hypertarget{correlations-1}{%
+\subsubsection{Correlations}\label{correlations-1}}
 
 First of all, \texttt{rew8r()} is based around correlations. Why are correlations important? Because they give an idea of how each indicator is represented in the final index, and at other aggregation levels (see earlier discussion in this chapter).
 
@@ -2788,10 +3150,10 @@ The correlations themselves are shown in two plots - the first is the scatter pl
 
 }
 
-\caption{Heatmap screenshot (in rew8r)}\label{fig:unnamed-chunk-46}
+\caption{Heatmap screenshot (in rew8r)}\label{fig:unnamed-chunk-70}
 \end{figure}
 
-The second plot is a heatmap of the correlation matrix (between Level 1 and Level 2 in this case) which is shown in the lower right corner. This gives the correlation values between all the indicators/groups of each level as colours according to a discrete colour map. This colour map intends to highlight highly correlated indicators (green), as well as negative or low-correlated indicators (red). These thresholds can be adjusted by adjusting the low and high correlation threshold dropdown menus in the side panel (on the left). The aggregation groups are also shown as overlaid rectangles, and correlation values can be turned on and off using the checkbox below the heatmap. The point of this plot is to show at a glance, where there are very high or low correlations, possibly within aggregation groups. For example, indicators that are negatively correlated with their aggregation group can be problematic. Note that correlation heatmaps can also be generated independently of the app using the \texttt{plotCorr()} function - this is described more in the \protect\hyperlink{multivariate-analysis}{Multivariate analysis} section.
+The second plot is a heatmap of the correlation matrix (between Level 1 and Level 2 in this case) which is shown in the lower right corner. This gives the correlation values between all the indicators/groups of each level as colours according to a discrete colour map. This colour map intends to highlight highly correlated indicators (green), as well as negative or low-correlated indicators (red). These thresholds can be adjusted by adjusting the low and high correlation threshold dropdown menus in the side panel (on the left). The aggregation groups are also shown as overlaid rectangles, and correlation values can be turned on and off using the checkbox below the heatmap. The point of this plot is to show at a glance, where there are very high or low correlations, possibly within aggregation groups. For example, indicators that are negatively correlated with their aggregation group can be problematic. Note that correlation heatmaps can also be generated independently of the app using the \texttt{plotCorr()} function - this is described more in the \protect\hyperlink{multivariate-analysis-1}{Multivariate analysis} section.
 
 Highly-correlated indicators are also listed in a table at the lower middle of the window. The ``Ind-Ind'' tab flags any indicators that are above the high correlation threshold, and within the same aggregation group (the aggregation level immediately above the indicator level). Note that this is \emph{not} dependent on the weights since it regards correlations between indicators only. The ``Cross-level'' tab instead gives a table which flags any correlations across the two levels selected in side panel, which are above the threshold.
 
@@ -2806,7 +3168,7 @@ Let us now turn back to the scatter plot. The scatter plot shows the correlation
 
 }
 
-\caption{Correlation scatter plot screenshots in rew8r().}\label{fig:unnamed-chunk-47-1}
+\caption{Correlation scatter plot screenshots in rew8r().}\label{fig:unnamed-chunk-71-1}
 \end{figure}
 \begin{figure}
 
@@ -2814,7 +3176,7 @@ Let us now turn back to the scatter plot. The scatter plot shows the correlation
 
 }
 
-\caption{Correlation scatter plot screenshots in rew8r().}\label{fig:unnamed-chunk-47-2}
+\caption{Correlation scatter plot screenshots in rew8r().}\label{fig:unnamed-chunk-71-2}
 \end{figure}
 
 Importantly, the scatter plot only shows correlations between each indicator/aggregate in the first level \emph{with its parent} in the second selected level. When everything is plotted on one plot, this may not be so clear, so the ``Separate groups'' checkbox in the side panel changes the plot to multiple sub-plots, one for each group in the second selected level. This helps to show how correlations are distributed within each group.
@@ -2840,7 +3202,7 @@ As discussed earlier, weighting can also be performed statistically, by optimisi
 
 The \texttt{getPCA()} function is used as a quick way to perform PCA on COINs. This does two things: first, to output PCA results for any aggregation level; and second, to provide PCA weights corresponding to the ``loadings'' of the first principle component. As discussed above, this is the linear combination that results in the most explained variance.
 
-The other outputs of \texttt{getPCA()} are left to the \protect\hyperlink{multivariate-analysis}{Multivariate analysis} section. Here, we will focus on weighting. To obtain PCA weights, simply run something like:
+The other outputs of \texttt{getPCA()} are left to the \protect\hyperlink{multivariate-analysis-1}{Multivariate analysis} section. Here, we will focus on weighting. To obtain PCA weights, simply run something like:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3265,7 +3627,7 @@ This will open a browser window or tab with the results dashboard app. The app a
 
 }
 
-\caption{resultsDash screenshot}\label{fig:unnamed-chunk-51}
+\caption{resultsDash screenshot}\label{fig:unnamed-chunk-75}
 \end{figure}
 
 \hypertarget{unit-reports}{%
@@ -3273,7 +3635,7 @@ This will open a browser window or tab with the results dashboard app. The app a
 
 Many composite indicators produce reports for each unit, for example the ``economy profiles'' in the Global Innovation Index. Typically this is a summary of the scores and ranks of the unit, possibly some figures, and maybe strengths and weaknesses.
 
-COINr allows country reports to be generated automatically. This is done via a \emph{parameterised R markdown document}, which includes several of the tables and figures shown in this section\footnote{See \href{https://bookdown.org/yihui/rmarkdown/parameterized-reports.html}{here} for more information on how parameterised documents work.}. The COINr function \texttt{getUnitReport()} generates a report for any specified unit using an example scorecard which is found in the \texttt{/inst} directory where COINr is installed on your computer. To easily find this, call:
+COINr allows country reports to be generated automatically. This is done via a \emph{parameterised R markdown document}, which includes several of the tables and figures shown in this section\footnote{See \href{https://bookdown.org/yihui/rmarkdown/parameterized-reports.html}{here} for more information on how parameterised documents work.}. The COINr function \texttt{getUnitReport()} generates a report for any specified unit using an example scorecard which is found in the \texttt{/UnitReport} directory where COINr is installed on your computer. To easily find this, call:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -3282,17 +3644,57 @@ COINr allows country reports to be generated automatically. This is done via a \
 \end{Highlighting}
 \end{Shaded}
 
-where the directory will different on your computer.
+where the directory will be different on your computer.
 
-Opening this document in R will give you an idea of how the parameterised document works. In short, the COIN is passed into the R Markdown document, so that anything that is inside the COIN can be accessed and used for generating tables, figures and text. The example included is just that, an example. To see how it looks, we can run:
+Opening this document in R will give you an idea of how the parameterised document works. In short, the COIN object is passed into the R Markdown document, so that anything that is inside the COIN can be accessed and used for generating tables, figures and text. The example included is just that, an example. To see how it looks, we can run:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{getUnitReport}\NormalTok{(COIN)}
+\FunctionTok{getUnitReport}\NormalTok{(ASEM, }\AttributeTok{usel =} \StringTok{"NZL"}\NormalTok{, }\AttributeTok{out\_type =} \StringTok{".html"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-Using R Markdown it is possible to generate a unit report using parameterised documents, which means you can easily generate a large number of similar reports for different units
+Calling this should create an html document in your current working directory, which will look something like this:
+
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{images/getUnitProfile_screenshot1} 
+
+}
+
+\caption{Unit profile screenshot 1/2}\label{fig:unnamed-chunk-78}
+\end{figure}
+\begin{figure}
+
+{\centering \includegraphics[width=1\linewidth]{images/getUnitProfile_screenshot2} 
+
+}
+
+\caption{Unit profile screenshot 2/2}\label{fig:unnamed-chunk-79}
+\end{figure}
+
+This is simply an example of the sort of thing that is possible, and the output can be either an html document, a Word document, or a pdf. It's important to note that if the output is pdf or a Word doc, this is a \emph{static document} which cannot include interactive plots such as those from plotly, COINr's iplot functions and any other javascript or html widget figures. If you want to use interactive plots, but still be able to create static documents, you must install the webshot package. To do this, run:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{install.packages}\NormalTok{(}\StringTok{"webshot"}\NormalTok{)}
+\NormalTok{webshot}\SpecialCharTok{::}\FunctionTok{install\_phantomjs}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+This will effectively render the figures to html, then take a static snapshot of each figure and paste it into your static document. Of course, this loses the interactive element of these plots, but can still render nice plots depending on what you are doing. If you do not have webshot installed, and try to render interactive plots to pdf or docx, you will encounter an error.
+
+That aside, why use a parameterised document, rather than a normal R Markdown doc? Because by parameterising it, we can automatically create unit profiles for all units at once, or a subset, by inserting the relevant unit codes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{getUnitReport}\NormalTok{(ASEM, }\AttributeTok{usel =} \FunctionTok{c}\NormalTok{(}\StringTok{"AUS"}\NormalTok{, }\StringTok{"AUT"}\NormalTok{, }\StringTok{"CHN"}\NormalTok{), }\AttributeTok{out\_type =} \StringTok{".html"}\NormalTok{)}\ErrorTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This generates reports for the three countries specified, but of course you can do it for all units present if you want to.
+
+Most likely if you want to use this function you will want to create a customised template that fits your requirements. To do this, copy the existing template found in the COINr directory as described above. Then make your own modifications, and set the \texttt{rmd\_template} argument to point to the new template. If the output is a Word doc, you can also customise the formatting of the document by additionally including a Word template. To do this, see the \href{https://bookdown.org/yihui/rmarkdown/word-document.html}{R Markdown Guide}. In fact, browsing this book is probably a good idea in general if you are planning to generate many unit reports or other markdown reports. You many also wish to create your own function for rendering rather than using \texttt{getUnitReport()}. The code for this function can be found on \href{https://github.com/bluefoxr/COINr/blob/master/R/coin_resultstable.R}{Github} and this may help for inspiration.
 
 \hypertarget{adjustments-and-comparisons}{%
 \chapter{Adjustments and comparisons}\label{adjustments-and-comparisons}}
@@ -3341,7 +3743,7 @@ One of the key advantages of working within the COINrverse is that (nearly) all 
 
 }
 
-\caption{Method folder in ASEM example}\label{fig:unnamed-chunk-54}
+\caption{Method folder in ASEM example}\label{fig:unnamed-chunk-82}
 \end{figure}
 
 The easiest way to view it is by looking in the viewer of R Studio as in the screenshot above. Essentially, the \texttt{.\$Method} folder has one entry for each COINr function that was used to build the COIN, and inside each of these folders are the arguments to the function that were input. Notice that the names inside \texttt{.\$Method\$denominate} correspond exactly to arguments to \texttt{denominate()}, for example.
@@ -3423,6 +3825,8 @@ Specifically, we have replaced the Winsorised value of Belgium, for the ``Bord''
 Now, when we regenerate the COIN using \texttt{regen()}, it will insert this extra line of code immediately after the treatment step.
 
 Using custom code may seem a bit confusing but it adds an extra layer of flexibility. It is however intended for small snippets of custom code, rather than large blocks of custom operations. If you are doing a lot of operations outside COINr, it may be better to do this in your own dedicated script or function, rather than trying to encode absolutely everything inside the COIN.
+
+Before moving on, it's worth reiterating that regenerating a COIN runs the construction functions in the order they appear in the Method folder. That means that if you build an index with no imputation, for example, and then later decide to make a copy which now includes imputation, you would have to insert the \texttt{.Method\$imputation} entry in the place where it should occur. An easy way to do this is using R's \texttt{append()} function.
 
 \hypertarget{adjustments}{%
 \section{Adjustments}\label{adjustments}}
@@ -4019,7 +4423,7 @@ To actually run the analysis, we call the \texttt{sensitivity()} function, using
 \DocumentationTok{\#\# Iteration 98 of 100 ... 98\% complete}
 \DocumentationTok{\#\# Iteration 99 of 100 ... 99\% complete}
 \DocumentationTok{\#\# Iteration 100 of 100 ... 100\% complete}
-\DocumentationTok{\#\# Time elapsed = 14.71s, average 0.15s/rep.}
+\DocumentationTok{\#\# Time elapsed = 20.4s, average 0.2s/rep.}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4061,12 +4465,12 @@ Let us now look at the elements in \texttt{SAresults}. The data frames \texttt{S
 \begin{Highlighting}[]
 \FunctionTok{head}\NormalTok{(SAresults}\SpecialCharTok{$}\NormalTok{Parameters)}
 \DocumentationTok{\#\#          imtype    ntype}
-\DocumentationTok{\#\# 1 indgroup\_mean   minmax}
-\DocumentationTok{\#\# 2      ind\_mean dist2max}
-\DocumentationTok{\#\# 3 indgroup\_mean dist2max}
-\DocumentationTok{\#\# 4          none   minmax}
-\DocumentationTok{\#\# 5          none     rank}
-\DocumentationTok{\#\# 6      ind\_mean     rank}
+\DocumentationTok{\#\# 1      ind\_mean   minmax}
+\DocumentationTok{\#\# 2      ind\_mean     rank}
+\DocumentationTok{\#\# 3          none dist2max}
+\DocumentationTok{\#\# 4          none     rank}
+\DocumentationTok{\#\# 5      ind\_mean dist2max}
+\DocumentationTok{\#\# 6 indgroup\_mean   minmax}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4078,57 +4482,57 @@ The \texttt{SAresults\$RankStats} table gives a summary of the main statistics o
 \begin{Highlighting}[]
 \NormalTok{SAresults}\SpecialCharTok{$}\NormalTok{RankStats}
 \DocumentationTok{\#\#    UnitCode Nominal  Mean Median    Q5   Q95}
-\DocumentationTok{\#\# 1       AUT       7  7.09    7.0  5.00  9.00}
-\DocumentationTok{\#\# 2       BEL       5  5.46    5.0  3.00  8.05}
-\DocumentationTok{\#\# 3       BGR      30 29.55   30.0 29.00 31.00}
-\DocumentationTok{\#\# 4       HRV      18 20.67   21.0 17.00 26.00}
-\DocumentationTok{\#\# 5       CYP      29 29.85   30.0 28.00 32.00}
-\DocumentationTok{\#\# 6       CZE      17 16.81   17.0 15.00 19.00}
-\DocumentationTok{\#\# 7       DNK       3  2.61    2.0  2.00  4.00}
-\DocumentationTok{\#\# 8       EST      22 18.96   18.0 13.00 25.05}
-\DocumentationTok{\#\# 9       FIN      13 13.44   14.0 11.00 15.00}
-\DocumentationTok{\#\# 10      FRA      21 20.77   21.0 18.00 24.00}
-\DocumentationTok{\#\# 11      DEU       9  9.07    9.0  7.00 13.00}
-\DocumentationTok{\#\# 12      GRC      32 31.99   32.0 30.00 34.00}
-\DocumentationTok{\#\# 13      HUN      20 20.90   21.0 19.00 24.00}
-\DocumentationTok{\#\# 14      IRL      12 12.10   12.0 10.00 16.00}
-\DocumentationTok{\#\# 15      ITA      28 28.16   28.0 27.00 30.00}
-\DocumentationTok{\#\# 16      LVA      23 21.96   22.0 19.00 24.00}
-\DocumentationTok{\#\# 17      LTU      16 15.00   16.0 11.00 17.05}
-\DocumentationTok{\#\# 18      LUX       8  8.58    9.0  5.00 11.05}
-\DocumentationTok{\#\# 19      MLT      10 13.17   12.0  9.00 19.00}
-\DocumentationTok{\#\# 20      NLD       2  3.00    3.0  2.00  4.00}
-\DocumentationTok{\#\# 21      NOR       4  3.72    4.0  2.00  6.00}
-\DocumentationTok{\#\# 22      POL      26 26.16   26.0 25.00 28.00}
-\DocumentationTok{\#\# 23      PRT      27 23.57   27.0 15.00 27.00}
-\DocumentationTok{\#\# 24      ROU      25 24.09   24.5 19.00 27.05}
-\DocumentationTok{\#\# 25      SVK      24 23.45   23.0 21.00 26.00}
-\DocumentationTok{\#\# 26      SVN      11  9.90   10.0  8.00 12.05}
-\DocumentationTok{\#\# 27      ESP      19 22.57   23.0 19.00 26.00}
-\DocumentationTok{\#\# 28      SWE       6  6.04    6.0  5.00  7.00}
+\DocumentationTok{\#\# 1       AUT       7  7.01    7.0  5.00  9.00}
+\DocumentationTok{\#\# 2       BEL       5  5.48    5.0  3.00  9.00}
+\DocumentationTok{\#\# 3       BGR      30 29.54   29.0 29.00 31.00}
+\DocumentationTok{\#\# 4       HRV      18 20.80   20.0 18.00 26.00}
+\DocumentationTok{\#\# 5       CYP      29 29.97   30.0 28.00 33.00}
+\DocumentationTok{\#\# 6       CZE      17 16.99   17.0 16.00 19.00}
+\DocumentationTok{\#\# 7       DNK       3  2.66    2.0  2.00  5.00}
+\DocumentationTok{\#\# 8       EST      22 18.54   18.0 13.00 26.00}
+\DocumentationTok{\#\# 9       FIN      13 13.42   14.0 11.00 15.05}
+\DocumentationTok{\#\# 10      FRA      21 21.13   21.0 18.00 25.00}
+\DocumentationTok{\#\# 11      DEU       9  9.09    9.0  7.00 12.00}
+\DocumentationTok{\#\# 12      GRC      32 32.11   32.0 31.00 34.00}
+\DocumentationTok{\#\# 13      HUN      20 20.92   21.0 19.00 23.05}
+\DocumentationTok{\#\# 14      IRL      12 12.48   12.5 10.00 16.00}
+\DocumentationTok{\#\# 15      ITA      28 28.13   28.0 27.00 29.00}
+\DocumentationTok{\#\# 16      LVA      23 21.77   21.5 19.95 24.05}
+\DocumentationTok{\#\# 17      LTU      16 14.65   16.0 11.00 17.00}
+\DocumentationTok{\#\# 18      LUX       8  8.78    9.0  6.00 11.05}
+\DocumentationTok{\#\# 19      MLT      10 13.64   13.0  9.00 19.00}
+\DocumentationTok{\#\# 20      NLD       2  3.06    3.0  2.00  4.00}
+\DocumentationTok{\#\# 21      NOR       4  3.60    4.0  2.95  5.00}
+\DocumentationTok{\#\# 22      POL      26 26.13   26.0 25.00 27.05}
+\DocumentationTok{\#\# 23      PRT      27 23.06   26.0 16.00 27.00}
+\DocumentationTok{\#\# 24      ROU      25 24.07   25.0 19.00 27.00}
+\DocumentationTok{\#\# 25      SVK      24 23.46   23.0 22.00 26.00}
+\DocumentationTok{\#\# 26      SVN      11  9.76    9.0  8.00 12.05}
+\DocumentationTok{\#\# 27      ESP      19 23.18   24.0 18.95 27.00}
+\DocumentationTok{\#\# 28      SWE       6  6.01    6.0  5.00  7.00}
 \DocumentationTok{\#\# 29      CHE       1  1.00    1.0  1.00  1.00}
-\DocumentationTok{\#\# 30      GBR      15 14.21   15.0 11.00 17.00}
-\DocumentationTok{\#\# 31      AUS      35 35.52   35.0 34.00 38.05}
-\DocumentationTok{\#\# 32      BGD      46 45.21   45.5 40.00 49.00}
-\DocumentationTok{\#\# 33      BRN      40 38.99   39.0 34.00 45.05}
-\DocumentationTok{\#\# 34      KHM      37 36.43   37.0 34.00 39.00}
-\DocumentationTok{\#\# 35      CHN      49 49.51   50.0 47.00 51.00}
-\DocumentationTok{\#\# 36      IND      45 45.49   46.0 42.00 48.00}
-\DocumentationTok{\#\# 37      IDN      43 45.71   45.0 42.00 49.00}
-\DocumentationTok{\#\# 38      JPN      34 33.57   34.0 31.00 35.00}
-\DocumentationTok{\#\# 39      KAZ      47 45.49   45.0 41.95 49.00}
-\DocumentationTok{\#\# 40      KOR      31 31.23   31.0 28.95 34.00}
-\DocumentationTok{\#\# 41      LAO      48 42.40   41.0 36.00 49.00}
-\DocumentationTok{\#\# 42      MYS      39 39.97   40.0 36.00 44.00}
-\DocumentationTok{\#\# 43      MNG      44 45.29   46.0 40.95 49.00}
-\DocumentationTok{\#\# 44      MMR      41 41.47   41.0 38.00 48.00}
-\DocumentationTok{\#\# 45      NZL      33 32.83   33.0 31.00 34.05}
-\DocumentationTok{\#\# 46      PAK      50 48.41   48.0 46.00 51.00}
-\DocumentationTok{\#\# 47      PHL      38 41.02   41.0 38.00 45.00}
-\DocumentationTok{\#\# 48      RUS      51 50.61   51.0 50.00 51.00}
-\DocumentationTok{\#\# 49      SGP      14 13.93   14.0  8.95 20.05}
-\DocumentationTok{\#\# 50      THA      42 41.78   42.0 40.00 44.00}
-\DocumentationTok{\#\# 51      VNM      36 37.29   37.0 36.00 39.00}
+\DocumentationTok{\#\# 30      GBR      15 14.08   15.0 11.00 16.00}
+\DocumentationTok{\#\# 31      AUS      35 35.77   35.0 34.00 39.00}
+\DocumentationTok{\#\# 32      BGD      46 45.13   45.0 40.00 49.00}
+\DocumentationTok{\#\# 33      BRN      40 38.65   38.0 34.00 45.00}
+\DocumentationTok{\#\# 34      KHM      37 36.33   37.0 33.95 39.00}
+\DocumentationTok{\#\# 35      CHN      49 49.62   50.0 47.00 51.00}
+\DocumentationTok{\#\# 36      IND      45 45.50   46.0 42.00 48.00}
+\DocumentationTok{\#\# 37      IDN      43 45.83   45.5 42.00 49.00}
+\DocumentationTok{\#\# 38      JPN      34 33.56   34.0 31.00 35.00}
+\DocumentationTok{\#\# 39      KAZ      47 45.38   45.0 41.95 49.00}
+\DocumentationTok{\#\# 40      KOR      31 31.08   31.0 29.00 34.00}
+\DocumentationTok{\#\# 41      LAO      48 41.71   41.0 35.00 49.00}
+\DocumentationTok{\#\# 42      MYS      39 40.14   39.0 37.00 45.05}
+\DocumentationTok{\#\# 43      MNG      44 45.51   46.0 41.00 49.00}
+\DocumentationTok{\#\# 44      MMR      41 41.52   41.0 38.00 47.00}
+\DocumentationTok{\#\# 45      NZL      33 32.89   33.0 31.00 35.00}
+\DocumentationTok{\#\# 46      PAK      50 48.31   48.0 46.00 50.05}
+\DocumentationTok{\#\# 47      PHL      38 41.22   41.0 38.00 45.00}
+\DocumentationTok{\#\# 48      RUS      51 50.58   51.0 50.00 51.00}
+\DocumentationTok{\#\# 49      SGP      14 13.37   13.0  9.00 18.00}
+\DocumentationTok{\#\# 50      THA      42 41.86   42.0 40.00 44.00}
+\DocumentationTok{\#\# 51      VNM      36 37.52   37.0 36.00 40.00}
 \end{Highlighting}
 \end{Shaded}
 
@@ -4596,7 +5000,7 @@ The \texttt{roundDF} function is a small helper function for rounding data frame
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-71-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-99-1.pdf}
 
 By default, numbers are rounded to two decimal places.
 
@@ -4831,7 +5235,7 @@ At this point, it's worth checking the COIN to make sure that everything is as y
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-73-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-101-1.pdf}
 
 You can also explore the indicator data using COINr's \texttt{indDash()} app:
 
@@ -4862,7 +5266,7 @@ I would also recommend to check the statistics of each indicator using \texttt{g
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-75-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-103-1.pdf}
 
 At this point you may decide to check individual indicators, and some may be added or excluded.
 
@@ -4889,7 +5293,7 @@ If you want to divide indicators by e.g.~GDP or population to be able to compare
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-76-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-104-1.pdf}
 
 According to the new table, there are now no high correlations with denominators, which indicates some kind of success.
 
@@ -4959,7 +5363,7 @@ It is also a good idea to visualise and compare the treated data against the unt
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-80-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-108-1.pdf}
 
 This shows the Winsorisation of four points for the ``Services'' indicator. This could also be plotted in different ways using box plots or violin plots.
 
@@ -5000,7 +5404,7 @@ We can now visualise our results. A good way at the index level is a stacked bar
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-83-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-111-1.pdf}
 
 This can look a bit strange because in fact the ASEM index was only aggregated up to the sustainability and connectivity sub-indexes. We can also plot that:
 
@@ -5010,7 +5414,7 @@ This can look a bit strange because in fact the ASEM index was only aggregated u
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-84-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-112-1.pdf}
 
 We may also plot the results on a map. Here we'll only plot connectivity:
 
@@ -5020,7 +5424,7 @@ We may also plot the results on a map. Here we'll only plot connectivity:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-85-1.pdf}
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-113-1.pdf}
 
 For a bit more detail we can also generate a table.
 
@@ -5323,6 +5727,439 @@ Double-checking calculations is tedious but in the process you often learn a lot
 
 \hypertarget{indicator-statistics}{%
 \section{Indicator statistics}\label{indicator-statistics}}
+
+One next step is to check the indicator statistics. If you have the raw data, it is probably advisable to do this both on the raw data, and the normalised/aggregated data. Here, we will just do this on the aggregated data (but this works on any data set, e.g.~also the ``PreAggregated'' and ``Normalised'' data sets created above):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{getStats}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{)}
+\DocumentationTok{\#\# Number of collinear indicators =  5}
+\DocumentationTok{\#\# Number of signficant negative indicator correlations =  396}
+\DocumentationTok{\#\# Number of indicators with high denominator correlations =  0}
+
+\CommentTok{\# view stats table}
+\CommentTok{\# this is rounded first (to make it easier to view), then sent to reactable to make an interactive table}
+\CommentTok{\# you can also view this in R Studio or use any other table viewer to look at it.}
+\NormalTok{ASEM}\SpecialCharTok{$}\NormalTok{Analysis}\SpecialCharTok{$}\NormalTok{Aggregated}\SpecialCharTok{$}\NormalTok{StatTable }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{roundDF}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  reactable}\SpecialCharTok{::}\FunctionTok{reactable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-121-1.pdf}
+
+Particular things of interest here will be whether indicators or aggregates are highly skewed, the percentage of missing data for each indicator, the percentage of unique values and zeroes, the presence of correlations with denominators, and negative correlations. Recall that \texttt{getStats()} allows you to change thresholds for flagging outliers and high/low correlations.
+
+Another output of \texttt{getStats()} is correlation matrices, which are also found in \texttt{ASEM\$Analysis\$Aggregated}. A good reason to include these here is that as part of the COIN, we can export all analysis to Excel, if needed (see the end of this chapter). However, for viewing correlations directly, COINr has dedicated functions - see the next section.
+
+Before arriving at correlations, let's also check data availability in more detail. The function of interest here is \texttt{checkData()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ASEM }\OtherTok{\textless{}{-}} \FunctionTok{checkData}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{)}
+
+\CommentTok{\# view missing data by group}
+\NormalTok{ASEM}\SpecialCharTok{$}\NormalTok{Analysis}\SpecialCharTok{$}\NormalTok{Raw}\SpecialCharTok{$}\NormalTok{MissDatByGroup }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  roundDF }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  reactable}\SpecialCharTok{::}\FunctionTok{reactable}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-122-1.pdf}
+
+This adds analysis tables to the \texttt{ASEM\$Analysis} folder (analysis always appears under the respective ``dset'' name). We have applied the analysis to the raw data set because in later steps, the data is imputed. Here, the missing data is given by each aggregation group. This helps to flag, for instance, cases where there is very low data availability for a unit in a given aggregation group. We can check the minimum:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# get minimum, exclude first column (not numerical)}
+\FunctionTok{min}\NormalTok{(ASEM}\SpecialCharTok{$}\NormalTok{Analysis}\SpecialCharTok{$}\NormalTok{Raw}\SpecialCharTok{$}\NormalTok{MissDatByGroup[}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{])}
+\DocumentationTok{\#\# [1] 55.55556}
+\end{Highlighting}
+\end{Shaded}
+
+This shows that in the worst case, there is more than 50\% data availability for each unit in each aggregation group.
+
+\hypertarget{multivariate-analysis-1}{%
+\section{Multivariate analysis}\label{multivariate-analysis-1}}
+
+This section will overlap to some extent with the \protect\hyperlink{multivariate-analysis-1}{Multivariate analysis} chapter. In any case we will summarise a few options here at the risk of repetition.
+
+Perhaps the most useful way to view correlations for an aggregated index is to look at correlations of each indicator or aggregate with its parents. This is done quickly in COINr with the \texttt{plotCorr()} function.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{showvals =}\NormalTok{ T, }\AttributeTok{withparent =} \StringTok{"family"}\NormalTok{, }\AttributeTok{flagcolours =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-124-1.pdf}
+
+This shows at a glance where some problems may lie. In particular we learn that the TBT indicator is negatively correlated with all its parent groups. We can also see that the ``Forest'' indicator is insignificantly correlated with its parents. This table is generated here for indicators, but can also generated for other levels by setting the \texttt{aglevs} argument.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{showvals =}\NormalTok{ T, }\AttributeTok{withparent =} \StringTok{"family"}\NormalTok{, }\AttributeTok{flagcolours =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{aglevs =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-125-1.pdf}
+
+Recall also that this function can return data frames for your own processing or presentation, rather than figures, by changing the \texttt{out2} argument.
+
+You may also want to view correlations between indicators or within specific groups. The \texttt{plotCorr()} function is flexible in this respect.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot correlations within a specific pillar (Physical)}
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Raw"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"Physical"}\NormalTok{, }\AttributeTok{aglevs =} \DecValTok{1}\NormalTok{, }\AttributeTok{cortype =} \StringTok{"spearman"}\NormalTok{, }\AttributeTok{pval =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-126-1.pdf}
+
+You may wish to generate these correlation plots for each major aggregation group. If any specific correlations are of interest, we can generate (for example) a scatter plot. Technical barriers to trade (TBTs) are shown in particular to be negatively correlated with the overall index and all parent levels.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{iplotIndDist2}\NormalTok{(ASEM, }\AttributeTok{dsets =} \FunctionTok{c}\NormalTok{(}\StringTok{"Raw"}\NormalTok{, }\StringTok{"Aggregated"}\NormalTok{), }\AttributeTok{icodes =} \StringTok{"TBTs"}\NormalTok{, }\AttributeTok{aglevs =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{4}\NormalTok{), }\AttributeTok{ptype =} \StringTok{"Scatter"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-127-1.pdf}
+
+Recall here that because we have plotted a ``Raw'' indicator against the index, and this is a negative indicator, its direction is flipped. Meaning that in this plot there is a positive correlation, but plotting the normalised indicator against the index would show a negative correlation.
+
+Next we can check the internal consistency of the indicators using Cronbach's alpha. Remember that this can be done for any group of indicators - e.g.~we could do it for all indicators, or target specific groups or also check the consistency of aggregated values. Examples:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# all indicators}
+\FunctionTok{getCronbach}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Normalised"}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.8985903}
+
+\CommentTok{\# indicators in connectivity sub{-}index}
+\FunctionTok{getCronbach}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Normalised"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"Conn"}\NormalTok{, }\AttributeTok{aglev =} \DecValTok{1}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.8805543}
+
+\CommentTok{\# indicators in sustainability sub{-}index}
+\FunctionTok{getCronbach}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Normalised"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"Sust"}\NormalTok{, }\AttributeTok{aglev =} \DecValTok{1}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.6794643}
+
+\CommentTok{\# pillars in connectivity sub{-}index}
+\FunctionTok{getCronbach}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"Conn"}\NormalTok{, }\AttributeTok{aglev =} \DecValTok{2}\NormalTok{)}
+\DocumentationTok{\#\# [1] 0.7827171}
+
+\CommentTok{\# pillars in sustainability sub{-}index}
+\FunctionTok{getCronbach}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"Sust"}\NormalTok{, }\AttributeTok{aglev =} \DecValTok{2}\NormalTok{)}
+\DocumentationTok{\#\# [1] {-}0.289811}
+\end{Highlighting}
+\end{Shaded}
+
+Note that it makes more sense to do correlation analysis on the normalised data, because indicators have had their directions reveresed where appropriate. But what's going on with the consistency of the sustainability pillars? We can check:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotCorr}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"Sust"}\NormalTok{, }\AttributeTok{aglevs =} \DecValTok{2}\NormalTok{, }\AttributeTok{pval =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-129-1.pdf}
+
+Sustainability dimensions are not well-correlated and are in fact slightly negatively correlated. This points to trade-offs between different aspects of sustainable development: as social sustainability increases, environmental sustainability often tends to decrease. Or at best, an increase in one does not really imply an increase in the others.
+
+Finally for the multivariate analysis, we may wish to run a principle component analysis. As with Cronbach's alpha, we can do this on any group or level of indicators, so there are many possibilities. In the \protect\hyperlink{multivariate-analysis-1}{Multivariate analysis} chapter, this was done at the pillar level. We can also try here at the indicator level, let's say within one of the pillar groups:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PCA\_P2P }\OtherTok{\textless{}{-}} \FunctionTok{getPCA}\NormalTok{(ASEM, }\AttributeTok{dset =} \StringTok{"Normalised"}\NormalTok{, }\AttributeTok{icodes =} \StringTok{"P2P"}\NormalTok{, }\AttributeTok{aglev =} \DecValTok{1}\NormalTok{, }\AttributeTok{out2 =} \StringTok{"list"}\NormalTok{)}
+
+\FunctionTok{summary}\NormalTok{(PCA\_P2P}\SpecialCharTok{$}\NormalTok{PCAresults}\SpecialCharTok{$}\NormalTok{P2P}\SpecialCharTok{$}\NormalTok{PCAres)}
+\DocumentationTok{\#\# Importance of components:}
+\DocumentationTok{\#\#                           PC1    PC2    PC3    PC4     PC5     PC6     PC7}
+\DocumentationTok{\#\# Standard deviation     1.9896 1.0164 0.9477 0.9067 0.72952 0.59923 0.46175}
+\DocumentationTok{\#\# Proportion of Variance 0.4948 0.1291 0.1123 0.1028 0.06653 0.04488 0.02665}
+\DocumentationTok{\#\# Cumulative Proportion  0.4948 0.6239 0.7362 0.8390 0.90548 0.95037 0.97702}
+\DocumentationTok{\#\#                            PC8}
+\DocumentationTok{\#\# Standard deviation     0.42878}
+\DocumentationTok{\#\# Proportion of Variance 0.02298}
+\DocumentationTok{\#\# Cumulative Proportion  1.00000}
+\end{Highlighting}
+\end{Shaded}
+
+We can see that the first principle component explains about 50\% of the variance of the indicators, which is perhaps borderline for the existence of single latent variable. That said, many composite indicators will not yield strong latent variables in many cases.
+
+We can now produce a PCA biplot using this information.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# install ggbiplot if you don\textquotesingle{}t have it}
+\CommentTok{\# library(devtools)}
+\CommentTok{\# install\_github("vqv/ggbiplot")}
+\FunctionTok{library}\NormalTok{(ggbiplot)}
+\FunctionTok{ggbiplot}\NormalTok{(PCA\_P2P}\SpecialCharTok{$}\NormalTok{PCAresults}\SpecialCharTok{$}\NormalTok{P2P}\SpecialCharTok{$}\NormalTok{PCAres,}
+         \AttributeTok{labels =}\NormalTok{ ASEM}\SpecialCharTok{$}\NormalTok{Data}\SpecialCharTok{$}\NormalTok{Normalised}\SpecialCharTok{$}\NormalTok{UnitCode,}
+         \AttributeTok{groups =}\NormalTok{ ASEM}\SpecialCharTok{$}\NormalTok{Data}\SpecialCharTok{$}\NormalTok{Normalised}\SpecialCharTok{$}\NormalTok{Group\_EurAsia)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-131-1.pdf}
+
+Once again we see a fairly clear divide between Asia and Europe in terms of P2P connectivity, with exceptions of Singapore which is very well-connected. We also note the small cluster of New Zealand and Australia which have very similar characteristics in P2P connectivity.
+
+\hypertarget{weights}{%
+\section{Weights}\label{weights}}
+
+Another worthwhile check is to understand the effective weights of each indicator. A sometimes under-appreciated fact is that the weight of an indicator in the final index is due to its own weight, plus the weight of all its parents, as well as the number of indicators and aggregates in each group. For example, an equally-weighted group of two indicators will each have a higher weight (0.5) than an equally weighted group of ten indicators (0.1), and this applies to all aggregation levels.
+
+The function \texttt{effectiveWeight()} gives effective weights for all levels. We can check the indicator level by filtering:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{EffWts }\OtherTok{\textless{}{-}} \FunctionTok{effectiveWeight}\NormalTok{(ASEM)}
+
+\NormalTok{IndWts }\OtherTok{\textless{}{-}}\NormalTok{ EffWts}\SpecialCharTok{$}\NormalTok{EffectiveWeightsList }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(AgLevel }\SpecialCharTok{==} \DecValTok{1}\NormalTok{)}
+
+\FunctionTok{head}\NormalTok{(IndWts)}
+\DocumentationTok{\#\#   AgLevel      Code EffectiveWeight}
+\DocumentationTok{\#\# 1       1     Goods      0.02000000}
+\DocumentationTok{\#\# 2       1  Services      0.02000000}
+\DocumentationTok{\#\# 3       1       FDI      0.02000000}
+\DocumentationTok{\#\# 4       1    PRemit      0.02000000}
+\DocumentationTok{\#\# 5       1   ForPort      0.02000000}
+\DocumentationTok{\#\# 6       1 CostImpEx      0.01666667}
+\end{Highlighting}
+\end{Shaded}
+
+We might want to know the maximum and minimum effective weights and which indicators are involved:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{IndWts }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(EffectiveWeight }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\FunctionTok{min}\NormalTok{(IndWts}\SpecialCharTok{$}\NormalTok{EffectiveWeight), }\FunctionTok{max}\NormalTok{(IndWts}\SpecialCharTok{$}\NormalTok{EffectiveWeight)))}
+\DocumentationTok{\#\#    AgLevel     Code EffectiveWeight}
+\DocumentationTok{\#\# 1        1    StMob      0.01250000}
+\DocumentationTok{\#\# 2        1 Research      0.01250000}
+\DocumentationTok{\#\# 3        1      Pat      0.01250000}
+\DocumentationTok{\#\# 4        1 CultServ      0.01250000}
+\DocumentationTok{\#\# 5        1 CultGood      0.01250000}
+\DocumentationTok{\#\# 6        1  Tourist      0.01250000}
+\DocumentationTok{\#\# 7        1 MigStock      0.01250000}
+\DocumentationTok{\#\# 8        1     Lang      0.01250000}
+\DocumentationTok{\#\# 9        1      LPI      0.01250000}
+\DocumentationTok{\#\# 10       1  Flights      0.01250000}
+\DocumentationTok{\#\# 11       1     Ship      0.01250000}
+\DocumentationTok{\#\# 12       1     Bord      0.01250000}
+\DocumentationTok{\#\# 13       1     Elec      0.01250000}
+\DocumentationTok{\#\# 14       1      Gas      0.01250000}
+\DocumentationTok{\#\# 15       1 ConSpeed      0.01250000}
+\DocumentationTok{\#\# 16       1    Cov4G      0.01250000}
+\DocumentationTok{\#\# 17       1     Embs      0.03333333}
+\DocumentationTok{\#\# 18       1     IGOs      0.03333333}
+\DocumentationTok{\#\# 19       1   UNVote      0.03333333}
+\DocumentationTok{\#\# 20       1    Renew      0.03333333}
+\DocumentationTok{\#\# 21       1 PrimEner      0.03333333}
+\DocumentationTok{\#\# 22       1      CO2      0.03333333}
+\DocumentationTok{\#\# 23       1   MatCon      0.03333333}
+\DocumentationTok{\#\# 24       1   Forest      0.03333333}
+\DocumentationTok{\#\# 25       1  PubDebt      0.03333333}
+\DocumentationTok{\#\# 26       1 PrivDebt      0.03333333}
+\DocumentationTok{\#\# 27       1  GDPGrow      0.03333333}
+\DocumentationTok{\#\# 28       1    RDExp      0.03333333}
+\DocumentationTok{\#\# 29       1     NEET      0.03333333}
+\end{Highlighting}
+\end{Shaded}
+
+An easy way to visualise is to call the \texttt{plotFramework()} function:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plotframework}\NormalTok{(ASEM)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{COINr-documentation_files/figure-latex/unnamed-chunk-134-1.pdf}
+
+\hypertarget{what-ifs}{%
+\section{What-ifs}\label{what-ifs}}
+
+Due to the uncertainty in composite indicators, it may often be useful to know how the scores and ranks would change under an alternative formulation of the index. Examples could include different weights, as well as adding/removing/substituting indicators or entire aggregation groups.
+
+To give an example, let's imagine that some stakeholders claim that Political connectivity is not relevant to the overall concept. What would happen if it were removed? There are at least three ways we can check this:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use the ``exclude'' argument of \texttt{assemble()} to exclude the relevant indicators
+\item
+  Set the weight of the Political pillar to zero
+\item
+  Remove the indicators manually
+\end{enumerate}
+
+Here we will take the quickest option, which is Option 2.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Copy the COIN}
+\NormalTok{ASEM\_NoPolitical }\OtherTok{\textless{}{-}}\NormalTok{ ASEM}
+
+\CommentTok{\# Copy the weights}
+\NormalTok{ASEM\_NoPolitical}\SpecialCharTok{$}\NormalTok{Parameters}\SpecialCharTok{$}\NormalTok{Weights}\SpecialCharTok{$}\NormalTok{NoPolitical }\OtherTok{\textless{}{-}}\NormalTok{ ASEM\_NoPolitical}\SpecialCharTok{$}\NormalTok{Parameters}\SpecialCharTok{$}\NormalTok{Weights}\SpecialCharTok{$}\NormalTok{Original}
+
+\CommentTok{\# Set Political weight to zero}
+\NormalTok{ASEM\_NoPolitical}\SpecialCharTok{$}\NormalTok{Parameters}\SpecialCharTok{$}\NormalTok{Weights}\SpecialCharTok{$}\NormalTok{NoPolitical}\SpecialCharTok{$}\NormalTok{Weight[}
+\NormalTok{  ASEM\_NoPolitical}\SpecialCharTok{$}\NormalTok{Parameters}\SpecialCharTok{$}\NormalTok{Weights}\SpecialCharTok{$}\NormalTok{NoPolitical}\SpecialCharTok{$}\NormalTok{Code }\SpecialCharTok{==} \StringTok{"Political"}\NormalTok{] }\OtherTok{\textless{}{-}} \DecValTok{0}
+
+\CommentTok{\# Alter methodology to use new weights}
+\NormalTok{ASEM\_NoPolitical}\SpecialCharTok{$}\NormalTok{Method}\SpecialCharTok{$}\NormalTok{aggregate}\SpecialCharTok{$}\NormalTok{agweights }\OtherTok{\textless{}{-}} \StringTok{"NoPolitical"}
+
+\CommentTok{\# Regenerate}
+\NormalTok{ASEM\_NoPolitical }\OtherTok{\textless{}{-}} \FunctionTok{regen}\NormalTok{(ASEM\_NoPolitical)}
+\DocumentationTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\# Denominators detected {-} stored in .$Input$Denominators}
+\DocumentationTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\# Indicator codes cross{-}checked and OK.}
+\DocumentationTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\# Number of indicators = 49}
+\DocumentationTok{\#\# Number of units = 51}
+\DocumentationTok{\#\# Number of aggregation levels = 3 above indicator level.}
+\DocumentationTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\# Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin}
+\DocumentationTok{\#\# Cross{-}check between metadata and framework = OK.}
+\DocumentationTok{\#\# Aggregation level 2 with 2 aggregate groups: Conn, Sust}
+\DocumentationTok{\#\# Cross{-}check between metadata and framework = OK.}
+\DocumentationTok{\#\# Aggregation level 3 with 1 aggregate groups: Index}
+\DocumentationTok{\#\# Cross{-}check between metadata and framework = OK.}
+\DocumentationTok{\#\# {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}}
+\DocumentationTok{\#\# Missing data points detected = 65}
+\DocumentationTok{\#\# Missing data points imputed = 65, using method = indgroup\_mean}
+\end{Highlighting}
+\end{Shaded}
+
+Now we need to compare the two alternative indexes:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{compTable}\NormalTok{(ASEM, ASEM\_NoPolitical, }\AttributeTok{dset =} \StringTok{"Aggregated"}\NormalTok{, }\AttributeTok{isel =} \StringTok{"Index"}\NormalTok{,}
+          \AttributeTok{COINnames =} \FunctionTok{c}\NormalTok{(}\StringTok{"Original"}\NormalTok{, }\StringTok{"NoPolitical"}\NormalTok{))}
+\DocumentationTok{\#\#    UnitCode           UnitName Rank:Original Rank:NoPolitical RankChange}
+\DocumentationTok{\#\# 14      EST            Estonia            22               28         {-}6}
+\DocumentationTok{\#\# 6       BRN  Brunei Darussalam            40               45         {-}5}
+\DocumentationTok{\#\# 44      ROU            Romania            25               20          5}
+\DocumentationTok{\#\# 9       CYP             Cyprus            29               33         {-}4}
+\DocumentationTok{\#\# 19      HRV            Croatia            18               22         {-}4}
+\DocumentationTok{\#\# 50      THA           Thailand            42               38          4}
+\DocumentationTok{\#\# 8       CHN              China            49               46          3}
+\DocumentationTok{\#\# 16      FRA             France            21               18          3}
+\DocumentationTok{\#\# 20      HUN            Hungary            20               23         {-}3}
+\DocumentationTok{\#\# 21      IDN          Indonesia            43               40          3}
+\DocumentationTok{\#\# 23      IRL            Ireland            12                9          3}
+\DocumentationTok{\#\# 25      JPN              Japan            34               31          3}
+\DocumentationTok{\#\# 31      LUX         Luxembourg             8               11         {-}3}
+\DocumentationTok{\#\# 33      MLT              Malta            10               13         {-}3}
+\DocumentationTok{\#\# 47      SVK           Slovakia            24               21          3}
+\DocumentationTok{\#\# 11      DEU            Germany             9                7          2}
+\DocumentationTok{\#\# 12      DNK            Denmark             3                5         {-}2}
+\DocumentationTok{\#\# 24      ITA              Italy            28               26          2}
+\DocumentationTok{\#\# 28      KOR              Korea            31               29          2}
+\DocumentationTok{\#\# 36      MYS           Malaysia            39               41         {-}2}
+\DocumentationTok{\#\# 38      NOR             Norway             4                2          2}
+\DocumentationTok{\#\# 1       AUS          Australia            35               36         {-}1}
+\DocumentationTok{\#\# 2       AUT            Austria             7                8         {-}1}
+\DocumentationTok{\#\# 3       BEL            Belgium             5                4          1}
+\DocumentationTok{\#\# 4       BGD         Bangladesh            46               47         {-}1}
+\DocumentationTok{\#\# 15      FIN            Finland            13               12          1}
+\DocumentationTok{\#\# 17      GBR     United Kingdom            15               14          1}
+\DocumentationTok{\#\# 22      IND              India            45               44          1}
+\DocumentationTok{\#\# 26      KAZ         Kazakhstan            47               48         {-}1}
+\DocumentationTok{\#\# 29      LAO            Lao PDR            48               49         {-}1}
+\DocumentationTok{\#\# 32      LVA             Latvia            23               24         {-}1}
+\DocumentationTok{\#\# 34      MMR            Myanmar            41               42         {-}1}
+\DocumentationTok{\#\# 35      MNG           Mongolia            44               43          1}
+\DocumentationTok{\#\# 37      NLD        Netherlands             2                3         {-}1}
+\DocumentationTok{\#\# 39      NZL        New Zealand            33               34         {-}1}
+\DocumentationTok{\#\# 41      PHL        Philippines            38               39         {-}1}
+\DocumentationTok{\#\# 42      POL             Poland            26               25          1}
+\DocumentationTok{\#\# 46      SGP          Singapore            14               15         {-}1}
+\DocumentationTok{\#\# 48      SVN           Slovenia            11               10          1}
+\DocumentationTok{\#\# 51      VNM            Vietnam            36               35          1}
+\DocumentationTok{\#\# 5       BGR           Bulgaria            30               30          0}
+\DocumentationTok{\#\# 7       CHE        Switzerland             1                1          0}
+\DocumentationTok{\#\# 10      CZE     Czech Republic            17               17          0}
+\DocumentationTok{\#\# 13      ESP              Spain            19               19          0}
+\DocumentationTok{\#\# 18      GRC             Greece            32               32          0}
+\DocumentationTok{\#\# 27      KHM           Cambodia            37               37          0}
+\DocumentationTok{\#\# 30      LTU          Lithuania            16               16          0}
+\DocumentationTok{\#\# 40      PAK           Pakistan            50               50          0}
+\DocumentationTok{\#\# 43      PRT           Portugal            27               27          0}
+\DocumentationTok{\#\# 45      RUS Russian Federation            51               51          0}
+\DocumentationTok{\#\# 49      SWE             Sweden             6                6          0}
+\DocumentationTok{\#\#    AbsRankChange}
+\DocumentationTok{\#\# 14             6}
+\DocumentationTok{\#\# 6              5}
+\DocumentationTok{\#\# 44             5}
+\DocumentationTok{\#\# 9              4}
+\DocumentationTok{\#\# 19             4}
+\DocumentationTok{\#\# 50             4}
+\DocumentationTok{\#\# 8              3}
+\DocumentationTok{\#\# 16             3}
+\DocumentationTok{\#\# 20             3}
+\DocumentationTok{\#\# 21             3}
+\DocumentationTok{\#\# 23             3}
+\DocumentationTok{\#\# 25             3}
+\DocumentationTok{\#\# 31             3}
+\DocumentationTok{\#\# 33             3}
+\DocumentationTok{\#\# 47             3}
+\DocumentationTok{\#\# 11             2}
+\DocumentationTok{\#\# 12             2}
+\DocumentationTok{\#\# 24             2}
+\DocumentationTok{\#\# 28             2}
+\DocumentationTok{\#\# 36             2}
+\DocumentationTok{\#\# 38             2}
+\DocumentationTok{\#\# 1              1}
+\DocumentationTok{\#\# 2              1}
+\DocumentationTok{\#\# 3              1}
+\DocumentationTok{\#\# 4              1}
+\DocumentationTok{\#\# 15             1}
+\DocumentationTok{\#\# 17             1}
+\DocumentationTok{\#\# 22             1}
+\DocumentationTok{\#\# 26             1}
+\DocumentationTok{\#\# 29             1}
+\DocumentationTok{\#\# 32             1}
+\DocumentationTok{\#\# 34             1}
+\DocumentationTok{\#\# 35             1}
+\DocumentationTok{\#\# 37             1}
+\DocumentationTok{\#\# 39             1}
+\DocumentationTok{\#\# 41             1}
+\DocumentationTok{\#\# 42             1}
+\DocumentationTok{\#\# 46             1}
+\DocumentationTok{\#\# 48             1}
+\DocumentationTok{\#\# 51             1}
+\DocumentationTok{\#\# 5              0}
+\DocumentationTok{\#\# 7              0}
+\DocumentationTok{\#\# 10             0}
+\DocumentationTok{\#\# 13             0}
+\DocumentationTok{\#\# 18             0}
+\DocumentationTok{\#\# 27             0}
+\DocumentationTok{\#\# 30             0}
+\DocumentationTok{\#\# 40             0}
+\DocumentationTok{\#\# 43             0}
+\DocumentationTok{\#\# 45             0}
+\DocumentationTok{\#\# 49             0}
+\end{Highlighting}
+\end{Shaded}
+
+The results show that the rank changes are not major at the index level, with a maximum shift of six places for Estonia. The implication might be (depending on context) that the inclusion or not of the Political pillar does not have a drastic impact on the results, although one should bear in mind that the changes on lower aggregation levels are probably higher, and the indicators themselves may have value and add legitimacy to the framework. In other words, it is not always just the index that counts.
+
+You can dig deeper investigating what-ifs with all kinds of adjustments. If you want to test the overall effect of uncertainties, rather than specific cases, an uncertainty and sensitivity analysis is very useful. This is explained in the \protect\hyperlink{sensitivity-analysis}{Sensitivity analysis} chapter and will not be repeated here.
+
+\hypertarget{summing-up}{%
+\section{Summing up}\label{summing-up}}
+
+COINr offers all kinds of possibilities for analysis of a composite indicator, although to access most things you would need to assemble the indicator data into a COIN. As mentioned, I would recommend perfoming the analysis in an R Markdown document, then knitting the document to Word, pdf or HTML depending on the format that you need to present the work in. This can save a lot of time in exporting figures, and if changes are made to the index, you can easily rerun everything. Consider also that if your output is Word, you can use a formatting template to already pre-format the document.
 
 \emph{To be completed}
 

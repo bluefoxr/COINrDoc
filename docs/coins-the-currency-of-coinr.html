@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 3 COINs: the currency of COINr | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
-  
+  <meta property="og:url" content="https://bluefoxr.github.io/COINrDoc/" />
   
   <meta property="og:description" content="Composite indicators with COINr" />
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-07-08" />
+<meta name="date" content="2021-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -175,6 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="foundations.html"><a href="foundations.html#use-scripts-and-r-markdown"><i class="fa fa-check"></i><b>2.4.1</b> Use scripts and R Markdown</a></li>
 <li class="chapter" data-level="2.4.2" data-path="foundations.html"><a href="foundations.html#missing-data"><i class="fa fa-check"></i><b>2.4.2</b> Missing data</a></li>
 <li class="chapter" data-level="2.4.3" data-path="foundations.html"><a href="foundations.html#plotting"><i class="fa fa-check"></i><b>2.4.3</b> Plotting</a></li>
+<li class="chapter" data-level="2.4.4" data-path="foundations.html"><a href="foundations.html#panel-data-and-multiple-coins"><i class="fa fa-check"></i><b>2.4.4</b> Panel data and multiple COINs</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a>
@@ -401,12 +402,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 Figure 3.1: Inside a COIN
 </p>
 </div>
+<p>The COIN is best explored using e.g. <code>View(ASEM)</code> in R Studio. It consists of six main sub-lists which are briefly described as follows (the dot in e.g. <code>.$Input</code> in the following refers to a generic COIN):</p>
+<ul>
+<li><code>.$Input</code> is all input data and metadata that was initially used to construct the COIN.</li>
+<li><code>.$Data</code> consists of data frames of indicator data at each construction step, e.g. <code>.$Data$Raw</code> is the raw data used to construct the COIN, <code>.$Data$Normalised</code> is the same data set after normalisation, and so on.</li>
+<li><code>.$Parameters</code> contains parameters such as sets of weights, details on the number of indicators, aggregation levels, etc.</li>
+<li><code>.$Method</code> is a record of the methodology applied to build the COIN. In practice, this records all the inputs to any COINr functions applied in building the COIN, for example the normalisation method and parameters, data treatment specifications, and so on. Apart from keeping a record of the construction, this also allows the entire results to be regenerated using the information stored in the COIN. This will be explained better in <a href="adjustments-and-comparisons.html#adjustments-and-comparisons">Adjustments and comparisons</a>.</li>
+<li><code>.$Analysis</code> contains any analysis tables which are sorted by the data sets to which they are applied. This can be e.g. indicator statistics of any of the data sets found in <code>.$Data</code>, or correlations.</li>
+<li><code>.$Results</code> contains summary tables of results, arranged and sorted for easy viewing.</li>
+</ul>
 <p>When you first build the COIN, using the three input data frames explained in the next section, the COIN will only consist of the Input, Data, Parameters and possibly Method “folders” (sub-lists). As you construct the composite indicator, more things will be added to the COIN, for example extra data sets (denominated, normalised, aggregated), analysis (missing data, PCA, etc), and results (summary results tables).</p>
-<p>Many analysis functions in COINr, for example, have an argument called <code>out2</code>, which specifies whether the result should be stored inside the COIN or output as a separate list or data frame.</p>
+<p>Many analysis functions in COINr have an argument called <code>out2</code>, which specifies whether the result should be stored inside the COIN or output as a separate list or data frame.</p>
 <p>It is worth exploring the contents of the COIN as it is built to understand where things are kept. A couple of things to keep in mind are:</p>
 <ol style="list-style-type: decimal">
 <li>One good reason to store things inside the COIN is that if you plan to export the results to Excel at any point, you can use the <code>coin2Excel()</code> function to export (almost) everything inside the COIN in one command. This includes all data sets, analysis tables and results tables.</li>
-<li>A COIN is a list that has been labelled as a “COIN” using R’s <code>class()</code> function. That means you can edit it as you would with any other list. This means that:
+<li>A COIN is a list that has been labelled as a “COIN” using R’s <code>class()</code> function, and has no hard restrictions on its structure. That means you can edit it as you would with any other list. The implications of this are:
 <ol style="list-style-type: lower-alpha">
 <li>You can also store other things in the COIN if you want, and add folders and lists to it, but,</li>
 <li>You have to be careful editing it, because COINr functions expect things to be in certain places inside the COIN. So if you delete something, for example, some COINr functions may not work.</li>
@@ -415,49 +425,50 @@ Figure 3.1: Inside a COIN
 </div>
 <div id="the-three-inputs" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> The three inputs</h2>
-<p>To build a COIN, three ingredients (data frames) are needed to begin with, and are used as inputs to the <code>assemble()</code> function, which outputs a COIN. In short, they are the indicator data, the indicator metadata, and the aggregation metadata. Here, each will be explained separately. Inputting the data in the first place is where you will do most of the work, because you have to get your data in a format that COINr understands. But once you have got your data assembled, COINr should do most of the hard work, so hang in there!</p>
+<p>To build a COIN, three ingredients (data frames) are needed to begin with, and are used as inputs to the <code>assemble()</code> function, which outputs a COIN<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>. In short, they are the indicator data, the indicator metadata, and the aggregation metadata. Here, each will be explained separately. Inputting the data in the first place takes a little effort, because you have to get your data in a format that COINr understands, and you are required to specify many things. But once you have got your data assembled, COINr should do most of the hard work, so hang in there!</p>
+<p>How you actually create these data frames is up to you. If your data is coming from Excel, it may be easiest to assemble these data frames (tables) manually in Excel and then read directly into R. Alternatively, you may wish to create them from scratch in R (an advantage here could be that you can source data directly from APIs, and have a fully reproducible data pipeline), or you may have yet a different approach.</p>
 <div id="indicator-data" class="section level3" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Indicator data</h3>
 <p>The indicator data is a data frame which, shockingly, specifies the data for the indicators. However, it can do more than that, and also some rules have to be followed. The easiest way to explain is to start with an example.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="coins-the-currency-of-coinr.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb8-2"><a href="coins-the-currency-of-coinr.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEMIndData)</span>
-<span id="cb8-3"><a href="coins-the-currency-of-coinr.html#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 60</span></span>
-<span id="cb8-4"><a href="coins-the-currency-of-coinr.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   UnitName UnitCode Group_GDP Group_GDPpc Group_Pop Group_EurAsia  Year Den_Area</span></span>
-<span id="cb8-5"><a href="coins-the-currency-of-coinr.html#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb8-6"><a href="coins-the-currency-of-coinr.html#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Austria  AUT      L         XL          M         Europe         2018    83871</span></span>
-<span id="cb8-7"><a href="coins-the-currency-of-coinr.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Belgium  BEL      L         L           L         Europe         2018    30528</span></span>
-<span id="cb8-8"><a href="coins-the-currency-of-coinr.html#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Bulgaria BGR      S         S           M         Europe         2018   110879</span></span>
-<span id="cb8-9"><a href="coins-the-currency-of-coinr.html#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Croatia  HRV      S         M           S         Europe         2018    56594</span></span>
-<span id="cb8-10"><a href="coins-the-currency-of-coinr.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Cyprus   CYP      S         L           S         Europe         2018     9251</span></span>
-<span id="cb8-11"><a href="coins-the-currency-of-coinr.html#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 Czech R~ CZE      M         L           M         Europe         2018    78867</span></span>
-<span id="cb8-12"><a href="coins-the-currency-of-coinr.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 52 more variables: Den_Energy &lt;dbl&gt;, Den_GDP &lt;dbl&gt;, Den_Pop &lt;dbl&gt;,</span></span>
-<span id="cb8-13"><a href="coins-the-currency-of-coinr.html#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="do">## #   LPI &lt;dbl&gt;, Flights &lt;dbl&gt;, Ship &lt;dbl&gt;, Bord &lt;dbl&gt;, Elec &lt;dbl&gt;, Gas &lt;dbl&gt;,</span></span>
-<span id="cb8-14"><a href="coins-the-currency-of-coinr.html#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">## #   ConSpeed &lt;dbl&gt;, Cov4G &lt;dbl&gt;, Goods &lt;dbl&gt;, Services &lt;dbl&gt;, FDI &lt;dbl&gt;,</span></span>
-<span id="cb8-15"><a href="coins-the-currency-of-coinr.html#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="do">## #   PRemit &lt;dbl&gt;, ForPort &lt;dbl&gt;, Embs &lt;dbl&gt;, IGOs &lt;dbl&gt;, UNVote &lt;dbl&gt;,</span></span>
-<span id="cb8-16"><a href="coins-the-currency-of-coinr.html#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="do">## #   CostImpEx &lt;dbl&gt;, Tariff &lt;dbl&gt;, TBTs &lt;dbl&gt;, TIRcon &lt;dbl&gt;, RTAs &lt;dbl&gt;,</span></span>
-<span id="cb8-17"><a href="coins-the-currency-of-coinr.html#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Visa &lt;dbl&gt;, StMob &lt;dbl&gt;, Research &lt;dbl&gt;, Pat &lt;dbl&gt;, CultServ &lt;dbl&gt;,</span></span>
-<span id="cb8-18"><a href="coins-the-currency-of-coinr.html#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="do">## #   CultGood &lt;dbl&gt;, Tourist &lt;dbl&gt;, MigStock &lt;dbl&gt;, Lang &lt;dbl&gt;, Renew &lt;dbl&gt;,</span></span>
-<span id="cb8-19"><a href="coins-the-currency-of-coinr.html#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="do">## #   PrimEner &lt;dbl&gt;, CO2 &lt;dbl&gt;, MatCon &lt;dbl&gt;, Forest &lt;dbl&gt;, Poverty &lt;dbl&gt;,</span></span>
-<span id="cb8-20"><a href="coins-the-currency-of-coinr.html#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="do">## #   Palma &lt;dbl&gt;, TertGrad &lt;dbl&gt;, FreePress &lt;dbl&gt;, TolMin &lt;dbl&gt;, NGOs &lt;dbl&gt;,</span></span>
-<span id="cb8-21"><a href="coins-the-currency-of-coinr.html#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="do">## #   CPI &lt;dbl&gt;, FemLab &lt;dbl&gt;, WomParl &lt;dbl&gt;, PubDebt &lt;dbl&gt;, PrivDebt &lt;dbl&gt;,</span></span>
-<span id="cb8-22"><a href="coins-the-currency-of-coinr.html#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="do">## #   GDPGrow &lt;dbl&gt;, RDExp &lt;dbl&gt;, NEET &lt;dbl&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="coins-the-currency-of-coinr.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
+<span id="cb9-2"><a href="coins-the-currency-of-coinr.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEMIndData[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>])</span>
+<span id="cb9-3"><a href="coins-the-currency-of-coinr.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 8</span></span>
+<span id="cb9-4"><a href="coins-the-currency-of-coinr.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   UnitName UnitCode Group_GDP Group_GDPpc Group_Pop Group_EurAsia  Year Den_Area</span></span>
+<span id="cb9-5"><a href="coins-the-currency-of-coinr.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span id="cb9-6"><a href="coins-the-currency-of-coinr.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Austria  AUT      L         XL          M         Europe         2018    83871</span></span>
+<span id="cb9-7"><a href="coins-the-currency-of-coinr.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Belgium  BEL      L         L           L         Europe         2018    30528</span></span>
+<span id="cb9-8"><a href="coins-the-currency-of-coinr.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Bulgaria BGR      S         S           M         Europe         2018   110879</span></span>
+<span id="cb9-9"><a href="coins-the-currency-of-coinr.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Croatia  HRV      S         M           S         Europe         2018    56594</span></span>
+<span id="cb9-10"><a href="coins-the-currency-of-coinr.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Cyprus   CYP      S         L           S         Europe         2018     9251</span></span>
+<span id="cb9-11"><a href="coins-the-currency-of-coinr.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 Czech R~ CZE      M         L           M         Europe         2018    78867</span></span>
+<span id="cb9-12"><a href="coins-the-currency-of-coinr.html#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEMIndData[<span class="dv">9</span><span class="sc">:</span><span class="dv">16</span>])</span>
+<span id="cb9-13"><a href="coins-the-currency-of-coinr.html#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 8</span></span>
+<span id="cb9-14"><a href="coins-the-currency-of-coinr.html#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="do">##   Den_Energy Den_GDP Den_Pop   LPI Flights  Ship  Bord   Elec</span></span>
+<span id="cb9-15"><a href="coins-the-currency-of-coinr.html#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="do">##        &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span id="cb9-16"><a href="coins-the-currency-of-coinr.html#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="do">## 1      27      391.    8735.  4.10   29.0   0       35 35.4  </span></span>
+<span id="cb9-17"><a href="coins-the-currency-of-coinr.html#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="do">## 2      41.8    468.   11429.  4.11   31.9  20.6     48 26.5  </span></span>
+<span id="cb9-18"><a href="coins-the-currency-of-coinr.html#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       9.96    53.2   7085.  2.81    9.24  7.92    18 11.3  </span></span>
+<span id="cb9-19"><a href="coins-the-currency-of-coinr.html#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="do">## 4       7.01    51.2   4189.  3.16    9.25 12.4     41 19.5  </span></span>
+<span id="cb9-20"><a href="coins-the-currency-of-coinr.html#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="do">## 5       1.43    20.0   1180.  3.00    8.75 11.7      0  0.439</span></span>
+<span id="cb9-21"><a href="coins-the-currency-of-coinr.html#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="do">## 6      25.5    195.   10618.  3.67   15.3   0       35 46.8</span></span></code></pre></div>
 <p>COINr comes prepackaged with some example data - here we are looking at indicator data from the <a href="https://composite-indicators.jrc.ec.europa.eu/asem-sustainable-connectivity/">ASEM Sustainable Connectivity Portal</a>, which has an indicator data set covering 51 Asian and European countries.</p>
 <p>The first thing to notice is that each row is an observation (here, a country), and each column is a variable (mostly indicators, but also other things). Look at the structure of the data frame, working from left to right:</p>
 <ul>
 <li><code>UnitName</code> [<strong>required</strong>] gives the name of each unit. Here, units are countries, so these are the names of each country.</li>
-<li><code>UnitCode</code> [<strong>required</strong>] is a unique code assigned to each unit (country). This is very important, and is the main “reference” inside COINr for units. If your units are countries, I recommend using <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO Alpha-3 codes</a>, because these are recognised by COINr for generating maps. It also makes data processing generally easier.</li>
-<li><code>Group_*</code> [optional] Any column name that starts with <code>Group_</code> is recognised as a group column rather than an indicator. You don’t have to have any groups, but some COINr functions support specific operations on groups (e.g. imputation within group, and future updates plan to expand this capacity). You can have as many group columns as you want.</li>
-<li><code>Year</code> [optional] gives the reference year of the data. This allows you to have multiple years of data, for example, you can have a value for a given country for 2018, and another value for the same country for 2019, and so on. Like groups, this feature is not yet fully developed in COINr.</li>
-<li><code>Den_*</code>[optional] Any column names that begin with <code>Den_*</code> are recognised as <em>denominators</em>, i.e. indicators that are used to scale other indicators.</li>
-<li>Finally, any column that begins with <code>x_</code> will be ignored and passed through. This is not shown in the data set above, but is useful for e.g. alternative codes or other variables that you want to retain. <em>Any remaining columns that do not begin with <code>x_</code> or use the other names in this list are recognised as indicators.</em></li>
+<li><code>UnitCode</code> [<strong>required</strong>] is a unique code assigned to each unit (country). This is very important, and is the main “reference” inside COINr for units. If your units are countries, I recommend using <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3">ISO Alpha-3 codes</a>, because these are recognised by COINr for generating maps. It also makes data processing generally easier. For converting names to codes and vice versa, the <a href="https://github.com/vincentarelbundock/countrycode">countrycode package</a> is extremely handy.</li>
+<li><code>Group_*</code> [optional] Any column name that starts with <code>Group_</code> is recognised as a group column rather than an indicator. You don’t have to have any groups, but some COINr functions support specific operations on groups (e.g. imputation within group, some charts also recognise groups). You can have as many group columns as you want.</li>
+<li><code>Year</code> [optional] gives the reference year of the data. This allows you to have multiple years of data, for example, you can have a value for a given country for 2018, and another value for the same country for 2019, and so on. Like groups, this feature is not yet fully developed in COINr, but the <code>assemble()</code> function has the possibility to select years of data and impute by latest year (see below).</li>
+<li><code>Den_*</code>[optional] Any column names that begin with <code>Den_*</code> are recognised as <em>denominators</em>, i.e. indicators that are used to scale other indicators. These are used in COINr’s <code>denominate()</code> function.</li>
+<li>Finally, any column that begins with <code>x_</code> will be ignored and passed through. This is not shown in the data set above, but is useful for e.g. alternative codes or other variables that you want to retain.</li>
 </ul>
+<p><em>Any remaining columns that do not begin with <code>x_</code> or use the other names in this list are recognised as indicators.</em></p>
 <p>You will notice that all column (variable/indicator) names use short codes. This is to keep things concise in tables, rough plots etc. Indicator codes should be short, but informative enough that you know which indicator it refers to (e.g. “Ind1” is not so helpful). In some COINr plots, codes are displayed, so you might want to take that into account. In any case, the full names of indicators, and other details, are also specified in the indicator metadata table - see the next section.</p>
 <p>Some important rules and tips to keep in mind are:</p>
 <ul>
-<li>The following columns are <em>required</em>. All other columns are optional:
+<li>The following columns are <em>required</em>. All other columns are optional (they can be excluded):
 <ul>
 <li>UnitCode</li>
-<li>UnitName</li>
+<li>UnitName (if you don’t have separate names you can just replicate the unit codes)</li>
 <li>At least one indicator column</li>
 </ul></li>
 <li>Columns don’t have to be in any particular order, columns are identified by names rather than positions.</li>
@@ -470,107 +481,98 @@ Figure 3.1: Inside a COIN
 <div id="indicator-metadata" class="section level3" number="3.2.2">
 <h3><span class="header-section-number">3.2.2</span> Indicator metadata</h3>
 <p>The second data frame you need to input specifies the <em>metadata</em> of each indicator. This serves two purposes: first, to give details about each indicator, such as its name, its units and so on; and second, to specify the structure of the index. Here’s what this looks like, for our example ASEM data set:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="coins-the-currency-of-coinr.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEMIndMeta)</span>
-<span id="cb9-2"><a href="coins-the-currency-of-coinr.html#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 10</span></span>
-<span id="cb9-3"><a href="coins-the-currency-of-coinr.html#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   IndName IndCode Direction IndWeight Denominator IndUnit Target Agg1  Agg2 </span></span>
-<span id="cb9-4"><a href="coins-the-currency-of-coinr.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
-<span id="cb9-5"><a href="coins-the-currency-of-coinr.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Logist~ LPI             1         1 &lt;NA&gt;        Score ~   4.12 Phys~ Conn </span></span>
-<span id="cb9-6"><a href="coins-the-currency-of-coinr.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Intern~ Flights         1         1 Den_Pop     Thousa~ 200.   Phys~ Conn </span></span>
-<span id="cb9-7"><a href="coins-the-currency-of-coinr.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Liner ~ Ship            1         1 &lt;NA&gt;        Score    20.1  Phys~ Conn </span></span>
-<span id="cb9-8"><a href="coins-the-currency-of-coinr.html#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Border~ Bord            1         1 Den_Area    Number~ 116.   Phys~ Conn </span></span>
-<span id="cb9-9"><a href="coins-the-currency-of-coinr.html#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Trade ~ Elec            1         1 Den_Energy  TWh     105.   Phys~ Conn </span></span>
-<span id="cb9-10"><a href="coins-the-currency-of-coinr.html#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 Trade ~ Gas             1         1 Den_Energy  Billio~  90.1  Phys~ Conn </span></span>
-<span id="cb9-11"><a href="coins-the-currency-of-coinr.html#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 1 more variable: Agg3 &lt;chr&gt;</span></span></code></pre></div>
-<p>Notice that now, the table is flipped on its side (transposed), and each row is an indicator, and the columns specify other things. This is to keep the data in a “tidy” format. Let’s go through the columns one by one.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="coins-the-currency-of-coinr.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEMIndMeta)</span>
+<span id="cb10-2"><a href="coins-the-currency-of-coinr.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 10</span></span>
+<span id="cb10-3"><a href="coins-the-currency-of-coinr.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   IndName IndCode Direction IndWeight Denominator IndUnit Target Agg1  Agg2 </span></span>
+<span id="cb10-4"><a href="coins-the-currency-of-coinr.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">##   &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;</span></span>
+<span id="cb10-5"><a href="coins-the-currency-of-coinr.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1 Logist~ LPI             1         1 &lt;NA&gt;        Score ~   4.12 Phys~ Conn </span></span>
+<span id="cb10-6"><a href="coins-the-currency-of-coinr.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2 Intern~ Flights         1         1 Den_Pop     Thousa~ 200.   Phys~ Conn </span></span>
+<span id="cb10-7"><a href="coins-the-currency-of-coinr.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3 Liner ~ Ship            1         1 &lt;NA&gt;        Score    20.1  Phys~ Conn </span></span>
+<span id="cb10-8"><a href="coins-the-currency-of-coinr.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 Border~ Bord            1         1 Den_Area    Number~ 116.   Phys~ Conn </span></span>
+<span id="cb10-9"><a href="coins-the-currency-of-coinr.html#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 5 Trade ~ Elec            1         1 Den_Energy  TWh     105.   Phys~ Conn </span></span>
+<span id="cb10-10"><a href="coins-the-currency-of-coinr.html#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 6 Trade ~ Gas             1         1 Den_Energy  Billio~  90.1  Phys~ Conn </span></span>
+<span id="cb10-11"><a href="coins-the-currency-of-coinr.html#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="do">## # ... with 1 more variable: Agg3 &lt;chr&gt;</span></span></code></pre></div>
+<p>Notice that here each row is an indicator (as opposed to <code>IndData</code> where columns represented indicators), and the columns specify attributes of indicators. This is to keep the data in a “tidy” format. Working through the columns one by one:</p>
 <ul>
 <li><code>IndName</code> [<strong>required</strong>] This is the full name of the indicator, which will be used in display plots.</li>
 <li><code>IndCode</code>[<strong>required</strong>] A reference code for each indicator. These <em>must be the same codes as specified in the indicator metadata</em>. The codes must also be unique.</li>
 <li><code>Direction</code> [<strong>required</strong>] The “direction” of each indicator - this takes values of either 1 or -1 for each indicator. A value of 1 means that higher values of the indicator correspond to higher values of the index, whereas -1 means the opposite.</li>
-<li><code>IndWeight</code> [<strong>required</strong>] The initial weights assigned to each indicator. Weights are relative and do not need to sum to one, so you can simply put all 1s here if you don’t know what else to put (the values can be adjusted later).</li>
-<li><code>Denominator</code> [<strong>required</strong>??] These should be the indicator codes of one of the denominator variables for each indicator to be denominated. E.g. here “Den_Pop” specifies that the indicator should be denominated by the “Den_Pop” indicators (population, in this case). For any indicators that do not need denominating, just set <code>NA</code>. Denominators can also be specified later, so if you want you can leave this column out. See <a href="appendix-building-a-composite-indicator-example.html#denomination-1">Denomination</a> for more information.</li>
+<li><code>IndWeight</code> [<strong>required</strong>] The initial weights assigned to each indicator. Weights are relative within each aggregation group and do not need to sum to one (they will be re-scaled to sum to one within each group by COINr).</li>
+<li><code>Denominator</code> [<strong>optional</strong>] These should be the indicator codes of one of the denominator variables for each indicator to be denominated. E.g. here “Den_Pop” specifies that the indicator should be denominated by the “Den_Pop” indicators (population, in this case). For any indicators that do not need denominating, just set <code>NA</code>. Denominators can also be specified later, so if you want you can leave this column out. See <a href="appendix-building-a-composite-indicator-example.html#denomination-1">Denomination</a> for more information.</li>
 <li><code>IndUnit</code> [<strong>optional</strong>] The units of the indicator. This helps for keeping track of what the numbers actually mean, and can be used in plots.</li>
 <li><code>Target</code> [<strong>optional</strong>] Targets associated with each indicator. Here, artificial targets have been generated which are 95% of the maximum score (accounting for the direction of the indicator). These are only used if the normalisation method is distance-to-target.</li>
-<li><code>Agg*</code> [<strong>required</strong>] Any column name that begins with <code>Agg</code> is recognised as a column specifying the aggregation group, and therefore the structure of the index. Aggregation columns should be in the order of the aggregation, but otherwise can have arbitrary names.</li>
+<li><code>Agg*</code> [<strong>required</strong>] Any column name that begins with <code>Agg</code> is recognised as a column specifying the aggregation group, and therefore the structure of the index. Aggregation columns <em>should be in the order of the aggregation</em>, but otherwise can have arbitrary names.</li>
 </ul>
 <p>Let’s look at the aggregation columns in a bit more detail. Each column represents a separate aggregation level, so in the ASEM example here we have three aggregation levels - the pillars, the two sub-indexes, and the overall index. The entry of each column specifies which group each indicator falls in. So, the first column <code>Agg1</code> specifies the pillar of each indicator. Again, each aggregation group (pillar, sub-index or index) is referenced by a unique code.</p>
 <p>The next column <code>Agg2</code>, gives the sub-index that the indicator belongs to. There is a bit of redundancy here, because obviously indicators in the same pillar must also belong to the same sub-index. Finally, <code>Agg3</code> specifies that all indicators belong to the index.</p>
-<p>You can have as many <code>Agg</code> columns as you like, and the names don’t have to be <code>Agg1</code> etc, but could be e.g. <code>Agg_Pillar</code>, <code>Agg_SubIndex</code>, etc. However, they <em>must</em> begin with <code>Agg</code>, otherwise COINr will not recognise them. And they <em>must</em> appear in the order of the aggregation, i.e. lowest level of aggregation first, then working upwards.</p>
+<p>You can have as many <code>Agg</code> columns as you like, and the names don’t have to be <code>Agg1</code> etc, but could be e.g. <code>Agg_Pillar</code>, <code>Agg_SubIndex</code>, etc. However, they <em>must</em> begin with <code>Agg</code>, otherwise COINr will not recognise them. And they <em>must</em> appear in the order of the aggregation, i.e. lowest level of aggregation first, then working upwards. This is in fact the only aspect of any of the input data frames that is dependent on order. It is not necessary even to aggregate to a single index – COINr will aggregate as far as the structure specified here.</p>
 </div>
 <div id="aggregation-metadata" class="section level3" number="3.2.3">
 <h3><span class="header-section-number">3.2.3</span> Aggregation metadata</h3>
-<p>The final data input is the aggregation metadata, which is also the simplest. Here’s our example for the ASEM data set:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="coins-the-currency-of-coinr.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEMAggMeta)</span>
-<span id="cb10-2"><a href="coins-the-currency-of-coinr.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 4</span></span>
-<span id="cb10-3"><a href="coins-the-currency-of-coinr.html#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   AgLevel Code      Name                         Weight</span></span>
-<span id="cb10-4"><a href="coins-the-currency-of-coinr.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                         &lt;dbl&gt;</span></span>
-<span id="cb10-5"><a href="coins-the-currency-of-coinr.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       2 Physical  Physical                          1</span></span>
-<span id="cb10-6"><a href="coins-the-currency-of-coinr.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2 ConEcFin  Economic and Financial (Con)      1</span></span>
-<span id="cb10-7"><a href="coins-the-currency-of-coinr.html#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       2 Political Political                         1</span></span>
-<span id="cb10-8"><a href="coins-the-currency-of-coinr.html#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 4       2 Instit    Institutional                     1</span></span>
-<span id="cb10-9"><a href="coins-the-currency-of-coinr.html#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 5       2 P2P       People to People                  1</span></span>
-<span id="cb10-10"><a href="coins-the-currency-of-coinr.html#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 6       2 Environ   Environmental                     1</span></span></code></pre></div>
-<p>This data frame simply consists of three columns for each aggregation level:</p>
+<p>The final data input is the aggregation metadata, which is also the simplest. The aim is to specify the names of each aggregation group (so far only codes have been specified), and the weights of each aggregate for building higher levels. Here’s our example for the ASEM data set:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="coins-the-currency-of-coinr.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ASEMAggMeta)</span>
+<span id="cb11-2"><a href="coins-the-currency-of-coinr.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## # A tibble: 6 x 4</span></span>
+<span id="cb11-3"><a href="coins-the-currency-of-coinr.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   AgLevel Code      Name                         Weight</span></span>
+<span id="cb11-4"><a href="coins-the-currency-of-coinr.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">##     &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;                         &lt;dbl&gt;</span></span>
+<span id="cb11-5"><a href="coins-the-currency-of-coinr.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">## 1       2 Physical  Physical                          1</span></span>
+<span id="cb11-6"><a href="coins-the-currency-of-coinr.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">## 2       2 ConEcFin  Economic and Financial (Con)      1</span></span>
+<span id="cb11-7"><a href="coins-the-currency-of-coinr.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">## 3       2 Political Political                         1</span></span>
+<span id="cb11-8"><a href="coins-the-currency-of-coinr.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## 4       2 Instit    Institutional                     1</span></span>
+<span id="cb11-9"><a href="coins-the-currency-of-coinr.html#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">## 5       2 P2P       People to People                  1</span></span>
+<span id="cb11-10"><a href="coins-the-currency-of-coinr.html#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">## 6       2 Environ   Environmental                     1</span></span></code></pre></div>
+<p>This data frame simply consists of four columns, all of which are required for assembly:</p>
 <ul>
-<li><code>*Code</code> [<strong>required</strong>] The aggregation group codes. This column must end with “Code,” and the codes must match the codes in the corresponding column in the indicator metadata aggregation columns.</li>
-<li><code>*Name</code> [<strong>required</strong>] The aggregation group names. This column must end with “Name.”</li>
-<li><code>*Weight</code> [<strong>required</strong>] The aggregation group weights. This column must end with “Weight.” Again, these weights can be changed later on.</li>
+<li><code>AgLevel</code> [<strong>required</strong>] The aggregation level (where 1 is indicator level, 2 is the first aggregation level, and so on – see Section <a href="#Sec:ContructingCIs"><strong>??</strong></a>)</li>
+<li><code>Code</code> [<strong>required</strong>] The aggregation group codes. These codes must match the codes in the corresponding column in the indicator metadata aggregation columns.</li>
+<li><code>Name</code> [<strong>required</strong>] The aggregation group names.</li>
+<li><code>Weight</code> [<strong>required</strong>] The aggregation group weights. These weights can be changed later on if needed.</li>
 </ul>
-<p>Columns must appear in the order of the aggregation groups.</p>
+<p>The codes specified here must be unique and not coincide with any other codes used for defining units or indicators. All columns are required, but do not need to be in a particular order.</p>
 </div>
 </div>
 <div id="putting-everything-together" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Putting everything together</h2>
 <p>Having got all your data in the correct format, you can finally build it into a COIN. From here, things start to get a bit easier. The function to build the COIN is called <code>assemble()</code>. This function takes the three data frames mentioned and converts them into a so-called <em>COIN</em>, which is a hierarchical list that is structured in a way that is recognised by all COINr functions. Let’s run <code>assemble()</code> using the built-in data sets to show how it works.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="coins-the-currency-of-coinr.html#cb11-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">assemble</span>(<span class="at">IndData =</span> ASEMIndData, <span class="at">IndMeta =</span> ASEMIndMeta, <span class="at">AggMeta =</span> ASEMAggMeta)</span>
-<span id="cb11-2"><a href="coins-the-currency-of-coinr.html#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb11-3"><a href="coins-the-currency-of-coinr.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Denominators detected - stored in .$Input$Denominators</span></span>
-<span id="cb11-4"><a href="coins-the-currency-of-coinr.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb11-5"><a href="coins-the-currency-of-coinr.html#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb11-6"><a href="coins-the-currency-of-coinr.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator codes cross-checked and OK.</span></span>
-<span id="cb11-7"><a href="coins-the-currency-of-coinr.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb11-8"><a href="coins-the-currency-of-coinr.html#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of indicators = 49</span></span>
-<span id="cb11-9"><a href="coins-the-currency-of-coinr.html#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of units = 51</span></span>
-<span id="cb11-10"><a href="coins-the-currency-of-coinr.html#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of aggregation levels = 3 above indicator level.</span></span>
-<span id="cb11-11"><a href="coins-the-currency-of-coinr.html#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
-<span id="cb11-12"><a href="coins-the-currency-of-coinr.html#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
-<span id="cb11-13"><a href="coins-the-currency-of-coinr.html#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb11-14"><a href="coins-the-currency-of-coinr.html#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
-<span id="cb11-15"><a href="coins-the-currency-of-coinr.html#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb11-16"><a href="coins-the-currency-of-coinr.html#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
-<span id="cb11-17"><a href="coins-the-currency-of-coinr.html#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
-<span id="cb11-18"><a href="coins-the-currency-of-coinr.html#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="coins-the-currency-of-coinr.html#cb12-1" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">assemble</span>(<span class="at">IndData =</span> ASEMIndData, <span class="at">IndMeta =</span> ASEMIndMeta, <span class="at">AggMeta =</span> ASEMAggMeta)</span>
+<span id="cb12-2"><a href="coins-the-currency-of-coinr.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb12-3"><a href="coins-the-currency-of-coinr.html#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Denominators detected - stored in .$Input$Denominators</span></span>
+<span id="cb12-4"><a href="coins-the-currency-of-coinr.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb12-5"><a href="coins-the-currency-of-coinr.html#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb12-6"><a href="coins-the-currency-of-coinr.html#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Indicator codes cross-checked and OK.</span></span>
+<span id="cb12-7"><a href="coins-the-currency-of-coinr.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb12-8"><a href="coins-the-currency-of-coinr.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of indicators = 49</span></span>
+<span id="cb12-9"><a href="coins-the-currency-of-coinr.html#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of units = 51</span></span>
+<span id="cb12-10"><a href="coins-the-currency-of-coinr.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of aggregation levels = 3 above indicator level.</span></span>
+<span id="cb12-11"><a href="coins-the-currency-of-coinr.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span>
+<span id="cb12-12"><a href="coins-the-currency-of-coinr.html#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 1 with 8 aggregate groups: Physical, ConEcFin, Political, Instit, P2P, Environ, Social, SusEcFin</span></span>
+<span id="cb12-13"><a href="coins-the-currency-of-coinr.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb12-14"><a href="coins-the-currency-of-coinr.html#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 2 with 2 aggregate groups: Conn, Sust</span></span>
+<span id="cb12-15"><a href="coins-the-currency-of-coinr.html#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb12-16"><a href="coins-the-currency-of-coinr.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Aggregation level 3 with 1 aggregate groups: Index</span></span>
+<span id="cb12-17"><a href="coins-the-currency-of-coinr.html#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="do">## Cross-check between metadata and framework = OK.</span></span>
+<span id="cb12-18"><a href="coins-the-currency-of-coinr.html#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="do">## -----------------</span></span></code></pre></div>
 <p>The three inputs here are as follows:</p>
 <ul>
 <li><code>IndData</code> which is the indicator data</li>
 <li><code>IndMeta</code> which is the indicator metadata</li>
 <li><code>AggMeta</code> which is the aggregation metadata</li>
 </ul>
-<p>And this outputs a “COIN” which you can name as you want (here we have called it “ASEM”). There are two further arguments to <code>assemble()</code> which are not used here, and they are:</p>
+<p>And this outputs a “COIN” which you can name as you want (here we have called it “ASEM”). There are some further arguments to <code>assemble()</code> which are not used here, and they are:</p>
 <ul>
 <li><code>include</code> - this is a character vector of indicator codes (i.e. codes that are found in <code>IndData$IndCode</code>) which specifies which indicators to include out of the <code>IndData</code> and <code>IndMeta</code> inputs. By default, all indicators are included, but this gives the option to only include certain indicators, if for example, you have several alternative data sources.</li>
-<li><code>exclude</code>- this an analogous character vector of indicator codes, but specifying which indicators to <em>exclude</em>, if any. Again, by default, nothing is excluded. This may be easier to specify when creating a subset of indicators.</li>
+<li><code>exclude</code> - this an analogous character vector of indicator codes, but specifying which indicators to <em>exclude</em>, if any. Again, by default, nothing is excluded. This may be easier to specify when creating a subset of indicators.</li>
+<li><code>preagg</code> - by default <code>assemble()</code> expects raw data to be input, which is then used to build the composite indicator. However, sometimes you may simply be analysing an already-built composite indicator. If <code>preagg = TRUE</code>, the <code>IndData</code> argument of <code>assemble()</code> can be a data frame of pre-aggregated data, i.e. columns for each indicator <em>plus</em> columns for each aggregate. In this case, you still need to supply <code>IndMeta</code> and <code>AggMeta</code>. An example of this is in <a href="appendix-analysing-a-composite-indicator-example.html#appendix-analysing-a-composite-indicator-example">Appendix: Analysing a Composite Indicator Example</a>.</li>
+<li><code>use_year</code> - you can optionally supply <code>assemble()</code> with panel data, where there is a separate observation of each indicator, for each year (or other time interval). To do this, include a “Year” column in <code>IndData</code>. Currently, <code>assemble()</code> will only build a COIN for a single year of data, but <code>use_year</code> allows you to easily select this. So setting e.g. <code>use_year = 2018</code> will filter <code>IndData</code> to only include values from 2018 (if it exists).</li>
+<li><code>impute_latest</code> - if panel data is supplied, you can optionally impute to the latest available observation by setting <code>impute_latest = TRUE</code>. This means if a unit has a missing value for a given indicator in the year specified by <code>use_year</code>, it will look backwards for previous observations of this data point and replace with the latest or <code>NA</code> if none is available.</li>
 </ul>
-<p>The structure of the list is as follows. First, it is divided into five main sub-lists, which I am going to call “folders”:</p>
-<ol style="list-style-type: decimal">
-<li><code>Input</code> is the input data, and has the following entries:
-<ol style="list-style-type: lower-alpha">
-<li><code>IndData</code> The indicator data, <em>after</em> any exclusion of indicators</li>
-<li><code>IndMeta</code> The indicator metadata, <em>after</em> any exclusion of indicators</li>
-<li><code>AggMeta</code> The aggregation metadata, <em>after</em> any exclusion of indicators</li>
-<li><code>Original</code> A list containing the original, unaltered inputs to <code>assemble()</code></li>
-</ol></li>
-<li><code>Data</code> is where the indicator data sets are stored. As you go through the construction, this will populated with more data sets, e.g. imputed data, treated data, aggregated data, and so on. On first assembly you will only see <code>Raw</code> present here.</li>
-<li><code>Parameters</code> stores some useful parameters that are used by COINr functions, and may be of general interest, such as the indicator codes, unit codes, weights, and so on.</li>
-<li><code>Analysis</code> is where analysis of the indicator data will be stored, including missing data analysis, indicator summary statistics, principal component analysis and so on.</li>
-<li><code>Method</code> keeps a record of the methodological decisions made when constructing the composite indicator, for example the normalisation method and parameters, data treatment specifications, and so on. Apart from keeping a record of the construction, this also allows the entire results to be regenerated using the information stored in the COIN, this will be explained better in <a href="adjustments-and-comparisons.html#adjustments-and-comparisons">Adjustments and comparisons</a>.</li>
-</ol>
-<p>The logic of the COIN is that COINr functions can take all the data and parameters that they need from it, and you only have to specify some particular parameters of the function. Then, outputs, such as new data sets, are returned back to the COIN, which is added to and expanded as the analysis progresses.</p>
+<p>The structure of the resulting COIN is explained in more detail in <a href="coins-the-currency-of-coinr.html#inside-a-coin">Inside a COIN</a>). The logic of the COIN is that COINr functions can take all the data and parameters that they need from it, and you only have to specify some particular parameters of the function. Then, outputs, such as new data sets, are returned back to the COIN, which is added to and expanded as the analysis progresses.</p>
 <p>Apart from building the COIN, <code>assemble()</code> does a few other things:</p>
 <ul>
 <li>It checks that indicator codes are consistent between indicator data and indicator metadata</li>
-<li>It checks that required columns, such as indicator codes, are presenr</li>
+<li>It checks that required columns, such as indicator codes, are present</li>
 <li>It returns some basic information about the data that was input, such as the number of indicators, the number of units, the number of aggregation levels and the groups in each level. This is done so you can check what you have entered, and that it agrees with your expectations.</li>
 </ul>
+<p>In general, the job of <code>assemble()</code> is to construct a <em>valid</em> COIN which should not throw any errors later on. In other words, if you succeed in assembling your COIN, things should work fairly well from there on. Wherever possible <code>assemble()</code> tries to return helpful error messages to help you fix any problems with your inputs.</p>
 </div>
 <div id="moving-on" class="section level2" number="3.4">
 <h2><span class="header-section-number">3.4</span> Moving on</h2>
@@ -582,6 +584,7 @@ Figure 3.1: Inside a COIN
 <hr />
 <ol start="1">
 <li id="fn1"><p>Depending on the function, you either get a packet of crisps (e.g. a plot or analysis), or your coin plus interest (an updated COIN with a new data set or analysis)<a href="coins-the-currency-of-coinr.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>It is likely that in the near future COINr will move to a more concise two data frame approach. Stay tuned.<a href="coins-the-currency-of-coinr.html#fnref2" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>
@@ -606,10 +609,10 @@ Figure 3.1: Inside a COIN
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
-"linkedin": false,
+"linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
@@ -632,9 +635,12 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["COINr-documentation.pdf", "COINr-documentation.epub"],
+"download": null,
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
+},
+"toolbar": {
+"position": "fixed"
 }
 });
 });

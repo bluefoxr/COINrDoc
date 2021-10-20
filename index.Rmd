@@ -3,13 +3,26 @@ title: "Composite Indicator Development and Analysis in R with COINr"
 author: "William Becker"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-output: bookdown::gitbook
+output: 
+  bookdown::gitbook:
+    config:
+      toc:
+        collapse: section
+      toolbar:
+        position: fixed
+      download: no
+      sharing:
+        facebook: yes
+        github: yes
+        twitter: yes
+        linkedin: yes
 documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: bluefoxr/COINrDoc
+github-repo: "bluefoxr/COINrDoc"
 description: "Composite indicators with COINr"
+url: "https://bluefoxr.github.io/COINrDoc/"
 ---
 
 ```{r, setup, include=FALSE}
@@ -18,17 +31,25 @@ knitr::opts_chunk$set(fig.width = 8, collapse = TRUE, warning = FALSE)
 
 # Introduction
 
+*NOTE: this documentation is currently being updated. Should be up to date in the next day or two.*
+
 ## Background
 
 This documentation describes in detail the COINr package, which is an open source R package for developing and analysing composite indicators, developed by the European Commission's [Joint Research Centre](https://knowledge4policy.ec.europa.eu/composite-indicators/about_en). In fact, this is slightly more than technical documentation, and also gives some tips on composite indicator development along the way.
 
 A *composite indicator* is an aggregation of indicators which aims to measure a particular concept. Composite indicators are typically used to measure complex and multidimensional concepts which are difficult to define, and cannot be measured directly. Examples include innovation, human development, environmental performance, and so on. Composite indicators are closely related to scoreboards, which are also groups of indicators aiming to capture a concept. However, scoreboards do not aggregate indicator values. Composite indicators also usually use a hierarchical structure which breaks the concept down into elements, sometimes known as sub-pillars, pillars, sub-indexes, dimensions, and so on.
 
-COINr is currently still under development, therefore the package itself, and this documentation, are a work in progress but are being continually updated. You can find the latest version of COINr at its [GitHub repo](https://github.com/bluefoxr/COINr), and also the source code for this documentation [here](https://github.com/bluefoxr/COINrDoc).
+You can find the latest version of COINr at its [GitHub repo](https://github.com/bluefoxr/COINr), and also the source code for this documentation [here](https://github.com/bluefoxr/COINrDoc).
 
 ## Installation
 
-COINr is not yet on CRAN but can be installed via Github. First, install the `devtools` package if you don't already have it, then run:
+COINr is now available on CRAN, which means that to install it you simply run:
+
+```{r InstallCOINrCRAN, eval=FALSE}
+install.packages("COINr")
+```
+
+An even more up to date version cab also be installed via GitHub. CRAN versions of the package are only updated every 1-2 months, whereas the GitHub version represents the very latest version available. First, install the **devtools** package if you don't already have it, then run:
 
 ```{r InstallCOINr, eval=FALSE}
 devtools::install_github("bluefoxr/COINr")
@@ -36,17 +57,15 @@ devtools::install_github("bluefoxr/COINr")
 
 This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also skip this step.
 
-At the time of writing (June 2021), the functionalities of the package are perhaps 90% complete. Roughly speaking, the features that are described in detail in this documentation are more or less complete and have survived an initial round of testing and checks. Any functions that are not described in detail here should be treated with more caution and it is likely that bugs would be encountered here and there. The entire package will need to beta tested before a more official “release”.
-
 In case you do spot a bug, or have a suggestion, the best way is to [open an issue](https://github.com/bluefoxr/COINr/issues) on the repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).
 
 ## What does it do?
 
 COINr is the first fully-flexible development and analysis environment for composite indicators and scoreboards. It is more than simply a collection of useful functions - it wraps up all data, methodology and analysis of a composite indicator into a single object called a "COIN". COINr functions are adapted to work with very few commands on COINs, but many will also work on data frames as well. This leads to a fast and neat environment for building and analysing composite indicators.
 
-Using COINs, i.e. the *COINrverse approach*, enables the full feature set of COINr, because some functions only work on COINs - for example, exporting all results to Excel in one command, or running an uncertainty/sensitivity analysis. Indeed, COINr is built mainly for COINrverse use, but functions have been written with the flexibility to also accommodate independent use where possible.
+Using COINs, i.e. the *COINrverse approach*, enables the full feature set of COINr, because some functions only work on COINs - for example, exporting all results to Excel in one command, or running an uncertainty/sensitivity analysis. Indeed, COINr is built mainly for COINrverse use, but functions have been written with the flexibility to also accommodate independent use where possible. COINr also includes a number of accessory functions which are generally useful in the process of building/analysing composite indicators.
 
-The main features can be summarised as features for *building*, features for *analysis* and features for *visualisation and presentation*.
+The main features can be summarised as features for *building*, features for *analysis* and features for *visualisation and presentation*. This list is not exhaustive and a nearly-full list of functions is found in [A map of COINr]. An actually-full list can be found in the [COINr function documentation](https://cran.r-project.org/web/packages/COINr/COINr.pdf).
 
 **Building features**:
 
@@ -56,19 +75,19 @@ The main features can be summarised as features for *building*, features for *an
 * Imputation of missing data, by a variety of methods
 * Data treatment using Winsorisation and nonlinear transformations
 * Normalisation by more than ten methods, either for all indicators or for each individually
-* Weighting using either manual weighting, PCA weights or correlation optimised weights. COINr also includes a reweighting app which explores the effects of weights on correlations.
+* Weighting using either manual weighting, PCA weights or correlation optimised weights. COINr also includes a re-weighting app which explores the effects of weights on correlations.
 * Aggregation of indicators using a variety of methods which can be different for each aggregation level.
 
 **Analysis features:**
 
 * Detailed indicator statistics, and data availability within aggregation groups
-* Multivariate analysis, including quick functions for PCA, and a detailed correlation analysis and visualisation
+* Multivariate analysis, including quick functions for PCA, and detailed correlation analysis and visualisation tools
 * Easy "what if" analysis - very quickly checking the effects of adding and removing indicators, changing weights, methodological variations
 * Full global uncertainty and sensitivity analysis which can check the impacts of uncertainties in weighting and many methodological choices
 
 **Visualisation and presentation:**
 
-* Statistical plots of indicators - histograms, violin plots, dot plots, scatter plots and more, including interactive html plots and an app for exploring indicator data
+* Statistical plots of indicators - histograms, violin plots, dot plots, scatter plots and more, including interactive html plots and an app for quickly exploring indicator data
 * Bar charts, stacked bar charts, maps, tables and radar charts for presenting indicator data and making comparisons between units
 * Static and interactive correlation plots for visualising correlations between indicators and between aggregation levels
 * An interactive app for visualising and presenting initial results
@@ -149,9 +168,9 @@ We can also get indicator statistics in table format:
 
 ```{r, warning=F, message=F}
 library(reactable)
-library(magrittr)
 ASEM <- getStats(ASEM, dset = "Raw")
-ASEM$Analysis$Raw$StatTable %>%
+ASEM$Analysis$Raw$StatTable |>
+  roundDF() |>
   reactable::reactable(defaultPageSize = 5, highlight = TRUE, wrap = F)
 ```
 

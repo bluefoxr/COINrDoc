@@ -10,7 +10,7 @@
 
   <meta property="og:title" content="Chapter 2 Foundations | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
-  
+  <meta property="og:url" content="https://bluefoxr.github.io/COINrDoc/" />
   
   <meta property="og:description" content="Composite indicators with COINr" />
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-07-08" />
+<meta name="date" content="2021-10-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -175,6 +175,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.4.1" data-path="foundations.html"><a href="foundations.html#use-scripts-and-r-markdown"><i class="fa fa-check"></i><b>2.4.1</b> Use scripts and R Markdown</a></li>
 <li class="chapter" data-level="2.4.2" data-path="foundations.html"><a href="foundations.html#missing-data"><i class="fa fa-check"></i><b>2.4.2</b> Missing data</a></li>
 <li class="chapter" data-level="2.4.3" data-path="foundations.html"><a href="foundations.html#plotting"><i class="fa fa-check"></i><b>2.4.3</b> Plotting</a></li>
+<li class="chapter" data-level="2.4.4" data-path="foundations.html"><a href="foundations.html#panel-data-and-multiple-coins"><i class="fa fa-check"></i><b>2.4.4</b> Panel data and multiple COINs</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="coins-the-currency-of-coinr.html"><a href="coins-the-currency-of-coinr.html"><i class="fa fa-check"></i><b>3</b> COINs: the currency of COINr</a>
@@ -406,8 +407,8 @@ Figure 2.2: Example of composite indicator structure.
 </p>
 </div>
 <p>In this example, four pairs of indicators are each aggregated into a “sub-pillar,” and sub-pillars are aggregated into two “pillars.” Finally, the pillars are aggregated into a single index. Typically, the sub-pillars and pillars represent specific sub-concepts of the central concept. For example, in the <a href="https://www.globalinnovationindex.org/Home">Global Innovation Index</a>, which aims to measure innovation at the national level, pillars include things like “Institutions,” “Human Capital,” and “Infrastructure,” each of which are populated with indicators which measure those specific concepts. The idea is that a complex multidimensional concept is broken down into sub-concepts which are easier to capture with a set of indicators. Additionally, the scores of pillars and sub-pillars can be interesting in their own right.</p>
-<p>Whether each of these groups is called a “pillar,” “sub-index,” “dimension,” or something else, depends on the index. For this reason, in COINr a more general terminology is adopted.</p>
-<p>When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an <em>aggregation group</em>. For example, the aggregation group of SP 1 in the diagram above consists of “ind.01” and “ind.02.” The aggregation group of Pillar 1 consists of SP 1 and SP 2. And so on. The resulting value from aggregating an aggregation group is called an <em>aggregate</em> or <em>aggregate value</em>.</p>
+<p>Whether each of these groups is called a “pillar,” “sub-index,” “dimension,” or something else, depends on the index and your own favourite words. For this reason, in COINr a more general terminology is adopted.</p>
+<p>When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an <em>aggregation group</em>. For example, the aggregation group of “SP 1” in the diagram above consists of “ind.01” and “ind.02.” The aggregation group of “Pillar 1” consists of “SP 1” and “SP 2.” And so on. The resulting value from aggregating an aggregation group is called an <em>aggregate</em> or <em>aggregate value</em>.</p>
 <p>COINr also frequently refers to <em>aggregation levels</em> or equivalently just <em>levels</em>. This refers to the vertical position in the hierarchy shown above. In this example, therefore,</p>
 <ul>
 <li>Level 1 = Indicators</li>
@@ -542,7 +543,7 @@ Figure 2.2: Example of composite indicator structure.
 </tr>
 <tr class="even">
 <td align="left"><code>getResults()</code></td>
-<td align="left">Gets quick results summary table</td>
+<td align="left">Gets quick results summary tables</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>getStrengthNWeak()</code></td>
@@ -616,10 +617,22 @@ Figure 2.2: Example of composite indicator structure.
 <td align="left">Get table of indicator statistics for any data set</td>
 </tr>
 <tr class="even">
+<td align="left"><code>hicorrSP()</code></td>
+<td align="left">Identify highly correlated indicators in the same aggregation group</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>outrankMatrix()</code></td>
+<td align="left">Outranking matrix based on a data frame of indicator data and corresponding weights</td>
+</tr>
+<tr class="even">
+<td align="left"><code>removeElements()</code></td>
+<td align="left">Reports the impact of sequentially removing indicators or aggregates</td>
+</tr>
+<tr class="odd">
 <td align="left"><code>sensitivity()</code></td>
 <td align="left">Perform a Monte Carlo uncertainty analysis and/or a global sensitivity analysis on a COIN</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>weightOpt()</code></td>
 <td align="left">Weight optimisation according to a pre-specified vector of “importances”</td>
 </tr>
@@ -698,20 +711,28 @@ Figure 2.2: Example of composite indicator structure.
 <td align="left">Winsorise one column of data according to skew/kurtosis thresholds</td>
 </tr>
 <tr class="even">
+<td align="left"><code>compareDF()</code></td>
+<td align="left">Detailed comparison of two data frames (e.g. for cross checking external calculations)</td>
+</tr>
+<tr class="odd">
 <td align="left"><code>copeland()</code></td>
 <td align="left">Aggregates a data frame into a single column using the Copeland method.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>geoMean()</code></td>
 <td align="left">Weighted geometric mean of a vector</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><code>getIn()</code></td>
 <td align="left">Useful function for subsetting indicator data. See <a href="helper-functions.html#helper-functions">Helper functions</a>.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left"><code>harMean()</code></td>
 <td align="left">Weighted harmonic mean of a vector</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>is.coin()</code></td>
+<td align="left">Check if object is a COIN</td>
 </tr>
 <tr class="even">
 <td align="left"><code>loggish()</code></td>
@@ -722,16 +743,16 @@ Figure 2.2: Example of composite indicator structure.
 <td align="left">Given a character vector of long names (probably with spaces), generates short codes.</td>
 </tr>
 <tr class="even">
-<td align="left"><code>outrankMatrix()</code></td>
-<td align="left">Outranking matrix based on a data frame of indicator data and corresponding weights</td>
-</tr>
-<tr class="odd">
-<td align="left"><code>roundDF()</code></td>
-<td align="left">Round down a data frame (i.e. for presentation)</td>
-</tr>
-<tr class="even">
 <td align="left"><code>rankDF()</code></td>
 <td align="left">Convert a data frame of scores to ranks (non-numerical columns are ignored)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>replaceDF()</code></td>
+<td align="left">Simultaneously replace multiple values in a data frame. Useful for converting categorical variables to numerical.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>roundDF()</code></td>
+<td align="left">Round down a data frame (i.e. for presentation)</td>
 </tr>
 </tbody>
 </table>
@@ -788,14 +809,14 @@ Figure 2.2: Example of composite indicator structure.
 <h3><span class="header-section-number">2.4.3</span> Plotting</h3>
 <p>COINr includes a number of plotting functions which return various types of plots. These are all either based on the ggplot2 or plotly packages. Think of COINr plots as “starting points” rather than finished plots. While I have tried to make the plots useful and even visually appealing, much more could be done to improve them and to fit particular uses and contexts.</p>
 <p>Luckily, because of the way that plotly and ggplot2 work, plots generated by COINr can easily be modified by assigning them to an object and then modifying the object. Generally this would look like this:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="foundations.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a plot, but assign to variable &quot;plt&quot;</span></span>
-<span id="cb7-2"><a href="foundations.html#cb7-2" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> <span class="fu">COINr_plot_function</span>(COIN, plot_options)</span>
-<span id="cb7-3"><a href="foundations.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="foundations.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># alter plt</span></span>
-<span id="cb7-5"><a href="foundations.html#cb7-5" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> plt <span class="sc">+</span> <span class="fu">alter_plot_function</span>(options)</span>
-<span id="cb7-6"><a href="foundations.html#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="foundations.html#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view the plot</span></span>
-<span id="cb7-8"><a href="foundations.html#cb7-8" aria-hidden="true" tabindex="-1"></a>plt</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="foundations.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a plot, but assign to variable &quot;plt&quot;</span></span>
+<span id="cb8-2"><a href="foundations.html#cb8-2" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> <span class="fu">COINr_plot_function</span>(COIN, plot_options)</span>
+<span id="cb8-3"><a href="foundations.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="foundations.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># alter plt</span></span>
+<span id="cb8-5"><a href="foundations.html#cb8-5" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> plt <span class="sc">+</span> <span class="fu">alter_plot_function</span>(options)</span>
+<span id="cb8-6"><a href="foundations.html#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="foundations.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view the plot</span></span>
+<span id="cb8-8"><a href="foundations.html#cb8-8" aria-hidden="true" tabindex="-1"></a>plt</span></code></pre></div>
 <p>The <code>alter_plot_function</code> could be any of the very many layout and geometry functions from ggplot2, for example. This means you can change colours, axis labels, point styles, titles and many other things.</p>
 <p>In summary, with COINr you may choose to either:</p>
 <ul>
@@ -803,6 +824,11 @@ Figure 2.2: Example of composite indicator structure.
 <li>Generate plots with COINr functions and tweak them to your tastes using the approach shown above</li>
 <li>Make your own plots</li>
 </ul>
+</div>
+<div id="panel-data-and-multiple-coins" class="section level3" number="2.4.4">
+<h3><span class="header-section-number">2.4.4</span> Panel data and multiple COINs</h3>
+<p>Currently COINr does not explicitly support panel data, although the <code>assemble()</code> function can extract and impute a single year of data from a panel data set. If you wish to work with panel data, I would recommend to build a separate COIN for each point in time, and store the COINs in a list. This makes it easy to apply COINr functions to all COINs in one go using purrr or <code>lapply()</code> functions. It is also more flexible to use separate COINs because methodology, units and indicators may vary from one year to the next.</p>
+<p>The same strategy can be applied any parallel development of multiple indexes, such as separate indexes for country groups.</p>
 
 </div>
 </div>
@@ -829,10 +855,10 @@ Figure 2.2: Example of composite indicator structure.
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": true,
 "twitter": true,
-"linkedin": false,
+"linkedin": true,
 "weibo": false,
 "instapaper": false,
 "vk": false,
@@ -855,9 +881,12 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["COINr-documentation.pdf", "COINr-documentation.epub"],
+"download": null,
 "toc": {
-"collapse": "subsection"
+"collapse": "section"
+},
+"toolbar": {
+"position": "fixed"
 }
 });
 });

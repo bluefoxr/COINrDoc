@@ -2,7 +2,6 @@
 
 This chapter aims to explain some important principles about how COINr works, and explain some terminology. It also gives a map of the functions available in the package. If you want to get straight to using COINr, you could skip this chapter for now and look at some examples in the appendices or directly at the chapters relating to specific functions and operations (the next chapter onwards).
 
-
 ## Terminology
 
 Let's clearly define a few terms first to avoid confusion later on.
@@ -25,9 +24,9 @@ knitr::include_graphics("images/CIhierarchy.jpg")
 
 In this example, four pairs of indicators are each aggregated into a "sub-pillar", and sub-pillars are aggregated into two "pillars". Finally, the pillars are aggregated into a single index. Typically, the sub-pillars and pillars represent specific sub-concepts of the central concept. For example, in the [Global Innovation Index](https://www.globalinnovationindex.org/Home), which aims to measure innovation at the national level, pillars include things like "Institutions", "Human Capital", and "Infrastructure", each of which are populated with indicators which measure those specific concepts. The idea is that a complex multidimensional concept is broken down into sub-concepts which are easier to capture with a set of indicators. Additionally, the scores of pillars and sub-pillars can be interesting in their own right.
 
-Whether each of these groups is called a "pillar", "sub-index", "dimension", or something else, depends on the index. For this reason, in COINr a more general terminology is adopted.
+Whether each of these groups is called a "pillar", "sub-index", "dimension", or something else, depends on the index and your own favourite words. For this reason, in COINr a more general terminology is adopted.
 
-When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an *aggregation group*. For example, the aggregation group of SP 1 in the diagram above consists of "ind.01" and "ind.02". The aggregation group of Pillar 1 consists of SP 1 and SP 2. And so on. The resulting value from aggregating an aggregation group is called an *aggregate* or *aggregate value*.
+When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an *aggregation group*. For example, the aggregation group of "SP 1" in the diagram above consists of "ind.01" and "ind.02". The aggregation group of "Pillar 1" consists of "SP 1" and "SP 2". And so on. The resulting value from aggregating an aggregation group is called an *aggregate* or *aggregate value*.
 
 COINr also frequently refers to *aggregation levels* or equivalently just *levels*. This refers to the vertical position in the hierarchy shown above. In this example, therefore, 
 
@@ -37,7 +36,6 @@ COINr also frequently refers to *aggregation levels* or equivalently just *level
 * Level 4 = Index
 
 This means that the fictional index above has four levels in total. COINr can handle any number of levels and aggregation groups. The structure of the index is defined when the COIN is constructed - see the following chapter for details.
-
 
 ## COINr syntax
 
@@ -88,7 +86,7 @@ Function            Description
 `plotSA()`          Plot sensitivity analysis results (sensitivity indices)
 `plotSARanks()`     Plot confidence intervals on ranks, following an uncertainty/sensitivity analysis
 `colourTable()`     Conditionally-formatted interactive HTML table, given a data frame
-`getResults()`      Gets quick results summary table
+`getResults()`      Gets quick results summary tables
 `getStrengthNWeak()`Gets strengths and weaknesses (N top ranked indicators) of a selected unit
 `getUnitReport()`   Generates a unit report following a template, and outputs either HTML, Word or pdf format
 `getUnitSummary()`  Summarises scores and ranks of a selected unit, at specified aggregation levels 
@@ -113,6 +111,9 @@ Function            Description
 `getPCA()`          Principle component analysis on a specified data set and subset of indicators. Also returns PCA weights.
 `effectiveWeight()` Calculates the effective weights of each element in the indicator hierarchy.
 `getStats()`        Get table of indicator statistics for any data set
+`hicorrSP()`        Identify highly correlated indicators in the same aggregation group
+`outrankMatrix()`   Outranking matrix based on a data frame of indicator data and corresponding weights
+`removeElements()`  Reports the impact of sequentially removing indicators or aggregates
 `sensitivity()`     Perform a Monte Carlo uncertainty analysis and/or a global sensitivity analysis on a COIN
 `weightOpt()`       Weight optimisation according to a pre-specified vector of "importances"
 
@@ -145,15 +146,17 @@ Function            Description
 `BoxCox()`          Box Cox transformation on a vector of data
 `build_ASEM()`      Build ASEM (example) composite indicator in one command
 `coin_win()`        Winsorise one column of data according to skew/kurtosis thresholds
+`compareDF()`       Detailed comparison of two data frames (e.g. for cross checking external calculations)
 `copeland()`        Aggregates a data frame into a single column using the Copeland method.
 `geoMean()`         Weighted geometric mean of a vector
 `getIn()`           Useful function for subsetting indicator data. See [Helper functions].
 `harMean()`         Weighted harmonic mean of a vector
+`is.coin()`         Check if object is a COIN
 `loggish()`         Log-type transformation, of various types, for a vector
 `names2Codes()`     Given a character vector of long names (probably with spaces), generates short codes.
-`outrankMatrix()`   Outranking matrix based on a data frame of indicator data and corresponding weights
-`roundDF()`         Round down a data frame (i.e. for presentation)
 `rankDF()`          Convert a data frame of scores to ranks (non-numerical columns are ignored)
+`replaceDF()`       Simultaneously replace multiple values in a data frame. Useful for converting categorical variables to numerical.
+`roundDF()`         Round down a data frame (i.e. for presentation)
 
 
 ### Data
@@ -211,3 +214,9 @@ In summary, with COINr you may choose to either:
 * Generate plots with COINr functions and be content with them as they are
 * Generate plots with COINr functions and tweak them to your tastes using the approach shown above
 * Make your own plots
+
+### Panel data and multiple COINs
+
+Currently COINr does not explicitly support panel data, although the `assemble()` function can extract and impute a single year of data from a panel data set. If you wish to work with panel data, I would recommend to build a separate COIN for each point in time, and store the COINs in a list. This makes it easy to apply COINr functions to all COINs in one go using purrr or `lapply()` functions. It is also more flexible to use separate COINs because methodology, units and indicators may vary from one year to the next.
+
+The same strategy can be applied any parallel development of multiple indexes, such as separate indexes for country groups.
