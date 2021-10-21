@@ -8,7 +8,7 @@ When the index is complete, it can be presented using a dedicated web platform, 
 * The [Cultural and Creative Cities Monitor](https://composite-indicators.jrc.ec.europa.eu/cultural-creative-cities-monitor/performance-map)
 * The [SDG Index and Dashboards](https://dashboards.sdgindex.org/map)
 
-These latter platforms are not usually built in R, but in Javascript. However, COINr does have a simple results viewer that can be used for prototyping.
+These latter platforms are not usually built in R, but in Javascript. However, COINr does have a simple interactive results viewer that can be used for prototyping.
 
 ## Tables
 
@@ -16,19 +16,20 @@ To see the aggregated results, one way is to look in `.$Data$Aggregated`, which 
 
 ```{r resultsSummary}
 library(COINr)
-library(magrittr)
 
 # build example data set
-ASEM <- build_ASEM() %>% suppressMessages()
+ASEM <- build_ASEM() |>
+  suppressMessages()
 
 # get results table, top 10
-getResults(ASEM) %>% head(10)
+getResults(ASEM) |>
+  head(10)
 ```
 
 By default, `getResults()` gives a table of the highest level of aggregation (i.e. typically the index), along with the scores, and the ranks. Scores are rounded to two decimal places, and this can be controlled by the `nround` argument. To see all aggregate scores, we can change the `tab_type` argument:
 
 ```{r resultsAgg}
-getResults(ASEM, tab_type = "Aggregates") %>%
+getResults(ASEM, tab_type = "Aggregates") |>
   reactable::reactable()
 ```
 
@@ -37,7 +38,7 @@ Here, we have used the reactable package to display the full table interactively
 Often it may be more interesting to look at ranks rather than scores We can do this by setting `use = "ranks"`:
 
 ```{r resultsAgg2}
-getResults(ASEM, tab_type = "Aggregates", use = "ranks") %>%
+getResults(ASEM, tab_type = "Aggregates", use = "ranks") |>
   reactable::reactable()
 ```
 
@@ -51,18 +52,29 @@ iplotTable(ASEM, dset = "Aggregated", isel = "Conn", aglev = 2)
 
 Recall that since the output of this function is a reactable table, we can also edit it further by using reactable functions.
 
+If you want a conditionally-formatted table like the one above, but of any data frame (e.g. the output of `getResults()`), use COINr's `colourTable()` function which is a short cut for reactable tables, with a few options thrown in for which colours to use, sorting, and so on.
+
+```{r}
+getResults(ASEM, tab_type = "Aggregates") |>
+  head(10) |>
+  colourTable(cell_colours = c("#99d594", "#ffffbf", "#fc8d59"), sortcol = "none")
+```
+
+For colouring, there are many websites to help select colours. [Colourbrewer](https://colorbrewer2.org/) is one useful resource for maps and heatmaps.
+
 If an individual unit is of interest, you can also call `getUnitSummary()`, which is a function which gives a summary of the scores for an individual unit:
 
 ```{r}
-getUnitSummary(ASEM, usel = "GBR", aglevs = c(4, 3, 2)) %>% knitr::kable()
+getUnitSummary(ASEM, usel = "GBR", aglevs = c(4, 3, 2)) |>
+  knitr::kable()
 ```
 
 Finally, the strengths and weaknesses of an individual unit can be found by calling `getStrengthNWeak()`:
 
 ```{r}
 SAW <- getStrengthNWeak(ASEM, usel = "GBR")
-SAW$Strengths  %>% knitr::kable()
-SAW$Weaknesses  %>% knitr::kable()
+SAW$Strengths  |> knitr::kable()
+SAW$Weaknesses  |> knitr::kable()
 ```
 
 These are selected as the top-ranked and bottom-ranked indicators for each unit, respectively, where by default the top and bottom five are selected (but this can be changed using the `topN` and `bottomN` arguments).
@@ -75,11 +87,19 @@ Tables are useful but can be a bit dry, so you can spice this up using the bar c
 iplotBar(ASEM, dset = "Aggregated", isel = "Index", usel = "GBR", aglev = 4)
 ```
 
+Even better, if we are plotting aggregated data we can also break down the bars into the underlying scores. For example, to see Sustainability scores with underlying sustainability pillar scores visible:
+
+```{r ASEMindexbar2}
+iplotBar(ASEM, dset = "Aggregated", isel = "Sust", aglev = 3, stack_children = TRUE)
+```
+
 And here's a map:
 
 ```{r ASEMindexmap}
 iplotMap(ASEM, dset = "Aggregated", isel = "Index")
 ```
+
+Remember that maps only work if both (a) your units are countries, and (b) you use ISO alpha-3 codes as unit codes.
 
 The map and bar chart options here are very useful for quickly presenting results. However, if you want to make a really beautiful map, you should consider one of the many mapping packages in R, such as [leaflet](https://rstudio.github.io/leaflet/).
 
@@ -121,6 +141,8 @@ This will open a browser window or tab with the results dashboard app. The app a
 ```{r echo=F, fig.align = 'center', out.width = "100%", fig.cap = "resultsDash screenshot"}
 knitr::include_graphics("images/resultsDash_screenshot.png")
 ```
+
+This app is useful for quickly visualising and presenting results. It might even be possible to host it online using [shinyapps](https://www.shinyapps.io/), although you might need the source code to do this. I am planning to enable online hosting more easily soon.
 
 ## Unit reports
 

@@ -31,8 +31,6 @@ knitr::opts_chunk$set(fig.width = 8, collapse = TRUE, warning = FALSE)
 
 # Introduction
 
-*NOTE: this documentation is currently being updated. Should be up to date in the next day or two.*
-
 ## Background
 
 This documentation describes in detail the COINr package, which is an open source R package for developing and analysing composite indicators, developed by the European Commission's [Joint Research Centre](https://knowledge4policy.ec.europa.eu/composite-indicators/about_en). In fact, this is slightly more than technical documentation, and also gives some tips on composite indicator development along the way.

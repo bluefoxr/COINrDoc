@@ -8,7 +8,7 @@ Normalisation is the operation of bringing indicators onto comparable scales so 
 
 Indicators can either be positively or negatively related to the concept that you are trying to measure. For example, in an index of quality of life, median income would probably be a positive indicator. Prevalance of malnourishment would be a negative indicator (higher values should give lower scores in quality of life).
 
-Accounting for these differences is considered part of the normalisation step. Indicators loaded into COINr should usually have a "Direction" column in the `IndMeta` input to `assemble()`, which is 1 for positive indicators, and -1 for negative indicators. With this information, normalisation is a two step procedure:
+Accounting for these differences is considered part of the normalisation step. Indicators loaded into COINr should have a "Direction" column in the `IndMeta` input to `assemble()`, which is 1 for positive indicators, and -1 for negative indicators. With this information, normalisation is a two step procedure:
 
 1. Multiply the values of each indicator by their corresponding direction value (either 1 or -1).
 2. Apply one of the normalisation methods described below.
@@ -27,7 +27,7 @@ where $\tilde{x}$ is the normalised indicator value. For example, if $l=0$ and $
 A similar transformation is to take *z-scores*, which instead use the mean and standard deviation as reference points:
 
 $$ \tilde{x}_{\text{min}} = \frac{ x - \mu_x }{ \sigma_x } \times a + b$$
-where $\mu_x$ and $\sigma_x$ are the mean and standard deviation of $x$. The indicator is first re-scaled to have mean zero and standard deviation of one. Then it is scaled by a factor $a$ and moved by a distance $b$. This is very similar to the min-max transformation in that it can be reduced to multiplying by a factor and adding a constant, which is the definition of a linear transformation. However, the two approaches have different implications. One is that Z scores will generally be less sensitive to outliers, because the standard deviation is less dependent on an outlying value than the minimum or maximum.
+where $\mu_x$ and $\sigma_x$ are the mean and standard deviation of $x$. The indicator is first re-scaled to have mean zero and standard deviation of one. Then it is scaled by a factor $a$ and moved by a distance $b$. This is very similar to the min-max transformation in that it can be reduced to multiplying by a factor and adding a constant, which is the definition of a linear transformation. However, the two approaches have different implications. One is that Z-scores will generally be less sensitive to outliers, because the standard deviation is less dependent on an outlying value than the minimum or maximum.
 
 Following the min-max and z-score, the general linear transformation is defined as:
 
@@ -76,7 +76,7 @@ where $x_U$ and $x_L$ are the upper and lower bounds, respectively, for the indi
 
 The normalisation function in COINr is imaginatively named `normalise()`. It has the following main features:
 
-* A wide range of normalisation methods, including custom func
+* A wide range of normalisation methods, including the possibility to pass custom functions
 * Customisable parameters for normalisation
 * Possibility to specify detailed individual treatment for each indicator
 
@@ -84,8 +84,8 @@ The function looks like this:
 
 ```{r, eval=FALSE}
 # don't run this chunk, just for illustration (will throw error if run)
-normalise <- function(COIN, ntype="minmax", npara = NULL, icodes = NULL,
-                      dset = "Raw", directions = NULL, individual = NULL,
+normalise <- function(COIN, ntype = NULL, npara = NULL,
+                      dset = NULL, directions = NULL, individual = NULL,
                       indiv_only = FALSE, out2 = NULL){
 ```
 
@@ -121,7 +121,7 @@ You can select the normalisation type of the `normalise()` function using the `n
 * `ntype = "dist2max"` gives the normalised distance to the maximum of each indicator.
 * `ntype = "dist2targ"` gives the normalised distance to indicator targets. Targets are specified, in the `IndMeta` argument of `assemble()`, and will be in the COIN at `.$Input$IndMeta`. Any scores that exceed the target will be capped at a normalised value of one.
 * `ntype = "custom"` allows to pass a custom function to apply to every indicator. For example, `npara$custom = function(x) {x/max(x, na.rm = T)}` would give the "fracmax" normalisation method described above.
-* `ntype = "none"` the indicator is not normalised.
+* `ntype = "none"` the indicator is not normalised (this is mainly useful for adjustments and sensitivity analysis).
 
 The `normalise()` function also allows you to specify the directions of the indicators using the argument `directions`. If this is not specified, the directions will be taken from the indicator metadata input to `assemble()`. If they are not present here, all directions will default to positive.
 

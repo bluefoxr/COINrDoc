@@ -152,7 +152,7 @@ SAspecs <- list(
 Leaving aside the `nspecs` line for now (but see below for details), we focus on the list `SAspecs`, which will be used as the `SA_specs` argument of `sensitivity()`. The *names* of the first level of this list should be any of the seven construction functions. Each named element of the list is itself a list, which specifies the parameters of that function to vary, and the alternative values. In summary, the general format is:
 
 ```{r SAspecsformat, eval=F}
-<function_name> = list(<parameter name> = <vector or list of alternatives>)
+function_name = list(parameter name = vector_or_list_of_alternatives)
 ```
 
 There is no restriction on the number of parameters that can be varied, or the number of alternatives. You can have multiple parameters from the same function, for example.
@@ -220,7 +220,7 @@ We will go into more detail in a minute, but first we can plot the results of th
 plotSARanks(SAresults)
 ```
 
-This plot orders the units by their nominal ranks, and plots the median rank across all the replications of the uncertainty analysis, as well as the 5th and 95th percentile rank values. The ranks are the focus of an uncertainty analysis because scores can change drastically depending on the method. Ranks are the only comparable metric across different composite indicator methodologies^[This may give a more general hint that focusing on scores in composite indicators is usually not a good idea, because the scores can be extremely different depending on the methodology, while the ranks are much more stable].
+This plot orders the units by their nominal ranks, and plots the median rank across all the replications of the uncertainty analysis, as well as the 5th and 95th percentile rank values. The ranks are the focus of an uncertainty analysis because scores can change drastically depending on the method. Ranks are the only comparable metric across different composite indicator methodologies^[This may give a more general hint that focusing on scores in composite indicators is usually not a good idea, because the scores can be extremely different depending on the methodology, while the ranks are much more stable]. The `plotSARanks()` function also gives options for line and dot colours.
 
 Let us now look at the elements in `SAresults`. The data frames `SAresults$Scores` and `SAresults$Ranks` give the scores and ranks respectively for each replication of the composite indicator. The `SAresults$Parameters` data frame gives the uncertain parameter values used for each iteration:
 
@@ -302,3 +302,28 @@ plotSA(SAresults, ptype = "box")
 ```
 
 This will not work unless `Nboot` was specified. Bootstrapping allows confidence intervals to be estimated, and this shows that the estimates of total effect indices ($S_{Ti}$) are quite reliable. Whereas the confidence intervals are much wider on the first order indices ($S_{i}$). Still, with the number of runs applied, it is possible to draw robust conclusions. If the confidence intervals were still too wide here, you could consider increasing `N` - this should lead to narrower intervals, although you might have to wait for a bit.
+
+## Removing indicators and aggregates
+
+COINr also has a tool which lies somewhere in between the ad-hoc adjustments and comparisons described in the previous chapter, and the formal sensitivity analysis described here.  The `removeElements()` function answers the question: if we remove an indicator, what would happen to the rankings?
+
+This question is relevant because sometimes you may be in doubt about whether an indicator is necessary in the framework. If you were to remove it, would things change that much? It can also be an alternative measure of "indicator importance/influence" -  an indicator which changes very little when removed could be said to be uninfluential.
+
+To make this test, we simply call the `removeElements()` function as follows, which sequentially removes all elements of a given level, with replacement, and returns the average (absolute) rank change each time. Here we do the analysis at pillar level (level 2).
+
+```{r}
+CheckPillars <- removeElements(ASEM, 2, "Index")
+```
+
+The output here is a list with the scores and ranks each time for the selected target (by default, the highest level of aggregation is targeted), as well as average rank changes. A good way to view the output is with a bar chart.
+
+```{r}
+library(ggplot2)
+ggplot(data.frame(Pillar = names(CheckPillars$MeanAbsDiff[-1]),
+                  Impact = CheckPillars$MeanAbsDiff[-1]),
+       aes(x=Pillar, y=Impact)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+```
+
+This plot shows that the effect of removing pillars from the framework is definitely not equal. In fact, the "Social" pillar has nearly four times the impact of the "ConEcFin" pillar on average rank change.

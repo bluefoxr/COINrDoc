@@ -2,7 +2,7 @@
 
 One of the great things about R is the sheer number of freely-available resources that are out there. Not just the software and packages, but also online books and materials to learn everything you need to know about pretty much anything.
 
-Here are a list of resources for users who (a) are interested in R and want to get started, and (b) are proficient R users but want to learn more. I am focusing here on resources that have really helped me in the work that I have done. Of course there is far more out there and you only have to look.
+Here are a list of resources for users who (a) are interested in R and want to get started, and (b) are proficient R users but want to learn more. I am focusing here on resources that have really helped me in the work that I have done. Of course there is far more out there and you only have to look. Indeed, the greatest collection of R resources can be found in the [Big Book of R](https://www.bigbookofr.com/) which contains links to at least 150 books on R (including this book!).
 
 ## Introduction to R
 

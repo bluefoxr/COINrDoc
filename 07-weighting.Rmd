@@ -107,9 +107,13 @@ NewWeights <- ASEM$Parameters$Weights$Original
 head(NewWeights)
 ```
 
-The structure of the weights is a data frame, with each row being either an indicator or aggregation. The `AgLevel` column points to the aggregation level, and the `Weight` column is the (relative) weight.
+The structure of the weights is a data frame, with each row being either an indicator or aggregation. The `AgLevel` column points to the aggregation level, and the `Weight` column is the weight, *which is relative inside its aggregation group*.
 
-We can just directly modify this. Let's say we want to set the weight of the connectivity sub-index to 0.5.
+This last point is important so let's clarify. When aggregating, the weights within each group are normalised to sum to one. So if we have three indicators in a group, and we specify the weights as all ones, the actual weights will each be 1/3. This means that actually, we can put any number we like if we are aiming for equal weighting, as long as it is the same for each indicator.
+
+Another implication of relative weighting is that the number of indicators within a group also matters. If we have two indicators in a group, equally weighted, their weight is 0.5. If we have ten, they are each weighted 0.1. Moreover, an indicator's final weight in the index is also affected by its parent group weights (e.. sub-pillar, pillar weights). This is why it is important to be aware of the so-called "effective weights" which are the final weights of the indicators (and each aggregate in the index). COINr has a function to calculate this: see [Effective weights].
+
+Anyway, to change the weights we can just directly modify the data frame. Let's say we want to set the weight of the connectivity sub-index to 0.5.
 
 ```{r DownWeightConn}
 NewWeights$Weight[NewWeights$Code == "Conn"] <- 0.5
@@ -117,7 +121,7 @@ NewWeights$Weight[NewWeights$Code == "Conn"] <- 0.5
 tail(NewWeights)
 ```
 
-Remember that *weights are relative*, and are re-scaled to sum to 1 during aggregation. To actually use these weights, we can either (a) input them directly in the `aggregate()` function, or first attach them to the COIN and the call `aggregate()`, pointing to the new set of weights. The latter option seems more sensible because that way, all our sets of weights are neatly stored. Also, we can access this in the reweighting app as explained in the next section.
+Now, to actually use these weights in the aggregation, we can either (a) input them directly in the `aggregate()` function, or first attach them to the COIN and the call `aggregate()`, pointing to the new set of weights. The latter option seems more sensible because that way, all our sets of weights are neatly stored. Also, we can access this in the reweighting app as explained in the next section. Sets of weights need to be stored as a named data frame in `.$Parameters$Weights` to be accessible to `aggregate()`.
 
 ```{r ReAggregate}
 # put new weights in the COIN
@@ -212,7 +216,7 @@ This calls the aggregated data set, and performs PCA on aggregation level 2, i.e
 
 An important point here is that this weighting represents optimal properties if the components (pillars here) are aggregated directly into a single value. In this example, it is not strictly correct because above the pillar level we have another aggregation (sub-index) before reaching the final index. This means that these weights wouldn't be strictly correct, because they don't account for the intermediate level. However, depending on the aggregation structure and weighting (i.e. if it is fairly even) it may give a fairly good approximation.
 
-*Note: PCA weights have not been fully tested at the time of writing, treat with skepticism.*
+*Note: PCA weights have not been fully tested at the time of writing, treat with a healthy dose of skepticism.*
 
 #### Weight optimisation
 
@@ -258,7 +262,7 @@ Even then, the algorithm may not always converge, depending on the problem.
 
 ## Effective weights
 
-By now, you may know or have realised that the weight of an indicator is not only affected by its own weight, but also the weights of any aggregate groups to which it belongs. If the aggregation method is the arithmetic mean, the "effective weight", i.e. the final weight of each indicator, including its parent weights, can be be easily obtained by COINr's `effectiveWeight()` function:
+By now, it should be clear that the weight of an indicator is not only affected by its own weight, but also the weights of any aggregate groups to which it belongs. If the aggregation method is the arithmetic mean, the "effective weight", i.e. the final weight of each indicator, including its parent weights, can be be easily obtained by COINr's `effectiveWeight()` function:
 
 ```{r}
 # get effective weight info

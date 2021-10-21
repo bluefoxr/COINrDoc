@@ -6,7 +6,7 @@ Aggregating should almost always be done on normalised data, unless the indicato
 
 Of course you don't *have* to aggregate indicators at all, and you might be content with a scoreboard, or perhaps aggregating into several aggregate values rather than a single index. However, consider that aggregation should not substitute the underlying indicator data, but complement it.
 
-Overall, aggregating indicators is a form of information compression - you are trying to combine many indicator values into one, and inevitably information will be lost. As long as this is kept in mind, and indicator data is presented and made available along side aggregate values, then aggregate (index) values can complement indicators and be used as a useful tool for summarising the underlying data, and identifying overall trends and patterns.
+Overall, aggregating indicators is a form of information compression - you are trying to combine many indicator values into one, and inevitably information will be lost^[This recent paper may be of interest: https://doi.org/10.1016/j.envsoft.2021.105208]. As long as this is kept in mind, and indicator data is presented and made available along side aggregate values, then aggregate (index) values can complement indicators and be used as a useful tool for summarising the underlying data, and identifying overall trends and patterns.
 
 ## Weighting
 
@@ -20,7 +20,7 @@ This chicken and egg conundrum is best solved by aggregating initially with a tr
 
 The most straightforward and widely-used approach to aggregation is the **weighted arithmetic mean**. Denoting the indicators as $x_i \in \{x_1, x_2, ... , x_d \}$, a weighted arithmetic mean is calculated as:
 
-$$ y = \frac{\sum_{i=1}^d x_iw_i}{\sum_{i=1}^d w_i}  $$
+$$ y = \frac{1}{\sum_{i=1}^d w_i} \sum_{i=1}^d x_iw_i $$
 
 where the $w_i$ are the weights corresponding to each $x_i$. Here, if the weights are chosen to sum to 1, it will simplify to the weighted sum of the indicators. In any case, the weighted mean is scaled by the sum of the weights, so weights operate relative to each other.
 
@@ -60,8 +60,7 @@ Clearly, this can be applied at any level of aggregation and used hierarchically
 
 In some cases, one unit may score higher than the other in all indicators. This is called a *dominance pair*, and corresponds to any pair scores equal to one (equivalent to any pair scores equal to zero).
 
-The percentage of dominance pairs is an indication of robustness. Under dominance, there is no way methodological choices (weighting, normalisation, etc.) can affect the relative standing of the pair in the ranking. One will always be ranked higher than the other. The greater the number of dominance (or robust) pairs in a classification, the less sensitive country ranks will be to methodological assumptions.
-
+The percentage of dominance pairs is an indication of robustness. Under dominance, there is no way methodological choices (weighting, normalisation, etc.) can affect the relative standing of the pair in the ranking. One will always be ranked higher than the other. The greater the number of dominance (or robust) pairs in a classification, the less sensitive country ranks will be to methodological assumptions. COINr allows to calculate the percentage of dominance pairs with an inbuilt function.
 
 ## Aggregation in COINr
 
@@ -93,6 +92,18 @@ By default, the aggregation function performs the following steps:
 
 Like other COINr functions `aggregate()` has arguments `dset` which specifies which data set to aggregate, and `out2` which specifies whether to output an updated COIN, or a data frame. Unlike other COINr functions however, `aggregate()` only works on COINs, because it requires a number of inputs, including data, weights, and the index structure.
 
+The data set outputted by `aggregate()` simply adds the aggregate columns onto the end of the data set that was input. This means that aggregate columns will always appear at the end. To more easily see the results of the index, COINr's `getResults()` function rearranges the aggregated data set into a better format.
+
+```{r}
+# generate simple results table, attach to COIN
+ASEM <- getResults(ASEM, tab_type = "Summary", out2 = "COIN")
+# view the table
+ASEM$Results$SummaryScores |>
+  head(10)
+```
+
+This function, which is explained more in [Visualising results], sorts the aggregated data and extracts the most relevant columns. It has options to control sorting and which columns to display.
+
 The types of aggregation supported by `aggregate()` are specified by `agtype` from the following options:
 
 * `agtype = arith_mean` uses the arithmetic mean, and is the default.
@@ -100,6 +111,7 @@ The types of aggregation supported by `aggregate()` are specified by `agtype` fr
 * `agtype = harm_mean` uses the harmonic mean. This only works if all data values are non-zero, otherwise it will throw an error.
 * `agtype = median` uses the weighted median
 * `agtype = copeland` uses the Copeland method. This may take a few seconds to process depending on the number of units, because it involves pairwise comparisons across units.
+* `agtype = mixed` a different aggregation method for each level. In this case, aggregation methods are specified as any of the previous options using the `agtype_bylevel` argument.
 * `agtype = custom` allows you to pass a custom aggregation function.
 
 For the last option here, if `agtype = custom` then you need to also specify the custom function via the `agfunc` argument. As an example:
@@ -113,17 +125,29 @@ ASEM <- aggregate(ASEM, dset = "Normalised", agtype = "custom",
                   agfunc = weightedMin, out2 = "df")
 ```
 
-Any custom function should have the form `functionName <- function(x,w)`, i.e. it accepts x and w as vectors of indicator values and weights respectively, and returns a scalar aggregated value. Ensure that NAs are handled (e.g. set na.rm = T) if your data has missing values, otherwise NAs will be passed through to higher levels.
+Any custom function should have the form `functionName <- function(x,w)`, i.e. it accepts x and w as vectors of indicator values and weights respectively, and returns a scalar aggregated value. Ensure that `NA`s are handled (e.g. set `na.rm = T`) if your data has missing values, otherwise `NA`s will be passed through to higher levels.
 
 A number of sophisticated aggregation approaches and linked weighting methods are available in the [compind package](https://cran.r-project.org/web/packages/Compind/index.html). These can nicely complement the features in COINr and may be of interest to those looking for more technical approaches to aggregation, such as those based on benefit of the doubt methods.
 
 A further argument, `agtype_bylevel`, allows specification of different normalisation types at different aggregation levels. For example, `agtype_bylevel = c("arith_mean", "geom_mean", "median")` would use the arithmetic mean at the indicator level, the geometric mean at the pillar level, and the median at the sub-index level (for the ASEM data structure).
 
-Finally, alternative weights can be used for aggregation by specifying the `agweights` argument. This can either be:
+Alternative weights can also be used for aggregation by specifying the `agweights` argument. This can either be:
 
 * `NULL`, in which case it will use the weights that were attached to IndMeta and AggMeta in GII_assemble (if they exist), or
 * A character string which corresponds to a named list of weights stored in `.$Parameters$Weights`. You can either add these manually or through `rew8r` (see chapter on [Weighting]). E.g. entering `agweights = "Original"` will use the original weights read in on assembly. This is equivalent to `agweights = NULL`.
-* A list of weights to use in the aggregation, where each element of the list is a numeric vector of weights for a given level.
+* A data frame of weights to use in the aggregation. See [Weighting] for the format of weight data frames.
+
+A final option of `aggregate()` is the possibility to set missing data limits for aggregation. By default, `aggregate()` will produce an aggregate score as long as at least one value is available within the aggregation group. For example, for an aggregation group we might have five indicators. A unit might have the following:
+
+```{r, echo=F}
+data.frame(Ind1 = NA,
+           Ind2 = 3,
+           Ind3 = NA,
+           Ind4 = NA,
+           Ind5 = NA)
+```
+
+The arithmetic mean of this would still be 3. But the unit has 80% missing data for this aggregation group, so calculating an aggregate score may seem a bit disingenuous. The `avail_limit` argument helps here: it gives the possibility to set a minimum data availability threshold for each level of the index, such that if data availability is below the threshold (for a particular unit and aggregation group), it returns `NA` (for that unit and group) instead of an aggregated score. This is probably good practice in any composite indicator where data availability is an issue: some units/countries may have fairly high data availability overall, but have low data availability for particular groups.
 
 Now that the data has been aggregated, a natural next step is to explore the results. This is dealt with in the chapter on [Results visualisation].
 

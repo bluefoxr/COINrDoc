@@ -4,7 +4,7 @@ It's fairly common to make adjustments to the index, perhaps in terms of alterna
 
 ## Regeneration
 
-One of the key advantages of working within the COINrverse is that (nearly) all the methodology that is applied when building a composite indicator (COIN) is stored automatically in a folder of the COIN called `.$Method`. To see what this looks like:
+One of the key advantages of working within the "COINrverse" is that (nearly) all the methodology that is applied when building a composite indicator (COIN) is stored automatically in a folder of the COIN called `.$Method`. To see what this looks like:
 
 ```{r MethodFolder}
 # load COINr if not loaded
@@ -70,7 +70,7 @@ Specifically, we have replaced the Winsorised value of Belgium, for the "Bord" i
 
 Now, when we regenerate the COIN using `regen()`, it will insert this extra line of code immediately after the treatment step. Clearly, anything we refer to in this custom code must be available at that step in the construction. For example, we can't refer to the aggregated data set if the data has not yet been aggregated.
 
-Using custom code may seem a bit confusing but it adds an extra layer of flexibility. It is however intended for small snippets of custom code, rather than large blocks of custom operations. If you are doing a lot of operations outside COINr, it may be better to do this in your own dedicated script or function, rather than trying to encode absolutely everything inside the COIN.
+Using custom code may seem a bit confusing but it adds an extra layer of flexibility. It is however intended for small snippets of custom code, rather than large blocks of custom operations. If you are doing a lot of operations outside COINr, it may be better to do this in your own dedicated script or function, rather than trying to encode absolutely everything inside the COIN. However, also consider that some features of COINr, such as global sensitivity analysis, require everything to be encoded inside the COIN.
 
 Before moving on, it's worth reiterating that regenerating a COIN runs the construction functions in the order they appear in the Method folder. That means that if you build an index with no imputation, for example, and then later decide to make a copy which now includes imputation, you would have to insert the `.Method$imputation` entry in the place where it should occur. An easy way to do this is using R's `append()` function. 
 
@@ -177,19 +177,21 @@ In using these tools it should be fairly evident that comparisons are made betwe
 To begin with, we can make a simple bilateral comparison between two COINs. Taking two of the index versions created previously:
 
 ```{r}
-compTable(ASEM, ASEMAltNorm, dset = "Aggregated", isel = "Index") %>%
-  head(10) %>%
+compTable(ASEM, ASEMAltNorm, dset = "Aggregated", isel = "Index") |>
+  head(10) |>
   knitr::kable()
 ```
 
 The `compTable()` function allows a rank comparison of a single indicator or aggregate, between two COINs. The COINs must both share the indicator code which is assigned to `isel`. By default the output table (data frame) is sorted by the highest absolute rank change downwards, but it can be sorted by the other columns using the `sort_by` argument:
 
 ```{r}
-compTable(ASEM, ASEMAltNorm, dset = "Aggregated", isel = "Index", sort_by = "RankCOIN1") %>%
-  head(10) %>%
+compTable(ASEM, ASEMAltNorm, dset = "Aggregated", isel = "Index", sort_by = "RankCOIN1") |>
+  head(10) |>
   knitr::kable()
 ```
 
 Why use ranks as a comparison and not scores? As explained elsewhere in this documentation, a different normalisation method or aggregation method can result in very different scores for the same unit. Since scores have no units, the scale is in many ways arbitrary, but ranks are a consistent way of comparing different versions.
 
 For comparisons between more than two COINs, the `compTableMulti()` function can be used.
+
+Finally, you may wish to cross-check results of a COIN against parallel calculations. For example, you might be reproducing a composite indicator which was calculated in Excel and want to see if the results are the same. COINr has a handy function called `compareDF()`, which gives a fairly detailed comparison between two data frames. This is explained in more detail in the [Helper functions] chapter.

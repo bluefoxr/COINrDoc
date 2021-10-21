@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-10-20" />
+<meta name="date" content="2021-10-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -314,6 +314,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.4.3" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-an-uncertainty-analysis"><i class="fa fa-check"></i><b>14.4.3</b> Running an uncertainty analysis</a></li>
 <li class="chapter" data-level="14.4.4" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#running-a-sensitivity-analysis"><i class="fa fa-check"></i><b>14.4.4</b> Running a sensitivity analysis</a></li>
 </ul></li>
+<li class="chapter" data-level="14.5" data-path="sensitivity-analysis.html"><a href="sensitivity-analysis.html#removing-indicators-and-aggregates"><i class="fa fa-check"></i><b>14.5</b> Removing indicators and aggregates</a></li>
 </ul></li>
 <li class="chapter" data-level="15" data-path="helper-functions.html"><a href="helper-functions.html"><i class="fa fa-check"></i><b>15</b> Helper functions</a>
 <ul>
@@ -323,7 +324,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.1.2" data-path="helper-functions.html"><a href="helper-functions.html#export-to-excel"><i class="fa fa-check"></i><b>15.1.2</b> Export to Excel</a></li>
 </ul></li>
 <li class="chapter" data-level="15.2" data-path="helper-functions.html"><a href="helper-functions.html#selecting-data-sets-and-indicators"><i class="fa fa-check"></i><b>15.2</b> Selecting data sets and indicators</a></li>
-<li class="chapter" data-level="15.3" data-path="helper-functions.html"><a href="helper-functions.html#rounding-data-frames"><i class="fa fa-check"></i><b>15.3</b> Rounding data frames</a></li>
+<li class="chapter" data-level="15.3" data-path="helper-functions.html"><a href="helper-functions.html#data-frame-tools"><i class="fa fa-check"></i><b>15.3</b> Data frame tools</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="appendix-r-resources.html"><a href="appendix-r-resources.html"><i class="fa fa-check"></i><b>16</b> Appendix: R Resources</a>
 <ul>
@@ -410,10 +411,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>See <a href="appendix-analysing-a-composite-indicator-example.html#appendix-analysing-a-composite-indicator-example">Appendix: Analysing a Composite Indicator Example</a>.</p>
 <blockquote>
+<p>I am having trouble assembling the COIN. What should I do?</p>
+</blockquote>
+<p>First, make sure you read the <a href="coins-the-currency-of-coinr.html#coins-the-currency-of-coinr">COINs: the currency of COINr</a> chapter. Next, I would really recommend looking at the example data sets, <code>ASEMIndData</code>, <code>ASEMIndMeta</code>, and <code>ASEMAggMeta</code>. If it is easier, export these to Excel (using e.g. <code>write.csv()</code>) to look at them there and perhaps use them as a template for your own index and data. If you are having problems, it may be in the definition of the index structure. Call <code>ASEM &lt;- build_ASEM()</code> which builds the example COIN, and then <code>plotframework(ASEM)</code> to see the structure of the example. Now look at the <code>ASEMIndMeta</code> and <code>ASEMAggMeta</code> data frames. Have a cup of coffee or tea and mull it over. Hopefully it should make sense!</p>
+<blockquote>
 <p>Can I construct a composite indicator over multiple years?</p>
 </blockquote>
-<p>At the moment, COINr does not have a dedicated support for panel data, i.e. data that has different values for different years. This can also be complicated because from one year to another, indicators may change, there may be a different set of units, methodology may change, and so on. A suggested workaround, for the moment, is to build a separate COIN for each year of data. This allows methodological variations if needed, and the results can be compared using COINr’s <code>compTable()</code> and <code>compTableMulti()</code> functions. You would probably also need to extract results using your own code as well.</p>
-<p>Eventually, time permitting, I would build this into a package. This would probably be done in the same way suggested here, i.e. having multiple COINs for each year, but would be slightly automated. The COINs would also be stored in a single list or possibly a data frame, following something along the lines of the <a href="https://r4ds.had.co.nz/many-models.html">Many Models</a> chapter in the R For Data Science book.</p>
+<p>At the moment, COINr does not have comprehensive support for panel data, i.e. data that has different values for different years. This can also be complicated because from one year to another, indicators may change, there may be a different set of units, methodology may change, and so on. A suggested workaround, for the moment, is to build a separate COIN for each year of data. This allows methodological variations if needed, and the results can be compared using COINr’s <code>compTable()</code> and <code>compTableMulti()</code> functions. In recent versions of COINr, the <code>assemble()</code> function gives the possibility to extract and impute single years of data from a panel data set. See <a href="coins-the-currency-of-coinr.html#coins-the-currency-of-coinr">COINs: the currency of COINr</a> for more information on this.</p>
+<p>You would probably also need to extract results using your own code as well.</p>
+<p>If you follow this approach, it is a good idea to store COINs in a list (or possibly a data frame), which means you can apply COINr functions to the whole set of COINs using e.g. <code>lapply()</code> and purrr commands. Eventually, time permitting, I would build this into a package. See the <a href="https://r4ds.had.co.nz/many-models.html">Many Models</a> chapter in the R For Data Science book for a bit more general information along these lines.</p>
 <blockquote>
 <p>Do I <em>have</em> to aggregate indicators? Can I just make a scoreboard or only aggregate up to a certain level?</p>
 </blockquote>
@@ -423,7 +429,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>You can <a href="https://github.com/bluefoxr/COINr/issues">open an issue</a> on the COINr repo. Otherwise, you can also just <a href="mailto:william.becker@bluefoxdata.eu">email me</a>.</p>
 <blockquote>
-<p>I need help. Who can I ask?</p>
+<p>I need help. Who ask?</p>
 </blockquote>
 <p>Please search this manual first and also the help documentation by typing e.g. <code>?normalise</code> (depending on the function you are interested in). If you need general assistance with composite indicators and indicators, <a href="mailto:william.becker@bluefoxdata.eu">email me</a> and I may be able to help.</p>
 <blockquote>
@@ -433,6 +439,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This means that, like any modelling exercise, composite indicators should be interpreted carefully. Which is to say that you should be aware that small differences in scores and ranks may not be significant. Uncertainty analysis can help with this.</p>
 <p>It’s also worth pointing out that composite indicators usually aim to measure things that cannot really be measured any other way, like innovation or quality of life. And also that even if we build an index, it should always be presented alongside its underlying data.</p>
 <p>If you want to read in more detail on this, you could see my <a href="https://www.bluefoxdata.eu/blog/2020-11-17-whycompositeindicators/">blog post</a> on the topic.</p>
+<blockquote>
+<p>COINr is great and I want to cite it. How do I do that?</p>
+</blockquote>
+<p>At the moment there is no official publication for COINr. There is this online book, but it is not “officially” published. A paper on COINr is currently (Oct 2021) under review in the Journal of Statistical Software. If it makes it through, I will put the citation details here. In the meantime, follow something like <a href="https://www.r-bloggers.com/2018/08/how-to-cite-packages/">this</a>.</p>
 
 </div>
             </section>
