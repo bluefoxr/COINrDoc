@@ -83,6 +83,7 @@ Function            Description
 `plotCorr()`        Correlation heatmap between any levels/groups of the index
 `plotframework()`   Interactive sunburst plot visualising the indicator framework
 `plotIndDist()`     Static plot of distributions for indicators and groups of indicators
+`plotIndDot()`      Dot plot of a single indicator with possibility to label units
 `plotSA()`          Plot sensitivity analysis results (sensitivity indices)
 `plotSARanks()`     Plot confidence intervals on ranks, following an uncertainty/sensitivity analysis
 `colourTable()`     Conditionally-formatted interactive HTML table, given a data frame

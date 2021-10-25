@@ -89,6 +89,15 @@ iplotMap(ASEM, dset = "Raw", isel = "Embs")
 
 Note that this only works if `IndData$UnitCode` corresponds to ISO alpha-3 country codes. If you want to do some more sophisticated mapping R, Plotly has [many mapping options](https://plotly.com/r/maps/), but R in general a wealth of mapping packages, you just have to search for them. COINr uses Plotly maps to keep things simple and to not depend on too many packages.
 
+Another useful plotting function is `plotIndDot()`, which simply plots a single indicator using dots, with options to highlight particular units.
+
+```{r, fig.height=3, fig.width=10}
+plotIndDot(ASEM, dset = "Raw", icode = "CO2",
+           usel = c("GBR", "ESP", "AUS"), add_stat = "median")
+```
+
+This also gives the option to add a statistic, either mean or median, or to pass your own value to mark. This is similar to a dot plot using e.g. `plotIndDist()`, but is more suited to showing where a particular unit falls in an ordering.
+
 COINr has yet more tools to plot data, but let's leave it at that for the moment. Other tools will be introduced in other chapters.
 
 ## Statistics and analysis
