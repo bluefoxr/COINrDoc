@@ -162,6 +162,14 @@ In the online version of this documentation, this plot appears as an interactive
 
 The framework plot is called a “sunburst plot” and summarises the structure of the index and the relative weight of each indicator in each aggregation level and the index.
 
+At any time we can get an overview of the contents of the COIN using the `print()` method:
+
+```{r}
+# print() method is implicitly called by naming the object on the command line
+ASEM
+```
+
+
 We can also get indicator statistics in table format:
 
 ```{r, warning=F, message=F}

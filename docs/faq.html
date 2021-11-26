@@ -24,7 +24,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-10-25" />
+<meta name="date" content="2021-11-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -443,6 +443,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>COINr is great and I want to cite it. How do I do that?</p>
 </blockquote>
 <p>At the moment there is no official publication for COINr. There is this online book, but it is not “officially” published. A paper on COINr is currently (Oct 2021) under review in the Journal of Statistical Software. If it makes it through, I will put the citation details here. In the meantime, follow something like <a href="https://www.r-bloggers.com/2018/08/how-to-cite-packages/">this</a>.</p>
+<blockquote>
+<p>I get errors when installing COINr.</p>
+</blockquote>
+<p>The CRAN version of COINr has survived many CRAN checks, so it should install. If you get errors, it is most likely a problem with your R installation rather than a problem with COINr. I have also experienced problems installing packages sometimes (probably everyone has).</p>
+<p>First of all, you may be asked to update some packages which COINr depends on. This is a good idea, but it could cause problems. If you update many packages at the same time, things seem to have a habit of going wrong. I have found that it is often less problematic to update packages individually. Sometimes, even individual package updates may have problems due to packages being “locked” or it not being possible to write to package files. In this case, the best thing seems to be to close R, manually delete the package from your R Library folder (i.e. delete the package folder), reopen R and then install it afresh.</p>
+<p>It will also often help to update R and R Studio to the latest versions.</p>
 
 </div>
             </section>

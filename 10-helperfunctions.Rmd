@@ -148,6 +148,14 @@ ASEMIndData[c("UnitCode", "LPI", "Goods")] |>
 
 Note that there are different ways to rank values, depending on how you deal with ties. The `rankDF()` function uses so-called "sport" ranking, where ties are assigned the highest rank value. See `?rank` for some information on this.
 
+In-group ranking is also possible using `rankDF()` by specifying a column of the data frame to use as a grouping variable.
+
+```{r}
+ASEMIndData[c("UnitCode", "Group_GDP", "Goods", "LPI")] |>
+  rankDF(use_group = "Group_GDP") |>
+  head(10)
+```
+
 A final helpful function is `compareDF()`, which gives a detailed comparison of two similar data frames. This is particularly useful when comparing results from one calculation to another. For example, let's say you have built a composite indicator in Excel, but want to replicate it in COINr, to use some of the COINr tools. But having built it, you want to be sure that the results are exactly the same. From experience, it is actually quite common for differences to appear, which could be due to calculation errors, but also sometimes due to differences in the way that Excel calculates certain things. Anyway, how can you check that the two sets of results are the same, and if not, what are the differences?
 
 The `compareDF()` function is intended to compare two data frames that have the same variables and rows, but possibly in a different order. Moreover it allows to compare at a specified number of significant figures and will tell you specifically what the differences are. This is probably best clarified with an example.

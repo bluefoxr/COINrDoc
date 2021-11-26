@@ -157,6 +157,13 @@ Apart from building the COIN, `assemble()` does a few other things:
 
 In general, the job of `assemble()` is to construct a *valid* COIN which should not throw any errors later on. In other words, if you succeed in assembling your COIN, things should work fairly well from there on. Wherever possible `assemble()` tries to return helpful error messages to help you fix any problems with your inputs.
 
+We can view a summary of the contents of the COIN at any time with the `print()` method for COINs. This can be called simply by naming the object on the command line:
+
+```{r}
+ASEM
+```
+
+
 ## Moving on
 
 Now that you have a COIN, you can start using all the other functions in COINr to their full potential. Most functions will still work on standalone data frames, so you don't *need* to work with COINs if you prefer not to.
