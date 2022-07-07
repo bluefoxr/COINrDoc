@@ -39,7 +39,7 @@ That said, relationships between indicators can often turn out to be fairly line
 COINr offers a few ways to check correlations that are more convenient than `stats::cor()`. The first is to call the `getStats()` function that was already mentioned in [Initial visualisation and analysis]. This can be pointed at any data set and indicator subset and will give correlation between all indicators present. For example, taking the raw data of our example data set:
 
 ```{r, message=F}
-library(COINr)
+library(COINr6)
 # shortcut to build ASEM COIN
 ASEM <- build_ASEM()
 # get statistics of raw data set

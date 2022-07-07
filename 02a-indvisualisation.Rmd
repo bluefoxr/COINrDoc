@@ -11,7 +11,7 @@ The plotting tools here can be useful at any stage of building a composite indic
 Independently from the indicator data, a good way to begin is to check the structure of the index. This can be done visually with the `plotframework()` function, which generates a sunburst plot of the index structure.
 
 ```{r}
-library(COINr)
+library(COINr6)
 # assemble ASEM COIN
 ASEM <- assemble(ASEMIndData, ASEMIndMeta, ASEMAggMeta) |>
   suppressMessages()

@@ -15,7 +15,7 @@ These latter platforms are not usually built in R, but in Javascript. However, C
 To see the aggregated results, one way is to look in `.$Data$Aggregated`, which contains the aggregated scores, along with any grouping variables that were attached with the original data. However, this is not always convenient because the table can be quite large, and also the index itself will be the last column. You can of course manually select columns, but to make life easier COINr has a dedicated function, `getResults()`.
 
 ```{r resultsSummary}
-library(COINr)
+library(COINr6)
 
 # build example data set
 ASEM <- build_ASEM() |>

@@ -11,7 +11,7 @@ A good first step is to check how much data is missing, and where (see below). U
 The simplest imputation approach is to use values of other units to estimate the missing point. Typically, this could involve the sample mean or median of the indicator. Here's some data from the ASEM data set regarding the average connection speed of each country. Towards the end there are some missing values, so let's view the last few rows:
 
 ```{r}
-library(COINr)
+library(COINr6)
 Ind1 <- data.frame(Country = ASEMIndData$UnitName, ConSpeed = ASEMIndData$ConSpeed)
 Ind1[40:nrow(Ind1),]
 ```
@@ -42,8 +42,8 @@ A first step is to check in detail how much data are missing. The function `chec
 
 ```{r, collapse=T}
 # Assemble ASEM data first
-ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta,
-                 AggMeta = COINr::ASEMAggMeta)
+ASEM <- assemble(IndData = COINr6::ASEMIndData, IndMeta = COINr6::ASEMIndMeta,
+                 AggMeta = COINr6::ASEMAggMeta)
 # Missing data check on the raw data set
 ASEM <- checkData(ASEM, dset = "Raw")
 head(ASEM$Analysis$Raw$MissDatSummary)
@@ -97,8 +97,8 @@ The `impute()` function follows a similar logic to other COINr functions. We can
 
 ```{r, collapse=T}
 # Assemble ASEM data if not done already (uncomment the following)
-# ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta,
-#                 AggMeta = COINr::ASEMAggMeta)
+# ASEM <- assemble(IndData = COINr6::ASEMIndData, IndMeta = COINr6::ASEMIndMeta,
+#                 AggMeta = COINr6::ASEMAggMeta)
 
 # check how many NAs we have
 sum(is.na(ASEM$Data$Raw))

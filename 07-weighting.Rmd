@@ -98,7 +98,7 @@ The simplest approach is to make manual adjustments. First, make a copy of the e
 
 ```{r CopyWeights, message=F, warning=F}
 
-library(COINr)
+library(COINr6)
 # quietly build data set
 ASEM <- build_ASEM()
 

@@ -51,7 +51,7 @@ How you actually create these data frames is up to you. If your data is coming f
 The indicator data is a data frame which, shockingly, specifies the data for the indicators. However, it can do more than that, and also some rules have to be followed. The easiest way to explain is to start with an example.
 
 ```{r}
-library(COINr)
+library(COINr6)
 head(ASEMIndData[1:8])
 head(ASEMIndData[9:16])
 ```

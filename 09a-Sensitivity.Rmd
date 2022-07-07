@@ -112,7 +112,7 @@ Depending on your background, this may or may not seem a little confusing. Eithe
 To run a sensitivity analysis in COINr, the function of interest is `sensitivity()`. We must follow the steps outlined above, so first, you should have a nominal composite indicator constructed up to and including the aggregation step. Here, we use our old friend the ASEM index.
 
 ```{r SA_buildASEM}
-library(COINr)
+library(COINr6)
 # build ASEM index
 ASEM <- build_ASEM()
 ```

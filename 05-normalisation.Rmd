@@ -92,9 +92,9 @@ normalise <- function(COIN, ntype = NULL, npara = NULL,
 As an input, it takes a COIN or data frame, as usual. It outputs a new dataset to the COIN `.$Data$Normalised`, or a normalised data frame if `out2 = "df"`. Default normalisation (min-max, scaled between 0 and 100) can be achieved by simply calling:
 
 ```{r Default normalise, collapse=T, message=F, warning=F}
-library(COINr)
+library(COINr6)
 # Build ASEM index up to denomination
-ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta, AggMeta = COINr::ASEMAggMeta)
+ASEM <- assemble(IndData = COINr6::ASEMIndData, IndMeta = COINr6::ASEMIndMeta, AggMeta = COINr6::ASEMAggMeta)
 ASEM <- denominate(ASEM, dset = "Raw")
 
 # Default normalisation (min max scaled between 0 and 100) on denominated data set

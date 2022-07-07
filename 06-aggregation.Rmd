@@ -67,11 +67,11 @@ The percentage of dominance pairs is an indication of robustness. Under dominanc
 Many will be amazed to learn that the function to aggregate in COINr is called `aggregate()`. First, let's build the ASEM data set up to the point of normalisation, then aggregate it using the default approaches.
 
 ```{r}
-library(COINr)
+library(COINr6)
 
 # Build ASEM data up to the normalisation step
 # Assemble data and metadata into a COIN
-ASEM <- assemble(IndData = COINr::ASEMIndData, IndMeta = COINr::ASEMIndMeta, AggMeta = COINr::ASEMAggMeta)
+ASEM <- assemble(IndData = COINr6::ASEMIndData, IndMeta = COINr6::ASEMIndMeta, AggMeta = COINr6::ASEMAggMeta)
 # Denominate as specified in metadata
 ASEM <- denominate(ASEM, dset = "Raw")
 # Normalise using default method: min-max scaled between 0 and 100.

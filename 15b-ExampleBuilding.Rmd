@@ -28,7 +28,7 @@ Where these data frames come from is up to you. You might want to load data into
 Let's assume now that you have got these three data frames in the correct formats. Now you simply put them into `assemble()` to build your COIN. Here I will use the built-in data frames in COINr:
 
 ```{r, collapse=T}
-library(COINr)
+library(COINr6)
 
 ASEM <- assemble(IndData = ASEMIndData,
                  IndMeta = ASEMIndMeta,

@@ -8,7 +8,7 @@ One of the key advantages of working within the "COINrverse" is that (nearly) al
 
 ```{r MethodFolder}
 # load COINr if not loaded
-library(COINr)
+library(COINr6)
 
 # build example COIN
 ASEM <- build_ASEM()

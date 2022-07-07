@@ -9,7 +9,7 @@ COINr has a couple of useful functions to help import and export data and metada
 To demonstrate, we can take the example version of the COIN Tool, which you can download [here](https://composite-indicators.jrc.ec.europa.eu/sites/default/files/COIN_Tool_v1_LITE_exampledata.xlsm). Then it's as simple as running:
 
 ```{r Import CT}
-library(COINr)
+library(COINr6)
 
 # This is the file path and name where the COIN Tool is downloaded to
 # You could also just put it in your project directory.

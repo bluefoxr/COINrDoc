@@ -11,7 +11,7 @@ COINr's `assemble()` function allows you to assemble a COIN with pre-aggregated 
 To demonstrate, we can use a pre-aggregated data set created by COINr.
 
 ```{r, message=FALSE}
-library(COINr)
+library(COINr6)
 
 # build ASEM index
 ASEM <- build_ASEM()

@@ -31,6 +31,18 @@ knitr::opts_chunk$set(fig.width = 8, collapse = TRUE, warning = FALSE)
 
 # Introduction
 
+**IMPORTANT INFORMATION**
+
+*As of July 5th 2022 COINr has had a major upgrade from v0.6.1 to v1.0.0. This was to fix a number of underlying issues, introduce many new features and harmonise syntax. The syntax of v1.0.0 is quite different from previous versions - as a result the code and examples in this book will for the most part not work with COINr 1.0.0 and higher versions.*
+
+*The material and guidance in this e-book has been largely replaced with COINr's [new website](https://bluefoxr.github.io/COINr/). If you want to use the latest COINr version, please now go there for documentation.*
+
+*If you prefer to continue with the older COINr versions, you can install the "legacy" version of COINr 0.6.1 as a separate package called "COINr6". This can be loaded to allow any code written with older versions of COINr to work without any problems. COINr6 must be installed via GitHub (see below). I will leave this book here for users of COINr6 to follow.*
+
+*Note that in the rest of the book, "COINr" now implicitly refers to "COINr6". I have only changed the `library()` commands to ensure the code works.*
+
+*To learn more about these changes and why they were necessary, see [here](https://bluefoxr.github.io/COINr/articles/v1.html).*
+
 ## Background
 
 This documentation describes in detail the COINr package, which is an open source R package for developing and analysing composite indicators, developed by the European Commission's [Joint Research Centre](https://knowledge4policy.ec.europa.eu/composite-indicators/about_en). In fact, this is slightly more than technical documentation, and also gives some tips on composite indicator development along the way.
@@ -39,23 +51,19 @@ A *composite indicator* is an aggregation of indicators which aims to measure a 
 
 You can find the latest version of COINr at its [GitHub repo](https://github.com/bluefoxr/COINr), and also the source code for this documentation [here](https://github.com/bluefoxr/COINrDoc).
 
+**NOTE** as discussed above, this book now refers to the "COINr6" package, which has its repo [here](https://github.com/bluefoxr/COINr6).
+
 ## Installation
 
-COINr is now available on CRAN, which means that to install it you simply run:
-
-```{r InstallCOINrCRAN, eval=FALSE}
-install.packages("COINr")
-```
-
-An even more up to date version cab also be installed via GitHub. CRAN versions of the package are only updated every 1-2 months, whereas the GitHub version represents the very latest version available. First, install the **devtools** package if you don't already have it, then run:
+As discussed above, this book now refers to the COINr6 package. While the latest COINr version is on CRAN, COINr6 can only be installed from GitHub, as follows:
 
 ```{r InstallCOINr, eval=FALSE}
-devtools::install_github("bluefoxr/COINr")
+devtools::install_github("bluefoxr/COINr6")
 ```
 
 This should directly install the package from Github, without any other steps. You may be asked to update packages. This might not be strictly necessary, so you can also skip this step.
 
-In case you do spot a bug, or have a suggestion, the best way is to [open an issue](https://github.com/bluefoxr/COINr/issues) on the repo. Otherwise, you can also just [email me](mailto:william.becker@bluefoxdata.eu).
+In case you do spot a bug, or have a suggestion, [open an issue](https://github.com/bluefoxr/COINr6/issues) on the repo.
 
 ## What does it do?
 
@@ -124,7 +132,7 @@ It is however worth browsing through the contents to pick out any further releva
 COINr is highly customisable, but equally allows composite indicator construction in a few commands. Taking the built-in ASEM dataset, we can assemble a composite indicator in a few steps.
 
 ```{r demo_assemble, collapse=T}
-library(COINr)
+library(COINr6)
 
 # assemble basic composite indicator object from input data
 ASEM <- assemble(IndData = ASEMIndData,

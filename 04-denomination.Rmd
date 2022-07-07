@@ -12,7 +12,7 @@ To take an example, let's examine some indicators in the ASEM data set, and intr
 
 ```{r, warning=F, message=F}
 # load COINr package
-library(COINr)
+library(COINr6)
 library(magrittr) # for pipe operations
 # build ASEM index
 ASEM <- build_ASEM()
