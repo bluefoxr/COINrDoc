@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Foundations | Composite Indicator Development and Analysis in R with COINr</title>
   <meta name="description" content="Composite indicators with COINr" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Foundations | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://bluefoxr.github.io/COINrDoc/" />
   
   <meta property="og:description" content="Composite indicators with COINr" />
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
@@ -24,7 +23,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-11-26" />
+<meta name="date" content="2022-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="coins-the-currency-of-coinr.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,14 +49,16 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 <script src="libs/core-js-2.5.3/shim.min.js"></script>
 <script src="libs/react-16.12.0/react.min.js"></script>
 <script src="libs/react-16.12.0/react-dom.min.js"></script>
@@ -129,6 +130,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -383,33 +385,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="foundations" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Foundations</h1>
+<div id="foundations" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Foundations<a href="foundations.html#foundations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This chapter aims to explain some important principles about how COINr works, and explain some terminology. It also gives a map of the functions available in the package. If you want to get straight to using COINr, you could skip this chapter for now and look at some examples in the appendices or directly at the chapters relating to specific functions and operations (the next chapter onwards).</p>
-<div id="terminology" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Terminology</h2>
+<div id="terminology" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Terminology<a href="foundations.html#terminology" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s clearly define a few terms first to avoid confusion later on.</p>
 <ul>
 <li><p>An <em>indicator</em> is a variable which has an observed value for each unit. Indicators might be things like life expectancy, CO2 emissions, number of tertiary graduates, and so on.</p></li>
 <li><p>A <em>unit</em> is one of the entities that you are comparing using indicators. Often, units are countries, but they could also be regions, universities, individuals or even competing policy options (the latter is the realm of multicriteria decision analysis).</p></li>
 </ul>
 <p>Together, indicators and units form the main input data frame for COINr (units as rows, and indicators as columns):</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-6"></span>
 <img src="images/inds_n_units.png" alt="Indicators and units" width="100%" />
 <p class="caption">
 Figure 2.1: Indicators and units
 </p>
 </div>
 <p><em>Composite indicators</em> are created by aggregating multiple indicators into a single value. This may often be repeated more than once, following a hierarchical structure, such as the following figure:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:unnamed-chunk-7"></span>
 <img src="images/CIhierarchy.jpg" alt="Example of composite indicator structure." width="100%" />
 <p class="caption">
 Figure 2.2: Example of composite indicator structure.
 </p>
 </div>
-<p>In this example, four pairs of indicators are each aggregated into a “sub-pillar,” and sub-pillars are aggregated into two “pillars.” Finally, the pillars are aggregated into a single index. Typically, the sub-pillars and pillars represent specific sub-concepts of the central concept. For example, in the <a href="https://www.globalinnovationindex.org/Home">Global Innovation Index</a>, which aims to measure innovation at the national level, pillars include things like “Institutions,” “Human Capital,” and “Infrastructure,” each of which are populated with indicators which measure those specific concepts. The idea is that a complex multidimensional concept is broken down into sub-concepts which are easier to capture with a set of indicators. Additionally, the scores of pillars and sub-pillars can be interesting in their own right.</p>
-<p>Whether each of these groups is called a “pillar,” “sub-index,” “dimension,” or something else, depends on the index and your own favourite words. For this reason, in COINr a more general terminology is adopted.</p>
-<p>When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an <em>aggregation group</em>. For example, the aggregation group of “SP 1” in the diagram above consists of “ind.01” and “ind.02.” The aggregation group of “Pillar 1” consists of “SP 1” and “SP 2.” And so on. The resulting value from aggregating an aggregation group is called an <em>aggregate</em> or <em>aggregate value</em>.</p>
+<p>In this example, four pairs of indicators are each aggregated into a “sub-pillar”, and sub-pillars are aggregated into two “pillars”. Finally, the pillars are aggregated into a single index. Typically, the sub-pillars and pillars represent specific sub-concepts of the central concept. For example, in the <a href="https://www.globalinnovationindex.org/Home">Global Innovation Index</a>, which aims to measure innovation at the national level, pillars include things like “Institutions”, “Human Capital”, and “Infrastructure”, each of which are populated with indicators which measure those specific concepts. The idea is that a complex multidimensional concept is broken down into sub-concepts which are easier to capture with a set of indicators. Additionally, the scores of pillars and sub-pillars can be interesting in their own right.</p>
+<p>Whether each of these groups is called a “pillar”, “sub-index”, “dimension”, or something else, depends on the index and your own favourite words. For this reason, in COINr a more general terminology is adopted.</p>
+<p>When a group of indicators is aggregated together to form a single sub-pillar, pillar or otherwise, this is called an <em>aggregation group</em>. For example, the aggregation group of “SP 1” in the diagram above consists of “ind.01” and “ind.02”. The aggregation group of “Pillar 1” consists of “SP 1” and “SP 2”. And so on. The resulting value from aggregating an aggregation group is called an <em>aggregate</em> or <em>aggregate value</em>.</p>
 <p>COINr also frequently refers to <em>aggregation levels</em> or equivalently just <em>levels</em>. This refers to the vertical position in the hierarchy shown above. In this example, therefore,</p>
 <ul>
 <li>Level 1 = Indicators</li>
@@ -419,8 +421,8 @@ Figure 2.2: Example of composite indicator structure.
 </ul>
 <p>This means that the fictional index above has four levels in total. COINr can handle any number of levels and aggregation groups. The structure of the index is defined when the COIN is constructed - see the following chapter for details.</p>
 </div>
-<div id="coinr-syntax" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> COINr syntax</h2>
+<div id="coinr-syntax" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> COINr syntax<a href="foundations.html#coinr-syntax" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Many COINr functions follow a common syntax which is related to some of the terminology described above.</p>
 <ul>
 <li><code>dset</code> always refers to the name of the data set that is found in <code>.$Data</code>. For example, <code>dset = "Normalised"</code> will return <code>.$Data$Normalised</code>. The only exception is <code>dset = "Denominators"</code>, which returns <code>.$Input$Denominators</code>. The argument <code>dset</code> is used in many COINr functions because they have to know which data set to operate on.</li>
@@ -430,11 +432,11 @@ Figure 2.2: Example of composite indicator structure.
 </ul>
 <p>In particular, the combination of <code>icodes</code> and <code>aglev</code> is useful because it allows to call sets of indicators inside aggregation groups very quickly. See <a href="helper-functions.html#selecting-data-sets-and-indicators">Selecting data sets and indicators</a> for more details.</p>
 </div>
-<div id="a-map-of-coinr" class="section level2" number="2.3">
-<h2><span class="header-section-number">2.3</span> A map of COINr</h2>
+<div id="a-map-of-coinr" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> A map of COINr<a href="foundations.html#a-map-of-coinr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>COINr consists of many functions that do a number of different types of operations. Here is a summary.</p>
-<div id="construction" class="section level3" number="2.3.1">
-<h3><span class="header-section-number">2.3.1</span> Construction</h3>
+<div id="construction" class="section level3 hasAnchor" number="2.3.1">
+<h3><span class="header-section-number">2.3.1</span> Construction<a href="foundations.html#construction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The following functions are the main functions for building a composite indicator in COINr.</p>
 <table>
 <thead>
@@ -479,8 +481,8 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="visualisation-and-presenting" class="section level3" number="2.3.2">
-<h3><span class="header-section-number">2.3.2</span> Visualisation and presenting</h3>
+<div id="visualisation-and-presenting" class="section level3 hasAnchor" number="2.3.2">
+<h3><span class="header-section-number">2.3.2</span> Visualisation and presenting<a href="foundations.html#visualisation-and-presenting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>These functions are for visualising and presenting data and results</p>
 <table>
 <thead>
@@ -565,8 +567,8 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="adjustment-and-comparison" class="section level3" number="2.3.3">
-<h3><span class="header-section-number">2.3.3</span> Adjustment and comparison</h3>
+<div id="adjustment-and-comparison" class="section level3 hasAnchor" number="2.3.3">
+<h3><span class="header-section-number">2.3.3</span> Adjustment and comparison<a href="foundations.html#adjustment-and-comparison" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <table>
 <thead>
 <tr class="header">
@@ -590,8 +592,8 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="analysis" class="section level3" number="2.3.4">
-<h3><span class="header-section-number">2.3.4</span> Analysis</h3>
+<div id="analysis" class="section level3 hasAnchor" number="2.3.4">
+<h3><span class="header-section-number">2.3.4</span> Analysis<a href="foundations.html#analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The following functions analyse indicator data.</p>
 <table>
 <thead>
@@ -644,8 +646,8 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="interactive-apps" class="section level3" number="2.3.5">
-<h3><span class="header-section-number">2.3.5</span> Interactive apps</h3>
+<div id="interactive-apps" class="section level3 hasAnchor" number="2.3.5">
+<h3><span class="header-section-number">2.3.5</span> Interactive apps<a href="foundations.html#interactive-apps" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>These are interactive apps, built using Shiny, which allow fast interactive exploration and adjustments.</p>
 <table>
 <thead>
@@ -670,8 +672,8 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="importexport" class="section level3" number="2.3.6">
-<h3><span class="header-section-number">2.3.6</span> Import/export</h3>
+<div id="importexport" class="section level3 hasAnchor" number="2.3.6">
+<h3><span class="header-section-number">2.3.6</span> Import/export<a href="foundations.html#importexport" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Functions to import and export data and results to and from COINr and R.</p>
 <table>
 <thead>
@@ -692,8 +694,8 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="other-functions" class="section level3" number="2.3.7">
-<h3><span class="header-section-number">2.3.7</span> Other functions</h3>
+<div id="other-functions" class="section level3 hasAnchor" number="2.3.7">
+<h3><span class="header-section-number">2.3.7</span> Other functions<a href="foundations.html#other-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>These are other functions that may be of interest, but do not neatly fit in the previous categories. Many of them are called from the other functions listed above, but may still be useful on their own.</p>
 <table>
 <thead>
@@ -762,8 +764,8 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="data" class="section level3" number="2.3.8">
-<h3><span class="header-section-number">2.3.8</span> Data</h3>
+<div id="data" class="section level3 hasAnchor" number="2.3.8">
+<h3><span class="header-section-number">2.3.8</span> Data<a href="foundations.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>COINr comes with some example data embedded into the package.</p>
 <table>
 <thead>
@@ -792,36 +794,36 @@ Figure 2.2: Example of composite indicator structure.
 </tbody>
 </table>
 </div>
-<div id="finally" class="section level3" number="2.3.9">
-<h3><span class="header-section-number">2.3.9</span> Finally</h3>
+<div id="finally" class="section level3 hasAnchor" number="2.3.9">
+<h3><span class="header-section-number">2.3.9</span> Finally<a href="foundations.html#finally" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are also a number functions which are mainly for internal use, and are not listed here.</p>
 </div>
 </div>
-<div id="tips-for-using-coinr" class="section level2" number="2.4">
-<h2><span class="header-section-number">2.4</span> Tips for using COINr</h2>
-<div id="use-scripts-and-r-markdown" class="section level3" number="2.4.1">
-<h3><span class="header-section-number">2.4.1</span> Use scripts and R Markdown</h3>
+<div id="tips-for-using-coinr" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Tips for using COINr<a href="foundations.html#tips-for-using-coinr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="use-scripts-and-r-markdown" class="section level3 hasAnchor" number="2.4.1">
+<h3><span class="header-section-number">2.4.1</span> Use scripts and R Markdown<a href="foundations.html#use-scripts-and-r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Like any good data science, anything you do in COINr should be reproducible. This means that ideally, you should be able to go from importing the data into R up to visualising the results. This can be either done by a script or a set of scripts, or perhaps better using an R markdown document or documents which combines text with code. If you haven’t used R Markdown before, you probably should be using it. It is very similar to the idea of Jupyter notebooks in Python. Find out more about R Markdown in the free and excellent online book <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a>. You might also notice that this manual is written in R Markdown, and more specifically using the <a href="https://bookdown.org/yihui/bookdown/">bookdown package</a>.</p>
 <p>Ideally, the whole process of building and analysing the composite indicator should be documented with an R Markdown file or files, or scripts. Apart from reproducibility, this makes it very easy to make retrospective changes and update the whole file. I have personally found that it may help to have several markdown notebooks - one for exploring the data and selecting indicators, another for data treatment, and another for construction, and so on. At the end of each notebook, the COIN(s) containing all data and analysis are saved to a folder and loaded back in in the next notebook. This avoids having one very long notebook. Of course, this is just one way of doing things and is just a suggestion.</p>
 </div>
-<div id="missing-data" class="section level3" number="2.4.2">
-<h3><span class="header-section-number">2.4.2</span> Missing data</h3>
+<div id="missing-data" class="section level3 hasAnchor" number="2.4.2">
+<h3><span class="header-section-number">2.4.2</span> Missing data<a href="foundations.html#missing-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>It’s very important to understand the difference between missing data and zeros. A zero means that you know that the value of the indicator is zero, whereas missing data (in R this is denoted as <code>NA</code>) means you don’t know what the value is at all.</p>
 <p>When aggregating indicators, this difference becomes particularly important. If a data point is missing, it is often excluded from the aggregation, which effectively means reassigning it with the mean (or similar) value of the indicators in the same group. If you impute the data, missing values could be assigned with mean or median indicator values, for example. Clearly, these values will be very different from zeros.</p>
 <p>This point is made here, because data may sometimes come with missing values denoted as zeros, or with zeros denoted as missing values. Ensure that these are checked carefully before proceeding with construction.</p>
 </div>
-<div id="plotting" class="section level3" number="2.4.3">
-<h3><span class="header-section-number">2.4.3</span> Plotting</h3>
+<div id="plotting" class="section level3 hasAnchor" number="2.4.3">
+<h3><span class="header-section-number">2.4.3</span> Plotting<a href="foundations.html#plotting" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>COINr includes a number of plotting functions which return various types of plots. These are all either based on the ggplot2 or plotly packages. Think of COINr plots as “starting points” rather than finished plots. While I have tried to make the plots useful and even visually appealing, much more could be done to improve them and to fit particular uses and contexts.</p>
 <p>Luckily, because of the way that plotly and ggplot2 work, plots generated by COINr can easily be modified by assigning them to an object and then modifying the object. Generally this would look like this:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="foundations.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a plot, but assign to variable &quot;plt&quot;</span></span>
-<span id="cb9-2"><a href="foundations.html#cb9-2" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> <span class="fu">COINr_plot_function</span>(COIN, plot_options)</span>
-<span id="cb9-3"><a href="foundations.html#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="foundations.html#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># alter plt</span></span>
-<span id="cb9-5"><a href="foundations.html#cb9-5" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> plt <span class="sc">+</span> <span class="fu">alter_plot_function</span>(options)</span>
-<span id="cb9-6"><a href="foundations.html#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="foundations.html#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view the plot</span></span>
-<span id="cb9-8"><a href="foundations.html#cb9-8" aria-hidden="true" tabindex="-1"></a>plt</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="foundations.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a plot, but assign to variable &quot;plt&quot;</span></span>
+<span id="cb8-2"><a href="foundations.html#cb8-2" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> <span class="fu">COINr_plot_function</span>(COIN, plot_options)</span>
+<span id="cb8-3"><a href="foundations.html#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="foundations.html#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># alter plt</span></span>
+<span id="cb8-5"><a href="foundations.html#cb8-5" aria-hidden="true" tabindex="-1"></a>plt <span class="ot">&lt;-</span> plt <span class="sc">+</span> <span class="fu">alter_plot_function</span>(options)</span>
+<span id="cb8-6"><a href="foundations.html#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="foundations.html#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view the plot</span></span>
+<span id="cb8-8"><a href="foundations.html#cb8-8" aria-hidden="true" tabindex="-1"></a>plt</span></code></pre></div>
 <p>The <code>alter_plot_function</code> could be any of the very many layout and geometry functions from ggplot2, for example. This means you can change colours, axis labels, point styles, titles and many other things.</p>
 <p>In summary, with COINr you may choose to either:</p>
 <ul>
@@ -830,8 +832,8 @@ Figure 2.2: Example of composite indicator structure.
 <li>Make your own plots</li>
 </ul>
 </div>
-<div id="panel-data-and-multiple-coins" class="section level3" number="2.4.4">
-<h3><span class="header-section-number">2.4.4</span> Panel data and multiple COINs</h3>
+<div id="panel-data-and-multiple-coins" class="section level3 hasAnchor" number="2.4.4">
+<h3><span class="header-section-number">2.4.4</span> Panel data and multiple COINs<a href="foundations.html#panel-data-and-multiple-coins" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Currently COINr does not explicitly support panel data, although the <code>assemble()</code> function can extract and impute a single year of data from a panel data set. If you wish to work with panel data, I would recommend to build a separate COIN for each point in time, and store the COINs in a list. This makes it easy to apply COINr functions to all COINs in one go using purrr or <code>lapply()</code> functions. It is also more flexible to use separate COINs because methodology, units and indicators may vary from one year to the next.</p>
 <p>The same strategy can be applied any parallel development of multiple indexes, such as separate indexes for country groups.</p>
 
@@ -848,7 +850,6 @@ Figure 2.2: Example of composite indicator structure.
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -867,6 +868,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -887,6 +889,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 },

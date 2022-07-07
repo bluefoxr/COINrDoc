@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 9 Normalisation | Composite Indicator Development and Analysis in R with COINr</title>
   <meta name="description" content="Composite indicators with COINr" />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 9 Normalisation | Composite Indicator Development and Analysis in R with COINr" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://bluefoxr.github.io/COINrDoc/" />
   
   <meta property="og:description" content="Composite indicators with COINr" />
   <meta name="github-repo" content="bluefoxr/COINrDoc" />
@@ -24,7 +23,7 @@
 <meta name="author" content="William Becker" />
 
 
-<meta name="date" content="2021-11-26" />
+<meta name="date" content="2022-07-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -33,8 +32,8 @@
   
 <link rel="prev" href="data-treatment.html"/>
 <link rel="next" href="aggregation.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-3.5.1/jquery.min.js"></script>
+<script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -50,14 +49,16 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.3/plotly.js"></script>
+<script src="libs/plotly-binding-4.10.0/plotly.js"></script>
 <script src="libs/typedarray-0.1/typedarray.min.js"></script>
 <link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
 <script src="libs/core-js-2.5.3/shim.min.js"></script>
 <script src="libs/react-16.12.0/react.min.js"></script>
 <script src="libs/react-16.12.0/react-dom.min.js"></script>
@@ -129,6 +130,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -383,13 +385,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="normalisation" class="section level1" number="9">
-<h1><span class="header-section-number">Chapter 9</span> Normalisation</h1>
+<div id="normalisation" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Normalisation<a href="normalisation.html#normalisation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Normalisation is the operation of bringing indicators onto comparable scales so that they can be aggregated more fairly. To see why this is necessary, consider aggregating GDP values (billions or trillions of dollars) with percentage tertiary graduates (tens of percent). Average values here would make no sense because one is on a completely different scale to the other.</p>
-<div id="approaches" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Approaches</h2>
-<div id="first-adjust-direction" class="section level3" number="9.1.1">
-<h3><span class="header-section-number">9.1.1</span> First: adjust direction</h3>
+<div id="approaches" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Approaches<a href="normalisation.html#approaches" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="first-adjust-direction" class="section level3 hasAnchor" number="9.1.1">
+<h3><span class="header-section-number">9.1.1</span> First: adjust direction<a href="normalisation.html#first-adjust-direction" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Indicators can either be positively or negatively related to the concept that you are trying to measure. For example, in an index of quality of life, median income would probably be a positive indicator. Prevalance of malnourishment would be a negative indicator (higher values should give lower scores in quality of life).</p>
 <p>Accounting for these differences is considered part of the normalisation step. Indicators loaded into COINr should have a “Direction” column in the <code>IndMeta</code> input to <code>assemble()</code>, which is 1 for positive indicators, and -1 for negative indicators. With this information, normalisation is a two step procedure:</p>
 <ol style="list-style-type: decimal">
@@ -398,8 +400,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ol>
 <p>It’s that simple. COINr has this built in, so you don’t need to do anything other than specify the directions.</p>
 </div>
-<div id="linear-transformations" class="section level3" number="9.1.2">
-<h3><span class="header-section-number">9.1.2</span> Linear transformations</h3>
+<div id="linear-transformations" class="section level3 hasAnchor" number="9.1.2">
+<h3><span class="header-section-number">9.1.2</span> Linear transformations<a href="normalisation.html#linear-transformations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Normalisation is relatively simple but there are still a number of different approaches which have different properties.</p>
 <p>Perhaps the most straightforward and intuitive option (and therefore probably the most widely used) is called the <em>min-max</em> transformation. This is a simple linear function which rescales the indicator to have a minimum value <span class="math inline">\(l\)</span>, a maximum value <span class="math inline">\(u\)</span>, and consequently a range <span class="math inline">\(u-l\)</span>, and is as follows:</p>
 <p><span class="math display">\[ \tilde{x}_{\text{min}} = \frac{ x - x_{\text{min}} }{ x_{\text{max}} - x_{\text{min}} } \times (u-l) + l\]</span>
@@ -411,16 +413,16 @@ where <span class="math inline">\(\mu_x\)</span> and <span class="math inline">\
 <p><span class="math display">\[ \tilde{x} = \frac{ x - p }{ q } \times a + b\]</span></p>
 <p>and it is fairly straightforward to see how z-scores and the min-max transformations are special cases of this.</p>
 </div>
-<div id="nonlinear-transformations" class="section level3" number="9.1.3">
-<h3><span class="header-section-number">9.1.3</span> Nonlinear transformations</h3>
+<div id="nonlinear-transformations" class="section level3 hasAnchor" number="9.1.3">
+<h3><span class="header-section-number">9.1.3</span> Nonlinear transformations<a href="normalisation.html#nonlinear-transformations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>A simple nonlinear transformation is the rank transformation.</p>
 <p><span class="math display">\[ \tilde{x} = \text{rank}(x)\]</span>
 where the ranks should be defined so that the lowest indicator value has a rank of 1, the second lowest a rank of 2, and so on. The rank transformation is attractive because it automatically eliminates any outliers. Therefore there would not usually be any need to treat the data previously. However, it converts detailed indicator scores to simple ranks, which might be too reductionist for some.</p>
 <p>It’s worth pointing out that there are different ways to rank values, because of how ties (units with the same score) are handled. To read about this, just call <code>?rank</code> in R.</p>
 <p>Similar approaches to simple ranks include Borda scores, which are simply the ranks described above but minus 1 (so the lowest score is 0 instead of 1), and percentile ranks.</p>
 </div>
-<div id="distances" class="section level3" number="9.1.4">
-<h3><span class="header-section-number">9.1.4</span> Distances</h3>
+<div id="distances" class="section level3 hasAnchor" number="9.1.4">
+<h3><span class="header-section-number">9.1.4</span> Distances<a href="normalisation.html#distances" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Another approach is to use the distance of each score to some reference value. Possibilities here are the (normalised) distance to the maximum value of the indicator:</p>
 <p><span class="math display">\[ \tilde{x} = 1 - \frac{\text{max}(x) - x}{\text{max}(x) - \text{min}(x)}\]</span></p>
 <p>the fraction of the maximum value of the indicator:</p>
@@ -435,8 +437,8 @@ where <span class="math inline">\(\text{targ}(x)\)</span> is the target for the 
 <p>where <span class="math inline">\(x_U\)</span> and <span class="math inline">\(x_L\)</span> are the upper and lower bounds, respectively, for the indicator. Any values that are below the lower bound are assigned a score of zero, and any above the upper bound are assigned a score of one. This approach is used by the <a href="https://www.cedefop.europa.eu/en/events-and-projects/projects/european-skills-index-esi">European Skills Index</a>, for example.</p>
 </div>
 </div>
-<div id="normalisation-in-coinr" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Normalisation in COINr</h2>
+<div id="normalisation-in-coinr" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Normalisation in COINr<a href="normalisation.html#normalisation-in-coinr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The normalisation function in COINr is imaginatively named <code>normalise()</code>. It has the following main features:</p>
 <ul>
 <li>A wide range of normalisation methods, including the possibility to pass custom functions</li>
@@ -444,24 +446,24 @@ where <span class="math inline">\(\text{targ}(x)\)</span> is the target for the 
 <li>Possibility to specify detailed individual treatment for each indicator</li>
 </ul>
 <p>The function looks like this:</p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="normalisation.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t run this chunk, just for illustration (will throw error if run)</span></span>
-<span id="cb77-2"><a href="normalisation.html#cb77-2" aria-hidden="true" tabindex="-1"></a>normalise <span class="ot">&lt;-</span> <span class="cf">function</span>(COIN, <span class="at">ntype =</span> <span class="cn">NULL</span>, <span class="at">npara =</span> <span class="cn">NULL</span>,</span>
-<span id="cb77-3"><a href="normalisation.html#cb77-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dset =</span> <span class="cn">NULL</span>, <span class="at">directions =</span> <span class="cn">NULL</span>, <span class="at">individual =</span> <span class="cn">NULL</span>,</span>
-<span id="cb77-4"><a href="normalisation.html#cb77-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">indiv_only =</span> <span class="cn">FALSE</span>, <span class="at">out2 =</span> <span class="cn">NULL</span>){</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="normalisation.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="co"># don&#39;t run this chunk, just for illustration (will throw error if run)</span></span>
+<span id="cb76-2"><a href="normalisation.html#cb76-2" aria-hidden="true" tabindex="-1"></a>normalise <span class="ot">&lt;-</span> <span class="cf">function</span>(COIN, <span class="at">ntype =</span> <span class="cn">NULL</span>, <span class="at">npara =</span> <span class="cn">NULL</span>,</span>
+<span id="cb76-3"><a href="normalisation.html#cb76-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">dset =</span> <span class="cn">NULL</span>, <span class="at">directions =</span> <span class="cn">NULL</span>, <span class="at">individual =</span> <span class="cn">NULL</span>,</span>
+<span id="cb76-4"><a href="normalisation.html#cb76-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">indiv_only =</span> <span class="cn">FALSE</span>, <span class="at">out2 =</span> <span class="cn">NULL</span>){</span></code></pre></div>
 <p>As an input, it takes a COIN or data frame, as usual. It outputs a new dataset to the COIN <code>.$Data$Normalised</code>, or a normalised data frame if <code>out2 = "df"</code>. Default normalisation (min-max, scaled between 0 and 100) can be achieved by simply calling:</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="normalisation.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr)</span>
-<span id="cb78-2"><a href="normalisation.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build ASEM index up to denomination</span></span>
-<span id="cb78-3"><a href="normalisation.html#cb78-3" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">assemble</span>(<span class="at">IndData =</span> COINr<span class="sc">::</span>ASEMIndData, <span class="at">IndMeta =</span> COINr<span class="sc">::</span>ASEMIndMeta, <span class="at">AggMeta =</span> COINr<span class="sc">::</span>ASEMAggMeta)</span>
-<span id="cb78-4"><a href="normalisation.html#cb78-4" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">denominate</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
-<span id="cb78-5"><a href="normalisation.html#cb78-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-6"><a href="normalisation.html#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Default normalisation (min max scaled between 0 and 100) on denominated data set</span></span>
-<span id="cb78-7"><a href="normalisation.html#cb78-7" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">normalise</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Denominated&quot;</span>)</span>
-<span id="cb78-8"><a href="normalisation.html#cb78-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-9"><a href="normalisation.html#cb78-9" aria-hidden="true" tabindex="-1"></a><span class="co"># compare one of the indicators</span></span>
-<span id="cb78-10"><a href="normalisation.html#cb78-10" aria-hidden="true" tabindex="-1"></a><span class="fu">iplotIndDist2</span>(ASEM, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Denominated&quot;</span>, <span class="st">&quot;Normalised&quot;</span>),</span>
-<span id="cb78-11"><a href="normalisation.html#cb78-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">icodes =</span> <span class="st">&quot;TertGrad&quot;</span>, <span class="at">ptype =</span> <span class="st">&quot;Scatter&quot;</span>)</span></code></pre></div>
-<div id="htmlwidget-1c2e67f5985d2bd7c45c" style="width:768px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1c2e67f5985d2bd7c45c">{"x":{"visdat":{"2cb014dd6fd8":["function () ","plotlyVisDat"]},"cur_data":"2cb014dd6fd8","attrs":{"2cb014dd6fd8":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"2cb014dd6fd8.1":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":{},"y":{},"text":["Austria","Belgium","Bulgaria","Croatia","Cyprus","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta","Netherlands","Norway","Poland","Portugal","Romania","Slovakia","Slovenia","Spain","Sweden","Switzerland","United Kingdom","Australia","Bangladesh","Brunei Darussalam","Cambodia","China","India","Indonesia","Japan","Kazakhstan","Korea","Lao PDR","Malaysia","Mongolia","Myanmar","New Zealand","Pakistan","Philippines","Russian Federation","Singapore","Thailand","Vietnam"],"hoverinfo":"text","marker":{"size":15},"showlegend":false,"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Tertiary graduates <br> (Percent)"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Tertiary graduates <br> (Percent)"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"mode":"markers","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"mode":"markers","type":"scatter","x":[13.08167,31.70948,24.47098,18.25773,25.54672,19.3418,30.38373,37.60498,22.50554,17.66307,24.74205,22.92907,20.67309,26.8378,14.35266,27.79356,33.09735,34.27727,13.28486,28.86907,26.65009,23.7002,18.18253,13.01408,18.92215,18.82353,29.29108,22.99885,36.94929,29.33262,29.78425,3.57765,9.13629,8.48301,29.87681,24.35774,16.36954,23.71332,26.00903,8.75331,16.99506,2.00915,28.21053,13.12545],"y":[31.1062278924245,83.4376667154552,63.10241958117,45.6474255551844,66.1245151468585,48.6929227384219,79.7132135983344,100,57.5808739394474,43.9768366126032,63.8639413661656,58.7707043212646,52.4329394763375,69.7515692147086,34.6768427650093,72.4366028267918,87.3366346563628,90.6514049538949,31.677053182915,75.4580522493787,69.2242321642732,60.9370535818381,45.4361648541416,30.9163461000909,47.5139925097968,47.2369375851048,76.6436124680897,58.9667385196524,98.1579583900698,76.7603115308731,78.0290837437981,4.40641502108534,20.0224015004005,18.1871303464479,78.289114202422,62.7842924297593,40.3428997160622,60.9739118318073,67.42329087424,18.9464889567121,42.1001842069703,0,73.6080040836244,31.2292198271539],"text":["Austria","Belgium","Bulgaria","Croatia","Cyprus","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta","Netherlands","Norway","Poland","Portugal","Romania","Slovakia","Slovenia","Spain","Sweden","Switzerland","United Kingdom","Australia","China","India","Indonesia","Japan","Korea","Malaysia","Mongolia","New Zealand","Pakistan","Philippines","Russian Federation","Singapore","Thailand"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(255,127,14,1)","size":15,"line":{"color":"rgba(255,127,14,1)"}},"showlegend":false,"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="normalisation.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(COINr6)</span>
+<span id="cb77-2"><a href="normalisation.html#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Build ASEM index up to denomination</span></span>
+<span id="cb77-3"><a href="normalisation.html#cb77-3" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">assemble</span>(<span class="at">IndData =</span> COINr6<span class="sc">::</span>ASEMIndData, <span class="at">IndMeta =</span> COINr6<span class="sc">::</span>ASEMIndMeta, <span class="at">AggMeta =</span> COINr6<span class="sc">::</span>ASEMAggMeta)</span>
+<span id="cb77-4"><a href="normalisation.html#cb77-4" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">denominate</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Raw&quot;</span>)</span>
+<span id="cb77-5"><a href="normalisation.html#cb77-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-6"><a href="normalisation.html#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Default normalisation (min max scaled between 0 and 100) on denominated data set</span></span>
+<span id="cb77-7"><a href="normalisation.html#cb77-7" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">normalise</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Denominated&quot;</span>)</span>
+<span id="cb77-8"><a href="normalisation.html#cb77-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-9"><a href="normalisation.html#cb77-9" aria-hidden="true" tabindex="-1"></a><span class="co"># compare one of the indicators</span></span>
+<span id="cb77-10"><a href="normalisation.html#cb77-10" aria-hidden="true" tabindex="-1"></a><span class="fu">iplotIndDist2</span>(ASEM, <span class="at">dsets =</span> <span class="fu">c</span>(<span class="st">&quot;Denominated&quot;</span>, <span class="st">&quot;Normalised&quot;</span>),</span>
+<span id="cb77-11"><a href="normalisation.html#cb77-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">icodes =</span> <span class="st">&quot;TertGrad&quot;</span>, <span class="at">ptype =</span> <span class="st">&quot;Scatter&quot;</span>)</span></code></pre></div>
+<div id="htmlwidget-e89e3972f6c150da529a" style="width:768px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e89e3972f6c150da529a">{"x":{"visdat":{"57e0677870d":["function () ","plotlyVisDat"]},"cur_data":"57e0677870d","attrs":{"57e0677870d":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"57e0677870d.1":{"mode":"markers","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","x":{},"y":{},"text":["Austria","Belgium","Bulgaria","Croatia","Cyprus","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta","Netherlands","Norway","Poland","Portugal","Romania","Slovakia","Slovenia","Spain","Sweden","Switzerland","United Kingdom","Australia","Bangladesh","Brunei Darussalam","Cambodia","China","India","Indonesia","Japan","Kazakhstan","Korea","Lao PDR","Malaysia","Mongolia","Myanmar","New Zealand","Pakistan","Philippines","Russian Federation","Singapore","Thailand","Vietnam"],"hoverinfo":"text","marker":{"size":15},"showlegend":false,"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"Tertiary graduates <br> (Percent)"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Tertiary graduates <br> (Percent)"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"mode":"markers","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"mode":"markers","type":"scatter","x":[13.08167,31.70948,24.47098,18.25773,25.54672,19.3418,30.38373,37.60498,22.50554,17.66307,24.74205,22.92907,20.67309,26.8378,14.35266,27.79356,33.09735,34.27727,13.28486,28.86907,26.65009,23.7002,18.18253,13.01408,18.92215,18.82353,29.29108,22.99885,36.94929,29.33262,29.78425,3.57765,9.13629,8.48301,29.87681,24.35774,16.36954,23.71332,26.00903,8.75331,16.99506,2.00915,28.21053,13.12545],"y":[31.1062278924245,83.4376667154552,63.10241958117,45.6474255551844,66.1245151468585,48.6929227384219,79.7132135983344,100,57.5808739394474,43.9768366126032,63.8639413661656,58.7707043212646,52.4329394763375,69.7515692147086,34.6768427650093,72.4366028267918,87.3366346563628,90.6514049538949,31.677053182915,75.4580522493787,69.2242321642732,60.9370535818381,45.4361648541416,30.9163461000909,47.5139925097968,47.2369375851048,76.6436124680897,58.9667385196524,98.1579583900698,76.7603115308731,78.0290837437981,4.40641502108534,20.0224015004005,18.1871303464479,78.289114202422,62.7842924297593,40.3428997160622,60.9739118318073,67.42329087424,18.9464889567121,42.1001842069703,0,73.6080040836244,31.2292198271539],"text":["Austria","Belgium","Bulgaria","Croatia","Cyprus","Czech Republic","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta","Netherlands","Norway","Poland","Portugal","Romania","Slovakia","Slovenia","Spain","Sweden","Switzerland","United Kingdom","Australia","China","India","Indonesia","Japan","Korea","Malaysia","Mongolia","New Zealand","Pakistan","Philippines","Russian Federation","Singapore","Thailand"],"hoverinfo":["text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text","text"],"marker":{"color":"rgba(255,127,14,1)","size":15,"line":{"color":"rgba(255,127,14,1)"}},"showlegend":false,"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 <p>This plot also illustrates the linear nature of the min-max transformation.</p>
 <p>You can select the normalisation type of the <code>normalise()</code> function using the <code>ntype</code> and accompanying <code>npara</code> arguments, where the latter is an object which specifies any parameters for the type of normalisation selected.</p>
 <ul>
@@ -481,8 +483,8 @@ where <span class="math inline">\(\text{targ}(x)\)</span> is the target for the 
 </ul>
 <p>The <code>normalise()</code> function also allows you to specify the directions of the indicators using the argument <code>directions</code>. If this is not specified, the directions will be taken from the indicator metadata input to <code>assemble()</code>. If they are not present here, all directions will default to positive.</p>
 </div>
-<div id="individual-normalisation" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Individual normalisation</h2>
+<div id="individual-normalisation" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Individual normalisation<a href="normalisation.html#individual-normalisation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Indicators can be normalised using individual specifications in a similar way to the <code>treat()</code> function. This is specified by the following two arguments to <code>normalise()</code>:</p>
 <ul>
 <li><code>individual</code> A list of named lists specifiying individual normalisation to apply to specific indicators. Should be structured so that the name of each sublist should be the indicator code. The the list elements are:
@@ -493,22 +495,22 @@ where <span class="math inline">\(\text{targ}(x)\)</span> is the target for the 
 <li><code>indiv_only</code> Logical. As with <code>treat()</code>, if this is set to <code>FALSE</code> (default), then the indicators that are <em>not</em> specified in <code>individual</code> will be normalised according to the <code>ntype</code> and <code>npara</code> arguments specified in the function argument. Otherwise if <code>TRUE</code>, only the indicators in <code>individual</code> will be normalised, and the others will be unaffected.</li>
 </ul>
 <p>The easiest way to clarify this is with an example. In the following, we will apply min-max, scaled to [0, 1] to all indicators, except for “Flights” which will be normalised using Borda scores, “Renew” which will remain un-normalised, and “Ship” which will be scaled as a distance to the value of Singapore.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="normalisation.html#cb79-1" aria-hidden="true" tabindex="-1"></a>indiv <span class="ot">=</span> <span class="fu">list</span>(</span>
-<span id="cb79-2"><a href="normalisation.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="fu">list</span>(<span class="at">ntype =</span> <span class="st">&quot;borda&quot;</span>),</span>
-<span id="cb79-3"><a href="normalisation.html#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Renew =</span> <span class="fu">list</span>(<span class="at">ntype =</span> <span class="st">&quot;none&quot;</span>),</span>
-<span id="cb79-4"><a href="normalisation.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Ship =</span> <span class="fu">list</span>(<span class="at">ntype =</span> <span class="st">&quot;dist2ref&quot;</span>, <span class="at">npara =</span> <span class="fu">list</span>(<span class="at">dist2ref =</span> <span class="st">&quot;SGP&quot;</span>))</span>
-<span id="cb79-5"><a href="normalisation.html#cb79-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb79-6"><a href="normalisation.html#cb79-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-7"><a href="normalisation.html#cb79-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Minmax in [0,1] for all indicators, except custom individual normalisation</span></span>
-<span id="cb79-8"><a href="normalisation.html#cb79-8" aria-hidden="true" tabindex="-1"></a><span class="co"># for those described above</span></span>
-<span id="cb79-9"><a href="normalisation.html#cb79-9" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">normalise</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Denominated&quot;</span>, <span class="at">ntype =</span> <span class="st">&quot;minmax&quot;</span>, <span class="at">npara =</span> <span class="fu">list</span>(<span class="at">minmax =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
-<span id="cb79-10"><a href="normalisation.html#cb79-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">individual =</span> indiv, <span class="at">indiv_only =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="normalisation.html#cb78-1" aria-hidden="true" tabindex="-1"></a>indiv <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb78-2"><a href="normalisation.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Flights =</span> <span class="fu">list</span>(<span class="at">ntype =</span> <span class="st">&quot;borda&quot;</span>),</span>
+<span id="cb78-3"><a href="normalisation.html#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Renew =</span> <span class="fu">list</span>(<span class="at">ntype =</span> <span class="st">&quot;none&quot;</span>),</span>
+<span id="cb78-4"><a href="normalisation.html#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Ship =</span> <span class="fu">list</span>(<span class="at">ntype =</span> <span class="st">&quot;dist2ref&quot;</span>, <span class="at">npara =</span> <span class="fu">list</span>(<span class="at">dist2ref =</span> <span class="st">&quot;SGP&quot;</span>))</span>
+<span id="cb78-5"><a href="normalisation.html#cb78-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb78-6"><a href="normalisation.html#cb78-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-7"><a href="normalisation.html#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Minmax in [0,1] for all indicators, except custom individual normalisation</span></span>
+<span id="cb78-8"><a href="normalisation.html#cb78-8" aria-hidden="true" tabindex="-1"></a><span class="co"># for those described above</span></span>
+<span id="cb78-9"><a href="normalisation.html#cb78-9" aria-hidden="true" tabindex="-1"></a>ASEM <span class="ot">&lt;-</span> <span class="fu">normalise</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Denominated&quot;</span>, <span class="at">ntype =</span> <span class="st">&quot;minmax&quot;</span>, <span class="at">npara =</span> <span class="fu">list</span>(<span class="at">minmax =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)),</span>
+<span id="cb78-10"><a href="normalisation.html#cb78-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">individual =</span> indiv, <span class="at">indiv_only =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p>We can visualise the new ranges of the data.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="normalisation.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotIndDist</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
-<span id="cb80-2"><a href="normalisation.html#cb80-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">icodes =</span> <span class="fu">c</span>(<span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;Renew&quot;</span>, <span class="st">&quot;Ship&quot;</span>, <span class="st">&quot;Goods&quot;</span>), <span class="at">type =</span> <span class="st">&quot;Dot&quot;</span>)</span>
-<span id="cb80-3"><a href="normalisation.html#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Bin width defaults to 1/30 of the range of the data. Pick better value with `binwidth`.</span></span></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="normalisation.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotIndDist</span>(ASEM, <span class="at">dset =</span> <span class="st">&quot;Normalised&quot;</span>,</span>
+<span id="cb79-2"><a href="normalisation.html#cb79-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">icodes =</span> <span class="fu">c</span>(<span class="st">&quot;Flights&quot;</span>, <span class="st">&quot;Renew&quot;</span>, <span class="st">&quot;Ship&quot;</span>, <span class="st">&quot;Goods&quot;</span>), <span class="at">type =</span> <span class="st">&quot;Dot&quot;</span>)</span>
+<span id="cb79-3"><a href="normalisation.html#cb79-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Bin width defaults to 1/30 of the range of the data. Pick better value with `binwidth`.</span></span></code></pre></div>
 <p><img src="COINr-documentation_files/figure-html/unnamed-chunk-71-1.png" width="768" /></p>
-<p>This example is meant to be illustrative of the functionality of <code>normalise()</code>, rather than being a sensible normalisation strategy, because the indicators are now on very different ranges, from the default minmax range of [0, 1] (“Goods” in this case), to the unchanged scale of “Renew” and the Borda rank scale of “Flights.” Notice also the scaling of “Ship,” which has values above zero because the reference country, Singapore, is does not have the maximum value of the indicator.</p>
+<p>This example is meant to be illustrative of the functionality of <code>normalise()</code>, rather than being a sensible normalisation strategy, because the indicators are now on very different ranges, from the default minmax range of [0, 1] (“Goods” in this case), to the unchanged scale of “Renew” and the Borda rank scale of “Flights”. Notice also the scaling of “Ship”, which has values above zero because the reference country, Singapore, is does not have the maximum value of the indicator.</p>
 <p>In practice, if different normalisation strategies are selected, it is a good idea to keep the indicators on similar ranges, otherwise the effects will be very unequal in the aggregation step.</p>
 
 </div>
@@ -523,7 +525,6 @@ where <span class="math inline">\(\text{targ}(x)\)</span> is the target for the 
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -542,6 +543,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -562,6 +564,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "section"
 },
